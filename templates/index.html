@@ -1350,84 +1350,131 @@ self.onmessage = function(e) {
 };
 </script>
 
+
+
 <!-- SEO Blog/FAQ Section -->
-<section id="seo-content" style="max-width:860px;margin:60px auto;padding:0 24px;font-family:inherit;color:#222;">
+<section id="seo-content">
+<style>
+#seo-content{padding:72px 24px 80px;background:var(--faq-bg,#0d1117);color:var(--faq-text,#e6edf3)}
+@media(prefers-color-scheme:light){#seo-content{--faq-bg:#f6f8fa;--faq-text:#1a1f2e}}
+.faq-inner{max-width:860px;margin:0 auto}
+.faq-eyebrow{display:inline-block;background:rgba(37,99,235,.15);color:#60a5fa;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:20px}
+.faq-title{font-size:clamp(22px,4vw,32px);font-weight:700;margin:0 0 10px;color:var(--faq-text,#e6edf3)}
+.faq-sub{color:#8b949e;font-size:15px;margin:0 0 56px;line-height:1.6}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:640px){.faq-grid{grid-template-columns:1fr}}
+.faq-card{background:var(--faq-card,rgba(255,255,255,.04));border:1px solid var(--faq-border,rgba(255,255,255,.08));border-radius:14px;padding:28px;transition:border-color .2s,transform .2s;cursor:default}
+@media(prefers-color-scheme:light){.faq-card{--faq-card:#fff;--faq-border:#e1e4e8;box-shadow:0 1px 4px rgba(0,0,0,.06)}}
+.faq-card:hover{border-color:#2563EB;transform:translateY(-2px)}
+.faq-icon{width:38px;height:38px;background:rgba(37,99,235,.15);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.faq-icon svg{width:20px;height:20px;stroke:#60a5fa;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+@media(prefers-color-scheme:light){.faq-icon svg{stroke:#2563EB}}
+.faq-card h3{font-size:16px;font-weight:600;margin:0 0 10px;color:var(--faq-text,#e6edf3);line-height:1.4}
+.faq-card p{font-size:14px;color:#8b949e;line-height:1.7;margin:0}
+@media(prefers-color-scheme:light){.faq-card p,.faq-card ul{color:#57606a}}
+.faq-card ul{font-size:14px;color:#8b949e;line-height:2;margin:8px 0 0;padding-left:18px}
+.faq-card strong{color:#60a5fa}
+@media(prefers-color-scheme:light){.faq-card strong{color:#2563EB}}
+.faq-card.wide{grid-column:1/-1}
+.faq-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:48px;padding-top:32px;border-top:1px solid var(--faq-border,rgba(255,255,255,.08))}
+.faq-tag{font-size:12px;color:#8b949e;background:var(--faq-card,rgba(255,255,255,.04));border:1px solid var(--faq-border,rgba(255,255,255,.08));border-radius:20px;padding:4px 12px}
+</style>
+<div class="faq-inner">
+  <div style="text-align:center;margin-bottom:8px">
+    <span class="faq-eyebrow">Knowledge Base</span>
+  </div>
+  <h2 class="faq-title" style="text-align:center">Legal Hash Checksum — Complete Guide</h2>
+  <p class="faq-sub" style="text-align:center">Everything about digital evidence hashing under BSA 2023 Section 63(4)(c)</p>
 
-  <h2 style="font-size:28px;font-weight:700;text-align:center;margin-bottom:8px;">Legal Hash Checksum — Complete Guide</h2>
-  <p style="text-align:center;color:#555;margin-bottom:48px;">Everything about digital evidence hashing under BSA 2023 Section 63(4)(c)</p>
+  <div class="faq-grid">
 
-  <!-- FAQ 1 -->
-  <div style="margin-bottom:40px;border-left:4px solid #2563EB;padding-left:20px;">
-    <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">What is a Legal Hash Checksum?</h3>
-    <p style="color:#444;line-height:1.8;">A <strong>legal hash checksum</strong> is a unique alphanumeric fingerprint generated from a digital file using algorithms like MD5, SHA-1, SHA-256, or SHA-512. In Indian courts, a hash checksum is required under <strong>Bharatiya Sakshya Adhiniyam (BSA) 2023 Section 63(4)(c)</strong> to certify the integrity of digital evidence. It proves the file has not been tampered with since it was seized.</p>
+    <div class="faq-card">
+      <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div>
+      <h3>What is a Legal Hash Checksum?</h3>
+      <p>A <strong>legal hash checksum</strong> is a unique alphanumeric fingerprint of a digital file. Under <strong>BSA 2023 Section 63(4)(c)</strong>, Indian courts require a hash value to certify that digital evidence has not been tampered with since seizure.</p>
+    </div>
+
+    <div class="faq-card">
+      <div class="faq-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+      <h3>What is a Hash Checksum Tool?</h3>
+      <p>A <strong>checksum tool</strong> or <strong>hash generator</strong> computes the hash value of any file. This free <strong>online hash generator</strong> computes MD5, SHA-1, SHA-256 and SHA-512 entirely in your browser — the file never leaves your device.</p>
+    </div>
+
+    <div class="faq-card">
+      <div class="faq-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+      <h3>MD5 Hash vs SHA-256 — Which is accepted in Indian Courts?</h3>
+      <p>Both <strong>MD5 hash</strong> and <strong>SHA-256 hash</strong> are accepted under BSA 2023. Courts increasingly prefer <strong>SHA-256</strong> as it is more secure. Best practice is to include all four algorithms in your hash report.</p>
+    </div>
+
+    <div class="faq-card">
+      <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      <h3>How to fill Part A and Part B Certificate?</h3>
+      <p><strong>Part A</strong> is filled by the party producing evidence — the device owner. <strong>Part B</strong> is filled by a forensic expert. This tool auto-fills hash values into both certificates. Just add your details and sign before submitting to court.</p>
+    </div>
+
+    <div class="faq-card wide">
+      <div class="faq-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></div>
+      <h3>Supported Evidence Types — Mobile, DVR, CCTV, WhatsApp &amp; More</h3>
+      <ul>
+        <li><strong>Mobile evidence</strong> — hash extracted data files or full phone backups</li>
+        <li><strong>DVR evidence hash</strong> — hash exported video files from DVR/NVR systems</li>
+        <li><strong>CCTV hash checksum</strong> — hash CCTV footage before court submission</li>
+        <li><strong>WhatsApp evidence hash</strong> — hash exported WhatsApp ZIP or PDF exports</li>
+        <li><strong>Computer &amp; cloud evidence</strong> — hash any document, image, or storage media</li>
+        <li><strong>Cyber crime evidence</strong> — hash digital artifacts for police &amp; forensic use</li>
+      </ul>
+    </div>
+
+    <div class="faq-card">
+      <div class="faq-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+      <h3>What is Section 63(4)(c) of BSA 2023?</h3>
+      <p><strong>Section 63(4)(c) of Bharatiya Sakshya Adhiniyam 2023</strong> mandates that electronic records submitted as evidence must carry a certificate stating the hash value, signed by the producing party or a forensic expert.</p>
+    </div>
+
+    <div class="faq-card">
+      <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      <h3>Is this tool safe? Does it upload files?</h3>
+      <p>No files are uploaded. This <strong>file checksum</strong> tool runs 100% in your browser using the Web Crypto API. This preserves chain of custody — critical for <strong>police digital evidence</strong>, forensic experts, and court submissions.</p>
+    </div>
+
+    <div class="faq-card wide">
+      <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h3>Who needs a Legal Hash Certificate in India?</h3>
+      <ul>
+        <li><strong>Police officers</strong> — cyber crime evidence, seized devices, FIR attachments</li>
+        <li><strong>Advocates</strong> — filing digital evidence on behalf of clients in court</li>
+        <li><strong>Forensic experts</strong> — certifying evidence integrity with Part B certificate</li>
+        <li><strong>Corporate legal teams</strong> — email, document, and server data as evidence</li>
+        <li><strong>Cyber crime investigators</strong> — hashing digital artifacts and storage media</li>
+        <li><strong>IT departments</strong> — producing computer records and logs as court evidence</li>
+      </ul>
+    </div>
+
   </div>
 
-  <!-- FAQ 2 -->
-  <div style="margin-bottom:40px;border-left:4px solid #2563EB;padding-left:20px;">
-    <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">What is a Hash Checksum Tool?</h3>
-    <p style="color:#444;line-height:1.8;">A <strong>hash checksum tool</strong> or <strong>checksum tool</strong> computes the hash value of any file — PDF, image, video, mobile backup, DVR footage, or WhatsApp export. LegalHashChecksum.com is a free <strong>online hash generator</strong> that computes MD5, SHA-1, SHA-256 and SHA-512 hash values entirely in your browser. The file never leaves your device.</p>
+  <div class="faq-tags">
+    <span class="faq-tag">hash checksum</span>
+    <span class="faq-tag">file checksum</span>
+    <span class="faq-tag">hash generator</span>
+    <span class="faq-tag">MD5 hash</span>
+    <span class="faq-tag">SHA256 hash</span>
+    <span class="faq-tag">digital evidence India</span>
+    <span class="faq-tag">BSA 2023</span>
+    <span class="faq-tag">legal evidence certificate</span>
+    <span class="faq-tag">forensic hash tool</span>
+    <span class="faq-tag">cyber crime evidence</span>
+    <span class="faq-tag">DVR evidence hash</span>
+    <span class="faq-tag">CCTV hash India</span>
+    <span class="faq-tag">WhatsApp evidence hash</span>
+    <span class="faq-tag">mobile evidence hash</span>
+    <span class="faq-tag">hash value Indian court</span>
+    <span class="faq-tag">electronic record certificate</span>
+    <span class="faq-tag">cyber forensics India</span>
+    <span class="faq-tag">police digital evidence</span>
+    <span class="faq-tag">section 63 4 c hash</span>
+    <span class="faq-tag">file integrity verification</span>
   </div>
-
-  <!-- FAQ 3 -->
-  <div style="margin-bottom:40px;border-left:4px solid #2563EB;padding-left:20px;">
-    <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">MD5 Hash vs SHA-256 Hash — Which is accepted in Indian Courts?</h3>
-    <p style="color:#444;line-height:1.8;">Both <strong>MD5 hash</strong> and <strong>SHA-256 hash</strong> are accepted under BSA 2023. However, courts and forensic experts increasingly prefer <strong>SHA-256</strong> as it is more secure and collision-resistant. This tool generates all four — MD5, SHA-1, SHA-256, and SHA-512 — so you can include all in your hash report, which is the recommended practice for digital evidence submissions.</p>
-  </div>
-
-  <!-- FAQ 4 -->
-  <div style="margin-bottom:40px;border-left:4px solid #2563EB;padding-left:20px;">
-    <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">How to generate hash for Digital Evidence — Mobile, DVR, CCTV, WhatsApp?</h3>
-    <p style="color:#444;line-height:1.8;">This <strong>file checksum</strong> tool works for all types of digital evidence:</p>
-    <ul style="color:#444;line-height:2;margin-top:8px;padding-left:20px;">
-      <li><strong>Mobile evidence</strong> — hash the extracted data file or full phone backup</li>
-      <li><strong>DVR evidence hash</strong> — hash the exported video file from DVR/NVR</li>
-      <li><strong>CCTV hash checksum</strong> — hash CCTV footage files before submission</li>
-      <li><strong>WhatsApp evidence hash</strong> — hash the exported WhatsApp chat ZIP or PDF</li>
-      <li><strong>Computer files</strong> — hash any document, image, or storage media image</li>
-      <li><strong>Cloud data</strong> — hash downloaded cloud records before court submission</li>
-    </ul>
-  </div>
-
-  <!-- FAQ 5 -->
-  <div style="margin-bottom:40px;border-left:4px solid #2563EB;padding-left:20px;">
-    <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">What is Section 63(4)(c) of Bharatiya Sakshya Adhiniyam 2023?</h3>
-    <p style="color:#444;line-height:1.8;"><strong>Section 63(4)(c) of BSA 2023</strong> requires that electronic records submitted as evidence in Indian courts must be accompanied by a certificate stating the hash value of the digital record. The certificate must be signed by the person producing the evidence (Part A — Party) or a forensic expert (Part B — Expert). This tool generates both certificates automatically after computing the hash.</p>
-  </div>
-
-  <!-- FAQ 6 -->
-  <div style="margin-bottom:40px;border-left:4px solid #2563EB;padding-left:20px;">
-    <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">How to fill Part A and Part B Hash Certificate for Indian Courts?</h3>
-    <p style="color:#444;line-height:1.8;"><strong>Part A</strong> is filled by the party producing the evidence — the person who owns or controls the device. <strong>Part B</strong> is filled by a forensic expert or examiner. This tool auto-fills the hash values into both certificates after computing them. You just need to enter your name, address, device details, and sign the printout before submitting to court.</p>
-  </div>
-
-  <!-- FAQ 7 -->
-  <div style="margin-bottom:40px;border-left:4px solid #2563EB;padding-left:20px;">
-    <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">Is this tool safe? Does it upload my files?</h3>
-    <p style="color:#444;line-height:1.8;">No. This <strong>online hash generator</strong> runs 100% in your browser using the Web Crypto API. Your files are never uploaded to any server. This is critical for legal evidence — uploading evidence files to third-party servers could compromise the chain of custody. All computation happens locally on your device, making this tool safe for police, advocates, forensic experts, and courts.</p>
-  </div>
-
-  <!-- FAQ 8 -->
-  <div style="margin-bottom:40px;border-left:4px solid #2563EB;padding-left:20px;">
-    <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">Who needs a Legal Hash Certificate in India?</h3>
-    <p style="color:#444;line-height:1.8;">Anyone submitting <strong>digital evidence</strong> in Indian courts under BSA 2023 needs a hash certificate. This includes:</p>
-    <ul style="color:#444;line-height:2;margin-top:8px;padding-left:20px;">
-      <li><strong>Police officers</strong> — cyber crime evidence, seized devices</li>
-      <li><strong>Advocates</strong> — filing digital evidence on behalf of clients</li>
-      <li><strong>Forensic experts</strong> — certifying evidence integrity (Part B)</li>
-      <li><strong>Corporate legal teams</strong> — email, document, and data evidence</li>
-      <li><strong>Private investigators</strong> — digital surveillance evidence</li>
-      <li><strong>IT departments</strong> — producing computer records as evidence</li>
-    </ul>
-  </div>
-
-  <!-- Keywords footer for SEO -->
-  <div style="background:#f0f4ff;border-radius:12px;padding:24px;margin-top:48px;">
-    <p style="color:#666;font-size:13px;line-height:2;text-align:center;">
-      <strong>Related:</strong> hash checksum · file checksum · hash generator · checksum tool · MD5 hash · SHA256 hash · SHA512 hash · SHA1 hash · digital evidence India · legal evidence certificate · electronic evidence BSA 2023 · forensic hash tool India · cyber crime evidence hash · police digital evidence hash · DVR evidence hash · CCTV hash India · WhatsApp evidence hash · mobile evidence hash · hash value Indian court · forensic expert certificate · electronic record certificate India · hash report court India · file integrity verification · cyber forensics India
-    </p>
-  </div>
-
+</div>
 </section>
-
 </body>
 </html>
