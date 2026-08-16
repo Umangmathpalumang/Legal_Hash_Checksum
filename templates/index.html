@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Legal Hash Checksum - BSA 2023 S.63(4)(c)</title>
+<title>Legal Hash Checksum — BSA 2023 Section 63(4)(c)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -168,21 +168,41 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
   .cpaper{border:none;padding:2cm;max-width:100%}
   @page{margin:1.5cm}
 }
+
+/* Legal Hash Checksum header */
+.lhc-header{margin-bottom:1.5rem}
+.lhc-logo-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:8px}
+.lhc-icon{width:52px;height:52px;background:linear-gradient(135deg,#2563EB,#3B82F6);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(59,130,246,.4)}
+.lhc-title{font-size:26px;font-weight:800;color:var(--tx);letter-spacing:-0.3px;line-height:1.1;margin-bottom:6px}
+.lhc-badge{display:inline-block;font-size:12px;font-family:var(--mono);color:var(--tx2);background:var(--s2);border:1px solid var(--bd2);padding:3px 12px;border-radius:20px}
+.lhc-sub{font-size:14px;color:var(--tx2);margin-bottom:2px}
+.lhc-sub2{font-size:12px;color:var(--tx3);margin-bottom:4px}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="banner">
-    <div class="lhc-icon" style="width:52px;height:52px;background:linear-gradient(135deg,#2563EB,#3B82F6);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(59,130,246,.4)"><svg width="32" height="32" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-    <div class="btext">
-      <h1>Legal Hash Checksum</h1>
-      <p>The Schedule [See section 63(4)(c)] -- Bharatiya Sakshya Adhiniyam, 2023</p>
-      <div class="btags">
-        <span class="btag">MD5</span><span class="btag">SHA-1</span>
-        <span class="btag">SHA-256</span><span class="btag">SHA-512</span>
-        <span class="btag">Part A -- Party</span><span class="btag">Part B -- Expert</span>
+  <!-- Logo header matching original Hash Verify style -->
+  <div class="lhc-header">
+    <div class="lhc-logo-row">
+      <div class="lhc-icon" aria-hidden="true">
+        <svg width="32" height="32" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
       </div>
+      <div>
+        <div class="lhc-title">Legal Hash Checksum</div>
+        <div class="lhc-badge">v1.0</div>
+      </div>
+    </div>
+    <p class="lhc-sub">Compute cryptographic checksums for any file &mdash; instantly, privately.</p>
+    <p class="lhc-sub2">The Schedule [See section 63(4)(c)] &middot; Bharatiya Sakshya Adhiniyam, 2023</p>
+    <div class="btags" style="margin-top:10px">
+      <span class="btag">MD5</span><span class="btag">SHA-1</span>
+      <span class="btag">SHA-256</span><span class="btag">SHA-512</span>
+      <span class="btag">Part A &mdash; Party</span><span class="btag">Part B &mdash; Expert</span>
     </div>
   </div>
 
@@ -326,15 +346,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
         <div class="ff"><label>Make &amp; Model</label><input type="text" id="a-make" placeholder="e.g. Apple iPhone 13"></div>
         <div class="ff"><label>Color</label><input type="text" id="a-col" placeholder="e.g. Space Grey"></div>
         <div class="ff"><label>Serial Number</label><input type="text" id="a-sn" placeholder="From device settings or box"></div>
-        <div class="ff full"><label>IMEI / UIN / UID / MAC / Cloud ID (select applicable)</label>
-<div style="display:flex;flex-wrap:wrap;gap:12px;margin:6px 0">
-  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="IMEI" style="accent-color:var(--ac)"> IMEI</label>
-  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="UIN" style="accent-color:var(--ac)"> UIN</label>
-  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="UID" style="accent-color:var(--ac)"> UID</label>
-  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="MAC" style="accent-color:var(--ac)"> MAC</label>
-  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="Cloud ID" style="accent-color:var(--ac)"> Cloud ID</label>
-</div>
-<input type="text" id="a-imei" placeholder="Enter the value here"></div>
+        <div class="ff"><label>IMEI / UIN / UID / MAC / Cloud ID</label><input type="text" id="a-imei" placeholder="As applicable"></div>
         <div class="ff full"><label>Any other relevant information about the device / digital record (specify)</label><input type="text" id="a-other" placeholder="Optional"></div>
       </div>
 
@@ -400,15 +412,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
         <div class="ff"><label>Make &amp; Model</label><input type="text" id="b-make" placeholder="Device make and model"></div>
         <div class="ff"><label>Color</label><input type="text" id="b-col" placeholder="Device color"></div>
         <div class="ff"><label>Serial Number</label><input type="text" id="b-sn" placeholder="Device serial number"></div>
-        <div class="ff full"><label>IMEI / UIN / UID / MAC / Cloud ID (select applicable)</label>
-<div style="display:flex;flex-wrap:wrap;gap:12px;margin:6px 0">
-  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="IMEI" style="accent-color:var(--ac)"> IMEI</label>
-  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="UIN" style="accent-color:var(--ac)"> UIN</label>
-  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="UID" style="accent-color:var(--ac)"> UID</label>
-  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="MAC" style="accent-color:var(--ac)"> MAC</label>
-  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="Cloud ID" style="accent-color:var(--ac)"> Cloud ID</label>
-</div>
-<input type="text" id="b-imei" placeholder="Enter the value here"></div>
+        <div class="ff"><label>IMEI / UIN / UID / MAC / Cloud ID</label><input type="text" id="b-imei" placeholder="As applicable"></div>
         <div class="ff full"><label>Any other relevant information about the device / digital record (specify)</label><input type="text" id="b-other" placeholder="Optional"></div>
       </div>
 
@@ -454,8 +458,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
   </section>
 
   <div class="foot">
-    All hash computations run entirely in your browser using pure JavaScript (RFC 1321, FIPS 180-4).<br>
-    No file data is transmitted. No server contact. No analytics. No cookies.
+    Legal Hash Checksum &mdash; All hash computations run entirely in your browser (RFC 1321, FIPS 180-4).<br>
+    No file data is transmitted. No server contact. No analytics. No cookies.<br>
+    <span style="color:var(--tx3)">legalhashchecksum.com</span>
   </div>
 </div>
 
@@ -523,16 +528,29 @@ function md5(ab){
 
 /* SHA-1 */
 function sha1(ab){
-  const msg=new Uint8Array(ab),len=msg.length;const pad=new Uint8Array(len+1+((55-len%64+64)%64)+8);
+  const msg=new Uint8Array(ab),len=msg.length;
+  const pad=new Uint8Array(len+1+((55-len%64+64)%64)+8);
   pad.set(msg);pad[len]=0x80;const dv=new DataView(pad.buffer);
-  dv.setUint32(pad.length-4,(len*8)>>>0,false);dv.setUint32(pad.length-8,Math.floor(len/0x20000000),false);
+  dv.setUint32(pad.length-4,(len*8)>>>0,false);
+  dv.setUint32(pad.length-8,Math.floor(len/0x20000000),false);
   let h0=0x67452301,h1=0xEFCDAB89,h2=0x98BADCFE,h3=0x10325476,h4=0xC3D2E1F0;
-  const rol=(x,n)=>(x<<n)|(x>>>(32-n));const add=(...a)=>a.reduce((s,x)=>(s+x)|0,0);const W=new Uint32Array(80);
+  const rol=(x,n)=>((x<<n)|(x>>>(32-n)))>>>0;
+  const add32=(...a)=>a.reduce((s,x)=>(s+(x>>>0))>>>0,0);
+  const W=new Uint32Array(80);
   for(let i=0;i<pad.length;i+=64){
-    for(let j=0;j<16;j++)W[j]=dv.getUint32(i+j*4,false);for(let j=16;j<80;j++)W[j]=rol(W[j-3]^W[j-8]^W[j-14]^W[j-16],1);
+    for(let j=0;j<16;j++)W[j]=dv.getUint32(i+j*4,false);
+    for(let j=16;j<80;j++)W[j]=rol(W[j-3]^W[j-8]^W[j-14]^W[j-16],1);
     let a=h0,b=h1,c=h2,d=h3,e=h4;
-    for(let j=0;j<80;j++){let f,k;if(j<20){f=(b&c)|(~b&d);k=0x5A827999}else if(j<40){f=b^c^d;k=0x6ED9EBA1}else if(j<60){f=(b&c)|(b&d)|(c&d);k=0x8F1BBCDC}else{f=b^c^d;k=0xCA62C1D6}const t=add(rol(a,5),f,e,k,W[j]);e=d;d=c;c=rol(b,30);b=a;a=t}
-    h0=add(h0,a);h1=add(h1,b);h2=add(h2,c);h3=add(h3,d);h4=add(h4,e);
+    for(let j=0;j<80;j++){
+      let f,k;
+      if(j<20){f=((b&c)|(~b&d))>>>0;k=0x5A827999}
+      else if(j<40){f=(b^c^d)>>>0;k=0x6ED9EBA1}
+      else if(j<60){f=((b&c)|(b&d)|(c&d))>>>0;k=0x8F1BBCDC}
+      else{f=(b^c^d)>>>0;k=0xCA62C1D6}
+      const t=add32(rol(a,5),f,e,k,W[j]);
+      e=d;d=c;c=rol(b,30);b=a;a=t;
+    }
+    h0=add32(h0,a);h1=add32(h1,b);h2=add32(h2,c);h3=add32(h3,d);h4=add32(h4,e);
   }
   return[h0,h1,h2,h3,h4].map(v=>v.toString(16).padStart(8,'0')).join('');
 }
@@ -540,17 +558,36 @@ function sha1(ab){
 /* SHA-256 */
 function sha256(ab){
   const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
-  const msg=new Uint8Array(ab),len=msg.length;const pad=new Uint8Array(len+1+((55-len%64+64)%64)+8);
+  const msg=new Uint8Array(ab),len=msg.length;
+  const pad=new Uint8Array(len+1+((55-len%64+64)%64)+8);
   pad.set(msg);pad[len]=0x80;const dv=new DataView(pad.buffer);
-  dv.setUint32(pad.length-4,(len*8)>>>0,false);dv.setUint32(pad.length-8,Math.floor(len/0x20000000),false);
-  let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
-  const rotr=(x,n)=>(x>>>n)|(x<<(32-n));const add=(...a)=>a.reduce((s,x)=>(s+x)|0,0);const W=new Uint32Array(64);
+  dv.setUint32(pad.length-4,(len*8)>>>0,false);
+  dv.setUint32(pad.length-8,Math.floor(len/0x20000000),false);
+  const H=new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]);
+  const rotr=(x,n)=>((x>>>n)|(x<<(32-n)))>>>0;
+  const add32=(...a)=>a.reduce((s,x)=>(s+(x>>>0))>>>0,0);
+  const W=new Uint32Array(64);
   for(let i=0;i<pad.length;i+=64){
-    for(let j=0;j<16;j++)W[j]=dv.getUint32(i+j*4,false);for(let j=16;j<64;j++){const s0=rotr(W[j-15],7)^rotr(W[j-15],18)^(W[j-15]>>>3);const s1=rotr(W[j-2],17)^rotr(W[j-2],19)^(W[j-2]>>>10);W[j]=add(W[j-16],s0,W[j-7],s1)}
-    let[a,b,c,d,e,f,g,h]=H;for(let j=0;j<64;j++){const S1=rotr(e,6)^rotr(e,11)^rotr(e,25);const ch=(e&f)^(~e&g);const t1=add(h,S1,ch,K[j],W[j]);const S0=rotr(a,2)^rotr(a,13)^rotr(a,22);const maj=(a&b)^(a&c)^(b&c);const t2=add(S0,maj);h=g;g=f;f=e;e=add(d,t1);d=c;c=b;b=a;a=add(t1,t2)}
-    H=H.map((v,i)=>add(v,[a,b,c,d,e,f,g,h][i]));
+    for(let j=0;j<16;j++)W[j]=dv.getUint32(i+j*4,false);
+    for(let j=16;j<64;j++){
+      const s0=(rotr(W[j-15],7)^rotr(W[j-15],18)^(W[j-15]>>>3))>>>0;
+      const s1=(rotr(W[j-2],17)^rotr(W[j-2],19)^(W[j-2]>>>10))>>>0;
+      W[j]=add32(W[j-16],s0,W[j-7],s1);
+    }
+    let a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+    for(let j=0;j<64;j++){
+      const S1=(rotr(e,6)^rotr(e,11)^rotr(e,25))>>>0;
+      const ch=((e&f)^((~e>>>0)&g))>>>0;
+      const t1=add32(h,S1,ch,K[j],W[j]);
+      const S0=(rotr(a,2)^rotr(a,13)^rotr(a,22))>>>0;
+      const maj=((a&b)^(a&c)^(b&c))>>>0;
+      const t2=add32(S0,maj);
+      h=g;g=f;f=e;e=add32(d,t1);d=c;c=b;b=a;a=add32(t1,t2);
+    }
+    H[0]=add32(H[0],a);H[1]=add32(H[1],b);H[2]=add32(H[2],c);H[3]=add32(H[3],d);
+    H[4]=add32(H[4],e);H[5]=add32(H[5],f);H[6]=add32(H[6],g);H[7]=add32(H[7],h);
   }
-  return H.map(v=>v.toString(16).padStart(8,'0')).join('');
+  return Array.from(H).map(v=>v.toString(16).padStart(8,'0')).join('');
 }
 
 /* SHA-512 */
@@ -589,41 +626,190 @@ async function startHash(){
   document.getElementById('vsec').style.display='none';
   document.getElementById('psec').style.display='none';
   sp(0,'Initialising...');
+
   const t0=performance.now();
-  await clog(di('$ ')+hi('hash_engine --bsa2023 --algorithms='+algos.join(',')),0);
-  await clog('',60);
-  await clog(di('|  File     : ')+hi(F.name),100);
-  await clog(di('|  Size     : ')+hi(fmtSz(F.size)),130);
-  await clog(di('|  Modified : ')+hi(new Date(F.lastModified).toISOString()),160);
-  await clog('',190);
-  sp(5,'Reading file...');
+  await clog(di('$ ')+hi('hash_engine --bsa2023 --worker --algorithms='+algos.join(',')),0);
+  await clog('',50);
+  await clog(di('|  File : ')+hi(F.name),80);
+  await clog(di('|  Size : ')+hi(fmtSz(F.size)),110);
+  await clog('',130);
+  sp(3,'Reading file...');
+  await clog(yl('[*] Reading file into buffer...'),150);
+
   let buf;
-  try{
-    await clog(yl('[*] Reading evidence file into memory buffer...'),220);
-    buf=await F.arrayBuffer();
-    await clog(ok('[+] Buffer ready -- ')+hi(buf.byteLength.toLocaleString()+' bytes'),340);
-  }catch(e){await clog(er('[X] '+e.message),360);btn.disabled=false;return}
-  sp(12,'Buffer ready');await clog('',380);
-  const step=Math.floor(78/algos.length);let prog=12;
-  for(const algo of algos){
-    await clog(yl('[*] Computing '+algo+'  (FIPS 180-4 / RFC 1321, pure JS)...'),30);
-    sp(prog,'Computing '+algo+'...');
-    const ts=performance.now();
-    try{
-      let v;
-      if(algo==='MD5')v=md5(buf);
-      else if(algo==='SHA-1')v=sha1(buf);
-      else if(algo==='SHA-256')v=sha256(buf);
-      else v=sha512(buf);
-      const ms=(performance.now()-ts).toFixed(1);
-      HR[algo]=v;prog+=step;sp(prog,algo+' done');
-      await clog(ok('[+] '+algo.padEnd(8))+cy(v)+di('  '+ms+'ms'),0);
-    }catch(e){await clog(er('[X] '+algo+' failed: '+e.message),0)}
+  try {
+    buf = await F.arrayBuffer();
+  } catch(e) {
+    await clog(er('[X] Failed to read file: '+e.message),0);
+    btn.disabled=false;return;
   }
-  const el=((performance.now()-t0)/1000).toFixed(3);
-  await clog('',80);await clog(ok('[+] Complete -- '+Object.keys(HR).length+'/'+algos.length+' | '+el+'s'),110);
-  sp(100,'Complete');
-  setTimeout(()=>{document.getElementById('con').style.display='none';showRes(el);btn.disabled=false},1200);
+  await clog(ok('[+] Buffer ready -- ')+hi(buf.byteLength.toLocaleString()+' bytes'),0);
+  sp(8,'Starting worker...');
+  await clog(yl('[*] Spawning hash worker (off main thread)...'),80);
+
+  // Build worker from blob so no separate file needed
+  const workerCode = `
+'use strict';
+/* MD5 */
+function md5(ab){
+  const T=new Uint32Array(64);for(let i=0;i<64;i++)T[i]=Math.floor(Math.abs(Math.sin(i+1))*4294967296);
+  const msg=new Uint8Array(ab),len=msg.length;const pad=new Uint8Array(len+1+((55-len%64+64)%64)+8);
+  pad.set(msg);pad[len]=0x80;const dv=new DataView(pad.buffer);
+  dv.setUint32(pad.length-8,(len*8)>>>0,true);dv.setUint32(pad.length-4,Math.floor(len/0x20000000),true);
+  let a=0x67452301,b=0xefcdab89,c=0x98badcfe,d=0x10325476;
+  const F=(x,y,z)=>(x&y)|(~x&z),G=(x,y,z)=>(x&z)|(y&~z),H=(x,y,z)=>x^y^z,I=(x,y,z)=>y^(x|~z);
+  const rol=(v,n)=>(v<<n)|(v>>>(32-n));const add=(...a)=>a.reduce((s,x)=>(s+x)|0,0);
+  const R=[7,12,17,22,5,9,14,20,4,11,16,23,6,10,15,21];
+  const IX=[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,6,11,0,5,10,15,4,9,14,3,8,13,2,7,12],[5,8,11,14,1,4,7,10,13,0,3,6,9,12,15,2],[0,7,14,5,12,3,10,1,8,15,6,13,4,11,2,9]];
+  const FN=[F,G,H,I];
+  for(let i=0;i<pad.length;i+=64){let A=a,B=b,C=c,D=d;for(let j=0;j<64;j++){const r=j>>4,k=IX[r][j&15],s=R[(r<<2)|(j&3)],t=add(FN[r](B,C,D),A,T[j],dv.getInt32(i+k*4,true));A=D;D=C;C=B;B=add(B,rol(t,s))}a=add(a,A);b=add(b,B);c=add(c,C);d=add(d,D)}
+  const o=new Uint8Array(16),ov=new DataView(o.buffer);[a,b,c,d].forEach((v,i)=>ov.setUint32(i*4,v,true));
+  return Array.from(o).map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+function sha1(ab){
+  const msg=new Uint8Array(ab),len=msg.length;
+  const pad=new Uint8Array(len+1+((55-len%64+64)%64)+8);
+  pad.set(msg);pad[len]=0x80;const dv=new DataView(pad.buffer);
+  dv.setUint32(pad.length-4,(len*8)>>>0,false);
+  dv.setUint32(pad.length-8,Math.floor(len/0x20000000),false);
+  let h0=0x67452301,h1=0xEFCDAB89,h2=0x98BADCFE,h3=0x10325476,h4=0xC3D2E1F0;
+  const rol=(x,n)=>((x<<n)|(x>>>(32-n)))>>>0;
+  const add32=(...a)=>a.reduce((s,x)=>(s+(x>>>0))>>>0,0);
+  const W=new Uint32Array(80);
+  for(let i=0;i<pad.length;i+=64){
+    for(let j=0;j<16;j++)W[j]=dv.getUint32(i+j*4,false);
+    for(let j=16;j<80;j++)W[j]=rol(W[j-3]^W[j-8]^W[j-14]^W[j-16],1);
+    let a=h0,b=h1,c=h2,d=h3,e=h4;
+    for(let j=0;j<80;j++){
+      let f,k;
+      if(j<20){f=((b&c)|(~b&d))>>>0;k=0x5A827999}
+      else if(j<40){f=(b^c^d)>>>0;k=0x6ED9EBA1}
+      else if(j<60){f=((b&c)|(b&d)|(c&d))>>>0;k=0x8F1BBCDC}
+      else{f=(b^c^d)>>>0;k=0xCA62C1D6}
+      const t=add32(rol(a,5),f,e,k,W[j]);
+      e=d;d=c;c=rol(b,30);b=a;a=t;
+    }
+    h0=add32(h0,a);h1=add32(h1,b);h2=add32(h2,c);h3=add32(h3,d);h4=add32(h4,e);
+  }
+  return[h0,h1,h2,h3,h4].map(v=>v.toString(16).padStart(8,'0')).join('');
+}
+
+function sha256(ab){
+  const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const msg=new Uint8Array(ab),len=msg.length;
+  const pad=new Uint8Array(len+1+((55-len%64+64)%64)+8);
+  pad.set(msg);pad[len]=0x80;const dv=new DataView(pad.buffer);
+  dv.setUint32(pad.length-4,(len*8)>>>0,false);
+  dv.setUint32(pad.length-8,Math.floor(len/0x20000000),false);
+  const H=new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]);
+  const rotr=(x,n)=>((x>>>n)|(x<<(32-n)))>>>0;
+  const add32=(...a)=>a.reduce((s,x)=>(s+(x>>>0))>>>0,0);
+  const W=new Uint32Array(64);
+  for(let i=0;i<pad.length;i+=64){
+    for(let j=0;j<16;j++)W[j]=dv.getUint32(i+j*4,false);
+    for(let j=16;j<64;j++){
+      const s0=(rotr(W[j-15],7)^rotr(W[j-15],18)^(W[j-15]>>>3))>>>0;
+      const s1=(rotr(W[j-2],17)^rotr(W[j-2],19)^(W[j-2]>>>10))>>>0;
+      W[j]=add32(W[j-16],s0,W[j-7],s1);
+    }
+    let a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+    for(let j=0;j<64;j++){
+      const S1=(rotr(e,6)^rotr(e,11)^rotr(e,25))>>>0;
+      const ch=((e&f)^((~e>>>0)&g))>>>0;
+      const t1=add32(h,S1,ch,K[j],W[j]);
+      const S0=(rotr(a,2)^rotr(a,13)^rotr(a,22))>>>0;
+      const maj=((a&b)^(a&c)^(b&c))>>>0;
+      const t2=add32(S0,maj);
+      h=g;g=f;f=e;e=add32(d,t1);d=c;c=b;b=a;a=add32(t1,t2);
+    }
+    H[0]=add32(H[0],a);H[1]=add32(H[1],b);H[2]=add32(H[2],c);H[3]=add32(H[3],d);
+    H[4]=add32(H[4],e);H[5]=add32(H[5],f);H[6]=add32(H[6],g);H[7]=add32(H[7],h);
+  }
+  return Array.from(H).map(v=>v.toString(16).padStart(8,'0')).join('');
+}
+
+function sha512(ab){
+  const K=[0x428a2f98d728ae22n,0x7137449123ef65cdn,0xb5c0fbcfec4d3b2fn,0xe9b5dba58189dbbcn,0x3956c25bf348b538n,0x59f111f1b605d019n,0x923f82a4af194f9bn,0xab1c5ed5da6d8118n,0xd807aa98a3030242n,0x12835b0145706fben,0x243185be4ee4b28cn,0x550c7dc3d5ffb4e2n,0x72be5d74f27b896fn,0x80deb1fe3b1696b1n,0x9bdc06a725c71235n,0xc19bf174cf692694n,0xe49b69c19ef14ad2n,0xefbe4786384f25e3n,0x0fc19dc68b8cd5b5n,0x240ca1cc77ac9c65n,0x2de92c6f592b0275n,0x4a7484aa6ea6e483n,0x5cb0a9dcbd41fbd4n,0x76f988da831153b5n,0x983e5152ee66dfabn,0xa831c66d2db43210n,0xb00327c898fb213fn,0xbf597fc7beef0ee4n,0xc6e00bf33da88fc2n,0xd5a79147930aa725n,0x06ca6351e003826fn,0x142929670a0e6e70n,0x27b70a8546d22ffcn,0x2e1b21385c26c926n,0x4d2c6dfc5ac42aedn,0x53380d139d95b3dfn,0x650a73548baf63den,0x766a0abb3c77b2a8n,0x81c2c92e47edaee6n,0x92722c851482353bn,0xa2bfe8a14cf10364n,0xa81a664bbc423001n,0xc24b8b70d0f89791n,0xc76c51a30654be30n,0xd192e819d6ef5218n,0xd69906245565a910n,0xf40e35855771202an,0x106aa07032bbd1b8n,0x19a4c116b8d2d0c8n,0x1e376c085141ab53n,0x2748774cdf8eeb99n,0x34b0bcb5e19b48a8n,0x391c0cb3c5c95a63n,0x4ed8aa4ae3418acbn,0x5b9cca4f7763e373n,0x682e6ff3d6b2b8a3n,0x748f82ee5defb2fcn,0x78a5636f43172f60n,0x84c87814a1f0ab72n,0x8cc702081a6439ecn,0x90befffa23631e28n,0xa4506cebde82bde9n,0xbef9a3f7b2c67915n,0xc67178f2e372532bn,0xca273eceea26619cn,0xd186b8c721c0c207n,0xeada7dd6cde0eb1en,0xf57d4f7fee6ed178n,0x06f067aa72176fban,0x0a637dc5a2c898a6n,0x113f9804bef90daen,0x1b710b35131c471bn,0x28db77f523047d84n,0x32caab7b40c72493n,0x3c9ebe0a15c9bebcn,0x431d67c49c100d4cn,0x4cc5d4becb3e42b6n,0x597f299cfc657e2an,0x5fcb6fab3ad6faecn,0x6c44198c4a475817n];
+  const M=BigInt('0xffffffffffffffff');const rotr=(x,n)=>((x>>BigInt(n))|(x<<BigInt(64-n)))&M;const add=(...a)=>a.reduce((s,x)=>(s+x)&M,0n);
+  const msg=new Uint8Array(ab),len=msg.length;const pad=new Uint8Array(len+1+(((111-len%128)+128)%128)+16);
+  pad.set(msg);pad[len]=0x80;const dv=new DataView(pad.buffer);dv.setBigUint64(pad.length-8,BigInt(len)*8n,false);
+  let H=[0x6a09e667f3bcc908n,0xbb67ae8584caa73bn,0x3c6ef372fe94f82bn,0xa54ff53a5f1d36f1n,0x510e527fade682d1n,0x9b05688c2b3e6c1fn,0x1f83d9abfb41bd6bn,0x5be0cd19137e2179n];
+  const W=new Array(80);
+  for(let i=0;i<pad.length;i+=128){
+    for(let j=0;j<16;j++)W[j]=dv.getBigUint64(i+j*8,false);for(let j=16;j<80;j++){const s0=rotr(W[j-15],1)^rotr(W[j-15],8)^(W[j-15]>>7n);const s1=rotr(W[j-2],19)^rotr(W[j-2],61)^(W[j-2]>>6n);W[j]=add(W[j-16],s0,W[j-7],s1)}
+    let[a,b,c,d,e,f,g,h]=H;for(let j=0;j<80;j++){const S1=rotr(e,14)^rotr(e,18)^rotr(e,41);const ch=(e&f)^(~e&g)&M;const t1=add(h,S1,ch,K[j],W[j]);const S0=rotr(a,28)^rotr(a,34)^rotr(a,39);const maj=(a&b)^(a&c)^(b&c);const t2=add(S0,maj);h=g;g=f;f=e;e=add(d,t1);d=c;c=b;b=a;a=add(t1,t2)}
+    H=H.map((v,i)=>add(v,[a,b,c,d,e,f,g,h][i]));
+  }
+  return H.map(v=>v.toString(16).padStart(16,'0')).join('');
+}
+
+self.onmessage = function(e) {
+  const { buf, algos } = e.data;
+  const t0 = performance.now();
+  const results = {};
+  const step = Math.floor(88 / algos.length);
+  let prog = 5;
+
+  try {
+    self.postMessage({ type: 'progress', pct: 5, label: 'Buffer received...' });
+
+    for (const algo of algos) {
+      self.postMessage({ type: 'progress', pct: prog, label: 'Computing ' + algo + '...' });
+      let val;
+      if (algo === 'MD5') val = md5(buf);
+      else if (algo === 'SHA-1') val = sha1(buf);
+      else if (algo === 'SHA-256') val = sha256(buf);
+      else if (algo === 'SHA-512') val = sha512(buf);
+      results[algo] = val;
+      prog += step;
+      self.postMessage({ type: 'progress', pct: prog, label: algo + ' done', algo, val });
+    }
+
+    const elapsed = ((performance.now() - t0) / 1000).toFixed(3);
+    self.postMessage({ type: 'done', results, elapsed });
+  } catch(err) {
+    self.postMessage({ type: 'error', msg: err.message });
+  }
+};
+`;
+  const blob = new Blob([workerCode], { type: 'application/javascript' });
+  const workerURL = URL.createObjectURL(blob);
+  const worker = new Worker(workerURL);
+
+  worker.postMessage({ buf, algos }, [buf]);
+
+  worker.onmessage = async function(e) {
+    const msg = e.data;
+    if (msg.type === 'progress') {
+      sp(msg.pct, msg.label);
+      if (msg.algo && msg.val) {
+        await clog(ok('[+] '+msg.algo.padEnd(8))+cy(msg.val)+di('  done'),0);
+      } else if (msg.label) {
+        await clog(yl('[*] '+msg.label),0);
+      }
+    } else if (msg.type === 'done') {
+      Object.assign(HR, msg.results);
+      sp(100,'Complete');
+      await clog('',50);
+      await clog(ok('[+] Complete -- '+Object.keys(HR).length+'/'+algos.length+' | '+msg.elapsed+'s'),80);
+      worker.terminate();
+      URL.revokeObjectURL(workerURL);
+      setTimeout(()=>{document.getElementById('con').style.display='none';showRes(msg.elapsed);btn.disabled=false},1000);
+    } else if (msg.type === 'error') {
+      await clog(er('[X] Worker error: '+msg.msg),0);
+      worker.terminate();
+      URL.revokeObjectURL(workerURL);
+      btn.disabled=false;
+    }
+  };
+
+  worker.onerror = async function(e) {
+    await clog(er('[X] Worker failed: '+e.message),0);
+    worker.terminate();
+    URL.revokeObjectURL(workerURL);
+    btn.disabled=false;
+  };
 }
 
 function showRes(el){
@@ -686,9 +872,7 @@ function printCert(part){
   const make=gv(p+'-make')||'______________';
   const col=gv(p+'-col')||'______________';
   const sn=gv(p+'-sn')||'_______________';
-  const imeiType = document.querySelector('input[name="'+p+'-imei-type"]:checked');
-  const imeiLabel = imeiType ? imeiType.value : 'IMEI/UIN/UID/MAC/Cloud ID';
-  const imei = (imeiLabel !== 'IMEI/UIN/UID/MAC/Cloud ID' ? imeiLabel+': ' : '') + (gv(p+'-imei')||'____________________');
+  const imei=gv(p+'-imei')||'____________________';
   const other=gv(p+'-other')||'';
   const dateS=fmtDInput(gv(p+'-dt'));
   const timeS=gv(p+'-tm')||'______';
