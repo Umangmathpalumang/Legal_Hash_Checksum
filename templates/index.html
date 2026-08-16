@@ -220,8 +220,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
       </svg>
     </div>
     <h3>Drop the evidence file here, or click to browse</h3>
-    <p>Audio &middot; Video &middot; Image &middot; PDF &middot; Document -- any file type</p>
-    <input type="file" id="fi" onchange="fileSelected(this.files[0])">
+    <p>Audio &middot; Video &middot; Image &middot; PDF &middot; Document -- any file type &middot; <strong style="color:var(--ac)">Multiple files supported</strong></p>
+    <input type="file" id="fi" multiple onchange="filesSelected(this.files)">
   </div>
 
   <!-- File card -->
@@ -302,6 +302,10 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
       </svg>
       Generate Certificate -- The Schedule [See section 63(4)(c)]
     </div>
+    <div id="cert-file-selector" style="display:none;margin-bottom:1rem">
+      <label style="font-size:12px;color:var(--tx2);font-weight:500;display:block;margin-bottom:4px">Select file for certificate</label>
+      <select id="cert-file-select" style="width:100%;background:var(--s2);border:1px solid var(--bd2);border-radius:6px;padding:8px 12px;font-size:13px;font-family:var(--sans);color:var(--tx);outline:none" onchange="switchCertFile(this.value)"></select>
+    </div>
 
     <p style="font-size:13px;color:var(--tx2);margin-bottom:1rem">Select which part you need to fill:</p>
 
@@ -326,9 +330,20 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 
       <div class="flabel">Personal details</div>
       <div class="fgrid">
-        <div class="ff"><label>Full Name</label><input type="text" id="a-nm" placeholder="As per official records"></div>
-        <div class="ff"><label>Son / Daughter / Spouse of</label><input type="text" id="a-rel" placeholder="Father's / Spouse's name"></div>
-        <div class="ff full"><label>Residing / Employed at</label><input type="text" id="a-addr" placeholder="Full residential or employment address"></div>
+        <div class="ff"><label>Full Name</label><input type="text" id="a-nm" placeholder="AS PER OFFICIAL RECORDS" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff full"><label>Relation</label>
+<div style="display:flex;gap:16px;margin:6px 0;flex-wrap:wrap">
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-rel-type" value="Son of" style="accent-color:var(--ac)"> Son of</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-rel-type" value="Daughter of" style="accent-color:var(--ac)"> Daughter of</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-rel-type" value="Spouse of" style="accent-color:var(--ac)"> Spouse of</label>
+</div>
+<input type="text" id="a-rel" placeholder="FATHER'S / SPOUSE'S NAME" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff full"><label>Residing / Employed at</label>
+<div style="display:flex;gap:16px;margin:6px 0">
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-addr-type" value="Residing at" style="accent-color:var(--ac)"> Residing at</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-addr-type" value="Employed at" style="accent-color:var(--ac)"> Employed at</label>
+</div>
+<input type="text" id="a-addr" placeholder="FULL ADDRESS" oninput="this.value=this.value.toUpperCase()"></div>
       </div>
 
       <div class="flabel">Device / Digital record source (tick mark)</div>
@@ -343,11 +358,19 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
         <label class="chk"><input type="checkbox" value="Other"> Other</label>
       </div>
       <div class="fgrid">
-        <div class="ff"><label>Make &amp; Model</label><input type="text" id="a-make" placeholder="e.g. Apple iPhone 13"></div>
-        <div class="ff"><label>Color</label><input type="text" id="a-col" placeholder="e.g. Space Grey"></div>
-        <div class="ff"><label>Serial Number</label><input type="text" id="a-sn" placeholder="From device settings or box"></div>
-        <div class="ff"><label>IMEI / UIN / UID / MAC / Cloud ID</label><input type="text" id="a-imei" placeholder="As applicable"></div>
-        <div class="ff full"><label>Any other relevant information about the device / digital record (specify)</label><input type="text" id="a-other" placeholder="Optional"></div>
+        <div class="ff"><label>Make &amp; Model</label><input type="text" id="a-make" placeholder="E.G. APPLE IPHONE 13" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff"><label>Color</label><input type="text" id="a-col" placeholder="E.G. SPACE GREY" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff"><label>Serial Number</label><input type="text" id="a-sn" placeholder="FROM DEVICE SETTINGS OR BOX" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff full"><label>IMEI / UIN / UID / MAC / Cloud ID (select applicable)</label>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin:6px 0">
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="IMEI" style="accent-color:var(--ac)"> IMEI</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="UIN" style="accent-color:var(--ac)"> UIN</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="UID" style="accent-color:var(--ac)"> UID</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="MAC" style="accent-color:var(--ac)"> MAC</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="Cloud ID" style="accent-color:var(--ac)"> Cloud ID</label>
+</div>
+<input type="text" id="a-imei" placeholder="ENTER THE VALUE HERE" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff full"><label>Any other relevant information about the device / digital record (specify)</label><input type="text" id="a-other" placeholder="SPECIFY IF ANY" oninput="this.value=this.value.toUpperCase()"></div>
       </div>
 
       <div class="flabel">Device was (select as applicable) -- by me</div>
@@ -372,7 +395,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
       <div class="fgrid">
         <div class="ff"><label>Date (DD/MM/YYYY)</label><input type="date" id="a-dt"></div>
         <div class="ff"><label>Time (IST, 24-hour format)</label><input type="time" id="a-tm"></div>
-        <div class="ff"><label>Place</label><input type="text" id="a-pl" placeholder="City / Location of signing"></div>
+        <div class="ff"><label>Place</label><input type="text" id="a-pl" placeholder="CITY / LOCATION" oninput="this.value=this.value.toUpperCase()"></div>
       </div>
 
       <button class="bcert" onclick="printCert('A')">
@@ -390,11 +413,22 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 
       <div class="flabel">Expert personal details</div>
       <div class="fgrid">
-        <div class="ff"><label>Full Name</label><input type="text" id="b-nm" placeholder="Expert's full name"></div>
-        <div class="ff"><label>Son / Daughter / Spouse of</label><input type="text" id="b-rel" placeholder="Father's / Spouse's name"></div>
-        <div class="ff full"><label>Residing / Employed at</label><input type="text" id="b-addr" placeholder="Official address / organization address"></div>
-        <div class="ff"><label>Designation</label><input type="text" id="b-desig" placeholder="e.g. Inspector, Cyber Cell"></div>
-        <div class="ff"><label>Organization / Police Station</label><input type="text" id="b-org" placeholder="e.g. Delhi Police Cyber Cell"></div>
+        <div class="ff"><label>Full Name</label><input type="text" id="b-nm" placeholder="EXPERT'S FULL NAME" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff full"><label>Relation</label>
+<div style="display:flex;gap:16px;margin:6px 0;flex-wrap:wrap">
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-rel-type" value="Son of" style="accent-color:var(--ac)"> Son of</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-rel-type" value="Daughter of" style="accent-color:var(--ac)"> Daughter of</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-rel-type" value="Spouse of" style="accent-color:var(--ac)"> Spouse of</label>
+</div>
+<input type="text" id="b-rel" placeholder="FATHER'S / SPOUSE'S NAME" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff full"><label>Residing / Employed at</label>
+<div style="display:flex;gap:16px;margin:6px 0">
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-addr-type" value="Residing at" style="accent-color:var(--ac)"> Residing at</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-addr-type" value="Employed at" style="accent-color:var(--ac)"> Employed at</label>
+</div>
+<input type="text" id="b-addr" placeholder="FULL ADDRESS" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff"><label>Designation</label><input type="text" id="b-desig" placeholder="E.G. INSPECTOR, CYBER CELL" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff"><label>Organization / Police Station</label><input type="text" id="b-org" placeholder="E.G. DELHI POLICE CYBER CELL" oninput="this.value=this.value.toUpperCase()"></div>
       </div>
 
       <div class="flabel">Device / Digital record source (tick mark)</div>
@@ -409,11 +443,19 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
         <label class="chk"><input type="checkbox" value="Other"> Other</label>
       </div>
       <div class="fgrid">
-        <div class="ff"><label>Make &amp; Model</label><input type="text" id="b-make" placeholder="Device make and model"></div>
-        <div class="ff"><label>Color</label><input type="text" id="b-col" placeholder="Device color"></div>
-        <div class="ff"><label>Serial Number</label><input type="text" id="b-sn" placeholder="Device serial number"></div>
-        <div class="ff"><label>IMEI / UIN / UID / MAC / Cloud ID</label><input type="text" id="b-imei" placeholder="As applicable"></div>
-        <div class="ff full"><label>Any other relevant information about the device / digital record (specify)</label><input type="text" id="b-other" placeholder="Optional"></div>
+        <div class="ff"><label>Make &amp; Model</label><input type="text" id="b-make" placeholder="DEVICE MAKE AND MODEL" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff"><label>Color</label><input type="text" id="b-col" placeholder="DEVICE COLOR" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff"><label>Serial Number</label><input type="text" id="b-sn" placeholder="DEVICE SERIAL NUMBER" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff full"><label>IMEI / UIN / UID / MAC / Cloud ID (select applicable)</label>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin:6px 0">
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="IMEI" style="accent-color:var(--ac)"> IMEI</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="UIN" style="accent-color:var(--ac)"> UIN</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="UID" style="accent-color:var(--ac)"> UID</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="MAC" style="accent-color:var(--ac)"> MAC</label>
+  <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="Cloud ID" style="accent-color:var(--ac)"> Cloud ID</label>
+</div>
+<input type="text" id="b-imei" placeholder="ENTER THE VALUE HERE" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff full"><label>Any other relevant information about the device / digital record (specify)</label><input type="text" id="b-other" placeholder="SPECIFY IF ANY" oninput="this.value=this.value.toUpperCase()"></div>
       </div>
 
       <div class="hbox" id="b-hbox"></div>
@@ -430,7 +472,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
       <div class="fgrid">
         <div class="ff"><label>Date (DD/MM/YYYY)</label><input type="date" id="b-dt"></div>
         <div class="ff"><label>Time (IST, 24-hour format)</label><input type="time" id="b-tm"></div>
-        <div class="ff"><label>Place</label><input type="text" id="b-pl" placeholder="City / Location of signing"></div>
+        <div class="ff"><label>Place</label><input type="text" id="b-pl" placeholder="CITY / LOCATION" oninput="this.value=this.value.toUpperCase()"></div>
       </div>
 
       <button class="bcert" onclick="printCert('B')">
@@ -472,6 +514,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 <script>
 'use strict';
 let F=null;
+let FILES=[];  // all selected files
+let currentFileIdx=0;
+let allResults={};  // { filename: { MD5: '...', 'SHA-1': '...', ... } }
 const HR={};
 
 function fmtSz(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';if(b<1073741824)return(b/1048576).toFixed(2)+' MB';return(b/1073741824).toFixed(2)+' GB'}
@@ -618,6 +663,8 @@ const cy=s=>'<span style="color:var(--cy)">'+s+'</span>';
 const er=s=>'<span style="color:#ff4444">'+s+'</span>';
 
 async function startHash(){
+  if(FILES.length>1){await startHashAll();return;}
+  if(FILES.length>1){await startHashAll();return;}
   const algos=selAlgos();if(!F)return;if(!algos.length){alert('Select at least one algorithm.');return}
   const btn=document.getElementById('hbtn');btn.disabled=true;
   co().innerHTML='';document.getElementById('con').style.display='block';
@@ -812,6 +859,147 @@ self.onmessage = function(e) {
   };
 }
 
+
+function filesSelected(fileList){
+  if(!fileList||!fileList.length)return;
+  FILES=Array.from(fileList);
+  allResults={};
+  F=FILES[0];
+  currentFileIdx=0;
+  const multi=FILES.length>1;
+  document.getElementById('fn').textContent=multi?FILES.length+' files selected':FILES[0].name;
+  document.getElementById('fs').textContent=multi?
+    fmtSz(FILES.reduce((s,f)=>s+f.size,0))+' total':fmtSz(FILES[0].size);
+  document.getElementById('ft').textContent=multi?FILES.length+' files':FILES[0].type||'unknown';
+  document.getElementById('fd').textContent=multi?'':fmtDIN(FILES[0].lastModified);
+  document.getElementById('fcard').style.display='block';
+  ['rcard','con','cpyall','vsec','psec'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('compareresult').style.display='none';
+  document.getElementById('compareinput').value='';
+  const now=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  const td=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
+  const tt=pad(now.getHours())+':'+pad(now.getMinutes());
+  ['a-dt','b-dt'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.value)el.value=td});
+  ['a-tm','b-tm'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.value)el.value=tt});
+}
+
+function hashInWorker(buf,algos){
+  return new Promise((resolve,reject)=>{
+    const wcEl=document.getElementById('workerCode');
+    const workerSrc=wcEl?wcEl.textContent:'';
+    if(!workerSrc){reject(new Error('Worker code not found'));return;}
+    const blob=new Blob([workerSrc],{type:'application/javascript'});
+    const wURL=URL.createObjectURL(blob);
+    const w=new Worker(wURL);
+    w.postMessage({buf,algos},[buf]);
+    w.onmessage=function(e){
+      if(e.data.type==='done'){w.terminate();URL.revokeObjectURL(wURL);resolve(e.data.results);}
+      else if(e.data.type==='error'){w.terminate();URL.revokeObjectURL(wURL);reject(new Error(e.data.msg));}
+    };
+    w.onerror=function(e){w.terminate();URL.revokeObjectURL(wURL);reject(new Error(e.message||'Worker error'));};
+  });
+}
+
+async function startHashAll(){
+  const algos=selAlgos();
+  if(!FILES.length||!algos.length){if(!algos.length)alert('Select at least one algorithm.');return;}
+  const btn=document.getElementById('hbtn');btn.disabled=true;
+  co().innerHTML='';
+  document.getElementById('con').style.display='block';
+  ['rcard','cpyall','vsec','psec'].forEach(id=>document.getElementById(id).style.display='none');
+  sp(0,'Processing '+FILES.length+' files...');
+  allResults={};
+  const totalT=performance.now();
+  await clog(di('$ ')+hi('hash_engine --multi-file --count='+FILES.length+' --algorithms='+algos.join(',')),0);
+
+  for(let i=0;i<FILES.length;i++){
+    const file=FILES[i];
+    await clog('',30);
+    await clog(di('['+(i+1)+'/'+FILES.length+'] ')+hi(file.name)+di(' ('+fmtSz(file.size)+')'),0);
+    sp(Math.round((i/FILES.length)*88),'File '+(i+1)+'/'+FILES.length+': '+file.name.slice(0,28)+'...');
+    let buf;
+    try{buf=await file.arrayBuffer();}
+    catch(e){await clog(er('[X] Read failed: '+e.message),0);continue;}
+    try{
+      const results=await hashInWorker(buf,algos);
+      allResults[file.name]=results;
+      Object.entries(results).forEach(([algo,val])=>clog(ok('  [+] '+algo.padEnd(8))+cy(val),0));
+    }catch(e){await clog(er('[X] Hash failed: '+e.message),0);}
+  }
+
+  const elapsed=((performance.now()-totalT)/1000).toFixed(2);
+  await clog('',50);
+  await clog(ok('[+] '+FILES.length+' files complete in '+elapsed+'s'),80);
+  sp(100,'Complete');
+  setTimeout(()=>{document.getElementById('con').style.display='none';showMultiRes(elapsed);btn.disabled=false;},1000);
+}
+
+function showMultiRes(elapsed){
+  document.getElementById('rt').textContent=elapsed+'s  ('+FILES.length+' files)';
+  const rows=document.getElementById('hrows');
+  rows.innerHTML=Object.entries(allResults).map(([fname,hashes])=>
+    '<div style="padding:10px 16px;border-bottom:1px solid var(--bd)">'+
+    '<div style="font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:6px;word-break:break-all">'+fname+'</div>'+
+    Object.entries(hashes).map(([algo,val])=>
+      '<div class="hrow" style="border:none;padding:5px 0">'+
+      '<div class="halgo">'+algo+'</div>'+
+      '<div class="hval">'+val+'</div>'+
+      '<button class="cbtn" onclick="cp1(\''+algo+'\',\''+val+'\',this)">'+SVG_COPY+'</button></div>'
+    ).join('')+'</div>'
+  ).join('');
+  document.getElementById('rcard').style.display='block';
+  document.getElementById('cpyall').style.display='flex';
+  document.getElementById('vsec').style.display='none'; // hide verify for multi-file
+  document.getElementById('psec').style.display='block';
+  // show file selector dropdown if multiple files
+  if(Object.keys(allResults).length>1){
+    const sel=document.getElementById('cert-file-select');
+    sel.innerHTML=Object.keys(allResults).map(f=>'<option value="'+f+'">'+f+'</option>').join('');
+    document.getElementById('cert-file-selector').style.display='block';
+  } else {
+    document.getElementById('cert-file-selector').style.display='none';
+  }
+  // pre-fill hash display boxes with first file's hashes
+  const firstFile=Object.keys(allResults)[0];
+  if(firstFile){
+    const firstHashes=allResults[firstFile];
+    Object.assign(HR,firstHashes);
+    const hs=Object.entries(firstHashes).map(([a,v])=>'<span>'+a+':</span> '+v).join('<br>');
+    ['a-hbox','b-hbox'].forEach(id=>{
+      const el=document.getElementById(id);
+      el.innerHTML='Hash value/s of: <strong>'+firstFile+'</strong><br>'+hs;
+      el.style.display='block';
+    });
+    Object.keys(firstHashes).forEach(algo=>{
+      ['a','b'].forEach(p=>{
+        if(algo==='MD5')document.getElementById(p+'-md5').checked=true;
+        if(algo==='SHA-1')document.getElementById(p+'-sha1').checked=true;
+        if(algo==='SHA-256')document.getElementById(p+'-sha256').checked=true;
+      });
+    });
+  }
+}
+
+function switchCertFile(fname){
+  if(!allResults[fname])return;
+  const hashes=allResults[fname];
+  Object.assign(HR,hashes);
+  const hs=Object.entries(hashes).map(([a,v])=>'<span>'+a+':</span> '+v).join('<br>');
+  ['a-hbox','b-hbox'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.innerHTML='Hash value/s of: <strong>'+fname+'</strong><br>'+hs;
+    el.style.display='block';
+  });
+  Object.keys(hashes).forEach(algo=>{
+    ['a','b'].forEach(p=>{
+      if(algo==='MD5')document.getElementById(p+'-md5').checked=true;
+      if(algo==='SHA-1')document.getElementById(p+'-sha1').checked=true;
+      if(algo==='SHA-256')document.getElementById(p+'-sha256').checked=true;
+    });
+  });
+}
+
 function showRes(el){
   document.getElementById('rt').textContent=el+'s';
   const rows=document.getElementById('hrows');
@@ -845,7 +1033,19 @@ function cp1(a,v,btn){
   }).catch(()=>{});
 }
 function cpAll(){
-  const txt=Object.entries(HR).map(([a,v])=>a+': '+v).join('\n');
+  if(Object.keys(allResults).length>1){
+    const txt=Object.entries(allResults).map(([f,h])=>f+'\n'+Object.entries(h).map(([a,v])=>a+': '+v).join('\n')).join('\n\n');
+    navigator.clipboard.writeText(txt).then(()=>{
+      const btn=document.getElementById('cpyall');btn.textContent='Copied all files';
+      setTimeout(()=>{btn.innerHTML=SVG_COPY+' Copy all hash values'},2000);
+    }).catch(()=>{});return;
+  }
+  let txt;
+  if(Object.keys(allResults).length>1){
+    txt=Object.entries(allResults).map(([f,h])=>f+'\n'+Object.entries(h).map(([a,v])=>a+': '+v).join('\n')).join('\n\n');
+  } else {
+    txt=Object.entries(HR).map(([a,v])=>a+': '+v).join('\n');
+  }
   navigator.clipboard.writeText(txt).then(()=>{
     const b=document.getElementById('cpyall');b.textContent='Copied all hash values';
     setTimeout(()=>{b.innerHTML=SVG_COPY+' Copy all hash values'},2000);
@@ -867,12 +1067,18 @@ function gchk(gid){return[...document.querySelectorAll('#'+gid+' input[type=chec
 function printCert(part){
   const p=part.toLowerCase();
   const nm=gv(p+'-nm')||'___________________';
+  const relType=document.querySelector('input[name="'+p+'-rel-type"]:checked');
+  const relLabel=relType?relType.value:'Son/Daughter/Spouse of';
   const rel=gv(p+'-rel')||'___________________';
+  const addrType=document.querySelector('input[name="'+p+'-addr-type"]:checked');
+  const addrLabel=addrType?addrType.value:'Residing/Employed at';
   const addr=gv(p+'-addr')||'_______________________________';
   const make=gv(p+'-make')||'______________';
   const col=gv(p+'-col')||'______________';
   const sn=gv(p+'-sn')||'_______________';
-  const imei=gv(p+'-imei')||'____________________';
+  const imeiType=document.querySelector('input[name="'+p+'-imei-type"]:checked');
+  const imeiLabel=imeiType?imeiType.value:'IMEI/UIN/UID/MAC/Cloud ID';
+  const imei=(imeiLabel!=='IMEI/UIN/UID/MAC/Cloud ID'?imeiLabel+': ':'')+( gv(p+'-imei')||'____________________');
   const other=gv(p+'-other')||'';
   const dateS=fmtDInput(gv(p+'-dt'));
   const timeS=gv(p+'-tm')||'______';
@@ -904,15 +1110,15 @@ function printCert(part){
 <div class="cpart">PART A</div>
 <div class="cpartsub">(To be filled by the Party)</div>
 <div class="cpara">
-  I, <span class="cbl">&nbsp;${nm}&nbsp;</span> (Name), &nbsp;Son/daughter/spouse of &nbsp;<span class="cbl">&nbsp;${rel}&nbsp;</span><br>
-  residing/employed at <span class="cbl-xl">&nbsp;${addr}&nbsp;</span> do hereby solemnly affirm and sincerely state and submit as follows:--
+  I, <span class="cbl">&nbsp;${nm}&nbsp;</span> (Name), &nbsp;${relLabel} &nbsp;<span class="cbl">&nbsp;${rel}&nbsp;</span><br>
+  ${addrLabel}: <span class="cbl-xl">&nbsp;${addr}&nbsp;</span> do hereby solemnly affirm and sincerely state and submit as follows:--
 </div>
 <div class="cpara">I have produced electronic record/output of the digital record taken from the following device/digital record source (tick mark):--</div>
 <table style="width:100%;font-size:13px;margin:.5rem 0"><tr>${devRow0}</tr><tr>${devRow1}</tr></table>
 <div class="cpara">Other: <span class="cbl-lg"></span></div>
 <div class="cpara">Make &amp; Model: <span class="cbl-sm">&nbsp;${make}&nbsp;</span> &nbsp;&nbsp;&nbsp; Color: <span class="cbl-sm">&nbsp;${col}&nbsp;</span></div>
 <div class="cpara">Serial Number: <span class="cbl-sm">&nbsp;${sn}&nbsp;</span></div>
-<div class="cpara">IMEI/UIN/UID/MAC/Cloud ID<span class="cbl">&nbsp;${imei}&nbsp;</span> (as applicable)</div>
+<div class="cpara">${imeiLabel}: <span class="cbl">&nbsp;${imei}&nbsp;</span> (as applicable)</div>
 <div class="cpara">and any other relevant information, if any, about the device/digital record <span class="cbl-sm">&nbsp;${other}&nbsp;</span> (specify).</div>
 <div class="cpara">
   The digital device or the digital record source was under the lawful control for regularly creating, storing or processing information for the purposes of carrying out regular activities and during this period, the computer or the communication device was working properly and the relevant information was regularly fed into the computer during the ordinary course of business. If the computer/digital device at any point of time was not working properly or out of operation, then it has not affected the electronic/digital record or its accuracy. The digital device or the source of the digital record is:--
@@ -954,15 +1160,15 @@ function printCert(part){
 <div class="cpart">PART B</div>
 <div class="cpartsub">(To be filled by the Expert)</div>
 <div class="cpara">
-  I, <span class="cbl">&nbsp;${nm}&nbsp;</span> (Name), &nbsp;Son/daughter/spouse of &nbsp;<span class="cbl">&nbsp;${rel}&nbsp;</span><br>
-  residing/employed at <span class="cbl-xl">&nbsp;${addr}&nbsp;</span> do hereby solemnly affirm and sincerely state and submit as follows:--
+  I, <span class="cbl">&nbsp;${nm}&nbsp;</span> (Name), &nbsp;${relLabel} &nbsp;<span class="cbl">&nbsp;${rel}&nbsp;</span><br>
+  ${addrLabel}: <span class="cbl-xl">&nbsp;${addr}&nbsp;</span> do hereby solemnly affirm and sincerely state and submit as follows:--
 </div>
 <div class="cpara">The produced electronic record/output of the digital record are obtained from the following device/digital record source (tick mark):--</div>
 <table style="width:100%;font-size:13px;margin:.5rem 0"><tr>${devRow0}</tr><tr>${devRow1}</tr></table>
 <div class="cpara">Other: <span class="cbl-lg"></span></div>
 <div class="cpara">Make &amp; Model: <span class="cbl-sm">&nbsp;${make}&nbsp;</span> &nbsp;&nbsp;&nbsp; Color: <span class="cbl-sm">&nbsp;${col}&nbsp;</span></div>
 <div class="cpara">Serial Number: <span class="cbl-sm">&nbsp;${sn}&nbsp;</span></div>
-<div class="cpara">IMEI/UIN/UID/MAC/Cloud ID<span class="cbl">&nbsp;${imei}&nbsp;</span> (as applicable)</div>
+<div class="cpara">${imeiLabel}: <span class="cbl">&nbsp;${imei}&nbsp;</span> (as applicable)</div>
 <div class="cpara">and any other relevant information, if any, about the device/digital record <span class="cbl-sm">&nbsp;${other}&nbsp;</span> (specify).</div>
 <div class="cpara">I state that the HASH value/s of the electronic/digital record/s is <span class="cbl">&nbsp;${firstH}&nbsp;</span>, obtained through the following algorithm:--</div>
 <div class="chashbox">
@@ -989,6 +1195,131 @@ function printCert(part){
   document.getElementById('cprev').scrollIntoView({behavior:'smooth'});
   setTimeout(()=>window.print(),700);
 }
+</script>
+<script id="workerCode" type="text/worker-code">
+'use strict';
+/* MD5 */
+function md5(ab){
+  const T=new Uint32Array(64);for(let i=0;i<64;i++)T[i]=Math.floor(Math.abs(Math.sin(i+1))*4294967296);
+  const msg=new Uint8Array(ab),len=msg.length;const pad=new Uint8Array(len+1+((55-len%64+64)%64)+8);
+  pad.set(msg);pad[len]=0x80;const dv=new DataView(pad.buffer);
+  dv.setUint32(pad.length-8,(len*8)>>>0,true);dv.setUint32(pad.length-4,Math.floor(len/0x20000000),true);
+  let a=0x67452301,b=0xefcdab89,c=0x98badcfe,d=0x10325476;
+  const F=(x,y,z)=>(x&y)|(~x&z),G=(x,y,z)=>(x&z)|(y&~z),H=(x,y,z)=>x^y^z,I=(x,y,z)=>y^(x|~z);
+  const rol=(v,n)=>(v<<n)|(v>>>(32-n));const add=(...a)=>a.reduce((s,x)=>(s+x)|0,0);
+  const R=[7,12,17,22,5,9,14,20,4,11,16,23,6,10,15,21];
+  const IX=[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,6,11,0,5,10,15,4,9,14,3,8,13,2,7,12],[5,8,11,14,1,4,7,10,13,0,3,6,9,12,15,2],[0,7,14,5,12,3,10,1,8,15,6,13,4,11,2,9]];
+  const FN=[F,G,H,I];
+  for(let i=0;i<pad.length;i+=64){let A=a,B=b,C=c,D=d;for(let j=0;j<64;j++){const r=j>>4,k=IX[r][j&15],s=R[(r<<2)|(j&3)],t=add(FN[r](B,C,D),A,T[j],dv.getInt32(i+k*4,true));A=D;D=C;C=B;B=add(B,rol(t,s))}a=add(a,A);b=add(b,B);c=add(c,C);d=add(d,D)}
+  const o=new Uint8Array(16),ov=new DataView(o.buffer);[a,b,c,d].forEach((v,i)=>ov.setUint32(i*4,v,true));
+  return Array.from(o).map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+function sha1(ab){
+  const msg=new Uint8Array(ab),len=msg.length;
+  const pad=new Uint8Array(len+1+((55-len%64+64)%64)+8);
+  pad.set(msg);pad[len]=0x80;const dv=new DataView(pad.buffer);
+  dv.setUint32(pad.length-4,(len*8)>>>0,false);
+  dv.setUint32(pad.length-8,Math.floor(len/0x20000000),false);
+  let h0=0x67452301,h1=0xEFCDAB89,h2=0x98BADCFE,h3=0x10325476,h4=0xC3D2E1F0;
+  const rol=(x,n)=>((x<<n)|(x>>>(32-n)))>>>0;
+  const add32=(...a)=>a.reduce((s,x)=>(s+(x>>>0))>>>0,0);
+  const W=new Uint32Array(80);
+  for(let i=0;i<pad.length;i+=64){
+    for(let j=0;j<16;j++)W[j]=dv.getUint32(i+j*4,false);
+    for(let j=16;j<80;j++)W[j]=rol(W[j-3]^W[j-8]^W[j-14]^W[j-16],1);
+    let a=h0,b=h1,c=h2,d=h3,e=h4;
+    for(let j=0;j<80;j++){
+      let f,k;
+      if(j<20){f=((b&c)|(~b&d))>>>0;k=0x5A827999}
+      else if(j<40){f=(b^c^d)>>>0;k=0x6ED9EBA1}
+      else if(j<60){f=((b&c)|(b&d)|(c&d))>>>0;k=0x8F1BBCDC}
+      else{f=(b^c^d)>>>0;k=0xCA62C1D6}
+      const t=add32(rol(a,5),f,e,k,W[j]);
+      e=d;d=c;c=rol(b,30);b=a;a=t;
+    }
+    h0=add32(h0,a);h1=add32(h1,b);h2=add32(h2,c);h3=add32(h3,d);h4=add32(h4,e);
+  }
+  return[h0,h1,h2,h3,h4].map(v=>v.toString(16).padStart(8,'0')).join('');
+}
+
+function sha256(ab){
+  const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const msg=new Uint8Array(ab),len=msg.length;
+  const pad=new Uint8Array(len+1+((55-len%64+64)%64)+8);
+  pad.set(msg);pad[len]=0x80;const dv=new DataView(pad.buffer);
+  dv.setUint32(pad.length-4,(len*8)>>>0,false);
+  dv.setUint32(pad.length-8,Math.floor(len/0x20000000),false);
+  const H=new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]);
+  const rotr=(x,n)=>((x>>>n)|(x<<(32-n)))>>>0;
+  const add32=(...a)=>a.reduce((s,x)=>(s+(x>>>0))>>>0,0);
+  const W=new Uint32Array(64);
+  for(let i=0;i<pad.length;i+=64){
+    for(let j=0;j<16;j++)W[j]=dv.getUint32(i+j*4,false);
+    for(let j=16;j<64;j++){
+      const s0=(rotr(W[j-15],7)^rotr(W[j-15],18)^(W[j-15]>>>3))>>>0;
+      const s1=(rotr(W[j-2],17)^rotr(W[j-2],19)^(W[j-2]>>>10))>>>0;
+      W[j]=add32(W[j-16],s0,W[j-7],s1);
+    }
+    let a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+    for(let j=0;j<64;j++){
+      const S1=(rotr(e,6)^rotr(e,11)^rotr(e,25))>>>0;
+      const ch=((e&f)^((~e>>>0)&g))>>>0;
+      const t1=add32(h,S1,ch,K[j],W[j]);
+      const S0=(rotr(a,2)^rotr(a,13)^rotr(a,22))>>>0;
+      const maj=((a&b)^(a&c)^(b&c))>>>0;
+      const t2=add32(S0,maj);
+      h=g;g=f;f=e;e=add32(d,t1);d=c;c=b;b=a;a=add32(t1,t2);
+    }
+    H[0]=add32(H[0],a);H[1]=add32(H[1],b);H[2]=add32(H[2],c);H[3]=add32(H[3],d);
+    H[4]=add32(H[4],e);H[5]=add32(H[5],f);H[6]=add32(H[6],g);H[7]=add32(H[7],h);
+  }
+  return Array.from(H).map(v=>v.toString(16).padStart(8,'0')).join('');
+}
+
+function sha512(ab){
+  const K=[0x428a2f98d728ae22n,0x7137449123ef65cdn,0xb5c0fbcfec4d3b2fn,0xe9b5dba58189dbbcn,0x3956c25bf348b538n,0x59f111f1b605d019n,0x923f82a4af194f9bn,0xab1c5ed5da6d8118n,0xd807aa98a3030242n,0x12835b0145706fben,0x243185be4ee4b28cn,0x550c7dc3d5ffb4e2n,0x72be5d74f27b896fn,0x80deb1fe3b1696b1n,0x9bdc06a725c71235n,0xc19bf174cf692694n,0xe49b69c19ef14ad2n,0xefbe4786384f25e3n,0x0fc19dc68b8cd5b5n,0x240ca1cc77ac9c65n,0x2de92c6f592b0275n,0x4a7484aa6ea6e483n,0x5cb0a9dcbd41fbd4n,0x76f988da831153b5n,0x983e5152ee66dfabn,0xa831c66d2db43210n,0xb00327c898fb213fn,0xbf597fc7beef0ee4n,0xc6e00bf33da88fc2n,0xd5a79147930aa725n,0x06ca6351e003826fn,0x142929670a0e6e70n,0x27b70a8546d22ffcn,0x2e1b21385c26c926n,0x4d2c6dfc5ac42aedn,0x53380d139d95b3dfn,0x650a73548baf63den,0x766a0abb3c77b2a8n,0x81c2c92e47edaee6n,0x92722c851482353bn,0xa2bfe8a14cf10364n,0xa81a664bbc423001n,0xc24b8b70d0f89791n,0xc76c51a30654be30n,0xd192e819d6ef5218n,0xd69906245565a910n,0xf40e35855771202an,0x106aa07032bbd1b8n,0x19a4c116b8d2d0c8n,0x1e376c085141ab53n,0x2748774cdf8eeb99n,0x34b0bcb5e19b48a8n,0x391c0cb3c5c95a63n,0x4ed8aa4ae3418acbn,0x5b9cca4f7763e373n,0x682e6ff3d6b2b8a3n,0x748f82ee5defb2fcn,0x78a5636f43172f60n,0x84c87814a1f0ab72n,0x8cc702081a6439ecn,0x90befffa23631e28n,0xa4506cebde82bde9n,0xbef9a3f7b2c67915n,0xc67178f2e372532bn,0xca273eceea26619cn,0xd186b8c721c0c207n,0xeada7dd6cde0eb1en,0xf57d4f7fee6ed178n,0x06f067aa72176fban,0x0a637dc5a2c898a6n,0x113f9804bef90daen,0x1b710b35131c471bn,0x28db77f523047d84n,0x32caab7b40c72493n,0x3c9ebe0a15c9bebcn,0x431d67c49c100d4cn,0x4cc5d4becb3e42b6n,0x597f299cfc657e2an,0x5fcb6fab3ad6faecn,0x6c44198c4a475817n];
+  const M=BigInt('0xffffffffffffffff');const rotr=(x,n)=>((x>>BigInt(n))|(x<<BigInt(64-n)))&M;const add=(...a)=>a.reduce((s,x)=>(s+x)&M,0n);
+  const msg=new Uint8Array(ab),len=msg.length;const pad=new Uint8Array(len+1+(((111-len%128)+128)%128)+16);
+  pad.set(msg);pad[len]=0x80;const dv=new DataView(pad.buffer);dv.setBigUint64(pad.length-8,BigInt(len)*8n,false);
+  let H=[0x6a09e667f3bcc908n,0xbb67ae8584caa73bn,0x3c6ef372fe94f82bn,0xa54ff53a5f1d36f1n,0x510e527fade682d1n,0x9b05688c2b3e6c1fn,0x1f83d9abfb41bd6bn,0x5be0cd19137e2179n];
+  const W=new Array(80);
+  for(let i=0;i<pad.length;i+=128){
+    for(let j=0;j<16;j++)W[j]=dv.getBigUint64(i+j*8,false);for(let j=16;j<80;j++){const s0=rotr(W[j-15],1)^rotr(W[j-15],8)^(W[j-15]>>7n);const s1=rotr(W[j-2],19)^rotr(W[j-2],61)^(W[j-2]>>6n);W[j]=add(W[j-16],s0,W[j-7],s1)}
+    let[a,b,c,d,e,f,g,h]=H;for(let j=0;j<80;j++){const S1=rotr(e,14)^rotr(e,18)^rotr(e,41);const ch=(e&f)^(~e&g)&M;const t1=add(h,S1,ch,K[j],W[j]);const S0=rotr(a,28)^rotr(a,34)^rotr(a,39);const maj=(a&b)^(a&c)^(b&c);const t2=add(S0,maj);h=g;g=f;f=e;e=add(d,t1);d=c;c=b;b=a;a=add(t1,t2)}
+    H=H.map((v,i)=>add(v,[a,b,c,d,e,f,g,h][i]));
+  }
+  return H.map(v=>v.toString(16).padStart(16,'0')).join('');
+}
+
+self.onmessage = function(e) {
+  const { buf, algos } = e.data;
+  const t0 = performance.now();
+  const results = {};
+  const step = Math.floor(88 / algos.length);
+  let prog = 5;
+
+  try {
+    self.postMessage({ type: 'progress', pct: 5, label: 'Buffer received...' });
+
+    for (const algo of algos) {
+      self.postMessage({ type: 'progress', pct: prog, label: 'Computing ' + algo + '...' });
+      let val;
+      if (algo === 'MD5') val = md5(buf);
+      else if (algo === 'SHA-1') val = sha1(buf);
+      else if (algo === 'SHA-256') val = sha256(buf);
+      else if (algo === 'SHA-512') val = sha512(buf);
+      results[algo] = val;
+      prog += step;
+      self.postMessage({ type: 'progress', pct: prog, label: algo + ' done', algo, val });
+    }
+
+    const elapsed = ((performance.now() - t0) / 1000).toFixed(3);
+    self.postMessage({ type: 'done', results, elapsed });
+  } catch(err) {
+    self.postMessage({ type: 'error', msg: err.message });
+  }
+};
 </script>
 </body>
 </html>
