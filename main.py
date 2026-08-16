@@ -110,6 +110,29 @@ async def health():
     }
 
 
+
+
+@app.get("/sitemap.xml")
+async def sitemap():
+    return HTMLResponse(
+        content='''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://legalhashchecksum.com/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>''',
+        media_type="application/xml",
+    )
+
+@app.get("/google75decac8b13364d6.html")
+async def google_verify():
+    return HTMLResponse(
+        content="google-site-verification: google75decac8b13364d6.html",
+        media_type="text/html",
+    )
+
 @app.get("/robots.txt")
 async def robots():
     return HTMLResponse(
