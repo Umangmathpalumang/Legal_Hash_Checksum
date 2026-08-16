@@ -360,7 +360,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
       <div class="fgrid">
         <div class="ff"><label>Make &amp; Model</label><input type="text" id="a-make" placeholder="E.G. APPLE IPHONE 13" oninput="this.value=this.value.toUpperCase()"></div>
         <div class="ff"><label>Color</label><input type="text" id="a-col" placeholder="E.G. SPACE GREY" oninput="this.value=this.value.toUpperCase()"></div>
-        <div class="ff"><label>Serial Number</label><input type="text" id="a-sn" placeholder="FROM DEVICE SETTINGS OR BOX" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff"><label>Serial Number</label><input type="text" id="a-sn" placeholder="From device settings or box"></div>
         <div class="ff full"><label>IMEI / UIN / UID / MAC / Cloud ID (select applicable)</label>
 <div style="display:flex;flex-wrap:wrap;gap:12px;margin:6px 0">
   <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="IMEI" style="accent-color:var(--ac)"> IMEI</label>
@@ -369,7 +369,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
   <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="MAC" style="accent-color:var(--ac)"> MAC</label>
   <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="a-imei-type" value="Cloud ID" style="accent-color:var(--ac)"> Cloud ID</label>
 </div>
-<input type="text" id="a-imei" placeholder="ENTER THE VALUE HERE" oninput="this.value=this.value.toUpperCase()"></div>
+<input type="text" id="a-imei" placeholder="Enter the value here"></div>
         <div class="ff full"><label>Any other relevant information about the device / digital record (specify)</label><input type="text" id="a-other" placeholder="SPECIFY IF ANY" oninput="this.value=this.value.toUpperCase()"></div>
       </div>
 
@@ -445,7 +445,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
       <div class="fgrid">
         <div class="ff"><label>Make &amp; Model</label><input type="text" id="b-make" placeholder="DEVICE MAKE AND MODEL" oninput="this.value=this.value.toUpperCase()"></div>
         <div class="ff"><label>Color</label><input type="text" id="b-col" placeholder="DEVICE COLOR" oninput="this.value=this.value.toUpperCase()"></div>
-        <div class="ff"><label>Serial Number</label><input type="text" id="b-sn" placeholder="DEVICE SERIAL NUMBER" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="ff"><label>Serial Number</label><input type="text" id="b-sn" placeholder="Device serial number"></div>
         <div class="ff full"><label>IMEI / UIN / UID / MAC / Cloud ID (select applicable)</label>
 <div style="display:flex;flex-wrap:wrap;gap:12px;margin:6px 0">
   <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="IMEI" style="accent-color:var(--ac)"> IMEI</label>
@@ -454,7 +454,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
   <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="MAC" style="accent-color:var(--ac)"> MAC</label>
   <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2);cursor:pointer"><input type="radio" name="b-imei-type" value="Cloud ID" style="accent-color:var(--ac)"> Cloud ID</label>
 </div>
-<input type="text" id="b-imei" placeholder="ENTER THE VALUE HERE" oninput="this.value=this.value.toUpperCase()"></div>
+<input type="text" id="b-imei" placeholder="Enter the value here"></div>
         <div class="ff full"><label>Any other relevant information about the device / digital record (specify)</label><input type="text" id="b-other" placeholder="SPECIFY IF ANY" oninput="this.value=this.value.toUpperCase()"></div>
       </div>
 
@@ -1080,8 +1080,13 @@ function printCert(part){
   const imeiLabel=imeiType?imeiType.value:'IMEI/UIN/UID/MAC/Cloud ID';
   const imei=(imeiLabel!=='IMEI/UIN/UID/MAC/Cloud ID'?imeiLabel+': ':'')+( gv(p+'-imei')||'____________________');
   const other=gv(p+'-other')||'';
-  const dateS=fmtDInput(gv(p+'-dt'));
-  const timeS=gv(p+'-tm')||'______';
+  const now=new Date();const _pad=n=>String(n).padStart(2,'0');
+  const _td=now.getFullYear()+'-'+_pad(now.getMonth()+1)+'-'+_pad(now.getDate());
+  const _tt=_pad(now.getHours())+':'+_pad(now.getMinutes());
+  const el_dt=document.getElementById(p+'-dt');if(el_dt)el_dt.value=_td;
+  const el_tm=document.getElementById(p+'-tm');if(el_tm)el_tm.value=_tt;
+  const dateS=fmtDInput(_td);
+  const timeS=_tt;
   const place=gv(p+'-pl')||'____________';
   const devs=gchk(p+'-dev');
 
@@ -1104,7 +1109,7 @@ function printCert(part){
   if(part==='A'){
     html=`
 <div class="chead">
-  <p class="citalic">[<em>See</em> section 63(<em>4</em>)(<em>c</em>)]</p>
+  <p class="citalic">SECTION 63(4)(C)</p>
   <p class="cbold">CERTIFICATE</p>
 </div>
 <div class="cpart">PART A</div>
@@ -1153,7 +1158,7 @@ function printCert(part){
     const org=gv('b-org')||'____________________';
     html=`
 <div class="chead">
-  <p class="citalic">[<em>See</em> section 63(<em>4</em>)(<em>c</em>)]</p>
+  <p class="citalic">SECTION 63(4)(C)</p>
   <p class="cbold">CERTIFICATE</p>
 </div>
 <div class="cpart">PART B</div>
