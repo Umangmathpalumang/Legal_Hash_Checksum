@@ -39,6 +39,15 @@ jobs:
             git pull origin main
             venv/bin/pip install -r requirements.txt -q
             sudo systemctl restart hashverify.service
-            sleep 3
-            curl -sf http://localhost:8506/health | python3 -c "import sys,json; d=json.load(sys.stdin); sys.exit(0 if d.get('status')=='ok' else 1)"
-            echo "Deploy successful"
+            sleep 6
+            for i in 1 2 3; do
+              STATUS=$(curl -sf http://localhost:8506/health 2>/dev/null || echo "")
+              if echo "$STATUS" | python3 -c "import sys,json; d=json.load(sys.stdin); sys.exit(0 if d.get('status')=='ok' else 1)" 2>/dev/null; then
+                echo "Deploy successful"
+                exit 0
+              fi
+              echo "Waiting for service... attempt $i"
+              sleep 4
+            done
+            echo "Health check failed after retries"
+            exit 1
