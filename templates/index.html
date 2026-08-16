@@ -541,8 +541,8 @@ function fileSelected(f){
   const pad=n=>String(n).padStart(2,'0');
   const td=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
   const tt=pad(now.getHours())+':'+pad(now.getMinutes());
-  ['a-dt','b-dt'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.value)el.value=td});
-  ['a-tm','b-tm'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.value)el.value=tt});
+  ['a-dt','b-dt'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=td});
+  ['a-tm','b-tm'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=tt});
 }
 
 function tog(el){el.parentElement.classList.toggle('on',el.checked)}
@@ -880,8 +880,8 @@ function filesSelected(fileList){
   const pad=n=>String(n).padStart(2,'0');
   const td=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
   const tt=pad(now.getHours())+':'+pad(now.getMinutes());
-  ['a-dt','b-dt'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.value)el.value=td});
-  ['a-tm','b-tm'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.value)el.value=tt});
+  ['a-dt','b-dt'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=td});
+  ['a-tm','b-tm'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=tt});
 }
 
 function hashInWorker(buf,algos){
@@ -1085,6 +1085,7 @@ function printCert(part){
   const place=gv(p+'-pl')||'____________';
   const devs=gchk(p+'-dev');
 
+  const owns=gchk(p+'-own');
   const hrows=Object.entries(HR).map(([a,v])=>'<tr><td>'+a+'</td><td>'+v+'</td></tr>').join('');
   const sha1c=Object.keys(HR).includes('SHA-1');
   const sha256c=Object.keys(HR).includes('SHA-256');
@@ -1103,7 +1104,6 @@ function printCert(part){
   if(part==='A'){
     html=`
 <div class="chead">
-  <p>THE SCHEDULE</p>
   <p class="citalic">[<em>See</em> section 63(<em>4</em>)(<em>c</em>)]</p>
   <p class="cbold">CERTIFICATE</p>
 </div>
@@ -1124,10 +1124,10 @@ function printCert(part){
   The digital device or the digital record source was under the lawful control for regularly creating, storing or processing information for the purposes of carrying out regular activities and during this period, the computer or the communication device was working properly and the relevant information was regularly fed into the computer during the ordinary course of business. If the computer/digital device at any point of time was not working properly or out of operation, then it has not affected the electronic/digital record or its accuracy. The digital device or the source of the digital record is:--
 </div>
 <div class="cown">
-  <div class="cdi"><span class="cbox"></span> Owned</div>
-  <div class="cdi"><span class="cbox"></span> Maintained</div>
-  <div class="cdi"><span class="cbox"></span> Managed</div>
-  <div class="cdi"><span class="cbox"></span> Operated</div>
+  <div class="cdi"><span class="cbox">${owns.includes('Owned')?'X':''}</span> Owned</div>
+  <div class="cdi"><span class="cbox">${owns.includes('Maintained')?'X':''}</span> Maintained</div>
+  <div class="cdi"><span class="cbox">${owns.includes('Managed')?'X':''}</span> Managed</div>
+  <div class="cdi"><span class="cbox">${owns.includes('Operated')?'X':''}</span> Operated</div>
 </div>
 <div class="cpara">by me (select as applicable).</div>
 <div class="cpara">I state that the HASH value/s of the electronic/digital record/s is <span class="cbl">&nbsp;${firstH}&nbsp;</span>, obtained through the following algorithm:--</div>
@@ -1153,7 +1153,6 @@ function printCert(part){
     const org=gv('b-org')||'____________________';
     html=`
 <div class="chead">
-  <p>THE SCHEDULE</p>
   <p class="citalic">[<em>See</em> section 63(<em>4</em>)(<em>c</em>)]</p>
   <p class="cbold">CERTIFICATE</p>
 </div>
