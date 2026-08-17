@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vakalatnama Generator — Indian Courts</title>
+<meta name="description" content="Free Vakalatnama generator for Indian courts. Fill details online and print court-ready Vakalatnama instantly. Matches official format.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ── */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--surface:#161b22;--card:#1c2128;
+  --border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;
+  --text:#e6edf3;--muted:#8b949e;--green:#22c55e;
+  --input-bg:#0d1117;--input-border:#30363d;
+}
+@media(prefers-color-scheme:light){
+  :root{--bg:#f6f8fa;--surface:#fff;--card:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a;--input-bg:#fff;--input-border:#d1d9e0}
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── Nav ── */
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{font-size:14px;font-weight:700}
+.nav-links{display:flex;gap:8px}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px;transition:border-color .2s,color .2s}
+.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
+.btn-print{font-size:13px;font-weight:600;color:#fff;background:var(--accent);border:none;padding:8px 18px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .2s}
+.btn-print:hover{opacity:.88}
+.btn-print svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Layout ── */
+.app{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 57px)}
+@media(max-width:900px){.app{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+
+/* ── Form Panel ── */
+.form-panel{background:var(--surface);border-right:1px solid var(--border);padding:28px;overflow-y:auto;max-height:calc(100vh - 57px)}
+@media(max-width:900px){.form-panel{max-height:none;border-right:none;border-bottom:1px solid var(--border)}}
+.form-panel h2{font-size:15px;font-weight:700;margin-bottom:4px}
+.form-panel p{font-size:12px;color:var(--muted);margin-bottom:24px}
+
+.field-group{margin-bottom:20px}
+.field-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+.field-input{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s;outline:none}
+.field-input:focus{border-color:var(--accent)}
+.field-input::placeholder{color:var(--muted)}
+textarea.field-input{resize:vertical;min-height:60px}
+
+.section-divider{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-light);padding:12px 0 8px;border-top:1px solid var(--border);margin-top:8px;margin-bottom:16px}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.btn-clear{width:100%;padding:9px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-size:13px;cursor:pointer;margin-top:8px;transition:border-color .2s}
+.btn-clear:hover{border-color:var(--accent);color:var(--accent-light)}
+
+/* ── Preview Panel ── */
+.preview-panel{background:#e8ede8;display:flex;flex-direction:column;align-items:center;padding:32px 24px;overflow-y:auto;max-height:calc(100vh - 57px)}
+@media(max-width:900px){.preview-panel{max-height:none}}
+
+/* ── The Vakalatnama Paper ── */
+.paper{
+  width:210mm;min-height:297mm;
+  background:#d4e8c8;
+  border:1px solid #b8c8a8;
+  box-shadow:0 4px 32px rgba(0,0,0,.18);
+  padding:14mm 16mm 14mm 16mm;
+  font-family:'EB Garamond',serif;
+  font-size:11pt;
+  color:#1a1a1a;
+  line-height:1.55;
+  position:relative;
+}
+
+/* Top info box */
+.top-box{float:right;border:1px solid #555;padding:6px 10px;margin:0 0 4px 16px;min-width:180px;font-size:9.5pt}
+.top-row{display:flex;gap:4px;align-items:baseline;margin-bottom:3px}
+.top-label{white-space:nowrap;font-size:9pt}
+.top-val{border-bottom:1px solid #555;flex:1;min-width:60px;padding-bottom:1px;font-size:9pt}
+
+/* Clearfix */
+.clearfix::after{content:'';display:table;clear:both}
+
+.court-line{font-size:11pt;margin-bottom:2mm}
+.court-line .fill{border-bottom:1px solid #555;display:inline-block;min-width:160px}
+.suit-line{font-size:10pt;margin-bottom:2mm}
+.jurisdiction{float:right}
+
+.party-block{margin:2mm 0;font-size:10.5pt}
+.party-role{text-align:right;font-size:9.5pt;margin-bottom:1mm}
+
+.versus{text-align:center;font-weight:700;font-size:11pt;margin:2mm 0}
+
+.know-line{font-size:10.5pt;margin:3mm 0 2mm}
+.know-line .fill{border-bottom:1px solid #555;display:inline;min-width:200px}
+
+.appoint-line{font-size:10.5pt;margin:2mm 0}
+.appoint-line .fill{border-bottom:1px solid #555;display:inline-block;min-width:200px}
+
+.body-text{font-size:9.5pt;line-height:1.6;margin:3mm 0;text-align:justify}
+.body-text p{margin-bottom:2mm;text-indent:0}
+
+/* Photo box */
+.photo-box{float:right;width:28mm;height:34mm;border:1px solid #555;margin:0 0 4mm 8mm;display:flex;align-items:center;justify-content:center;font-size:7pt;color:#888;text-align:center}
+
+.witness-block{margin-top:5mm;font-size:9.5pt}
+.witness-date{margin-bottom:4mm}
+.witness-date .fill{border-bottom:1px solid #555;display:inline-block;min-width:120px}
+
+.sign-row{display:flex;justify-content:space-between;align-items:flex-end;margin-top:12mm;font-size:9.5pt}
+.sign-col{text-align:center;min-width:50mm}
+.sign-line{border-top:1px solid #555;margin-bottom:3px}
+.sign-label{font-size:8.5pt}
+.sign-col-center{text-align:center;font-size:8pt;max-width:80mm}
+
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:none}
+  nav,.form-panel,.preview-label{display:none!important}
+  .app{display:block}
+  .preview-panel{background:none!important;padding:0;max-height:none}
+  .paper{box-shadow:none;margin:0;width:100%;border:none}
+  @page{size:A4;margin:0}
+}
+
+.preview-label{font-size:11px;color:#666;margin-bottom:12px;text-align:center}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/tools" class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    </div>
+    <span class="nav-name">Vakalatnama Generator</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
+    <button class="btn-print" onclick="window.print()">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / Save PDF
+    </button>
+  </div>
+</nav>
+
+<div class="app">
+
+  <!-- FORM PANEL -->
+  <div class="form-panel">
+    <h2>Fill Vakalatnama Details</h2>
+    <p>Form updates live as you type. Click Print to save as PDF.</p>
+
+    <div class="section-divider">Case Details</div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label">FIR No.</label>
+        <input class="field-input" id="firNo" placeholder="e.g. 123" oninput="update()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">C.No.</label>
+        <input class="field-input" id="cNo" placeholder="e.g. 456" oninput="update()">
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label">U/S (Sections)</label>
+        <input class="field-input" id="us" placeholder="e.g. 302 IPC" oninput="update()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">P.S. (Police Station)</label>
+        <input class="field-input" id="ps" placeholder="e.g. Kotwali" oninput="update()">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">District</label>
+      <input class="field-input" id="distt" placeholder="e.g. Lucknow" oninput="update()">
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">In the Court of</label>
+      <input class="field-input" id="court" placeholder="e.g. Sessions Judge, Lucknow" oninput="update()">
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label">Suit/Appeal No.</label>
+        <input class="field-input" id="suitNo" placeholder="e.g. 45/2024" oninput="update()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Year</label>
+        <input class="field-input" id="year" placeholder="2024" oninput="update()">
+      </div>
+    </div>
+
+    <div class="section-divider">Parties</div>
+
+    <div class="field-group">
+      <label class="field-label">Plaintiff / Petitioner / Complainant</label>
+      <textarea class="field-input" id="plaintiff" placeholder="Full name and address" oninput="update()"></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Defendant / Respondent / Accused</label>
+      <textarea class="field-input" id="defendant" placeholder="Full name and address" oninput="update()"></textarea>
+    </div>
+
+    <div class="section-divider">Client Details</div>
+
+    <div class="field-group">
+      <label class="field-label">I/We (Client full name & address)</label>
+      <textarea class="field-input" id="client" placeholder="Full name, S/O, D/O, R/O address..." oninput="update()"></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">The above named (client name)</label>
+      <input class="field-input" id="clientShort" placeholder="Short name of client" oninput="update()">
+    </div>
+
+    <div class="section-divider">Advocate Details</div>
+
+    <div class="field-group">
+      <label class="field-label">Advocate Name</label>
+      <input class="field-input" id="advocate" placeholder="e.g. Adv. Ramesh Kumar" oninput="update()">
+    </div>
+
+    <div class="section-divider">Date & Place</div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label">Day</label>
+        <input class="field-input" id="day" placeholder="e.g. 16th" oninput="update()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Month & Year</label>
+        <input class="field-input" id="monthYear" placeholder="August 2024" oninput="update()">
+      </div>
+    </div>
+
+    <button class="btn-clear" onclick="clearAll()">Clear all fields</button>
+  </div>
+
+  <!-- PREVIEW PANEL -->
+  <div class="preview-panel">
+    <p class="preview-label">Live preview · Click "Print / Save PDF" to download</p>
+
+    <div class="paper" id="paper">
+
+      <!-- Top info box -->
+      <div class="top-box">
+        <div class="top-row"><span class="top-label">FIR No.</span> <span class="top-val" id="p-firNo">&nbsp;</span> <span class="top-label">C.No</span> <span class="top-val" id="p-cNo">&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">U/S</span> <span class="top-val" id="p-us">&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">P.S.</span> <span class="top-val" id="p-ps">&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">Distt.</span> <span class="top-val" id="p-distt">&nbsp;</span></div>
+      </div>
+
+      <!-- Blank space for court seal / left margin -->
+      <div style="min-height:30mm" class="clearfix"></div>
+
+      <!-- Court -->
+      <div class="court-line"><b>IN THE COURT OF</b> <span class="fill" id="p-court">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+
+      <!-- Suit No -->
+      <div class="suit-line">
+        Suit/Appeal No. <span class="fill" id="p-suitNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="jurisdiction">JURISDICTION of 20<span id="p-year"></span></span>
+      </div>
+
+      <div style="margin-bottom:1mm">In re :-</div>
+
+      <!-- Plaintiff -->
+      <div class="party-block">
+        <div id="p-plaintiff" style="border-bottom:1px solid #555;min-height:8mm;padding-bottom:1mm">&nbsp;</div>
+        <div class="party-role">Plaintiff / Apptt/Petitioner/Complainant</div>
+      </div>
+
+      <div class="versus">VERSUS</div>
+
+      <!-- Defendant -->
+      <div class="party-block">
+        <div id="p-defendant" style="border-bottom:1px solid #555;min-height:8mm;padding-bottom:1mm">&nbsp;</div>
+        <div class="party-role">Defendant/Respondent/Accused</div>
+      </div>
+
+      <!-- Know all -->
+      <div class="know-line">
+        KNOW ALL to whom these present shall come that I / We
+        <span class="fill" id="p-client">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </div>
+
+      <!-- Appoint -->
+      <div class="appoint-line">
+        The above named <span class="fill" id="p-clientShort">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> do hereby appoint
+      </div>
+
+      <!-- Photo box + body text -->
+      <div class="photo-box">Photo /<br>Stamp</div>
+
+      <div class="body-text">
+        <p>(herein after called the advocate/s) to be my/our Advocate in the above-noted case authorise him :-</p>
+        <p>To act, appear and plead in the above-noted case in this court or in any other Court in which the same may be tried or heard and also in the appellate court including High Court subject to payment of fees separately for each court by me/us.</p>
+        <p>To sign file, verify and present pleadings, appeals cross-objections or petitions for executions review, revision, withdrawal, compromise or other petitions or affidavits or other documents as may be deemed necessary or proper for the prosecution of the said case in all its stages subjects to payment of fees for each stage.</p>
+        <p>To file and take back documents to admit and/or deny the documents of opposite party.</p>
+        <p>To withdraw or compromise the said case or submit to arbitration any differences or disputes that may arise touching or in any manner relating to the said case.</p>
+        <p>To take execution proceedings.</p>
+        <p>The deposit, draw and receive money, cheques, cash and grant receipts hereof and to do all other acts and things which may be necessary to be done for the progress and in the course of the prosecution of the said case.</p>
+        <p>To appoint and instruct any other Legal Practitioner authorising him to exercise the power and-authority hereby conferred upon the Advocate whenever he may think fit to do so and to sign the power of attorney on our behalf.</p>
+        <p>And I/we the undersigned do hereby agree to ratify and confirm all acts done by the Advocate or his substitute in the matter as my/our own acts, as if done by me/us to all intents and purpose.</p>
+        <p>And I/We undertake that I/We or my/our duly authorised agent would appear in court on all hearings and will inform the Advocate for appearance when the case is called.</p>
+        <p>And I/We undersigned do hereby agree not to hold the advocate of his substitute responsible for the result of the said case. The adjournment costs whenever ordered by the court shall be of the Advocate which he shall receive and retain for himself.</p>
+        <p>And I/we undersigned do hereby agree that in the event of the whole or part of the fee agreed by me/us to be paid to the advocate remaining unpaid he shall be entitled to withdraw from the prosecution of the said case until the same is paid up. The fee settled is only for the above case and above Court I/We hereby agree that once the fee is paid, I/We will not be entitled for the refund of the same in any case whatsoever and if the case prolongs for more than 3 years the original fee shall be paid again by me/us.</p>
+        <p><b>IN WITNESS WHERE OF</b> I/We do hereunto set my/our hand to these presents the contents of which have been understood by me/us on this <span style="border-bottom:1px solid #555;display:inline-block;min-width:28mm" id="p-day">&nbsp;</span> day of <span style="border-bottom:1px solid #555;display:inline-block;min-width:40mm" id="p-monthYear">&nbsp;</span> 20&nbsp;&nbsp;&nbsp;&nbsp; Accepted subject to the terms of the fees.</p>
+      </div>
+
+      <!-- Signatures -->
+      <div class="sign-row">
+        <div class="sign-col">
+          <div style="height:14mm"></div>
+          <div class="sign-line"></div>
+          <div class="sign-label">Advocate</div>
+          <div style="font-size:8pt;margin-top:2px" id="p-advocate">&nbsp;</div>
+        </div>
+        <div class="sign-col-center">
+          <div style="height:14mm"></div>
+          <div style="border-top:1px solid #555;margin-bottom:3px"></div>
+          <div style="font-size:7.5pt">Client<br>I Identify The Signature/Thumb Impression Of Below Mentioned Person, Signed In My Presence. The Client</div>
+        </div>
+        <div class="sign-col">
+          <div style="height:14mm"></div>
+          <div class="sign-line"></div>
+          <div class="sign-label">Client</div>
+        </div>
+      </div>
+
+    </div><!-- end paper -->
+  </div><!-- end preview panel -->
+</div>
+
+<script>
+function v(id){return document.getElementById(id)}
+function gv(id){return v(id)?v(id).value.trim():''}
+
+function update(){
+  // Top box
+  setText('p-firNo', gv('firNo') || '\u00a0');
+  setText('p-cNo',   gv('cNo')   || '\u00a0');
+  setText('p-us',    gv('us')    || '\u00a0');
+  setText('p-ps',    gv('ps')    || '\u00a0');
+  setText('p-distt', gv('distt') || '\u00a0');
+
+  // Case
+  setText('p-court',   gv('court')   || '\u00a0');
+  setText('p-suitNo',  gv('suitNo')  || '\u00a0');
+  setText('p-year',    gv('year')    || '\u00a0');
+
+  // Parties
+  setText('p-plaintiff', gv('plaintiff') || '\u00a0');
+  setText('p-defendant', gv('defendant') || '\u00a0');
+
+  // Client
+  setText('p-client',      gv('client')      || '\u00a0');
+  setText('p-clientShort', gv('clientShort') || '\u00a0');
+
+  // Advocate
+  setText('p-advocate', gv('advocate') || '\u00a0');
+
+  // Date
+  setText('p-day',       gv('day')       || '\u00a0');
+  setText('p-monthYear', gv('monthYear') || '\u00a0');
+}
+
+function setText(id, val){
+  const el = v(id);
+  if(el) el.textContent = val;
+}
+
+function clearAll(){
+  ['firNo','cNo','us','ps','distt','court','suitNo','year',
+   'plaintiff','defendant','client','clientShort','advocate','day','monthYear']
+  .forEach(id=>{ const el=v(id); if(el) el.value=''; });
+  update();
+}
+
+// Auto-fill today's date
+(function(){
+  const now = new Date();
+  const days = ['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th',
+    '11th','12th','13th','14th','15th','16th','17th','18th','19th','20th',
+    '21st','22nd','23rd','24th','25th','26th','27th','28th','29th','30th','31st'];
+  const months = ['January','February','March','April','May','June',
+    'July','August','September','October','November','December'];
+  v('day').value = days[now.getDate()];
+  v('monthYear').value = months[now.getMonth()] + ' ' + now.getFullYear();
+  update();
+})();
+</script>
+</body>
+</html>

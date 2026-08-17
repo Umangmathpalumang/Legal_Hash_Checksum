@@ -110,6 +110,15 @@ async def tools(request: Request):
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Template not found")
 
+
+@app.get("/vakalatnama", response_class=HTMLResponse)
+async def vakalatnama(request: Request):
+    html_path = os.path.join(os.path.dirname(__file__), "templates", "vakalatnama.html")
+    try:
+        return HTMLResponse(content=open(html_path).read())
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Template not found")
+
 @app.get("/health")
 async def health():
     return {
