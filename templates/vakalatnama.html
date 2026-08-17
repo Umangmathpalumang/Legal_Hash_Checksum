@@ -63,7 +63,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 
 /* Paper */
 .paper{
-  width:200mm;
+  width:200mm;min-height:297mm;
   background:#d4e8c8;
   border:1px solid #b0c8a0;
   box-shadow:0 4px 24px rgba(0,0,0,.15);
@@ -113,11 +113,11 @@ textarea.field-input{resize:vertical;min-height:52px}
 
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  body{background:none}
+  html,body{background:#d4e8c8!important;margin:0;padding:0;height:100%}
   nav,.form-panel,.preview-label{display:none!important}
-  .app{display:block}
-  .preview-panel{background:none!important;padding:0;max-height:none}
-  .paper{box-shadow:none;margin:0;width:100%;border:none;padding:10mm 14mm}
+  .app{display:block;height:100%}
+  .preview-panel{background:#d4e8c8!important;padding:0;max-height:none;min-height:100vh;display:block}
+  .paper{box-shadow:none;margin:0;width:100%;border:none;padding:10mm 14mm;min-height:297mm;background:#d4e8c8!important}
   @page{size:A4;margin:0}
 }
 </style>
