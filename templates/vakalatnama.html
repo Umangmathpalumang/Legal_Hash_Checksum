@@ -9,12 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ── Reset & Base ── */
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0d1117;--surface:#161b22;--card:#1c2128;
   --border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;
-  --text:#e6edf3;--muted:#8b949e;--green:#22c55e;
+  --text:#e6edf3;--muted:#8b949e;
   --input-bg:#0d1117;--input-border:#30363d;
 }
 @media(prefers-color-scheme:light){
@@ -22,7 +21,6 @@
 }
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
-/* ── Nav ── */
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
 .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
 .nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
@@ -35,88 +33,83 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .btn-print:hover{opacity:.88}
 .btn-print svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── Layout ── */
-.app{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 57px)}
-@media(max-width:900px){.app{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+.app{display:grid;grid-template-columns:360px 1fr;min-height:calc(100vh - 57px)}
+@media(max-width:900px){.app{grid-template-columns:1fr}}
 
-/* ── Form Panel ── */
-.form-panel{background:var(--surface);border-right:1px solid var(--border);padding:28px;overflow-y:auto;max-height:calc(100vh - 57px)}
+.form-panel{background:var(--surface);border-right:1px solid var(--border);padding:24px;overflow-y:auto;max-height:calc(100vh - 57px)}
 @media(max-width:900px){.form-panel{max-height:none;border-right:none;border-bottom:1px solid var(--border)}}
 .form-panel h2{font-size:15px;font-weight:700;margin-bottom:4px}
-.form-panel p{font-size:12px;color:var(--muted);margin-bottom:24px}
+.form-panel>p{font-size:12px;color:var(--muted);margin-bottom:20px}
 
-.field-group{margin-bottom:20px}
-.field-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
-.field-input{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s;outline:none}
+.field-group{margin-bottom:14px}
+.field-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between;align-items:center}
+.field-limit{font-size:10px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0}
+.field-input{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s;outline:none}
 .field-input:focus{border-color:var(--accent)}
 .field-input::placeholder{color:var(--muted)}
-textarea.field-input{resize:vertical;min-height:60px}
+.field-input.warn{border-color:#f59e0b}
+textarea.field-input{resize:vertical;min-height:52px}
 
-.section-divider{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-light);padding:12px 0 8px;border-top:1px solid var(--border);margin-top:8px;margin-bottom:16px}
+.section-divider{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-light);padding:10px 0 8px;border-top:1px solid var(--border);margin-top:6px;margin-bottom:12px}
 
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
-.btn-clear{width:100%;padding:9px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-size:13px;cursor:pointer;margin-top:8px;transition:border-color .2s}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-clear{width:100%;padding:8px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-size:13px;cursor:pointer;margin-top:6px;transition:border-color .2s}
 .btn-clear:hover{border-color:var(--accent);color:var(--accent-light)}
 
-/* ── Preview Panel ── */
-.preview-panel{background:#e8ede8;display:flex;flex-direction:column;align-items:center;padding:32px 24px;overflow-y:auto;max-height:calc(100vh - 57px)}
+/* Preview */
+.preview-panel{background:#cdd8c5;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 57px)}
 @media(max-width:900px){.preview-panel{max-height:none}}
+.preview-label{font-size:11px;color:#667;margin-bottom:12px;text-align:center}
 
-/* ── The Vakalatnama Paper ── */
+/* Paper */
 .paper{
-  width:210mm;min-height:297mm;
+  width:200mm;
   background:#d4e8c8;
-  border:1px solid #b8c8a8;
-  box-shadow:0 4px 32px rgba(0,0,0,.18);
-  padding:14mm 16mm 14mm 16mm;
+  border:1px solid #b0c8a0;
+  box-shadow:0 4px 24px rgba(0,0,0,.15);
+  padding:12mm 14mm 12mm 14mm;
   font-family:'EB Garamond',serif;
-  font-size:11pt;
-  color:#1a1a1a;
-  line-height:1.55;
-  position:relative;
+  font-size:10.5pt;
+  color:#111;
+  line-height:1.5;
 }
 
-/* Top info box */
-.top-box{float:right;border:1px solid #555;padding:6px 10px;margin:0 0 4px 16px;min-width:180px;font-size:9.5pt}
-.top-row{display:flex;gap:4px;align-items:baseline;margin-bottom:3px}
-.top-label{white-space:nowrap;font-size:9pt}
-.top-val{border-bottom:1px solid #555;flex:1;min-width:60px;padding-bottom:1px;font-size:9pt}
+.top-box{float:right;border:1px solid #444;padding:5px 8px;margin:0 0 4px 12px;width:68mm;font-size:8.5pt}
+.top-row{display:flex;align-items:baseline;gap:3px;margin-bottom:2px;overflow:hidden}
+.top-label{white-space:nowrap;flex-shrink:0;font-size:8pt}
+.top-val{border-bottom:1px solid #444;flex:1;min-width:0;padding-bottom:1px;font-size:8pt;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 
-/* Clearfix */
 .clearfix::after{content:'';display:table;clear:both}
 
-.court-line{font-size:11pt;margin-bottom:2mm}
-.court-line .fill{border-bottom:1px solid #555;display:inline-block;min-width:160px}
-.suit-line{font-size:10pt;margin-bottom:2mm}
-.jurisdiction{float:right}
+.court-line{font-size:10.5pt;margin-bottom:2mm;white-space:nowrap;overflow:hidden}
+.court-fill{border-bottom:1px solid #444;display:inline-block;min-width:80px;max-width:110mm;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;vertical-align:bottom}
+.suit-line{font-size:9.5pt;margin-bottom:2mm;display:flex;justify-content:space-between;align-items:baseline}
+.suit-fill{border-bottom:1px solid #444;display:inline-block;min-width:40px;max-width:55mm;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;vertical-align:bottom}
 
-.party-block{margin:2mm 0;font-size:10.5pt}
-.party-role{text-align:right;font-size:9.5pt;margin-bottom:1mm}
-
+.party-block{margin:1.5mm 0}
+.party-fill{border-bottom:1px solid #444;display:block;min-height:6mm;padding:0 2px 1px;font-size:10pt;word-break:break-word}
+.party-role{text-align:right;font-size:8.5pt;margin-top:0.5mm}
 .versus{text-align:center;font-weight:700;font-size:11pt;margin:2mm 0}
 
-.know-line{font-size:10.5pt;margin:3mm 0 2mm}
-.know-line .fill{border-bottom:1px solid #555;display:inline;min-width:200px}
+.know-line{font-size:10pt;margin:2.5mm 0 1.5mm;word-break:break-word}
+.know-fill{border-bottom:1px solid #444;display:inline;word-break:break-word}
+.appoint-line{font-size:10pt;margin:1.5mm 0;word-break:break-word}
+.appoint-fill{border-bottom:1px solid #444;display:inline;word-break:break-word}
 
-.appoint-line{font-size:10.5pt;margin:2mm 0}
-.appoint-line .fill{border-bottom:1px solid #555;display:inline-block;min-width:200px}
+.photo-box{float:right;width:26mm;height:32mm;border:1px solid #444;margin:0 0 4mm 6mm;display:flex;align-items:center;justify-content:center;font-size:7pt;color:#888;text-align:center;flex-shrink:0}
 
-.body-text{font-size:9.5pt;line-height:1.6;margin:3mm 0;text-align:justify}
-.body-text p{margin-bottom:2mm;text-indent:0}
+.body-text{font-size:8.5pt;line-height:1.55;text-align:justify;word-break:break-word}
+.body-text p{margin-bottom:1.5mm}
 
-/* Photo box */
-.photo-box{float:right;width:28mm;height:34mm;border:1px solid #555;margin:0 0 4mm 8mm;display:flex;align-items:center;justify-content:center;font-size:7pt;color:#888;text-align:center}
+.witness-date{font-size:8.5pt}
+.date-fill{border-bottom:1px solid #444;display:inline-block;min-width:22mm;vertical-align:bottom}
+.month-fill{border-bottom:1px solid #444;display:inline-block;min-width:32mm;vertical-align:bottom}
 
-.witness-block{margin-top:5mm;font-size:9.5pt}
-.witness-date{margin-bottom:4mm}
-.witness-date .fill{border-bottom:1px solid #555;display:inline-block;min-width:120px}
-
-.sign-row{display:flex;justify-content:space-between;align-items:flex-end;margin-top:12mm;font-size:9.5pt}
-.sign-col{text-align:center;min-width:50mm}
-.sign-line{border-top:1px solid #555;margin-bottom:3px}
-.sign-label{font-size:8.5pt}
-.sign-col-center{text-align:center;font-size:8pt;max-width:80mm}
+.sign-row{display:flex;justify-content:space-between;align-items:flex-end;margin-top:10mm;font-size:8.5pt;gap:4mm}
+.sign-col{text-align:center;flex:1}
+.sign-line{border-top:1px solid #444;margin-bottom:2px}
+.sign-name{font-size:7.5pt;margin-top:1px;word-break:break-word}
+.sign-col-center{text-align:center;font-size:7pt;flex:1.4;line-height:1.4}
 
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
@@ -124,11 +117,9 @@ textarea.field-input{resize:vertical;min-height:60px}
   nav,.form-panel,.preview-label{display:none!important}
   .app{display:block}
   .preview-panel{background:none!important;padding:0;max-height:none}
-  .paper{box-shadow:none;margin:0;width:100%;border:none}
+  .paper{box-shadow:none;margin:0;width:100%;border:none;padding:10mm 14mm}
   @page{size:A4;margin:0}
 }
-
-.preview-label{font-size:11px;color:#666;margin-bottom:12px;text-align:center}
 </style>
 </head>
 <body>
@@ -151,8 +142,6 @@ textarea.field-input{resize:vertical;min-height:60px}
 </nav>
 
 <div class="app">
-
-  <!-- FORM PANEL -->
   <div class="form-panel">
     <h2>Fill Vakalatnama Details</h2>
     <p>Form updates live as you type. Click Print to save as PDF.</p>
@@ -161,148 +150,131 @@ textarea.field-input{resize:vertical;min-height:60px}
 
     <div class="two-col">
       <div class="field-group">
-        <label class="field-label">FIR No.</label>
-        <input class="field-input" id="firNo" placeholder="e.g. 123" oninput="update()">
+        <label class="field-label">FIR No. <span class="field-limit">max 10 chars</span></label>
+        <input class="field-input" id="firNo" placeholder="e.g. 123/2024" maxlength="10" oninput="update(this,'firNo',10)">
       </div>
       <div class="field-group">
-        <label class="field-label">C.No.</label>
-        <input class="field-input" id="cNo" placeholder="e.g. 456" oninput="update()">
+        <label class="field-label">C.No. <span class="field-limit">max 10 chars</span></label>
+        <input class="field-input" id="cNo" placeholder="e.g. 456" maxlength="10" oninput="update(this,'cNo',10)">
       </div>
     </div>
 
     <div class="two-col">
       <div class="field-group">
-        <label class="field-label">U/S (Sections)</label>
-        <input class="field-input" id="us" placeholder="e.g. 302 IPC" oninput="update()">
+        <label class="field-label">U/S (Sections) <span class="field-limit">max 30</span></label>
+        <input class="field-input" id="us" placeholder="e.g. 302 IPC" maxlength="30" oninput="update(this,'us',30)">
       </div>
       <div class="field-group">
-        <label class="field-label">P.S. (Police Station)</label>
-        <input class="field-input" id="ps" placeholder="e.g. Kotwali" oninput="update()">
+        <label class="field-label">P.S. <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="ps" placeholder="e.g. Kotwali" maxlength="20" oninput="update(this,'ps',20)">
       </div>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">District</label>
-      <input class="field-input" id="distt" placeholder="e.g. Lucknow" oninput="update()">
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">In the Court of</label>
-      <input class="field-input" id="court" placeholder="e.g. Sessions Judge, Lucknow" oninput="update()">
     </div>
 
     <div class="two-col">
       <div class="field-group">
-        <label class="field-label">Suit/Appeal No.</label>
-        <input class="field-input" id="suitNo" placeholder="e.g. 45/2024" oninput="update()">
+        <label class="field-label">District <span class="field-limit">max 25</span></label>
+        <input class="field-input" id="distt" placeholder="e.g. Lucknow" maxlength="25" oninput="update(this,'distt',25)">
       </div>
       <div class="field-group">
-        <label class="field-label">Year</label>
-        <input class="field-input" id="year" placeholder="2024" oninput="update()">
+        <label class="field-label">Year <span class="field-limit">4 digits</span></label>
+        <input class="field-input" id="year" placeholder="2024" maxlength="4" oninput="update(this,'year',4)">
       </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">In the Court of <span class="field-limit">max 60</span></label>
+      <input class="field-input" id="court" placeholder="e.g. Sessions Judge, Lucknow" maxlength="60" oninput="update(this,'court',60)">
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Suit/Appeal No. <span class="field-limit">max 20</span></label>
+      <input class="field-input" id="suitNo" placeholder="e.g. 45/2024" maxlength="20" oninput="update(this,'suitNo',20)">
     </div>
 
     <div class="section-divider">Parties</div>
 
     <div class="field-group">
-      <label class="field-label">Plaintiff / Petitioner / Complainant</label>
-      <textarea class="field-input" id="plaintiff" placeholder="Full name and address" oninput="update()"></textarea>
+      <label class="field-label">Plaintiff / Petitioner / Complainant <span class="field-limit">max 120</span></label>
+      <textarea class="field-input" id="plaintiff" placeholder="Full name and address" maxlength="120" oninput="update(this,'plaintiff',120)"></textarea>
     </div>
 
     <div class="field-group">
-      <label class="field-label">Defendant / Respondent / Accused</label>
-      <textarea class="field-input" id="defendant" placeholder="Full name and address" oninput="update()"></textarea>
+      <label class="field-label">Defendant / Respondent / Accused <span class="field-limit">max 120</span></label>
+      <textarea class="field-input" id="defendant" placeholder="Full name and address" maxlength="120" oninput="update(this,'defendant',120)"></textarea>
     </div>
 
     <div class="section-divider">Client Details</div>
 
     <div class="field-group">
-      <label class="field-label">I/We (Client full name & address)</label>
-      <textarea class="field-input" id="client" placeholder="Full name, S/O, D/O, R/O address..." oninput="update()"></textarea>
+      <label class="field-label">I/We — Client name & address <span class="field-limit">max 200</span></label>
+      <textarea class="field-input" id="client" placeholder="Full name, S/O D/O, R/O address..." maxlength="200" oninput="update(this,'client',200)"></textarea>
     </div>
 
     <div class="field-group">
-      <label class="field-label">The above named (client name)</label>
-      <input class="field-input" id="clientShort" placeholder="Short name of client" oninput="update()">
+      <label class="field-label">The above named (short name) <span class="field-limit">max 60</span></label>
+      <input class="field-input" id="clientShort" placeholder="Short name of client" maxlength="60" oninput="update(this,'clientShort',60)">
     </div>
 
-    <div class="section-divider">Advocate Details</div>
+    <div class="section-divider">Advocate</div>
 
     <div class="field-group">
-      <label class="field-label">Advocate Name</label>
-      <input class="field-input" id="advocate" placeholder="e.g. Adv. Ramesh Kumar" oninput="update()">
+      <label class="field-label">Advocate Name <span class="field-limit">max 50</span></label>
+      <input class="field-input" id="advocate" placeholder="e.g. Adv. Ramesh Kumar" maxlength="50" oninput="update(this,'advocate',50)">
     </div>
 
-    <div class="section-divider">Date & Place</div>
-
+    <div class="section-divider">Date</div>
     <div class="two-col">
       <div class="field-group">
-        <label class="field-label">Day</label>
-        <input class="field-input" id="day" placeholder="e.g. 16th" oninput="update()">
+        <label class="field-label">Day <span class="field-limit">max 6</span></label>
+        <input class="field-input" id="day" placeholder="e.g. 16th" maxlength="6" oninput="update(this,'day',6)">
       </div>
       <div class="field-group">
-        <label class="field-label">Month & Year</label>
-        <input class="field-input" id="monthYear" placeholder="August 2024" oninput="update()">
+        <label class="field-label">Month & Year <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="monthYear" placeholder="August 2024" maxlength="20" oninput="update(this,'monthYear',20)">
       </div>
     </div>
 
     <button class="btn-clear" onclick="clearAll()">Clear all fields</button>
   </div>
 
-  <!-- PREVIEW PANEL -->
   <div class="preview-panel">
     <p class="preview-label">Live preview · Click "Print / Save PDF" to download</p>
-
     <div class="paper" id="paper">
 
-      <!-- Top info box -->
       <div class="top-box">
-        <div class="top-row"><span class="top-label">FIR No.</span> <span class="top-val" id="p-firNo">&nbsp;</span> <span class="top-label">C.No</span> <span class="top-val" id="p-cNo">&nbsp;</span></div>
-        <div class="top-row"><span class="top-label">U/S</span> <span class="top-val" id="p-us">&nbsp;</span></div>
-        <div class="top-row"><span class="top-label">P.S.</span> <span class="top-val" id="p-ps">&nbsp;</span></div>
-        <div class="top-row"><span class="top-label">Distt.</span> <span class="top-val" id="p-distt">&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">FIR No.</span><span class="top-val" id="p-firNo">&nbsp;</span><span class="top-label">C.No</span><span class="top-val" id="p-cNo">&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">U/S</span><span class="top-val" id="p-us">&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">P.S.</span><span class="top-val" id="p-ps">&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">Distt.</span><span class="top-val" id="p-distt">&nbsp;</span></div>
       </div>
 
-      <!-- Blank space for court seal / left margin -->
-      <div style="min-height:30mm" class="clearfix"></div>
+      <div style="min-height:28mm" class="clearfix"></div>
 
-      <!-- Court -->
-      <div class="court-line"><b>IN THE COURT OF</b> <span class="fill" id="p-court">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      <div class="court-line"><b>IN THE COURT OF</b>&nbsp;<span class="court-fill" id="p-court">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
 
-      <!-- Suit No -->
       <div class="suit-line">
-        Suit/Appeal No. <span class="fill" id="p-suitNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <span class="jurisdiction">JURISDICTION of 20<span id="p-year"></span></span>
+        <span>Suit/Appeal No.&nbsp;<span class="suit-fill" id="p-suitNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+        <span>JURISDICTION of 20<span id="p-year"></span></span>
       </div>
 
-      <div style="margin-bottom:1mm">In re :-</div>
+      <div style="margin-bottom:1mm;font-size:9.5pt">In re :-</div>
 
-      <!-- Plaintiff -->
       <div class="party-block">
-        <div id="p-plaintiff" style="border-bottom:1px solid #555;min-height:8mm;padding-bottom:1mm">&nbsp;</div>
+        <div class="party-fill" id="p-plaintiff">&nbsp;</div>
         <div class="party-role">Plaintiff / Apptt/Petitioner/Complainant</div>
       </div>
 
       <div class="versus">VERSUS</div>
 
-      <!-- Defendant -->
       <div class="party-block">
-        <div id="p-defendant" style="border-bottom:1px solid #555;min-height:8mm;padding-bottom:1mm">&nbsp;</div>
+        <div class="party-fill" id="p-defendant">&nbsp;</div>
         <div class="party-role">Defendant/Respondent/Accused</div>
       </div>
 
-      <!-- Know all -->
-      <div class="know-line">
-        KNOW ALL to whom these present shall come that I / We
-        <span class="fill" id="p-client">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      </div>
+      <div class="know-line">KNOW ALL to whom these present shall come that I / We <span class="know-fill" id="p-client">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
 
-      <!-- Appoint -->
-      <div class="appoint-line">
-        The above named <span class="fill" id="p-clientShort">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> do hereby appoint
-      </div>
+      <div class="appoint-line">The above named <span class="appoint-fill" id="p-clientShort">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> do hereby appoint</div>
 
-      <!-- Photo box + body text -->
       <div class="photo-box">Photo /<br>Stamp</div>
 
       <div class="body-text">
@@ -318,89 +290,86 @@ textarea.field-input{resize:vertical;min-height:60px}
         <p>And I/We undertake that I/We or my/our duly authorised agent would appear in court on all hearings and will inform the Advocate for appearance when the case is called.</p>
         <p>And I/We undersigned do hereby agree not to hold the advocate of his substitute responsible for the result of the said case. The adjournment costs whenever ordered by the court shall be of the Advocate which he shall receive and retain for himself.</p>
         <p>And I/we undersigned do hereby agree that in the event of the whole or part of the fee agreed by me/us to be paid to the advocate remaining unpaid he shall be entitled to withdraw from the prosecution of the said case until the same is paid up. The fee settled is only for the above case and above Court I/We hereby agree that once the fee is paid, I/We will not be entitled for the refund of the same in any case whatsoever and if the case prolongs for more than 3 years the original fee shall be paid again by me/us.</p>
-        <p><b>IN WITNESS WHERE OF</b> I/We do hereunto set my/our hand to these presents the contents of which have been understood by me/us on this <span style="border-bottom:1px solid #555;display:inline-block;min-width:28mm" id="p-day">&nbsp;</span> day of <span style="border-bottom:1px solid #555;display:inline-block;min-width:40mm" id="p-monthYear">&nbsp;</span> 20&nbsp;&nbsp;&nbsp;&nbsp; Accepted subject to the terms of the fees.</p>
+        <p><b>IN WITNESS WHERE OF</b> I/We do hereunto set my/our hand to these presents the contents of which have been understood by me/us on this <span class="date-fill" id="p-day">&nbsp;</span> day of <span class="month-fill" id="p-monthYear">&nbsp;</span> &nbsp;&nbsp;&nbsp;&nbsp; Accepted subject to the terms of the fees.</p>
       </div>
 
-      <!-- Signatures -->
       <div class="sign-row">
         <div class="sign-col">
-          <div style="height:14mm"></div>
+          <div style="height:12mm"></div>
           <div class="sign-line"></div>
           <div class="sign-label">Advocate</div>
-          <div style="font-size:8pt;margin-top:2px" id="p-advocate">&nbsp;</div>
+          <div class="sign-name" id="p-advocate">&nbsp;</div>
         </div>
         <div class="sign-col-center">
-          <div style="height:14mm"></div>
-          <div style="border-top:1px solid #555;margin-bottom:3px"></div>
-          <div style="font-size:7.5pt">Client<br>I Identify The Signature/Thumb Impression Of Below Mentioned Person, Signed In My Presence. The Client</div>
+          <div style="height:12mm"></div>
+          <div style="border-top:1px solid #444;margin-bottom:2px"></div>
+          <div>Client<br>I Identify The Signature/Thumb Impression Of Below Mentioned Person, Signed In My Presence. The Client</div>
         </div>
         <div class="sign-col">
-          <div style="height:14mm"></div>
+          <div style="height:12mm"></div>
           <div class="sign-line"></div>
           <div class="sign-label">Client</div>
         </div>
       </div>
 
-    </div><!-- end paper -->
-  </div><!-- end preview panel -->
+    </div>
+  </div>
 </div>
 
 <script>
 function v(id){return document.getElementById(id)}
 function gv(id){return v(id)?v(id).value.trim():''}
 
-function update(){
-  // Top box
-  setText('p-firNo', gv('firNo') || '\u00a0');
-  setText('p-cNo',   gv('cNo')   || '\u00a0');
-  setText('p-us',    gv('us')    || '\u00a0');
-  setText('p-ps',    gv('ps')    || '\u00a0');
-  setText('p-distt', gv('distt') || '\u00a0');
-
-  // Case
-  setText('p-court',   gv('court')   || '\u00a0');
-  setText('p-suitNo',  gv('suitNo')  || '\u00a0');
-  setText('p-year',    gv('year')    || '\u00a0');
-
-  // Parties
-  setText('p-plaintiff', gv('plaintiff') || '\u00a0');
-  setText('p-defendant', gv('defendant') || '\u00a0');
-
-  // Client
-  setText('p-client',      gv('client')      || '\u00a0');
-  setText('p-clientShort', gv('clientShort') || '\u00a0');
-
-  // Advocate
-  setText('p-advocate', gv('advocate') || '\u00a0');
-
-  // Date
-  setText('p-day',       gv('day')       || '\u00a0');
-  setText('p-monthYear', gv('monthYear') || '\u00a0');
+function update(el,id,max){
+  if(el && max) el.classList.toggle('warn', el.value.length >= max*0.9);
+  render();
 }
 
-function setText(id, val){
+function render(){
+  set('p-firNo',   gv('firNo'));
+  set('p-cNo',     gv('cNo'));
+  set('p-us',      gv('us'));
+  set('p-ps',      gv('ps'));
+  set('p-distt',   gv('distt'));
+  set('p-court',   gv('court'));
+  set('p-suitNo',  gv('suitNo'));
+  v('p-year').textContent = gv('year');
+  set('p-plaintiff',   gv('plaintiff'));
+  set('p-defendant',   gv('defendant'));
+  set('p-client',      gv('client'));
+  set('p-clientShort', gv('clientShort'));
+  set('p-advocate',    gv('advocate'));
+  set('p-day',         gv('day'));
+  set('p-monthYear',   gv('monthYear'));
+}
+
+function set(id, val){
   const el = v(id);
-  if(el) el.textContent = val;
+  if(!el) return;
+  el.textContent = val || '\u00a0';
 }
 
 function clearAll(){
   ['firNo','cNo','us','ps','distt','court','suitNo','year',
    'plaintiff','defendant','client','clientShort','advocate','day','monthYear']
-  .forEach(id=>{ const el=v(id); if(el) el.value=''; });
-  update();
+  .forEach(id=>{
+    const el=v(id);
+    if(el){el.value='';el.classList.remove('warn');}
+  });
+  render();
 }
 
-// Auto-fill today's date
 (function(){
-  const now = new Date();
-  const days = ['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th',
+  const now=new Date();
+  const days=['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th',
     '11th','12th','13th','14th','15th','16th','17th','18th','19th','20th',
     '21st','22nd','23rd','24th','25th','26th','27th','28th','29th','30th','31st'];
-  const months = ['January','February','March','April','May','June',
+  const months=['January','February','March','April','May','June',
     'July','August','September','October','November','December'];
-  v('day').value = days[now.getDate()];
-  v('monthYear').value = months[now.getMonth()] + ' ' + now.getFullYear();
-  update();
+  v('day').value=days[now.getDate()];
+  v('monthYear').value=months[now.getMonth()]+' '+now.getFullYear();
+  v('year').value=now.getFullYear();
+  render();
 })();
 </script>
 </body>
