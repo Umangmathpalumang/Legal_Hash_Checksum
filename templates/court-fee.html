@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Court Fee Calculator — Indian Courts</title>
+<meta name="description" content="Calculate court fees for civil suits in Indian courts. Ad valorem fees based on suit valuation. Free tool for Indian advocates.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surface:#161b22;--card:#1c2128;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--green:#22c55e}
+@media(prefers-color-scheme:light){:root{--bg:#f6f8fa;--surface:#fff;--card:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a}}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{font-size:14px;font-weight:700}
+.nav-links{display:flex;gap:8px}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px}
+.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
+.main{max-width:760px;margin:0 auto;padding:40px 24px 60px}
+h1{font-size:26px;font-weight:800;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:32px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:20px}
+.card h2{font-size:15px;font-weight:700;margin-bottom:20px;color:var(--accent-light)}
+.field-group{margin-bottom:16px}
+.field-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+.field-input,.field-select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.field-input:focus,.field-select:focus{border-color:var(--accent)}
+.field-select option{background:var(--surface)}
+.btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;transition:opacity .2s}
+.btn:hover{opacity:.88}
+.result-box{background:var(--card);border:2px solid var(--green);border-radius:14px;padding:28px;display:none;margin-top:20px}
+.result-box.show{display:block}
+.result-fee{font-size:36px;font-weight:800;color:var(--green);margin-bottom:4px}
+.result-label{font-size:12px;color:var(--muted);margin-bottom:20px}
+.breakdown{background:var(--surface);border-radius:10px;overflow:hidden}
+.breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
+.breakdown-row:last-child{border-bottom:none;font-weight:700;background:rgba(37,99,235,.08)}
+.slab-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+.slab-table th{text-align:left;padding:8px 12px;border-bottom:2px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.slab-table td{padding:8px 12px;border-bottom:1px solid var(--border)}
+.slab-table tr:last-child td{border-bottom:none}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/tools" class="nav-brand">
+    <div class="nav-logo"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+    <span class="nav-name">Court Fee Calculator</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
+  </div>
+</nav>
+
+<div class="main">
+  <h1>Court Fee Calculator</h1>
+  <p class="subtitle">Calculate ad valorem court fees for civil suits. Based on the Court Fees Act 1870 and state schedules.</p>
+
+  <div class="card">
+    <h2>Calculate Court Fee</h2>
+    <div class="field-group">
+      <label class="field-label">State / Court</label>
+      <select class="field-select" id="state" onchange="calculate()">
+        <option value="up">Uttar Pradesh</option>
+        <option value="delhi">Delhi</option>
+        <option value="mh">Maharashtra</option>
+        <option value="rj">Rajasthan</option>
+        <option value="mp">Madhya Pradesh</option>
+        <option value="gj">Gujarat</option>
+        <option value="hr">Haryana</option>
+        <option value="pb">Punjab</option>
+        <option value="uk">Uttarakhand</option>
+        <option value="ka">Karnataka</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Type of Suit</label>
+      <select class="field-select" id="suitType" onchange="calculate()">
+        <option value="money">Money Recovery / Compensation</option>
+        <option value="property">Immovable Property</option>
+        <option value="specific">Specific Performance of Contract</option>
+        <option value="injunction">Permanent Injunction</option>
+        <option value="declaration">Declaration Only</option>
+        <option value="divorce">Matrimonial (Divorce / Maintenance)</option>
+        <option value="probate">Probate / Administration</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Suit Valuation / Claim Amount (₹)</label>
+      <input class="field-input" type="number" id="amount" placeholder="e.g. 500000" min="1" oninput="calculate()">
+    </div>
+    <button class="btn" onclick="calculate()">Calculate Court Fee</button>
+  </div>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-fee" id="resultFee"></div>
+    <div class="result-label">Court Fee Payable</div>
+    <div class="breakdown" id="breakdown"></div>
+    <p style="font-size:11px;color:var(--muted);margin-top:16px">⚠️ Court fees vary by state and may be updated. Always verify with the applicable state Court Fees Act. Process fee, misc. charges not included.</p>
+  </div>
+
+  <div class="card">
+    <h2>Ad Valorem Slab — General Reference (UP / Uttarakhand)</h2>
+    <table class="slab-table">
+      <thead><tr><th>Suit Value (₹)</th><th>Rate</th></tr></thead>
+      <tbody>
+        <tr><td>Up to ₹50,000</td><td>7.5%</td></tr>
+        <tr><td>₹50,001 – ₹1,00,000</td><td>7%</td></tr>
+        <tr><td>₹1,00,001 – ₹2,00,000</td><td>6%</td></tr>
+        <tr><td>₹2,00,001 – ₹5,00,000</td><td>5%</td></tr>
+        <tr><td>₹5,00,001 – ₹10,00,000</td><td>4%</td></tr>
+        <tr><td>Above ₹10,00,000</td><td>3% (subject to max cap)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+function fmt(n){return '₹'+Math.ceil(n).toLocaleString('en-IN')}
+
+function getSlabs(state){
+  // Simplified ad valorem slabs — representative rates
+  const slabs={
+    up:   [{max:50000,rate:.075},{max:100000,rate:.07},{max:200000,rate:.06},{max:500000,rate:.05},{max:1000000,rate:.04},{max:Infinity,rate:.03}],
+    delhi:[{max:50000,rate:.075},{max:100000,rate:.07},{max:200000,rate:.065},{max:500000,rate:.055},{max:1000000,rate:.045},{max:Infinity,rate:.035}],
+    mh:   [{max:100000,rate:.035},{max:500000,rate:.03},{max:1000000,rate:.025},{max:Infinity,rate:.02}],
+    rj:   [{max:50000,rate:.06},{max:200000,rate:.055},{max:500000,rate:.05},{max:Infinity,rate:.04}],
+    mp:   [{max:50000,rate:.07},{max:200000,rate:.06},{max:500000,rate:.05},{max:Infinity,rate:.035}],
+    gj:   [{max:100000,rate:.04},{max:500000,rate:.035},{max:Infinity,rate:.03}],
+    hr:   [{max:50000,rate:.075},{max:200000,rate:.065},{max:500000,rate:.055},{max:Infinity,rate:.04}],
+    pb:   [{max:50000,rate:.075},{max:200000,rate:.065},{max:500000,rate:.055},{max:Infinity,rate:.04}],
+    uk:   [{max:50000,rate:.075},{max:100000,rate:.07},{max:200000,rate:.06},{max:500000,rate:.05},{max:1000000,rate:.04},{max:Infinity,rate:.03}],
+    ka:   [{max:100000,rate:.03},{max:500000,rate:.025},{max:Infinity,rate:.02}],
+  };
+  return slabs[state]||slabs.up;
+}
+
+function calculate(){
+  const state=document.getElementById('state').value;
+  const suitType=document.getElementById('suitType').value;
+  const amount=parseFloat(document.getElementById('amount').value)||0;
+  const box=document.getElementById('resultBox');
+  if(!amount||amount<=0){box.classList.remove('show');return;}
+
+  let fee=0;
+  let rows=[];
+  const slabs=getSlabs(state);
+
+  if(suitType==='injunction'){fee=200;rows=[{label:'Permanent Injunction (fixed)',fee:200}];}
+  else if(suitType==='declaration'){fee=75;rows=[{label:'Declaration only (fixed)',fee:75}];}
+  else if(suitType==='divorce'){fee=50;rows=[{label:'Matrimonial matter (fixed)',fee:50}];}
+  else if(suitType==='probate'){
+    fee=amount*0.02;
+    rows=[{label:'Probate / Administration (2%)',fee}];
+  } else {
+    let prev=0;
+    for(const slab of slabs){
+      if(prev>=amount)break;
+      const taxable=Math.min(amount,slab.max)-prev;
+      const slabFee=taxable*slab.rate;
+      const rangeLabel=prev===0?`Up to ${fmt(slab.max=== Infinity?amount:slab.max)}`:`${fmt(prev+1)} – ${fmt(slab.max===Infinity?amount:slab.max)}`;
+      rows.push({label:`${rangeLabel} @ ${(slab.rate*100).toFixed(1)}%`,fee:slabFee});
+      fee+=slabFee;
+      prev=Math.min(amount,slab.max);
+    }
+  }
+
+  // Minimum fee
+  if(fee<10)fee=10;
+
+  document.getElementById('resultFee').textContent=fmt(fee);
+  document.getElementById('breakdown').innerHTML=rows.map(r=>`<div class="breakdown-row"><span>${r.label}</span><span>${fmt(r.fee)}</span></div>`).join('')+`<div class="breakdown-row"><span>Total Court Fee</span><span>${fmt(fee)}</span></div>`;
+  box.classList.add('show');
+}
+</script>
+</body>
+</html>

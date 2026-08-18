@@ -136,6 +136,22 @@ async def bail_bond(request: Request):
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Template not found")
 
+
+@app.get("/bns-lookup", response_class=HTMLResponse)
+async def bns_lookup(request: Request):
+    p = os.path.join(os.path.dirname(__file__), "templates", "bns-lookup.html")
+    return HTMLResponse(content=open(p).read())
+
+@app.get("/limitation-calculator", response_class=HTMLResponse)
+async def limitation_calculator(request: Request):
+    p = os.path.join(os.path.dirname(__file__), "templates", "limitation-calculator.html")
+    return HTMLResponse(content=open(p).read())
+
+@app.get("/court-fee", response_class=HTMLResponse)
+async def court_fee(request: Request):
+    p = os.path.join(os.path.dirname(__file__), "templates", "court-fee.html")
+    return HTMLResponse(content=open(p).read())
+
 @app.get("/health")
 async def health():
     return {

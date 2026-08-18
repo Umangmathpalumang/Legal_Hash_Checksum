@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Limitation Period Calculator — Indian Courts</title>
+<meta name="description" content="Calculate limitation periods under the Limitation Act 1963 for Indian courts. Enter cause of action date and get the exact last date to file.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surface:#161b22;--card:#1c2128;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--green:#22c55e;--red:#f87171;--amber:#f59e0b}
+@media(prefers-color-scheme:light){:root{--bg:#f6f8fa;--surface:#fff;--card:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a}}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{font-size:14px;font-weight:700}
+.nav-links{display:flex;gap:8px}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px}
+.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
+.main{max-width:760px;margin:0 auto;padding:40px 24px 60px}
+h1{font-size:26px;font-weight:800;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:32px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:20px}
+.card h2{font-size:15px;font-weight:700;margin-bottom:20px;color:var(--accent-light)}
+.field-group{margin-bottom:16px}
+.field-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+.field-input,.field-select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.field-input:focus,.field-select:focus{border-color:var(--accent)}
+.field-select option{background:var(--surface)}
+.btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-top:8px}
+.btn:hover{opacity:.88}
+.result-box{background:var(--card);border:2px solid var(--accent);border-radius:14px;padding:28px;display:none}
+.result-box.show{display:block}
+.result-title{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.result-date{font-size:32px;font-weight:800;color:var(--accent-light);margin-bottom:16px}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.result-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px}
+.result-item-label{font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.result-item-val{font-size:14px;font-weight:600}
+.warning{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:14px;font-size:13px;color:var(--amber);margin-top:12px}
+.expired{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);border-radius:10px;padding:14px;font-size:13px;color:var(--red);margin-top:12px}
+.safe{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:10px;padding:14px;font-size:13px;color:var(--green);margin-top:12px}
+.lim-table{width:100%;border-collapse:collapse;font-size:13px}
+.lim-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.lim-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.lim-table tr:last-child td{border-bottom:none}
+.lim-table tr:hover td{background:rgba(255,255,255,.02)}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/tools" class="nav-brand">
+    <div class="nav-logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+    <span class="nav-name">Limitation Calculator</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
+  </div>
+</nav>
+
+<div class="main">
+  <h1>Limitation Period Calculator</h1>
+  <p class="subtitle">Calculate the last date to file under the Limitation Act 1963. Enter the cause of action date and select the type of suit.</p>
+
+  <div class="card">
+    <h2>Calculate Limitation Period</h2>
+    <div class="field-group">
+      <label class="field-label">Type of Suit / Application</label>
+      <select class="field-select" id="suitType" onchange="calculate()">
+        <option value="">— Select suit type —</option>
+        <optgroup label="Money Recovery">
+          <option value="3,money">Money suit on written contract (3 years)</option>
+          <option value="3,money">Recovery of money lent (3 years)</option>
+          <option value="3,money">Recovery based on account stated (3 years)</option>
+          <option value="6,money">Recovery on bond / mortgage deed (6 years) — State variations apply</option>
+          <option value="12,money">Recovery under mortgage of immovable property (12 years)</option>
+        </optgroup>
+        <optgroup label="Property">
+          <option value="12,property">Recovery of immovable property (12 years)</option>
+          <option value="3,property">Specific performance of contract (3 years)</option>
+          <option value="1,property">Possession after determination of lease (1 year)</option>
+        </optgroup>
+        <optgroup label="Cheque Bounce (NI Act 138)">
+          <option value="1,cheque">Cheque bounce complaint u/s 138 NI Act (1 month from expiry of notice)</option>
+        </optgroup>
+        <optgroup label="Tort / Civil Wrong">
+          <option value="1,tort">Damages for malicious prosecution (1 year)</option>
+          <option value="1,tort">Compensation for false imprisonment (1 year)</option>
+          <option value="1,tort">Defamation (1 year)</option>
+          <option value="3,tort">Compensation for injury to person (3 years)</option>
+        </optgroup>
+        <optgroup label="Contract">
+          <option value="3,contract">Breach of contract (3 years)</option>
+          <option value="3,contract">Compensation for breach of contract (3 years)</option>
+          <option value="3,contract">Setting aside arbitration award (3 years)</option>
+        </optgroup>
+        <optgroup label="Appeal / Revision">
+          <option value="0.25,appeal">Appeal under CPC (30 days from decree)</option>
+          <option value="0.25,appeal">Revision under CPC (90 days — see note)</option>
+          <option value="0.083,appeal">Appeal to High Court in civil matters (90 days)</option>
+          <option value="3,appeal">Appeal under Limitation Act Article 116 — SC (90 days)</option>
+        </optgroup>
+        <optgroup label="Consumer">
+          <option value="2,consumer">Consumer complaint (2 years from cause of action)</option>
+        </optgroup>
+        <optgroup label="Labour / Service">
+          <option value="3,service">Service matter / labour dispute (3 years)</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Date of Cause of Action</label>
+      <input class="field-input" type="date" id="coaDate" onchange="calculate()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Today's Date</label>
+      <input class="field-input" type="date" id="todayDate" onchange="calculate()">
+    </div>
+    <button class="btn" onclick="calculate()">Calculate Last Date to File</button>
+  </div>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-title">Last date to file</div>
+    <div class="result-date" id="resultDate"></div>
+    <div class="result-grid">
+      <div class="result-item">
+        <div class="result-item-label">Limitation Period</div>
+        <div class="result-item-val" id="resultPeriod"></div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-label">Days Remaining</div>
+        <div class="result-item-val" id="resultDays"></div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-label">Cause of Action</div>
+        <div class="result-item-val" id="resultCOA"></div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-label">Today</div>
+        <div class="result-item-val" id="resultToday"></div>
+      </div>
+    </div>
+    <div id="resultAlert"></div>
+    <p style="font-size:11px;color:var(--muted);margin-top:16px">⚠️ This calculator is a guide only. Always verify with the relevant statute and consult your legal advisor. Courts may condone delay under Section 5 of the Limitation Act.</p>
+  </div>
+
+  <div class="card" style="margin-top:24px">
+    <h2>Quick Reference — Common Limitation Periods</h2>
+    <table class="lim-table">
+      <thead><tr><th>Type of Suit</th><th>Period</th><th>Article</th></tr></thead>
+      <tbody>
+        <tr><td>Money suit — written contract</td><td>3 years</td><td>Art. 24</td></tr>
+        <tr><td>Cheque bounce (NI Act 138)</td><td>1 month from expiry of 15-day notice</td><td>Sec. 142</td></tr>
+        <tr><td>Recovery of immovable property</td><td>12 years</td><td>Art. 65</td></tr>
+        <tr><td>Specific performance</td><td>3 years</td><td>Art. 54</td></tr>
+        <tr><td>Breach of contract</td><td>3 years</td><td>Art. 55</td></tr>
+        <tr><td>Defamation</td><td>1 year</td><td>Art. 75</td></tr>
+        <tr><td>Compensation for personal injury</td><td>3 years</td><td>Art. 72/73</td></tr>
+        <tr><td>Consumer complaint (COPRA)</td><td>2 years</td><td>Sec. 69</td></tr>
+        <tr><td>Appeal under CPC (District Court)</td><td>30 days</td><td>Art. 116</td></tr>
+        <tr><td>Appeal to High Court (civil)</td><td>90 days</td><td>Art. 117</td></tr>
+        <tr><td>Mortgage suit</td><td>12 years</td><td>Art. 61/62</td></tr>
+        <tr><td>Dissolution of partnership</td><td>3 years</td><td>Art. 43</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function(){
+  const now=new Date();
+  const fmt=d=>d.toISOString().split('T')[0];
+  document.getElementById('todayDate').value=fmt(now);
+})();
+
+function calculate(){
+  const suitVal=document.getElementById('suitType').value;
+  const coaDate=document.getElementById('coaDate').value;
+  const todayDate=document.getElementById('todayDate').value;
+  const box=document.getElementById('resultBox');
+  if(!suitVal||!coaDate||!todayDate){box.classList.remove('show');return;}
+  const years=parseFloat(suitVal.split(',')[0]);
+  const coa=new Date(coaDate);
+  const today=new Date(todayDate);
+  const lastDate=new Date(coa);
+  if(years<1){
+    // months
+    const months=Math.round(years*12);
+    lastDate.setMonth(lastDate.getMonth()+months);
+  } else {
+    lastDate.setFullYear(lastDate.getFullYear()+Math.floor(years));
+    if(years%1>0){
+      const extraMonths=Math.round((years%1)*12);
+      lastDate.setMonth(lastDate.getMonth()+extraMonths);
+    }
+  }
+  const diffMs=lastDate-today;
+  const diffDays=Math.ceil(diffMs/(1000*60*60*24));
+  const fmt=d=>d.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+  const fmtShort=d=>d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  document.getElementById('resultDate').textContent=fmt(lastDate);
+  document.getElementById('resultPeriod').textContent=years>=1?`${years} year${years>1?'s':''}`:`${Math.round(years*12)} month${Math.round(years*12)>1?'s':''}`;
+  document.getElementById('resultDays').textContent=diffDays>0?`${diffDays} days`:'EXPIRED';
+  document.getElementById('resultCOA').textContent=fmtShort(coa);
+  document.getElementById('resultToday').textContent=fmtShort(today);
+  const alert=document.getElementById('resultAlert');
+  if(diffDays<0){
+    alert.innerHTML=`<div class="expired">⛔ Limitation period has EXPIRED ${Math.abs(diffDays)} days ago. You may need to file a condonation of delay application under Section 5 of the Limitation Act.</div>`;
+  } else if(diffDays<=30){
+    alert.innerHTML=`<div class="warning">⚠️ Only ${diffDays} days remaining! File immediately to avoid limitation issues.</div>`;
+  } else if(diffDays<=90){
+    alert.innerHTML=`<div class="warning">⚠️ ${diffDays} days remaining. Arrange to file well before the last date.</div>`;
+  } else {
+    alert.innerHTML=`<div class="safe">✅ ${diffDays} days remaining. You are within the limitation period.</div>`;
+  }
+  box.classList.add('show');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BNS / IPC Section Lookup — Indian Courts</title>
+<meta name="description" content="Search BNS 2023 and IPC sections. Get full text, punishment, bailable status, and IPC to BNS mapping. Free tool for Indian advocates.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surface:#161b22;--card:#1c2128;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--green:#22c55e;--red:#f87171;--amber:#f59e0b}
+@media(prefers-color-scheme:light){:root{--bg:#f6f8fa;--surface:#fff;--card:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a}}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{font-size:14px;font-weight:700}
+.nav-links{display:flex;gap:8px}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px;transition:border-color .2s}
+.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
+
+.hero{text-align:center;padding:48px 24px 32px}
+.hero h1{font-size:28px;font-weight:800;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:15px;max-width:520px;margin:0 auto 24px}
+
+.search-box{max-width:600px;margin:0 auto 48px;padding:0 24px}
+.search-wrap{position:relative}
+.search-input{width:100%;background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:14px 50px 14px 18px;font-size:16px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--muted)}
+.search-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--accent);border:none;border-radius:8px;padding:8px 12px;cursor:pointer;display:flex;align-items:center}
+.search-btn svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tab-row{display:flex;gap:8px;margin-bottom:16px;justify-content:center}
+.tab{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:.2s}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.results{max-width:860px;margin:0 auto;padding:0 24px 60px}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;transition:border-color .2s}
+.result-card:hover{border-color:var(--accent)}
+.rc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.rc-section{font-size:13px;font-weight:700;color:var(--accent-light);margin-bottom:4px}
+.rc-title{font-size:16px;font-weight:700;line-height:1.3}
+.badges{display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0}
+.badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.badge-bail{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.25)}
+.badge-nonbail{background:rgba(248,113,113,.12);color:#f87171;border:1px solid rgba(248,113,113,.25)}
+.badge-cog{background:rgba(245,158,11,.1);color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
+.badge-noncog{background:rgba(139,148,158,.1);color:var(--muted);border:1px solid var(--border)}
+.badge-map{background:rgba(37,99,235,.12);color:var(--accent-light);border:1px solid rgba(37,99,235,.25)}
+.rc-text{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:12px}
+.rc-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid var(--border)}
+.rc-meta span strong{color:var(--text)}
+.empty{text-align:center;padding:60px 24px;color:var(--muted)}
+.empty svg{width:48px;height:48px;stroke:var(--border);fill:none;stroke-width:1.5;margin:0 auto 16px;display:block}
+.loading{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/tools" class="nav-brand">
+    <div class="nav-logo"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+    <span class="nav-name">BNS / IPC Section Lookup</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>BNS / IPC Section Lookup</h1>
+  <p>Search any section of Bharatiya Nyaya Sanhita 2023 or Indian Penal Code. Get full text, punishment, bailable status, and IPC ↔ BNS mapping.</p>
+</div>
+
+<div class="search-box">
+  <div class="tab-row">
+    <button class="tab active" onclick="setTab('both')">BNS + IPC</button>
+    <button class="tab" onclick="setTab('bns')">BNS 2023 Only</button>
+    <button class="tab" onclick="setTab('ipc')">IPC Only</button>
+  </div>
+  <div class="search-wrap">
+    <input class="search-input" id="searchInput" placeholder="Search section number or keyword — e.g. 302, murder, theft, rape..." oninput="debounce()">
+    <button class="search-btn" onclick="doSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+  </div>
+</div>
+
+<div class="results" id="results">
+  <div class="empty">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <p>Search a section number or keyword above</p>
+    <p style="font-size:12px;margin-top:8px">e.g. "302", "murder", "theft", "cheque bounce", "420"</p>
+  </div>
+</div>
+
+<script>
+let currentTab = 'both';
+let timer = null;
+
+const SECTIONS = [
+  // BNS 2023 sections (key criminal ones)
+  {law:'BNS',sec:'103',title:'Murder',text:'Whoever commits murder shall be punished with death or imprisonment for life, and shall also be liable to fine.',punishment:'Death or Life Imprisonment + Fine',bailable:false,cognizable:true,ipc:'302',triable:'Sessions Court'},
+  {law:'BNS',sec:'104',title:'Culpable Homicide not amounting to Murder',text:'Whoever commits culpable homicide not amounting to murder shall be punished with imprisonment for life, or imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.',punishment:'Life imprisonment or up to 10 years + Fine',bailable:false,cognizable:true,ipc:'304',triable:'Sessions Court'},
+  {law:'BNS',sec:'109',title:'Abetment of Suicide',text:'If any person commits suicide, whoever abets the commission of such suicide shall be punished with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.',punishment:'Up to 10 years + Fine',bailable:false,cognizable:true,ipc:'306',triable:'Sessions Court'},
+  {law:'BNS',sec:'115',title:'Voluntarily causing hurt',text:'Whoever voluntarily causes hurt to any person shall be punished with imprisonment of either description for a term which may extend to one year, or with fine which may extend to ten thousand rupees, or with both.',punishment:'Up to 1 year or Fine up to ₹10,000 or both',bailable:true,cognizable:false,ipc:'323',triable:'Any Magistrate'},
+  {law:'BNS',sec:'116',title:'Voluntarily causing grievous hurt',text:'Whoever voluntarily causes grievous hurt shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.',punishment:'Up to 7 years + Fine',bailable:false,cognizable:true,ipc:'325',triable:'Magistrate First Class'},
+  {law:'BNS',sec:'117',title:'Voluntarily causing grievous hurt by dangerous weapons',text:'Whoever, except in the case provided for by section 121, voluntarily causes grievous hurt by means of any instrument for shooting, stabbing or cutting, or any instrument which, used as a weapon of offence, is likely to cause death, or by means of fire or any heated substance, shall be punished with imprisonment for life, or with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.',punishment:'Life imprisonment or up to 10 years + Fine',bailable:false,cognizable:true,ipc:'326',triable:'Sessions Court'},
+  {law:'BNS',sec:'121',title:'Assault or criminal force to woman with intent to outrage her modesty',text:'Whoever assaults or uses criminal force to any woman, intending to outrage or knowing it to be likely that he will thereby outrage her modesty, shall be punished with imprisonment of either description for a term which shall not be less than one year but which may extend to five years, and shall also be liable to fine.',punishment:'1 to 5 years + Fine',bailable:false,cognizable:true,ipc:'354',triable:'Any Magistrate'},
+  {law:'BNS',sec:'124',title:'Stalking',text:'Any man who follows a woman and contacts, or attempts to contact such woman to foster personal interaction repeatedly despite a clear indication of disinterest by such woman or monitors the use by a woman of the internet, email or any other form of electronic communication commits the offence of stalking.',punishment:'First conviction: up to 3 years + Fine. Second conviction: up to 5 years + Fine',bailable:false,cognizable:true,ipc:'354D',triable:'Any Magistrate'},
+  {law:'BNS',sec:'63',title:'Rape',text:'A man is said to commit rape if he has sexual intercourse with a woman under circumstances falling under any of the following seven descriptions: Against her will, Without her consent, With her consent by putting her in fear of death or hurt, etc.',punishment:'Rigorous imprisonment not less than 10 years, may extend to life + Fine',bailable:false,cognizable:true,ipc:'376',triable:'Sessions Court'},
+  {law:'BNS',sec:'303',title:'Theft',text:'Whoever, intending to take dishonestly any moveable property out of the possession of any person without that person\'s consent, moves that property in order to such taking, is said to commit theft.',punishment:'Up to 3 years or Fine or Both',bailable:true,cognizable:true,ipc:'378/379',triable:'Any Magistrate'},
+  {law:'BNS',sec:'308',title:'Extortion',text:'Whoever intentionally puts any person in fear of any injury to that person, or to any other, and thereby dishonestly induces the person so put in fear to deliver to any person any property, or valuable security or anything signed or sealed which may be converted into a valuable security, commits extortion.',punishment:'Up to 3 years or Fine or Both',bailable:false,cognizable:true,ipc:'383/384',triable:'Any Magistrate'},
+  {law:'BNS',sec:'316',title:'Criminal breach of trust',text:'Whoever, being in any manner entrusted with property, or with any dominion over property, dishonestly misappropriates or converts to his own use that property, or dishonestly uses or disposes of that property in violation of any direction of law prescribing the mode in which such trust is to be discharged, commits criminal breach of trust.',punishment:'Up to 3 years or Fine or Both',bailable:true,cognizable:true,ipc:'405/406',triable:'Magistrate First Class'},
+  {law:'BNS',sec:'318',title:'Cheating',text:'Whoever, by deceiving any person, fraudulently or dishonestly induces the person so deceived to deliver any property to any person, or to consent that any person shall retain any property, or intentionally induces the person so deceived to do or omit to do anything which he would not do or omit if he were not so deceived, commits cheating.',punishment:'Up to 3 years or Fine or Both',bailable:true,cognizable:false,ipc:'415/417',triable:'Any Magistrate'},
+  {law:'BNS',sec:'319',title:'Cheating by personation',text:'A person is said to cheat by personation if he cheats by pretending to be some other person, or by knowingly substituting one person for another, or representing that he or any other person is a person other than he or they really are.',punishment:'Up to 5 years or Fine or Both',bailable:false,cognizable:true,ipc:'416/419',triable:'Any Magistrate'},
+  {law:'BNS',sec:'320',title:'Cheating and dishonestly inducing delivery of property',text:'Whoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person, or to make, alter or destroy the whole or any part of a valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.',punishment:'Up to 7 years + Fine',bailable:false,cognizable:true,ipc:'420',triable:'Magistrate First Class'},
+  {law:'BNS',sec:'329',title:'Criminal trespass',text:'Whoever enters into or upon property in the possession of another with intent to commit an offence or to intimidate, insult or annoy any person in possession of such property, commits criminal trespass.',punishment:'Up to 3 months or Fine up to ₹5,000 or Both',bailable:true,cognizable:false,ipc:'441/447',triable:'Any Magistrate'},
+  {law:'BNS',sec:'351',title:'Criminal intimidation',text:'Whoever threatens another with any injury to his person, reputation or property, or to the person or reputation of any one in whom that person is interested, with intent to cause alarm to that person, or to cause that person to do any act which he is not legally bound to do, or to omit to do any act which that person is legally entitled to do, as the means of avoiding the execution of such threat, commits criminal intimidation.',punishment:'Up to 2 years or Fine or Both',bailable:true,cognizable:false,ipc:'503/506',triable:'Any Magistrate'},
+  {law:'BNS',sec:'356',title:'Defamation',text:'Whoever, by words either spoken or intended to be read, or by signs or by visible representations, makes or publishes any imputation concerning any person intending to harm, or knowing or having reason to believe that such imputation will harm, the reputation of such person, is said to commit defamation.',punishment:'Up to 2 years or Fine or Both',bailable:true,cognizable:false,ipc:'499/500',triable:'Any Magistrate'},
+  {law:'BNS',sec:'191',title:'Rioting',text:'Whenever force or violence is used by an unlawful assembly, or by any member thereof, in prosecution of the common object of such assembly, every member of such assembly is guilty of the offence of rioting.',punishment:'Up to 2 years or Fine or Both',bailable:true,cognizable:true,ipc:'146/147',triable:'Any Magistrate'},
+  {law:'BNS',sec:'238',title:'Counterfeiting currency',text:'Whoever counterfeits, or knowingly performs any part of the process of counterfeiting, any currency note or bank note shall be punished with imprisonment for life, or with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.',punishment:'Life imprisonment or up to 10 years + Fine',bailable:false,cognizable:true,ipc:'489A',triable:'Sessions Court'},
+
+  // IPC sections
+  {law:'IPC',sec:'302',title:'Murder',text:'Whoever commits murder shall be punished with death, or imprisonment for life, and shall also be liable to fine.',punishment:'Death or Life Imprisonment + Fine',bailable:false,cognizable:true,bns:'103',triable:'Sessions Court'},
+  {law:'IPC',sec:'304',title:'Culpable Homicide not amounting to Murder',text:'Whoever commits culpable homicide not amounting to murder shall be punished with imprisonment for life, or imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.',punishment:'Life imprisonment or up to 10 years + Fine',bailable:false,cognizable:true,bns:'104',triable:'Sessions Court'},
+  {law:'IPC',sec:'306',title:'Abetment of Suicide',text:'If any person commits suicide, whoever abets the commission of such suicide shall be punished with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.',punishment:'Up to 10 years + Fine',bailable:false,cognizable:true,bns:'109',triable:'Sessions Court'},
+  {law:'IPC',sec:'307',title:'Attempt to Murder',text:'Whoever does any act with such intention or knowledge, and under such circumstances that, if he by that act caused death, he would be guilty of murder, shall be punished with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.',punishment:'Up to 10 years + Fine (if hurt caused: Life imprisonment)',bailable:false,cognizable:true,bns:'109',triable:'Sessions Court'},
+  {law:'IPC',sec:'323',title:'Voluntarily causing hurt',text:'Whoever, except in the case provided for by section 334, voluntarily causes hurt, shall be punished with imprisonment of either description for a term which may extend to one year, or with fine which may extend to one thousand rupees, or with both.',punishment:'Up to 1 year or Fine up to ₹1,000 or Both',bailable:true,cognizable:false,bns:'115',triable:'Any Magistrate'},
+  {law:'IPC',sec:'325',title:'Voluntarily causing grievous hurt',text:'Whoever, except in the case provided for by section 335, voluntarily causes grievous hurt, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.',punishment:'Up to 7 years + Fine',bailable:false,cognizable:true,bns:'116',triable:'Magistrate First Class'},
+  {law:'IPC',sec:'354',title:'Assault or criminal force to woman with intent to outrage her modesty',text:'Whoever assaults or uses criminal force to any woman, intending to outrage or knowing it to be likely that he will thereby outrage her modesty, shall be punished with imprisonment of either description for a term which shall not be less than one year but which may extend to five years, and shall also be liable to fine.',punishment:'1 to 5 years + Fine',bailable:false,cognizable:true,bns:'121',triable:'Any Magistrate'},
+  {law:'IPC',sec:'376',title:'Rape',text:'Whoever commits rape shall be punished with rigorous imprisonment of either description for a term which shall not be less than ten years, but which may extend to imprisonment for life, and shall also be liable to fine.',punishment:'Rigorous imprisonment not less than 10 years, may extend to life + Fine',bailable:false,cognizable:true,bns:'63',triable:'Sessions Court'},
+  {law:'IPC',sec:'378',title:'Theft',text:'Whoever, intending to take dishonestly any moveable property out of the possession of any person without that person\'s consent, moves that property in order to such taking, is said to commit theft.',punishment:'Up to 3 years or Fine or Both',bailable:true,cognizable:true,bns:'303',triable:'Any Magistrate'},
+  {law:'IPC',sec:'379',title:'Punishment for theft',text:'Whoever commits theft shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both.',punishment:'Up to 3 years or Fine or Both',bailable:true,cognizable:true,bns:'303',triable:'Any Magistrate'},
+  {law:'IPC',sec:'384',title:'Punishment for extortion',text:'Whoever commits extortion shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both.',punishment:'Up to 3 years or Fine or Both',bailable:false,cognizable:true,bns:'308',triable:'Any Magistrate'},
+  {law:'IPC',sec:'406',title:'Punishment for criminal breach of trust',text:'Whoever commits criminal breach of trust shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both.',punishment:'Up to 3 years or Fine or Both',bailable:true,cognizable:true,bns:'316',triable:'Magistrate First Class'},
+  {law:'IPC',sec:'415',title:'Cheating',text:'Whoever, by deceiving any person, fraudulently or dishonestly induces the person so deceived to deliver any property to any person, or to consent that any person shall retain any property, or intentionally induces the person so deceived to do or omit to do anything which he would not do or omit if he were not so deceived, and which act or omission causes or is likely to cause damage or harm to that person in body, mind, reputation or property, is said to cheat.',punishment:'Up to 1 year or Fine or Both',bailable:true,cognizable:false,bns:'318',triable:'Any Magistrate'},
+  {law:'IPC',sec:'420',title:'Cheating and dishonestly inducing delivery of property',text:'Whoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person, or to make, alter or destroy the whole or any part of a valuable security, or anything which is signed or sealed, and which is capable of being converted into a valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.',punishment:'Up to 7 years + Fine',bailable:false,cognizable:true,bns:'320',triable:'Magistrate First Class'},
+  {law:'IPC',sec:'447',title:'Punishment for criminal trespass',text:'Whoever commits criminal trespass shall be punished with imprisonment of either description for a term which may extend to three months, or with fine which may extend to five hundred rupees, or with both.',punishment:'Up to 3 months or Fine up to ₹500 or Both',bailable:true,cognizable:false,bns:'329',triable:'Any Magistrate'},
+  {law:'IPC',sec:'498A',title:'Husband or relative of husband of a woman subjecting her to cruelty',text:'Whoever, being the husband or the relative of the husband of a woman, subjects such woman to cruelty shall be punished with imprisonment for a term which may extend to three years and shall also be liable to fine.',punishment:'Up to 3 years + Fine',bailable:false,cognizable:true,bns:'85',triable:'Magistrate First Class'},
+  {law:'IPC',sec:'499',title:'Defamation',text:'Whoever, by words either spoken or intended to be read, or by signs or by visible representations, makes or publishes any imputation concerning any person intending to harm, or knowing or having reason to believe that such imputation will harm, the reputation of such person, is said, except in the cases hereinafter excepted, to defame that person.',punishment:'Up to 2 years or Fine or Both',bailable:true,cognizable:false,bns:'356',triable:'Any Magistrate'},
+  {law:'IPC',sec:'500',title:'Punishment for defamation',text:'Whoever defames another shall be punished with simple imprisonment for a term which may extend to two years, or with fine, or with both.',punishment:'Up to 2 years or Fine or Both',bailable:true,cognizable:false,bns:'356',triable:'Any Magistrate'},
+  {law:'IPC',sec:'503',title:'Criminal intimidation',text:'Whoever threatens another with any injury to his person, reputation or property, or to the person or reputation of any one in whom that person is interested, with intent to cause alarm to that person, or to cause that person to do any act which he is not legally bound to do, or to omit to do any act which that person is legally entitled to do, as the means of avoiding the execution of such threat, commits criminal intimidation.',punishment:'Up to 2 years or Fine or Both',bailable:true,cognizable:false,bns:'351',triable:'Any Magistrate'},
+  {law:'IPC',sec:'506',title:'Punishment for criminal intimidation',text:'Whoever commits the offence of criminal intimidation shall be punished with imprisonment of either description for a term which may extend to two years, or with fine, or with both.',punishment:'Up to 2 years or Fine or Both',bailable:true,cognizable:false,bns:'351',triable:'Any Magistrate'},
+  {law:'IPC',sec:'509',title:'Word, gesture or act intended to insult the modesty of a woman',text:'Whoever, intending to insult the modesty of any woman, utters any word, makes any sound or gesture, or exhibits any object, intending that such word or sound shall be heard, or that such gesture or object shall be seen, by such woman, or intrudes upon the privacy of such woman, shall be punished with simple imprisonment for a term which may extend to three years, and also with fine.',punishment:'Up to 3 years + Fine',bailable:true,cognizable:true,bns:'79',triable:'Any Magistrate'},
+
+  // NI Act
+  {law:'NI Act',sec:'138',title:'Dishonour of cheque for insufficiency of funds',text:'Where any cheque drawn by a person on an account maintained by him with a banker for payment of any amount of money to another person from out of that account for the discharge, in whole or in part, of any debt or other liability, is returned by the bank unpaid, either because of the amount of money standing to the credit of that account is insufficient to honour the cheque or that it exceeds the arrangement made with that bank, such person shall be deemed to have committed an offence.',punishment:'Up to 2 years or Fine up to twice the cheque amount or Both',bailable:true,cognizable:false,bns:'N/A',triable:'Judicial Magistrate First Class'},
+];
+
+function setTab(tab){
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    t.classList.toggle('active',['both','bns','ipc'][i]===tab);
+  });
+  doSearch();
+}
+
+function debounce(){
+  clearTimeout(timer);
+  timer=setTimeout(doSearch,300);
+}
+
+function doSearch(){
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
+  const el=document.getElementById('results');
+  if(!q){
+    el.innerHTML='<div class="empty"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p>Search a section number or keyword above</p><p style="font-size:12px;margin-top:8px">e.g. "302", "murder", "theft", "cheque bounce", "420"</p></div>';
+    return;
+  }
+  let filtered=SECTIONS.filter(s=>{
+    if(currentTab==='bns' && s.law!=='BNS') return false;
+    if(currentTab==='ipc' && s.law!=='IPC' && s.law!=='NI Act') return false;
+    return s.sec.includes(q)||s.title.toLowerCase().includes(q)||s.text.toLowerCase().includes(q)||(s.ipc&&s.ipc.includes(q))||(s.bns&&s.bns.includes(q));
+  });
+  if(!filtered.length){
+    el.innerHTML='<div class="empty"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p>No results found for "'+q+'"</p><p style="font-size:12px;margin-top:8px">Try a different section number or keyword</p></div>';
+    return;
+  }
+  el.innerHTML=filtered.map(s=>`
+    <div class="result-card">
+      <div class="rc-top">
+        <div>
+          <div class="rc-section">${s.law} Section ${s.sec}</div>
+          <div class="rc-title">${s.title}</div>
+        </div>
+        <div class="badges">
+          <span class="badge ${s.bailable?'badge-bail':'badge-nonbail'}">${s.bailable?'Bailable':'Non-Bailable'}</span>
+          <span class="badge ${s.cognizable?'badge-cog':'badge-noncog'}">${s.cognizable?'Cognizable':'Non-Cognizable'}</span>
+          ${s.ipc?`<span class="badge badge-map">IPC ${s.ipc}</span>`:''}
+          ${s.bns?`<span class="badge badge-map">BNS ${s.bns}</span>`:''}
+        </div>
+      </div>
+      <div class="rc-text">${s.text}</div>
+      <div class="rc-meta">
+        <span><strong>Punishment:</strong> ${s.punishment}</span>
+        <span><strong>Triable by:</strong> ${s.triable}</span>
+      </div>
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>
