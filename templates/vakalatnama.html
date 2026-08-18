@@ -113,11 +113,11 @@ textarea.field-input{resize:vertical;min-height:52px}
 
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  html,body{background:#d4e8c8!important;margin:0;padding:0;height:100%}
+  html,body{background:#fff!important;margin:0;padding:0}
   nav,.form-panel,.preview-label{display:none!important}
-  .app{display:block;height:100%}
-  .preview-panel{background:#d4e8c8!important;padding:0;max-height:none;min-height:100vh;display:block}
-  .paper{box-shadow:none;margin:0;width:100%;border:none;padding:10mm 14mm;min-height:297mm;background:#d4e8c8!important}
+  .app{display:block}
+  .preview-panel{background:#fff!important;padding:0;max-height:none;display:block}
+  .paper{box-shadow:none;margin:0;width:100%;border:none;padding:10mm 14mm;min-height:297mm;background:#fff!important}
   @page{size:A4;margin:0}
 }
 </style>
@@ -177,7 +177,7 @@ textarea.field-input{resize:vertical;min-height:52px}
       </div>
       <div class="field-group">
         <label class="field-label">Year <span class="field-limit">4 digits</span></label>
-        <input class="field-input" id="year" placeholder="2024" maxlength="4" oninput="update(this,'year',4)">
+        <input class="field-input" id="year" placeholder="2026" maxlength="4" oninput="update(this,'year',4)">
       </div>
     </div>
 
@@ -254,7 +254,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 
       <div class="suit-line">
         <span>Suit/Appeal No.&nbsp;<span class="suit-fill" id="p-suitNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
-        <span>JURISDICTION of 20<span id="p-year"></span></span>
+        <span>JURISDICTION of <span id="p-year"></span></span>
       </div>
 
       <div style="margin-bottom:1mm;font-size:9.5pt">In re :-</div>
