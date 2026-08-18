@@ -63,15 +63,16 @@ textarea.field-input{resize:vertical;min-height:52px}
 
 /* Paper */
 .paper{
-  width:216mm;min-height:356mm;
+  width:216mm;
+  min-height:356mm;
   background:#d4e8c8;
   border:1px solid #b0c8a0;
   box-shadow:0 4px 24px rgba(0,0,0,.15);
-  padding:12mm 14mm 12mm 14mm;
+  padding:12mm 16mm 16mm 16mm;
   font-family:'EB Garamond',serif;
-  font-size:10.5pt;
+  font-size:11pt;
   color:#111;
-  line-height:1.5;
+  line-height:1.6;
 }
 
 .top-box{float:right;border:1px solid #444;padding:5px 8px;margin:0 0 4px 12px;width:68mm;font-size:8.5pt}
@@ -111,22 +112,13 @@ textarea.field-input{resize:vertical;min-height:52px}
 .sign-name{font-size:7.5pt;margin-top:1px;word-break:break-word}
 .sign-col-center{text-align:center;font-size:7pt;flex:1.4;line-height:1.4}
 
-@media print{
+@media print{nav,.form-panel,.preview-label{display:none!important}.app{display:block}.preview-panel{padding:0;max-height:none;display:block;background:#fff!important}.paper{box-shadow:none!important;border:none!important;margin:0!important;width:216mm!important;min-height:356mm!important;padding:12mm 16mm 16mm 16mm!important;background:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}@page{size:legal portrait;margin:0}}
+  body{background:none}
   nav,.form-panel,.preview-label{display:none!important}
   .app{display:block}
-  .preview-panel{padding:0;max-height:none;display:block;background:#fff!important}
-  .paper{
-    box-shadow:none!important;
-    border:none!important;
-    margin:0!important;
-    width:100%!important;
-    min-height:0!important;
-    padding:10mm 14mm!important;
-    background:#fff!important;
-    -webkit-print-color-adjust:exact!important;
-    print-color-adjust:exact!important;
-  }
-  @page{size:legal portrait;margin:0}
+  .preview-panel{background:none!important;padding:0;max-height:none}
+  .paper{box-shadow:none;margin:0;width:100%;border:none;padding:10mm 14mm}
+  @page{size:A4;margin:0}
 }
 </style>
 </head>
@@ -158,30 +150,30 @@ textarea.field-input{resize:vertical;min-height:52px}
 
     <div class="two-col">
       <div class="field-group">
-        <label class="field-label">FIR No. <span class="field-limit">max 10 chars</span></label>
-        <input class="field-input" id="firNo" placeholder="e.g. 123/2024" maxlength="10" oninput="update(this,'firNo',10)">
+        <label class="field-label">FIR No. <span class="field-limit">max 15</span></label>
+        <input class="field-input" id="firNo" placeholder="e.g. 123/2024" maxlength="15" oninput="update(this,'firNo',15)">
       </div>
       <div class="field-group">
         <label class="field-label">C.No. <span class="field-limit">max 10 chars</span></label>
-        <input class="field-input" id="cNo" placeholder="e.g. 456" maxlength="10" oninput="update(this,'cNo',10)">
+        <input class="field-input" id="cNo" placeholder="e.g. 456" maxlength="15" oninput="update(this,'cNo',15)">
       </div>
     </div>
 
     <div class="two-col">
       <div class="field-group">
-        <label class="field-label">U/S (Sections) <span class="field-limit">max 30</span></label>
-        <input class="field-input" id="us" placeholder="e.g. 302 IPC" maxlength="30" oninput="update(this,'us',30)">
+        <label class="field-label">U/S (Sections) <span class="field-limit">max 60</span></label>
+        <input class="field-input" id="us" placeholder="e.g. 302 IPC / BNS" maxlength="60" oninput="update(this,'us',60)">
       </div>
       <div class="field-group">
-        <label class="field-label">P.S. <span class="field-limit">max 20</span></label>
-        <input class="field-input" id="ps" placeholder="e.g. Kotwali" maxlength="20" oninput="update(this,'ps',20)">
+        <label class="field-label">P.S. <span class="field-limit">max 40</span></label>
+        <input class="field-input" id="ps" placeholder="e.g. Kotwali" maxlength="40" oninput="update(this,'ps',40)">
       </div>
     </div>
 
     <div class="two-col">
       <div class="field-group">
-        <label class="field-label">District <span class="field-limit">max 25</span></label>
-        <input class="field-input" id="distt" placeholder="e.g. Lucknow" maxlength="25" oninput="update(this,'distt',25)">
+        <label class="field-label">District <span class="field-limit">max 40</span></label>
+        <input class="field-input" id="distt" placeholder="e.g. Lucknow" maxlength="40" oninput="update(this,'distt',40)">
       </div>
       <div class="field-group">
         <label class="field-label">Year <span class="field-limit">4 digits</span></label>
@@ -190,44 +182,44 @@ textarea.field-input{resize:vertical;min-height:52px}
     </div>
 
     <div class="field-group">
-      <label class="field-label">In the Court of <span class="field-limit">max 60</span></label>
-      <input class="field-input" id="court" placeholder="e.g. Sessions Judge, Lucknow" maxlength="60" oninput="update(this,'court',60)">
+      <label class="field-label">In the Court of <span class="field-limit">max 120</span></label>
+      <input class="field-input" id="court" placeholder="e.g. Sessions Judge, Lucknow" maxlength="120" oninput="update(this,'court',120)">
     </div>
 
     <div class="field-group">
-      <label class="field-label">Suit/Appeal No. <span class="field-limit">max 20</span></label>
-      <input class="field-input" id="suitNo" placeholder="e.g. 45/2024" maxlength="20" oninput="update(this,'suitNo',20)">
+      <label class="field-label">Suit/Appeal No. <span class="field-limit">max 30</span></label>
+      <input class="field-input" id="suitNo" placeholder="e.g. 45/2024" maxlength="30" oninput="update(this,'suitNo',30)">
     </div>
 
     <div class="section-divider">Parties</div>
 
     <div class="field-group">
-      <label class="field-label">Plaintiff / Petitioner / Complainant <span class="field-limit">max 120</span></label>
-      <textarea class="field-input" id="plaintiff" placeholder="Full name and address" maxlength="120" oninput="update(this,'plaintiff',120)"></textarea>
+      <label class="field-label">Plaintiff / Petitioner / Complainant <span class="field-limit">max 250</span></label>
+      <textarea class="field-input" id="plaintiff" placeholder="Full name and address" maxlength="250" oninput="update(this,'plaintiff',250)"></textarea>
     </div>
 
     <div class="field-group">
-      <label class="field-label">Defendant / Respondent / Accused <span class="field-limit">max 120</span></label>
-      <textarea class="field-input" id="defendant" placeholder="Full name and address" maxlength="120" oninput="update(this,'defendant',120)"></textarea>
+      <label class="field-label">Defendant / Respondent / Accused <span class="field-limit">max 250</span></label>
+      <textarea class="field-input" id="defendant" placeholder="Full name and address" maxlength="250" oninput="update(this,'defendant',250)"></textarea>
     </div>
 
     <div class="section-divider">Client Details</div>
 
     <div class="field-group">
       <label class="field-label">I/We — Client name & address <span class="field-limit">max 200</span></label>
-      <textarea class="field-input" id="client" placeholder="Full name, S/O D/O, R/O address..." maxlength="200" oninput="update(this,'client',200)"></textarea>
+      <textarea class="field-input" id="client" placeholder="Full name, S/O D/O, R/O address..." maxlength="400" oninput="update(this,'client',400)"></textarea>
     </div>
 
     <div class="field-group">
-      <label class="field-label">The above named (short name) <span class="field-limit">max 60</span></label>
-      <input class="field-input" id="clientShort" placeholder="Short name of client" maxlength="60" oninput="update(this,'clientShort',60)">
+      <label class="field-label">The above named (short name) <span class="field-limit">max 100</span></label>
+      <input class="field-input" id="clientShort" placeholder="Short name of client" maxlength="100" oninput="update(this,'clientShort',100)">
     </div>
 
     <div class="section-divider">Advocate</div>
 
     <div class="field-group">
-      <label class="field-label">Advocate Name <span class="field-limit">max 50</span></label>
-      <input class="field-input" id="advocate" placeholder="e.g. Adv. Ramesh Kumar" maxlength="50" oninput="update(this,'advocate',50)">
+      <label class="field-label">Advocate Name <span class="field-limit">max 80</span></label>
+      <input class="field-input" id="advocate" placeholder="e.g. Adv. Ramesh Kumar" maxlength="80" oninput="update(this,'advocate',80)">
     </div>
 
     <div class="section-divider">Date</div>
