@@ -152,6 +152,15 @@ async def court_fee(request: Request):
     p = os.path.join(os.path.dirname(__file__), "templates", "court-fee.html")
     return HTMLResponse(content=open(p).read())
 
+
+@app.get("/legal-notice", response_class=HTMLResponse)
+async def legal_notice(request: Request):
+    p = os.path.join(os.path.dirname(__file__), "templates", "legal-notice.html")
+    try:
+        return HTMLResponse(content=open(p).read())
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Template not found")
+
 @app.get("/health")
 async def health():
     return {
