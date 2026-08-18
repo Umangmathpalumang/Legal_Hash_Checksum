@@ -111,8 +111,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 .sign-name{font-size:7.5pt;margin-top:1px;word-break:break-word}
 .sign-col-center{text-align:center;font-size:7pt;flex:1.4;line-height:1.4}
 
-@media print{
-  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}html,body{background:#fff!important;margin:0;padding:0}nav,.form-panel,.preview-label{display:none!important}.app{display:block}.preview-panel{background:#fff!important;padding:0;max-height:none;display:block}.paper{box-shadow:none;margin:0;width:100%;border:none;min-height:0;padding:10mm 14mm;background:#fff!important}@page{size:legal;margin:0}}
   body{background:none}
   nav,.form-panel,.preview-label{display:none!important}
   .app{display:block}
