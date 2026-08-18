@@ -119,6 +119,23 @@ async def vakalatnama(request: Request):
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Template not found")
 
+
+@app.get("/memo-appearance", response_class=HTMLResponse)
+async def memo_appearance(request: Request):
+    html_path = os.path.join(os.path.dirname(__file__), "templates", "memo-appearance.html")
+    try:
+        return HTMLResponse(content=open(html_path).read())
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Template not found")
+
+@app.get("/bail-bond", response_class=HTMLResponse)
+async def bail_bond(request: Request):
+    html_path = os.path.join(os.path.dirname(__file__), "templates", "bail-bond.html")
+    try:
+        return HTMLResponse(content=open(html_path).read())
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Template not found")
+
 @app.get("/health")
 async def health():
     return {

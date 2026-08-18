@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memorandum of Appearance — Indian Courts</title>
+<meta name="description" content="Free Memorandum of Appearance generator for Indian courts. Fill details and print court-ready memo instantly.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--input-bg:#0d1117;--input-border:#30363d}
+@media(prefers-color-scheme:light){:root{--bg:#f6f8fa;--surface:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a;--input-bg:#fff;--input-border:#d1d9e0}}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{font-size:14px;font-weight:700}
+.nav-links{display:flex;gap:8px}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px;transition:border-color .2s}
+.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
+.btn-print{font-size:13px;font-weight:600;color:#fff;background:var(--accent);border:none;padding:8px 18px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn-print svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.app{display:grid;grid-template-columns:340px 1fr;min-height:calc(100vh - 57px)}
+@media(max-width:860px){.app{grid-template-columns:1fr}}
+
+.form-panel{background:var(--surface);border-right:1px solid var(--border);padding:24px;overflow-y:auto;max-height:calc(100vh - 57px)}
+.form-panel h2{font-size:15px;font-weight:700;margin-bottom:4px}
+.form-panel>p{font-size:12px;color:var(--muted);margin-bottom:20px}
+.section-divider{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-light);padding:10px 0 8px;border-top:1px solid var(--border);margin-top:6px;margin-bottom:12px}
+.field-group{margin-bottom:14px}
+.field-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between}
+.field-limit{font-weight:400;text-transform:none;letter-spacing:0;font-size:10px}
+.field-input{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s;outline:none}
+.field-input:focus{border-color:var(--accent)}
+.field-input::placeholder{color:var(--muted)}
+.field-input.warn{border-color:#f59e0b}
+textarea.field-input{resize:vertical;min-height:52px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-clear{width:100%;padding:8px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-size:13px;cursor:pointer;margin-top:6px}
+.btn-clear:hover{border-color:var(--accent);color:var(--accent-light)}
+
+.preview-panel{background:#f0f0f0;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 57px)}
+.preview-label{font-size:11px;color:#888;margin-bottom:12px}
+
+/* Paper */
+.paper{width:200mm;min-height:297mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:20mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.6}
+
+.paper-title{text-align:center;font-size:14pt;font-weight:700;margin-bottom:2mm;text-decoration:underline}
+.paper-subtitle{text-align:center;font-size:11pt;margin-bottom:1mm}
+.paper-of{text-align:center;font-size:11pt;margin-bottom:6mm}
+
+.fill{border-bottom:1px solid #333;display:inline-block;min-width:40px;vertical-align:bottom}
+.fill-line{border-bottom:1px solid #333;display:block;width:100%;margin:1mm 0;min-height:7mm;padding:0 2px;word-break:break-word}
+
+.vs{text-align:center;font-weight:700;margin:4mm 0;font-size:12pt}
+.label-right{text-align:right;font-size:9.5pt;margin-top:1mm}
+.sign-block{margin-top:20mm;text-align:right}
+.sign-line{border-top:1px solid #333;display:inline-block;width:60mm;margin-bottom:2px}
+
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  html,body{background:#fff!important}
+  nav,.form-panel,.preview-label{display:none!important}
+  .app{display:block}
+  .preview-panel{background:#fff!important;padding:0;max-height:none;display:block}
+  .paper{box-shadow:none;margin:0;width:100%;border:none;min-height:0}
+  @page{size:A4;margin:15mm 18mm}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/tools" class="nav-brand">
+    <div class="nav-logo"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+    <span class="nav-name">Memo of Appearance</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
+    <button class="btn-print" onclick="window.print()">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / Save PDF
+    </button>
+  </div>
+</nav>
+
+<div class="app">
+  <div class="form-panel">
+    <h2>Fill Memo of Appearance</h2>
+    <p>Live preview updates as you type.</p>
+
+    <div class="section-divider">Advocate Details</div>
+    <div class="field-group">
+      <label class="field-label">Advocate Name <span class="field-limit">max 60</span></label>
+      <input class="field-input" id="advName" placeholder="e.g. Adv. Ramesh Kumar" maxlength="60" oninput="render()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Qualification <span class="field-limit">max 40</span></label>
+      <input class="field-input" id="advQual" placeholder="e.g. B.A. LL.B." maxlength="40" oninput="render()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Designation <span class="field-limit">max 30</span></label>
+      <input class="field-input" id="advDesig" placeholder="e.g. Advocate / Pleader" maxlength="30" oninput="render()">
+    </div>
+
+    <div class="section-divider">Case Details</div>
+    <div class="field-group">
+      <label class="field-label">In the Court of <span class="field-limit">max 80</span></label>
+      <input class="field-input" id="court" placeholder="e.g. Sessions Judge, Lucknow" maxlength="80" oninput="render()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">In Re (Plaintiff/Case Title) <span class="field-limit">max 120</span></label>
+      <textarea class="field-input" id="inRe" placeholder="Name of plaintiff / petitioner / complainant" maxlength="120" oninput="render()"></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Versus (Defendant) <span class="field-limit">max 120</span></label>
+      <textarea class="field-input" id="versus" placeholder="Name of defendant / respondent / accused" maxlength="120" oninput="render()"></textarea>
+    </div>
+
+    <div class="section-divider">Appearance</div>
+    <div class="field-group">
+      <label class="field-label">Appearing on behalf of <span class="field-limit">max 150</span></label>
+      <textarea class="field-input" id="behalf" placeholder="Name and address of client" maxlength="150" oninput="render()"></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Authorized to appear by <span class="field-limit">max 150</span></label>
+      <textarea class="field-input" id="authorizedBy" placeholder="Name of authorizing party" maxlength="150" oninput="render()"></textarea>
+    </div>
+
+    <div class="section-divider">Date</div>
+    <div class="field-group">
+      <label class="field-label">Date <span class="field-limit">max 20</span></label>
+      <input class="field-input" id="date" maxlength="20" oninput="render()">
+    </div>
+
+    <button class="btn-clear" onclick="clearAll()">Clear all fields</button>
+  </div>
+
+  <div class="preview-panel">
+    <p class="preview-label">Live preview · Click "Print / Save PDF" to download</p>
+    <div class="paper">
+      <div class="paper-title">Memorandum of Appearance</div>
+      <div class="paper-subtitle">OF</div>
+      <div class="paper-of" id="p-advName">&nbsp;</div>
+      <div style="text-align:center;font-size:10pt;margin-bottom:2mm" id="p-advQual">&nbsp;</div>
+      <div style="text-align:center;font-size:10pt;margin-bottom:8mm" id="p-advDesig">&nbsp;</div>
+
+      <div style="margin-bottom:2mm">In the Court of <span class="fill" id="p-court" style="min-width:100mm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      <div style="margin-bottom:1mm">In Re :</div>
+      <div class="fill-line" id="p-inRe">&nbsp;</div>
+      <div class="label-right">Plaintiff / Petitioner / Complainant</div>
+
+      <div class="vs">VERSUS</div>
+
+      <div class="fill-line" id="p-versus">&nbsp;</div>
+      <div class="label-right">Defendant / Respondent / Accused</div>
+
+      <div style="margin-top:8mm;margin-bottom:2mm">The undersigned is appearing in the above case on behalf of :</div>
+      <div class="fill-line" id="p-behalf">&nbsp;</div>
+      <div class="fill-line" style="margin-top:1mm">&nbsp;</div>
+
+      <div style="margin-top:4mm;margin-bottom:2mm">He has been authorized to appear by :</div>
+      <div class="fill-line" id="p-authorizedBy">&nbsp;</div>
+      <div class="fill-line" style="margin-top:1mm">&nbsp;</div>
+
+      <div class="sign-block">
+        <div style="margin-bottom:16mm">Date : <span class="fill" id="p-date" style="min-width:40mm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+        <div class="sign-line"></div>
+        <div style="font-size:10pt" id="p-signName">&nbsp;</div>
+        <div style="font-size:9pt;color:#444">Advocate / Pleader</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function v(id){return document.getElementById(id)}
+function gv(id){return v(id)?v(id).value.trim():''}
+function set(id,val){const el=v(id);if(el)el.textContent=val||'\u00a0'}
+
+function render(){
+  set('p-advName',    gv('advName'));
+  set('p-advQual',    gv('advQual'));
+  set('p-advDesig',   gv('advDesig'));
+  set('p-court',      gv('court'));
+  set('p-inRe',       gv('inRe'));
+  set('p-versus',     gv('versus'));
+  set('p-behalf',     gv('behalf'));
+  set('p-authorizedBy', gv('authorizedBy'));
+  set('p-date',       gv('date'));
+  set('p-signName',   gv('advName'));
+}
+
+function clearAll(){
+  ['advName','advQual','advDesig','court','inRe','versus','behalf','authorizedBy','date']
+  .forEach(id=>{const el=v(id);if(el)el.value='';});
+  render();
+}
+
+(function(){
+  const now=new Date();
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  v('date').value=now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+  render();
+})();
+</script>
+</body>
+</html>
