@@ -63,7 +63,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 
 /* Paper */
 .paper{
-  width:216mm;
+  width:216mm;min-height:356mm;
   background:#d4e8c8;
   border:1px solid #b0c8a0;
   box-shadow:0 4px 24px rgba(0,0,0,.15);
@@ -112,13 +112,21 @@ textarea.field-input{resize:vertical;min-height:52px}
 .sign-col-center{text-align:center;font-size:7pt;flex:1.4;line-height:1.4}
 
 @media print{
-  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  body{background:none}
   nav,.form-panel,.preview-label{display:none!important}
   .app{display:block}
-  .preview-panel{background:none!important;padding:0;max-height:none}
-  .paper{box-shadow:none;margin:0;width:100%;border:none;padding:10mm 14mm}
-  @page{size:legal;margin:0}
+  .preview-panel{padding:0;max-height:none;display:block;background:#fff!important}
+  .paper{
+    box-shadow:none!important;
+    border:none!important;
+    margin:0!important;
+    width:100%!important;
+    min-height:0!important;
+    padding:10mm 14mm!important;
+    background:#fff!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  @page{size:legal portrait;margin:0}
 }
 </style>
 </head>
