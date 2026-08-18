@@ -161,6 +161,17 @@ async def legal_notice(request: Request):
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Template not found")
 
+
+@app.get("/law-converter", response_class=HTMLResponse)
+async def law_converter(request: Request):
+    p = os.path.join(os.path.dirname(__file__), "templates", "law-converter.html")
+    return HTMLResponse(content=open(p).read())
+
+@app.get("/legal-dictionary", response_class=HTMLResponse)
+async def legal_dictionary(request: Request):
+    p = os.path.join(os.path.dirname(__file__), "templates", "legal-dictionary.html")
+    return HTMLResponse(content=open(p).read())
+
 @app.get("/health")
 async def health():
     return {

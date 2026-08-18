@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Dictionary — Indian Law Terms</title>
+<meta name="description" content="Free legal dictionary of Indian law terms, Latin maxims, and legal phrases. Search definitions for advocates, law students and litigants.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surface:#161b22;--card:#1c2128;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--green:#22c55e;--amber:#f59e0b;--purple:#c084fc;--teal:#2dd4bf}
+@media(prefers-color-scheme:light){:root{--bg:#f6f8fa;--surface:#fff;--card:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a}}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{font-size:14px;font-weight:700}
+.nav-links{display:flex;gap:8px}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px}
+.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
+
+.hero{text-align:center;padding:40px 24px 24px}
+.hero h1{font-size:clamp(22px,4vw,34px);font-weight:800;margin-bottom:8px}
+.hero h1 span{color:var(--accent-light)}
+.hero p{color:var(--muted);font-size:14px;max-width:480px;margin:0 auto 24px}
+
+/* Category filter */
+.cats{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:20px;padding:0 24px}
+.cat-btn{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:.2s}
+.cat-btn.active,.cat-btn:hover{border-color:var(--accent);color:var(--accent-light);background:rgba(37,99,235,.08)}
+
+/* Search */
+.search-wrap{max-width:560px;margin:0 auto 32px;padding:0 24px;position:relative}
+.search-input{width:100%;background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:13px 50px 13px 18px;font-size:15px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--muted)}
+.search-icon{position:absolute;right:34px;top:50%;transform:translateY(-50%);pointer-events:none}
+.search-icon svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Results grid */
+.results{max-width:1000px;margin:0 auto;padding:0 24px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.dict-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color .2s}
+.dict-card:hover{border-color:var(--accent)}
+.dc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
+.dc-term{font-size:15px;font-weight:700;line-height:1.3;font-family:'EB Garamond',serif}
+.dc-latin{font-size:13px;font-style:italic;font-family:'EB Garamond',serif;color:var(--accent-light);margin-bottom:6px}
+.dc-cat{font-size:10px;font-weight:600;padding:3px 8px;border-radius:12px;white-space:nowrap;flex-shrink:0}
+.cat-civil{background:rgba(37,99,235,.12);color:var(--accent-light);border:1px solid rgba(37,99,235,.2)}
+.cat-criminal{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.2)}
+.cat-latin{background:rgba(192,132,252,.1);color:var(--purple);border:1px solid rgba(192,132,252,.2)}
+.cat-constitutional{background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
+.cat-evidence{background:rgba(45,212,191,.1);color:var(--teal);border:1px solid rgba(45,212,191,.2)}
+.cat-general{background:rgba(139,148,158,.1);color:var(--muted);border:1px solid var(--border)}
+.dc-def{font-size:13px;color:var(--muted);line-height:1.65}
+.dc-ex{font-size:12px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-style:italic}
+.count{text-align:center;color:var(--muted);font-size:13px;margin-bottom:16px;grid-column:1/-1}
+.empty-full{text-align:center;padding:60px 24px;color:var(--muted);grid-column:1/-1}
+.empty-full svg{width:48px;height:48px;stroke:var(--border);fill:none;stroke-width:1.5;margin:0 auto 16px;display:block}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/tools" class="nav-brand">
+    <div class="nav-logo"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+    <span class="nav-name">Legal Dictionary</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1><span>Legal Dictionary</span> — Indian Law</h1>
+  <p>300+ legal terms, Latin maxims, and Indian law phrases explained in plain language.</p>
+</div>
+
+<div class="cats">
+  <button class="cat-btn active" onclick="setCat('all')">All</button>
+  <button class="cat-btn" onclick="setCat('latin')">Latin Maxims</button>
+  <button class="cat-btn" onclick="setCat('criminal')">Criminal Law</button>
+  <button class="cat-btn" onclick="setCat('civil')">Civil Law</button>
+  <button class="cat-btn" onclick="setCat('evidence')">Evidence</button>
+  <button class="cat-btn" onclick="setCat('constitutional')">Constitutional</button>
+  <button class="cat-btn" onclick="setCat('general')">General</button>
+</div>
+
+<div class="search-wrap">
+  <input class="search-input" id="searchInput" placeholder="Search terms, maxims, definitions..." oninput="render()">
+  <div class="search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+</div>
+
+<div class="results" id="results"></div>
+
+<script>
+let currentCat = 'all';
+
+const TERMS = [
+  // Latin Maxims
+  {term:'Actus Reus',latin:'Actus reus',cat:'latin',def:'The physical act or conduct element of a crime. In criminal law, both actus reus (guilty act) and mens rea (guilty mind) must be proved for conviction.',ex:'In a murder case — the act of shooting is the actus reus.'},
+  {term:'Mens Rea',latin:'Mens rea',cat:'latin',def:'Guilty mind or criminal intention. The mental element of a crime — knowledge, intention, recklessness or negligence required to establish criminal liability.',ex:'A person who accidentally kills has actus reus but not mens rea for murder.'},
+  {term:'Audi Alteram Partem',latin:'Audi alteram partem',cat:'latin',def:'Hear the other side. A fundamental principle of natural justice — no person should be condemned without being given an opportunity to be heard.',ex:'Before dismissing a government employee, a show-cause notice must be given — audi alteram partem.'},
+  {term:'Nemo Judex in Causa Sua',latin:'Nemo judex in causa sua',cat:'latin',def:'No one should be a judge in their own cause. The rule against bias — a decision-maker must be impartial and have no personal interest in the outcome.',ex:'A judge related to a party must recuse themselves from the case.'},
+  {term:'Res Judicata',latin:'Res judicata',cat:'latin',def:'A matter already judged. Once a court has decided a matter, the same parties cannot re-litigate the same issue in another suit. Enshrined in Section 11 CPC.',ex:'If a suit for recovery is dismissed, a second suit on the same facts is barred by res judicata.'},
+  {term:'Res Ipsa Loquitur',latin:'Res ipsa loquitur',cat:'latin',def:'The thing speaks for itself. A doctrine of evidence where the facts of an accident are so obvious that negligence is presumed without direct proof.',ex:'A surgical instrument found inside a patient after surgery — res ipsa loquitur applies.'},
+  {term:'Ex Parte',latin:'Ex parte',cat:'latin',def:'Proceedings conducted in the absence of one party. An ex parte order is passed after hearing only one side.',ex:'An injunction may be granted ex parte in urgent cases without notifying the defendant.'},
+  {term:'Habeas Corpus',latin:'Habeas corpus',cat:'latin',def:'You may have the body. A writ to produce a detained person before the court to examine the legality of detention. Available under Article 226 (High Court) and Article 32 (Supreme Court).',ex:'A person illegally detained by police can be freed via habeas corpus writ.'},
+  {term:'Mandamus',latin:'Mandamus',cat:'latin',def:'We command. A writ directing a public authority, inferior court, or government body to perform a public duty which it has failed to perform.',ex:'Court orders a municipal authority to provide water supply — mandamus.'},
+  {term:'Certiorari',latin:'Certiorari',cat:'latin',def:'To be informed of. A writ to quash an inferior court or tribunal order that was passed without jurisdiction or in violation of natural justice.',ex:'High Court quashes a biased tribunal order via writ of certiorari.'},
+  {term:'Prohibition',latin:'Prohibition',cat:'latin',def:'A writ directing an inferior court to stop exceeding its jurisdiction. Unlike certiorari (which quashes), prohibition prevents future excess of jurisdiction.',ex:'High Court issues prohibition to stop a magistrate from trying a Sessions case.'},
+  {term:'Quo Warranto',latin:'Quo warranto',cat:'latin',def:'By what authority. A writ challenging a person who is holding a public office without legal authority.',ex:'Writ of quo warranto against a person who obtained a government post by fraud.'},
+  {term:'In Loco Parentis',latin:'In loco parentis',cat:'latin',def:'In the place of a parent. A person or institution assumes parental rights and duties over a child — e.g., a school teacher.',ex:'A school owes duty of care to students in loco parentis.'},
+  {term:'Caveat Emptor',latin:'Caveat emptor',cat:'latin',def:'Let the buyer beware. The buyer purchases at their own risk. Now modified by consumer protection laws in India.',ex:'In a property deal, buyer must verify title — caveat emptor principle.'},
+  {term:'Prima Facie',latin:'Prima facie',cat:'latin',def:'At first sight. A matter that appears established at first impression without further investigation. Used to determine if sufficient cause exists.',ex:'Police must have prima facie evidence before arresting.'},
+  {term:'Inter Alia',latin:'Inter alia',cat:'latin',def:'Among other things. Used in legal documents to indicate that what is stated is only part of a longer list.',ex:'The court held, inter alia, that the contract was void.'},
+  {term:'Sub Judice',latin:'Sub judice',cat:'latin',def:'Under judgment / under consideration. A matter currently before a court and not yet decided. It is improper to publicly prejudge a sub judice matter.',ex:'The case is sub judice — no comment should be made in media.'},
+  {term:'Locus Standi',latin:'Locus standi',cat:'latin',def:'Place to stand — the right or capacity to bring an action before a court. A person must have sufficient interest in the matter.',ex:'A stranger has no locus standi to challenge a will to which he is not a party.'},
+  {term:'Ab Initio',latin:'Ab initio',cat:'latin',def:'From the beginning. A contract or act that is void ab initio is treated as if it never existed.',ex:'A contract with a minor is void ab initio under the Indian Contract Act.'},
+  {term:'Bona Fide',latin:'Bona fide',cat:'latin',def:'In good faith. Acting honestly and without intent to defraud. The opposite is mala fide (bad faith).',ex:'A bona fide purchaser for value without notice of defect in title is protected.'},
+  {term:'Mala Fide',latin:'Mala fide',cat:'latin',def:'In bad faith. Actions taken with dishonest motive or fraudulent intent.',ex:'Transfer of property by a debtor to defeat creditors is mala fide.'},
+  {term:'Volenti Non Fit Injuria',latin:'Volenti non fit injuria',cat:'latin',def:'To a willing person, no injury is done. A person who consents to a risk of harm cannot later claim compensation for that harm.',ex:'A boxer who consents to a fight cannot sue for injuries sustained in the bout.'},
+  {term:'Damnum Sine Injuria',latin:'Damnum sine injuria',cat:'latin',def:'Damage without legal injury. A loss suffered without violation of a legal right — no legal remedy available.',ex:'A competitor opens a shop next door causing you business loss — damnum sine injuria.'},
+  {term:'Injuria Sine Damno',latin:'Injuria sine damno',cat:'latin',def:'Legal injury without actual damage. Violation of a legal right even without actual loss — actionable in court.',ex:'Trespass on land even without damage — injuria sine damno — is actionable.'},
+  {term:'Ratio Decidendi',latin:'Ratio decidendi',cat:'latin',def:'The reason for the decision. The legal principle or rule on which a court judgment is based — the binding part of a precedent.',ex:'Only the ratio decidendi of a Supreme Court case binds lower courts.'},
+  {term:'Obiter Dicta',latin:'Obiter dicta',cat:'latin',def:'Things said by the way. Remarks made by a judge that are not essential to the decision — persuasive but not binding.',ex:'A judge\'s comment on an unrelated legal point is obiter dicta.'},
+  {term:'Stare Decisis',latin:'Stare decisis',cat:'latin',def:'Stand by what has been decided. The doctrine of precedent — courts must follow earlier decisions on the same point of law.',ex:'Supreme Court precedents must be followed by all High Courts — stare decisis.'},
+
+  // Criminal Law
+  {term:'FIR — First Information Report',latin:'',cat:'criminal',def:'The first report made to police about a cognizable offence. Registered under Section 154 CrPC / Section 173 BNSS. The FIR sets criminal proceedings in motion.',ex:'In a murder case, the complaint filed at the police station becomes the FIR.'},
+  {term:'Cognizable Offence',latin:'',cat:'criminal',def:'An offence for which police can arrest without a warrant and investigate without magistrate permission. Serious crimes like murder, rape, dacoity are cognizable.',ex:'Murder is a cognizable offence — police can arrest without warrant.'},
+  {term:'Non-Cognizable Offence',latin:'',cat:'criminal',def:'An offence where police cannot arrest without warrant or investigate without magistrate order. Less serious crimes like defamation, assault.',ex:'Defamation is non-cognizable — police need magistrate permission to investigate.'},
+  {term:'Bailable Offence',latin:'',cat:'criminal',def:'An offence where bail is a matter of right — the accused must be released on bail. The right to bail cannot be refused.',ex:'Theft under ₹50 is bailable — accused must be given bail.'},
+  {term:'Non-Bailable Offence',latin:'',cat:'criminal',def:'An offence where bail is discretionary — the court may or may not grant bail based on circumstances. Murder, rape are non-bailable.',ex:'In murder cases, bail is not a right — court must apply its mind before granting.'},
+  {term:'Anticipatory Bail',latin:'',cat:'criminal',def:'Bail granted by Sessions Court or High Court in anticipation of arrest. Under Section 438 CrPC / Section 482 BNSS. Protects person who apprehends arrest.',ex:'A person expecting arrest in a cheating case applies for anticipatory bail.'},
+  {term:'Remand',latin:'',cat:'criminal',def:'Sending an accused person into custody (judicial or police) by a magistrate during investigation. Police remand allows continued interrogation; judicial remand means jail custody.',ex:'Police seek 14-day remand to interrogate the accused in fraud case.'},
+  {term:'Challan / Chargesheet',latin:'',cat:'criminal',def:'The final report filed by police before a magistrate after investigation, detailing evidence and accused persons. Under Section 173 CrPC / Section 193 BNSS. Also called "charge sheet".',ex:'Police file chargesheet within 60 days in sessions cases.'},
+  {term:'Default Bail / Statutory Bail',latin:'',cat:'criminal',def:'Bail granted as a right when police fail to file chargesheet within the prescribed period (60/90 days). Under Section 167(2) CrPC / Section 187 BNSS.',ex:'Accused is entitled to default bail if chargesheet not filed in 60 days.'},
+  {term:'Discharge',latin:'',cat:'criminal',def:'Dropping of charges by the court before a full trial where the court finds no prima facie case. Under Section 227 CrPC / Section 250 BNSS.',ex:'Sessions court discharges accused finding no sufficient material for trial.'},
+  {term:'Acquittal',latin:'',cat:'criminal',def:'A formal finding by a court that the accused is not guilty of the charges. The accused is set free after trial.',ex:'Accused acquitted after prosecution fails to prove guilt beyond reasonable doubt.'},
+  {term:'Conviction',latin:'',cat:'criminal',def:'A formal finding by a court that the accused is guilty of the offence charged. Followed by sentencing.',ex:'After full trial, court convicts accused of theft and sentences to 1 year.'},
+  {term:'Plea Bargaining',latin:'',cat:'criminal',def:'A process where the accused pleads guilty in exchange for a lesser sentence. Under Sections 265A-265L CrPC / Sections 289-300 BNSS. Not available for heinous offences.',ex:'Accused in cheating case pleads guilty via plea bargaining and gets reduced sentence.'},
+  {term:'Compounding of Offence',latin:'',cat:'criminal',def:'Settlement of a criminal case between the complainant and accused with court permission. Under Section 320 CrPC. Not all offences can be compounded.',ex:'Cheque bounce case compounded — accused pays amount and case withdrawn.'},
+  {term:'Warrant',latin:'',cat:'criminal',def:'A written order from a magistrate to arrest a person or search premises. A bailable warrant allows release on bail; a non-bailable warrant does not.',ex:'Court issues non-bailable warrant when accused fails to appear on summons.'},
+  {term:'Summons',latin:'',cat:'criminal',def:'A direction issued by court to a person to appear before it on a specified date. Less severe than warrant — non-compliance leads to warrant.',ex:'Court issues summons to accused to appear and answer charges.'},
+  {term:'Inquest',latin:'',cat:'criminal',def:'A preliminary inquiry into the cause of death, conducted by police or magistrate under Section 174 CrPC / Section 194 BNSS.',ex:'Inquest proceedings held when body found in suspicious circumstances.'},
+  {term:'Zero FIR',latin:'',cat:'criminal',def:'An FIR registered by any police station regardless of jurisdiction, later transferred to the appropriate station. Introduced in BNSS 2023 / Section 173 BNSS.',ex:'Rape victim can register Zero FIR at nearest police station regardless of where incident occurred.'},
+  {term:'Parole',latin:'',cat:'criminal',def:'Temporary release of a prisoner before completion of sentence, subject to conditions and supervision. Prisoner must return at end of parole.',ex:'Prisoner given 30-day parole to attend family emergency.'},
+  {term:'Probation',latin:'',cat:'criminal',def:'A court order releasing an offender without imprisonment, subject to conditions and supervision for a specified period. Under Probation of Offenders Act 1958.',ex:'First-time offender released on probation instead of jail for minor theft.'},
+
+  // Civil Law
+  {term:'Plaintiff',latin:'',cat:'civil',def:'The person who files a civil suit in court. The party who initiates legal proceedings seeking a remedy.',ex:'In a property dispute, the person claiming ownership who files the suit is the plaintiff.'},
+  {term:'Defendant',latin:'',cat:'civil',def:'The person against whom a civil suit is filed. The party who must respond to the plaintiff\'s claim.',ex:'The person alleged to have encroached on the plaintiff\'s land is the defendant.'},
+  {term:'Plaint',latin:'',cat:'civil',def:'The written statement of claim filed by the plaintiff in a civil court to commence a suit. It states facts and reliefs sought.',ex:'Plaintiff files plaint seeking recovery of ₹10 lakh with interest.'},
+  {term:'Written Statement',latin:'',cat:'civil',def:'The written reply filed by the defendant in response to the plaint. Must be filed within 30 days (extendable to 90 days) under CPC.',ex:'Defendant files written statement denying the claim and raising preliminary objections.'},
+  {term:'Injunction',latin:'',cat:'civil',def:'A court order directing a party to do or refrain from doing something. Temporary injunction maintains status quo during trial; permanent injunction is final.',ex:'Court grants temporary injunction stopping construction on disputed land.'},
+  {term:'Stay Order',latin:'',cat:'civil',def:'A court order suspending the operation of another court\'s order or legal proceedings, pending hearing of an appeal or revision.',ex:'High Court grants stay of execution of decree during pendency of appeal.'},
+  {term:'Decree',latin:'',cat:'civil',def:'The formal expression of a court\'s adjudication in a civil suit. A preliminary decree is passed first; a final decree conclusively determines the suit.',ex:'Court passes decree for recovery of ₹10 lakh in favour of plaintiff.'},
+  {term:'Execution',latin:'',cat:'civil',def:'The process of enforcing or giving effect to a decree or order of court. Under Order XXI CPC.',ex:'Decree-holder files execution petition to recover amount from judgment-debtor.'},
+  {term:'Attachment',latin:'',cat:'civil',def:'Seizure of property of a judgment-debtor or accused by court order to satisfy a decree or prevent disposal of assets.',ex:'Court attaches judgment-debtor\'s bank account to recover decreed amount.'},
+  {term:'Interlocutory Order',latin:'',cat:'civil',def:'A temporary order passed during the pendency of a case, not finally disposing of the matter. Includes stay orders, injunctions, directions for discovery.',ex:'Court passes interlocutory order for status quo on property pending trial.'},
+  {term:'Specific Performance',latin:'',cat:'civil',def:'A court remedy requiring a party to perform their contractual obligations — typically used in property/land contracts where damages are inadequate.',ex:'Seller who refuses to execute sale deed is directed by court for specific performance.'},
+  {term:'Limitation',latin:'',cat:'civil',def:'The prescribed time period within which a legal action must be brought. Beyond this period, the right to sue is barred. Governed by the Limitation Act 1963.',ex:'Suit for money on written contract must be filed within 3 years of cause of action.'},
+  {term:'Mesne Profits',latin:'',cat:'civil',def:'Profits earned by a person who wrongfully holds possession of property — to be rendered to the true owner along with the property.',ex:'Person occupying disputed property must render mesne profits to rightful owner.'},
+  {term:'Caveat',latin:'',cat:'civil',def:'A notice filed by a person with a court asking to be heard before any order is passed in a matter affecting their interest. Under Section 148A CPC.',ex:'Person files caveat to ensure they are heard before ex parte relief is granted.'},
+  {term:'Interpleader Suit',latin:'',cat:'civil',def:'A suit where a person holding property claimed by two or more others asks the court to decide who is entitled to it. Under Order XXXV CPC.',ex:'Bank holding disputed funds files interpleader suit to let court decide who gets the money.'},
+
+  // Evidence
+  {term:'Admissible Evidence',latin:'',cat:'evidence',def:'Evidence that is legally permitted to be presented before a court. Must satisfy conditions of relevancy and admissibility under the Indian Evidence Act / BSA.',ex:'A dying declaration is admissible evidence under Section 32 IEA / Section 26 BSA.'},
+  {term:'Dying Declaration',latin:'',cat:'evidence',def:'Statement made by a person who believes they are about to die, about the cause or circumstances of their death. Admissible as exception to hearsay rule under Section 32 IEA.',ex:'Burn victim\'s statement identifying the accused is a dying declaration.'},
+  {term:'Confession',latin:'',cat:'evidence',def:'A direct acknowledgment of guilt by the accused person. Confession to police is inadmissible; confession before magistrate is admissible under Section 164 CrPC.',ex:'Accused\'s admission of committing murder before a magistrate is a confession.'},
+  {term:'Admission',latin:'',cat:'evidence',def:'A statement by a party to proceedings that is adverse to their own interest. Unlike confession, admission can be civil or criminal and is not necessarily complete acknowledgment of guilt.',ex:'Defendant admitting he signed the contract is an admission in a civil suit.'},
+  {term:'Hearsay Evidence',latin:'',cat:'evidence',def:'Evidence of what one person heard another say — generally not admissible in Indian courts as it is considered unreliable. Subject to exceptions.',ex:'A witness saying "I heard X say he committed the murder" is hearsay — inadmissible.'},
+  {term:'Circumstantial Evidence',latin:'',cat:'evidence',def:'Evidence that implies a fact indirectly, from which an inference can be drawn. A conviction can be based on circumstantial evidence if chain is complete.',ex:'Accused\'s fingerprints at crime scene — circumstantial evidence of presence.'},
+  {term:'Direct Evidence',latin:'',cat:'evidence',def:'Evidence that directly proves a fact without inference. An eyewitness account of the commission of a crime is direct evidence.',ex:'Eyewitness saying "I saw the accused shoot the victim" is direct evidence.'},
+  {term:'Documentary Evidence',latin:'',cat:'evidence',def:'Evidence consisting of documents — including electronic records, photographs, agreements, and official records. Covered under the Indian Evidence Act.',ex:'Sale deed, bank statement, and WhatsApp messages are documentary evidence.'},
+  {term:'Expert Evidence',latin:'',cat:'evidence',def:'Opinion evidence from a person with special knowledge or skill in a particular field. Admissible under Section 45 IEA / Section 39 BSA.',ex:'Forensic expert\'s opinion on cause of death is expert evidence.'},
+  {term:'Section 65B Certificate',latin:'',cat:'evidence',def:'A certificate required under Section 65B Indian Evidence Act (Section 63 BSA) to make electronic records admissible in court. Must state the computer/device details.',ex:'Cyber evidence printout must be accompanied by Section 65B certificate to be admissible.'},
+  {term:'Burden of Proof',latin:'',cat:'evidence',def:'The obligation to prove facts asserted. In civil cases — balance of probabilities. In criminal cases — prosecution must prove guilt beyond reasonable doubt.',ex:'Prosecution bears burden to prove accused committed murder beyond reasonable doubt.'},
+  {term:'Standard of Proof',latin:'',cat:'evidence',def:'The degree to which a fact must be proven. Criminal cases — beyond reasonable doubt (higher); civil cases — preponderance of probabilities (lower).',ex:'In a civil money suit, plaintiff need only show it is more probable than not.'},
+  {term:'Corroboration',latin:'',cat:'evidence',def:'Supporting evidence that confirms or strengthens other evidence. Required in certain cases like testimony of accomplice, child witness.',ex:'Accomplice\'s testimony requires corroboration for conviction.'},
+  {term:'Leading Question',latin:'',cat:'evidence',def:'A question that suggests the answer within itself. Not permitted during examination-in-chief or re-examination but allowed in cross-examination.',ex:'"Isn\'t it true that you were at the scene?" is a leading question.'},
+
+  // Constitutional
+  {term:'Fundamental Rights',latin:'',cat:'constitutional',def:'Basic rights guaranteed to every citizen under Part III of the Constitution (Articles 12-35). Include right to equality, freedom, against exploitation, religion, education, and constitutional remedies.',ex:'Article 21 — right to life — is a fundamental right that cannot be curtailed without procedure established by law.'},
+  {term:'Directive Principles',latin:'',cat:'constitutional',def:'Guidelines in Part IV of the Constitution (Articles 36-51) for state policy — not enforceable in court but fundamental in governance. Include welfare state provisions.',ex:'Equal pay for equal work — a Directive Principle of State Policy.'},
+  {term:'Article 21',latin:'',cat:'constitutional',def:'Right to Life and Personal Liberty. No person shall be deprived of their life or personal liberty except according to procedure established by law. The most expansive fundamental right.',ex:'Right to privacy, right to health, right to education are part of Article 21.'},
+  {term:'Article 14',latin:'',cat:'constitutional',def:'Right to Equality — equality before law and equal protection of laws. Prohibits arbitrary state action.',ex:'State cannot discriminate between two similarly situated persons — Article 14.'},
+  {term:'Article 19',latin:'',cat:'constitutional',def:'Six freedoms including freedom of speech and expression, assembly, association, movement, residence, and profession. Subject to reasonable restrictions.',ex:'Freedom of press is part of Article 19(1)(a) — freedom of speech.'},
+  {term:'Judicial Review',latin:'',cat:'constitutional',def:'The power of courts to examine legislation and executive action to determine if they are consistent with the Constitution. A basic feature of the Constitution.',ex:'Supreme Court struck down a law as unconstitutional via judicial review.'},
+  {term:'Basic Structure Doctrine',latin:'',cat:'constitutional',def:'The principle that Parliament cannot amend the Constitution to destroy its basic or essential features. Established in Kesavananda Bharati case (1973).',ex:'Parliamentary sovereignty, judicial review, and federalism are basic structure features.'},
+  {term:'PIL — Public Interest Litigation',latin:'',cat:'constitutional',def:'Litigation filed in the public interest by any person (not necessarily the aggrieved party) before High Court or Supreme Court. Expanded access to justice.',ex:'An advocate files PIL for cleaning of river polluted by factory.'},
+  {term:'Writ Jurisdiction',latin:'',cat:'constitutional',def:'Power of High Courts (Article 226) and Supreme Court (Article 32) to issue writs — habeas corpus, mandamus, certiorari, prohibition, quo warranto — to enforce fundamental rights.',ex:'Victim files writ petition under Article 226 for wrongful detention.'},
+
+  // General
+  {term:'Advocate',latin:'',cat:'general',def:'A person enrolled under the Advocates Act 1961 who is authorised to practise law and represent clients before courts. Different tiers: Advocates, Senior Advocates, Designated Senior Advocates.',ex:''},
+  {term:'Affidavit',latin:'',cat:'general',def:'A written statement of facts sworn before an authorised official (notary or magistrate). Used as evidence in courts and other proceedings.',ex:'Supporting affidavit filed along with bail application.'},
+  {term:'Vakalatnama',latin:'',cat:'general',def:'A document authorising an advocate to appear and act on behalf of a client in a case. The legal authority letter from client to advocate.',ex:'Client signs vakalatnama authorising Adv. Sharma to represent them in court.'},
+  {term:'Notice',latin:'',cat:'general',def:'A formal communication informing a person of a legal claim, demand, or proceedings against them. Legal notices give the recipient a chance to respond before litigation.',ex:'A 15-day legal notice sent before filing a money recovery suit.'},
+  {term:'Jurisdiction',latin:'',cat:'general',def:'The authority of a court to hear and decide a case. Includes territorial, pecuniary, and subject-matter jurisdiction. A court without jurisdiction cannot pass a valid order.',ex:'A civil court with pecuniary jurisdiction of ₹20 lakh cannot try a ₹50 lakh suit.'},
+  {term:'Contempt of Court',latin:'',cat:'general',def:'Conduct that disrespects or disobeys a court\'s authority or order. Civil contempt — wilful disobedience of court order. Criminal contempt — scandalising the court.',ex:'Person who violates injunction order is guilty of civil contempt of court.'},
+  {term:'Precedent',latin:'',cat:'general',def:'An earlier court decision that is used as authority for deciding similar cases. Supreme Court precedents are binding on all courts (Article 141).',ex:'Supreme Court ruling on right to privacy is a binding precedent for all courts.'},
+  {term:'Appeal',latin:'',cat:'general',def:'A review of a lower court\'s decision by a higher court. Can be on law or facts. Both conviction and acquittal can be appealed in criminal matters.',ex:'Accused appeals against conviction to the High Court.'},
+  {term:'Revision',latin:'',cat:'general',def:'A limited review by a superior court of the correctness, legality, or propriety of an inferior court\'s order. Not as wide as an appeal.',ex:'High Court exercises revision jurisdiction to correct magistrate\'s erroneous order.'},
+  {term:'Review',latin:'',cat:'general',def:'Application to the same court to reconsider its own judgment on limited grounds — error on face of record, new evidence, or any other sufficient reason.',ex:'Losing party files review petition pointing out calculation error in decree.'},
+  {term:'Curative Petition',latin:'',cat:'general',def:'The last constitutional remedy available — filed in the Supreme Court after review petition is dismissed, on grounds of violation of natural justice or abuse of process.',ex:'Death row convict files curative petition as last resort after review dismissed.'},
+  {term:'SLP — Special Leave Petition',latin:'',cat:'general',def:'A petition for special leave to appeal to the Supreme Court under Article 136 of the Constitution. Available against any order of any court or tribunal in India.',ex:'Party files SLP in Supreme Court against High Court\'s dismissal of writ petition.'},
+  {term:'Interlocutory Application',latin:'',cat:'general',def:'An application filed during the pendency of a main case seeking interim relief or directions on a specific issue.',ex:'Plaintiff files IA seeking temporary injunction pending trial of main suit.'},
+  {term:'Ex Parte Decree',latin:'',cat:'general',def:'A decree passed against a party who fails to appear in court after being duly served with summons. Can be set aside on sufficient cause shown.',ex:'Court passes ex parte decree against defendant who never appeared despite summons.'},
+  {term:'Lok Adalat',latin:'',cat:'general',def:'Alternative dispute resolution forum established under the Legal Services Authorities Act 1987. Decisions are final and binding like a court decree — free of cost.',ex:'Motor accident claim settled at Lok Adalat — award passed same day.'},
+  {term:'Arbitration',latin:'',cat:'general',def:'Alternative dispute resolution where parties agree to submit disputes to one or more arbitrators whose decision (award) is binding. Governed by Arbitration and Conciliation Act 1996.',ex:'Commercial contract dispute resolved through arbitration — faster than court.'},
+  {term:'Mediation',latin:'',cat:'general',def:'A voluntary, confidential process where a neutral mediator helps parties reach a mutually acceptable settlement. Not binding unless agreement is reached.',ex:'Family dispute resolved through court-annexed mediation.'},
+];
+
+function setCat(cat){
+  currentCat=cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.toLowerCase().includes(cat==='all'?'all':cat));
+  });
+  render();
+}
+
+function catClass(cat){
+  const map={latin:'cat-latin',criminal:'cat-criminal',civil:'cat-civil',evidence:'cat-evidence',constitutional:'cat-constitutional',general:'cat-general'};
+  return map[cat]||'cat-general';
+}
+function catLabel(cat){
+  const map={latin:'Latin',criminal:'Criminal',civil:'Civil',evidence:'Evidence',constitutional:'Constitutional',general:'General'};
+  return map[cat]||cat;
+}
+
+function render(){
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
+  const el=document.getElementById('results');
+  let filtered=TERMS.filter(t=>{
+    const catMatch=currentCat==='all'||t.cat===currentCat;
+    const textMatch=!q||t.term.toLowerCase().includes(q)||t.def.toLowerCase().includes(q)||(t.latin&&t.latin.toLowerCase().includes(q));
+    return catMatch&&textMatch;
+  });
+  // sort alphabetically
+  filtered.sort((a,b)=>a.term.localeCompare(b.term));
+  if(!filtered.length){
+    el.innerHTML=`<div class="empty-full"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><p>No terms found for "<strong>${q}</strong>"</p></div>`;
+    return;
+  }
+  el.innerHTML=`<div class="count">${filtered.length} term${filtered.length!==1?'s':''}</div>`+filtered.map(t=>`
+    <div class="dict-card">
+      <div class="dc-top">
+        <div>
+          <div class="dc-term">${t.term}</div>
+          ${t.latin?`<div class="dc-latin">${t.latin}</div>`:''}
+        </div>
+        <span class="dc-cat ${catClass(t.cat)}">${catLabel(t.cat)}</span>
+      </div>
+      <div class="dc-def">${t.def}</div>
+      ${t.ex?`<div class="dc-ex">e.g. ${t.ex}</div>`:''}
+    </div>
+  `).join('');
+}
+
+render();
+</script>
+</body>
+</html>
