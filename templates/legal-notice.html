@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Notice Generator — Indian Courts</title>
+<meta name="description" content="Generate court-ready legal notices for cheque bounce (Section 138 NI Act), property disputes, employment, and consumer cases. Free tool for Indian advocates.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--input-bg:#0d1117;--input-border:#30363d;--amber:#f59e0b}
+@media(prefers-color-scheme:light){:root{--bg:#f6f8fa;--surface:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a;--input-bg:#fff;--input-border:#d1d9e0}}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{font-size:14px;font-weight:700}
+.nav-links{display:flex;gap:8px}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px;transition:border-color .2s}
+.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
+.btn-print{font-size:13px;font-weight:600;color:#fff;background:var(--accent);border:none;padding:8px 18px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn-print svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Type selector */
+.type-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 28px;display:flex;gap:8px;flex-wrap:wrap}
+.type-btn{padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:.2s;white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
+.type-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.app{display:grid;grid-template-columns:360px 1fr;min-height:calc(100vh - 105px)}
+@media(max-width:900px){.app{grid-template-columns:1fr}}
+.form-panel{background:var(--surface);border-right:1px solid var(--border);padding:24px;overflow-y:auto;max-height:calc(100vh - 105px)}
+.form-panel h2{font-size:15px;font-weight:700;margin-bottom:4px}
+.form-panel>p{font-size:12px;color:var(--muted);margin-bottom:20px}
+.section-divider{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-light);padding:10px 0 8px;border-top:1px solid var(--border);margin-top:6px;margin-bottom:12px}
+.field-group{margin-bottom:14px}
+.field-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between}
+.field-limit{font-weight:400;text-transform:none;letter-spacing:0;font-size:10px}
+.field-input{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s;outline:none}
+.field-input:focus{border-color:var(--accent)}
+.field-input::placeholder{color:var(--muted)}
+textarea.field-input{resize:vertical;min-height:60px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-clear{width:100%;padding:8px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-size:13px;cursor:pointer;margin-top:6px}
+.btn-clear:hover{border-color:var(--accent);color:var(--accent-light)}
+.hidden{display:none}
+
+/* Preview */
+.preview-panel{background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 105px)}
+.preview-label{font-size:11px;color:#888;margin-bottom:12px;text-align:center}
+
+/* Paper — white legal notice */
+.paper{width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:16mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.7}
+.notice-header{text-align:center;margin-bottom:8mm}
+.notice-law-firm{font-size:14pt;font-weight:700;margin-bottom:1mm}
+.notice-advocate{font-size:10pt;margin-bottom:1mm}
+.notice-addr{font-size:9.5pt;color:#333;margin-bottom:1mm}
+.notice-contact{font-size:9.5pt;color:#333}
+.notice-divider{border:none;border-top:2px solid #111;margin:4mm 0}
+.notice-thin{border:none;border-top:1px solid #111;margin:2mm 0}
+.notice-title{text-align:center;font-size:13pt;font-weight:700;text-decoration:underline;margin:4mm 0;text-transform:uppercase;letter-spacing:.05em}
+.notice-ref{font-size:9.5pt;margin-bottom:4mm;display:flex;justify-content:space-between}
+.notice-to{font-size:10.5pt;margin-bottom:4mm}
+.notice-to-label{font-weight:700;text-decoration:underline;margin-bottom:1mm}
+.notice-body{font-size:10.5pt;line-height:1.75;text-align:justify}
+.notice-body p{margin-bottom:3mm}
+.notice-body strong{font-weight:700}
+.notice-closing{margin-top:6mm;font-size:10.5pt}
+.notice-sign{margin-top:14mm;text-align:right;font-size:10.5pt}
+.notice-sign-line{border-top:1px solid #111;display:inline-block;width:60mm;margin-bottom:2px}
+.notice-enc{margin-top:6mm;font-size:9.5pt}
+.fill{border-bottom:1px solid #777;display:inline-block;min-width:20px;vertical-align:bottom}
+
+@media print{
+  nav,.type-bar,.form-panel,.preview-label{display:none!important}
+  .app{display:block}
+  .preview-panel{background:#fff!important;padding:0;max-height:none;display:block}
+  .paper{box-shadow:none;margin:0;width:100%;border:none;min-height:0;padding:15mm 20mm;background:#fff!important}
+  @page{size:legal portrait;margin:0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/tools" class="nav-brand">
+    <div class="nav-logo"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div>
+    <span class="nav-name">Legal Notice Generator</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
+    <button class="btn-print" onclick="window.print()">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / Save PDF
+    </button>
+  </div>
+</nav>
+
+<!-- Notice Type Selector -->
+<div class="type-bar">
+  <button class="type-btn active" onclick="setType('cheque')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:5px"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Cheque Bounce (Sec 138)
+  </button>
+  <button class="type-btn" onclick="setType('property')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:5px"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Property Dispute
+  </button>
+  <button class="type-btn" onclick="setType('consumer')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:5px"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Consumer Complaint
+  </button>
+  <button class="type-btn" onclick="setType('employment')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:5px"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Employment
+  </button>
+  <button class="type-btn" onclick="setType('money')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:5px"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Money Recovery
+  </button>
+</div>
+
+<div class="app">
+  <div class="form-panel">
+    <h2>Fill Notice Details</h2>
+    <p>Live preview updates as you type. Click Print to save PDF.</p>
+
+    <!-- Advocate / Sender Details -->
+    <div class="section-divider">Advocate / Sender</div>
+    <div class="field-group">
+      <label class="field-label">Law Firm / Advocate Name <span class="field-limit">max 80</span></label>
+      <input class="field-input" id="lawFirm" placeholder="e.g. Adv. Ramesh Kumar & Associates" maxlength="80" oninput="render()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Qualifications <span class="field-limit">max 60</span></label>
+      <input class="field-input" id="advQual" placeholder="e.g. B.A. LL.B., Advocate, High Court" maxlength="60" oninput="render()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Office Address <span class="field-limit">max 200</span></label>
+      <textarea class="field-input" id="advAddr" placeholder="Full office address" maxlength="200" oninput="render()"></textarea>
+    </div>
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label">Phone <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="advPhone" placeholder="Mobile / Office" maxlength="20" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Email <span class="field-limit">max 60</span></label>
+        <input class="field-input" id="advEmail" placeholder="email@example.com" maxlength="60" oninput="render()">
+      </div>
+    </div>
+
+    <!-- Client (Sender of Notice) -->
+    <div class="section-divider">Client (Notice Sender)</div>
+    <div class="field-group">
+      <label class="field-label">Client Name <span class="field-limit">max 80</span></label>
+      <input class="field-input" id="clientName" placeholder="Full name of client" maxlength="80" oninput="render()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Client Address <span class="field-limit">max 200</span></label>
+      <textarea class="field-input" id="clientAddr" placeholder="Full address of client" maxlength="200" oninput="render()"></textarea>
+    </div>
+
+    <!-- Noticee (Recipient) -->
+    <div class="section-divider">Noticee (Recipient)</div>
+    <div class="field-group">
+      <label class="field-label">Noticee Name <span class="field-limit">max 80</span></label>
+      <input class="field-input" id="noticeName" placeholder="Full name of noticee" maxlength="80" oninput="render()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Noticee Address <span class="field-limit">max 250</span></label>
+      <textarea class="field-input" id="noticeAddr" placeholder="Full address for service of notice" maxlength="250" oninput="render()"></textarea>
+    </div>
+
+    <!-- Cheque Bounce fields -->
+    <div id="cheque-fields">
+      <div class="section-divider">Cheque Details (Sec 138 NI Act)</div>
+      <div class="two-col">
+        <div class="field-group">
+          <label class="field-label">Cheque No. <span class="field-limit">max 20</span></label>
+          <input class="field-input" id="chequeNo" placeholder="e.g. 123456" maxlength="20" oninput="render()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Cheque Date <span class="field-limit">max 20</span></label>
+          <input class="field-input" id="chequeDate" placeholder="dd/mm/yyyy" maxlength="20" oninput="render()">
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="field-group">
+          <label class="field-label">Amount (₹) <span class="field-limit">max 20</span></label>
+          <input class="field-input" id="chequeAmt" placeholder="e.g. 5,00,000" maxlength="20" oninput="render()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Amount in Words <span class="field-limit">max 80</span></label>
+          <input class="field-input" id="chequeAmtWords" placeholder="e.g. Five Lakh Rupees" maxlength="80" oninput="render()">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Bank Name <span class="field-limit">max 60</span></label>
+        <input class="field-input" id="bankName" placeholder="e.g. State Bank of India, MG Road Branch" maxlength="60" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Dishonour Date <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="dishonourDate" placeholder="Date cheque was returned" maxlength="20" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Reason for Dishonour <span class="field-limit">max 80</span></label>
+        <input class="field-input" id="dishonourReason" placeholder="e.g. Insufficient funds / Account closed" maxlength="80" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Underlying Transaction <span class="field-limit">max 200</span></label>
+        <textarea class="field-input" id="transaction" placeholder="e.g. In discharge of debt/liability arising out of loan advanced on..." maxlength="200" oninput="render()"></textarea>
+      </div>
+    </div>
+
+    <!-- Property Dispute fields -->
+    <div id="property-fields" class="hidden">
+      <div class="section-divider">Property Details</div>
+      <div class="field-group">
+        <label class="field-label">Property Description <span class="field-limit">max 250</span></label>
+        <textarea class="field-input" id="propDesc" placeholder="Property no., area, location, etc." maxlength="250" oninput="render()"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Nature of Dispute <span class="field-limit">max 300</span></label>
+        <textarea class="field-input" id="propDispute" placeholder="Describe the dispute — encroachment, illegal possession, title dispute, etc." maxlength="300" oninput="render()"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Relief Sought <span class="field-limit">max 200</span></label>
+        <textarea class="field-input" id="propRelief" placeholder="e.g. Vacate the property, stop construction, etc." maxlength="200" oninput="render()"></textarea>
+      </div>
+    </div>
+
+    <!-- Consumer fields -->
+    <div id="consumer-fields" class="hidden">
+      <div class="section-divider">Consumer Complaint Details</div>
+      <div class="field-group">
+        <label class="field-label">Product / Service <span class="field-limit">max 100</span></label>
+        <input class="field-input" id="consProduct" placeholder="e.g. Refrigerator Model XYZ / Home loan" maxlength="100" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Purchase / Transaction Date <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="consDate" placeholder="dd/mm/yyyy" maxlength="20" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Amount Paid (₹) <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="consAmt" placeholder="e.g. 45,000" maxlength="20" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Deficiency / Complaint <span class="field-limit">max 400</span></label>
+        <textarea class="field-input" id="consDeficiency" placeholder="Describe the deficiency in service or defect in goods" maxlength="400" oninput="render()"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Relief Sought <span class="field-limit">max 200</span></label>
+        <textarea class="field-input" id="consRelief" placeholder="e.g. Refund, replacement, compensation, etc." maxlength="200" oninput="render()"></textarea>
+      </div>
+    </div>
+
+    <!-- Employment fields -->
+    <div id="employment-fields" class="hidden">
+      <div class="section-divider">Employment Details</div>
+      <div class="field-group">
+        <label class="field-label">Designation / Post <span class="field-limit">max 80</span></label>
+        <input class="field-input" id="empPost" placeholder="e.g. Senior Manager" maxlength="80" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Date of Joining <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="empJoin" placeholder="dd/mm/yyyy" maxlength="20" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Date of Termination / Incident <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="empTermDate" placeholder="dd/mm/yyyy" maxlength="20" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Nature of Grievance <span class="field-limit">max 400</span></label>
+        <textarea class="field-input" id="empGrievance" placeholder="Describe — wrongful termination, unpaid salary, harassment, etc." maxlength="400" oninput="render()"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Amount Due (₹) <span class="field-limit">max 30</span></label>
+        <input class="field-input" id="empAmt" placeholder="e.g. 2,50,000 (salary, dues, etc.)" maxlength="30" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Relief Sought <span class="field-limit">max 200</span></label>
+        <textarea class="field-input" id="empRelief" placeholder="e.g. Reinstatement, dues payment, etc." maxlength="200" oninput="render()"></textarea>
+      </div>
+    </div>
+
+    <!-- Money Recovery fields -->
+    <div id="money-fields" class="hidden">
+      <div class="section-divider">Money Recovery Details</div>
+      <div class="field-group">
+        <label class="field-label">Amount Due (₹) <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="moneyAmt" placeholder="e.g. 10,00,000" maxlength="20" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Amount in Words <span class="field-limit">max 80</span></label>
+        <input class="field-input" id="moneyAmtWords" placeholder="e.g. Ten Lakh Rupees" maxlength="80" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Nature of Transaction <span class="field-limit">max 300</span></label>
+        <textarea class="field-input" id="moneyTxn" placeholder="e.g. Loan advanced on dd/mm/yyyy, unpaid invoice, etc." maxlength="300" oninput="render()"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Due Date <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="moneyDue" placeholder="dd/mm/yyyy" maxlength="20" oninput="render()">
+      </div>
+    </div>
+
+    <!-- Date / Place -->
+    <div class="section-divider">Notice Date & Place</div>
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label">Place <span class="field-limit">max 30</span></label>
+        <input class="field-input" id="place" placeholder="e.g. Lucknow" maxlength="30" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Date <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="noticeDate" maxlength="20" oninput="render()">
+      </div>
+    </div>
+
+    <button class="btn-clear" onclick="clearAll()">Clear all fields</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-panel">
+    <p class="preview-label">Live preview · Click "Print / Save PDF" to download</p>
+    <div class="paper" id="paper"></div>
+  </div>
+</div>
+
+<script>
+let currentType = 'cheque';
+
+const TYPES = {
+  cheque:     'Cheque Bounce (Section 138 NI Act)',
+  property:   'Property Dispute',
+  consumer:   'Consumer Grievance',
+  employment: 'Employment Grievance',
+  money:      'Money Recovery'
+};
+
+function setType(t){
+  currentType = t;
+  document.querySelectorAll('.type-btn').forEach((b,i)=>{
+    b.classList.toggle('active', ['cheque','property','consumer','employment','money'][i]===t);
+  });
+  ['cheque','property','consumer','employment','money'].forEach(k=>{
+    document.getElementById(k+'-fields').classList.toggle('hidden', k!==t);
+  });
+  render();
+}
+
+function v(id){return document.getElementById(id)}
+function gv(id){const el=v(id);return el?el.value.trim():'';}
+function fill(val,minW){return `<span class="fill" style="min-width:${minW||'20px'}">${val||'\u00a0'}</span>`;}
+
+function render(){
+  const lawFirm    = gv('lawFirm')    || 'LAW FIRM / ADVOCATE NAME';
+  const advQual    = gv('advQual')    || 'Advocate';
+  const advAddr    = gv('advAddr')    || 'Office Address';
+  const advPhone   = gv('advPhone')   || '';
+  const advEmail   = gv('advEmail')   || '';
+  const clientName = gv('clientName') || '________________';
+  const clientAddr = gv('clientAddr') || '________________';
+  const noticeName = gv('noticeName') || '________________';
+  const noticeAddr = gv('noticeAddr') || '________________';
+  const place      = gv('place')      || '________________';
+  const noticeDate = gv('noticeDate') || '________________';
+  const contact    = [advPhone, advEmail].filter(Boolean).join(' | ');
+
+  let bodyHTML = '';
+
+  if(currentType === 'cheque'){
+    const cNo    = gv('chequeNo')       || '________________';
+    const cDate  = gv('chequeDate')     || '________________';
+    const cAmt   = gv('chequeAmt')      || '________________';
+    const cWords = gv('chequeAmtWords') || '________________';
+    const bank   = gv('bankName')       || '________________';
+    const dDate  = gv('dishonourDate')  || '________________';
+    const dRsn   = gv('dishonourReason')|| 'insufficient funds';
+    const txn    = gv('transaction')    || 'loan/liability';
+
+    bodyHTML = `
+      <p>Under the instructions and on behalf of my client <strong>${clientName}</strong>, residing at ${clientAddr}, I hereby serve upon you the following legal notice:</p>
+      <p><strong>1.</strong> That my client and you are well acquainted with each other. My client had advanced a sum of Rs. <strong>${cAmt}</strong> (Rupees <strong>${cWords}</strong> only) to you towards ${txn}.</p>
+      <p><strong>2.</strong> That in discharge of the aforesaid debt/liability, you issued a cheque bearing No. <strong>${cNo}</strong> dated <strong>${cDate}</strong> for a sum of Rs. <strong>${cAmt}</strong> (Rupees <strong>${cWords}</strong> only) drawn on <strong>${bank}</strong> in favour of my client.</p>
+      <p><strong>3.</strong> That the said cheque was presented for encashment by my client through his banker but the same was returned unpaid on <strong>${dDate}</strong> with the remark "<strong>${dRsn}</strong>", as per the dishonour memo issued by the bank.</p>
+      <p><strong>4.</strong> That the dishonour of the said cheque constitutes an offence under <strong>Section 138 of the Negotiable Instruments Act, 1881</strong>, punishable with imprisonment up to two years or fine up to twice the amount of the cheque, or both.</p>
+      <p><strong>5.</strong> That you are hereby called upon to make payment of the entire cheque amount of Rs. <strong>${cAmt}</strong> (Rupees <strong>${cWords}</strong> only) together with interest and costs, to my client within <strong>15 (fifteen) days</strong> from the receipt of this notice.</p>
+      <p><strong>6.</strong> That in case of your failure to comply with the above demand within the stipulated period, my client shall be constrained to initiate criminal proceedings against you under <strong>Section 138 of the Negotiable Instruments Act, 1881</strong> and/or civil proceedings for recovery of the said amount along with interest, costs and damages, entirely at your risk and peril.</p>`;
+  }
+  else if(currentType === 'property'){
+    const propDesc    = gv('propDesc')    || '________________';
+    const propDispute = gv('propDispute') || '________________';
+    const propRelief  = gv('propRelief')  || 'vacate the property and restore peaceful possession';
+
+    bodyHTML = `
+      <p>Under the instructions and on behalf of my client <strong>${clientName}</strong>, residing at ${clientAddr}, I hereby serve upon you the following legal notice:</p>
+      <p><strong>1.</strong> That my client is the lawful owner/occupant of the property described as: <strong>${propDesc}</strong>.</p>
+      <p><strong>2.</strong> That ${propDispute}.</p>
+      <p><strong>3.</strong> That the aforesaid acts on your part are illegal, unlawful and constitute an infringement of my client's legal rights and title over the said property.</p>
+      <p><strong>4.</strong> You are therefore hereby called upon to <strong>${propRelief}</strong> within <strong>15 (fifteen) days</strong> from the receipt of this notice, failing which my client shall be constrained to initiate appropriate legal proceedings — civil and/or criminal — against you before the competent court of law, at your risk, cost and consequences.</p>`;
+  }
+  else if(currentType === 'consumer'){
+    const prod    = gv('consProduct')    || '________________';
+    const cDate   = gv('consDate')       || '________________';
+    const cAmt    = gv('consAmt')        || '________________';
+    const defic   = gv('consDeficiency') || '________________';
+    const relief  = gv('consRelief')     || 'refund the amount paid along with compensation';
+
+    bodyHTML = `
+      <p>Under the instructions and on behalf of my client <strong>${clientName}</strong>, residing at ${clientAddr}, I hereby serve upon you the following legal notice under the <strong>Consumer Protection Act, 2019</strong>:</p>
+      <p><strong>1.</strong> That my client availed your product/service namely <strong>${prod}</strong> on <strong>${cDate}</strong> for a consideration of Rs. <strong>${cAmt}</strong>.</p>
+      <p><strong>2.</strong> That ${defic}.</p>
+      <p><strong>3.</strong> That the aforesaid acts/omissions on your part amount to <strong>deficiency in service / defect in goods</strong> as defined under the Consumer Protection Act, 2019, entitling my client to compensation and other reliefs.</p>
+      <p><strong>4.</strong> You are hereby called upon to <strong>${relief}</strong> within <strong>15 (fifteen) days</strong> from the receipt of this notice, failing which my client shall be constrained to file a complaint before the appropriate Consumer Disputes Redressal Commission, at your risk and cost.</p>`;
+  }
+  else if(currentType === 'employment'){
+    const post     = gv('empPost')      || '________________';
+    const join     = gv('empJoin')      || '________________';
+    const termDate = gv('empTermDate')  || '________________';
+    const griev    = gv('empGrievance') || '________________';
+    const amt      = gv('empAmt')       || '________________';
+    const relief   = gv('empRelief')    || 'reinstate and pay all outstanding dues';
+
+    bodyHTML = `
+      <p>Under the instructions and on behalf of my client <strong>${clientName}</strong>, I hereby serve upon you the following legal notice:</p>
+      <p><strong>1.</strong> That my client was employed with your organization as <strong>${post}</strong> with effect from <strong>${join}</strong>.</p>
+      <p><strong>2.</strong> That on <strong>${termDate}</strong>, ${griev}.</p>
+      <p><strong>3.</strong> That the outstanding dues payable to my client amount to Rs. <strong>${amt}</strong>.</p>
+      <p><strong>4.</strong> That the aforesaid acts/omissions on your part are illegal, arbitrary and in violation of applicable labour laws and the terms of employment.</p>
+      <p><strong>5.</strong> You are hereby called upon to <strong>${relief}</strong> within <strong>15 (fifteen) days</strong> from the receipt of this notice, failing which my client shall be constrained to initiate appropriate legal proceedings — civil and/or labour — before the competent authority/court, entirely at your risk and peril.</p>`;
+  }
+  else if(currentType === 'money'){
+    const amt      = gv('moneyAmt')      || '________________';
+    const words    = gv('moneyAmtWords') || '________________';
+    const txn      = gv('moneyTxn')      || '________________';
+    const dueDate  = gv('moneyDue')      || '________________';
+
+    bodyHTML = `
+      <p>Under the instructions and on behalf of my client <strong>${clientName}</strong>, residing at ${clientAddr}, I hereby serve upon you the following legal notice:</p>
+      <p><strong>1.</strong> That ${txn}.</p>
+      <p><strong>2.</strong> That a sum of Rs. <strong>${amt}</strong> (Rupees <strong>${words}</strong> only) became due and payable by you to my client on <strong>${dueDate}</strong>.</p>
+      <p><strong>3.</strong> That despite repeated requests and reminders, you have willfully failed and neglected to make payment of the aforesaid amount, causing great loss and hardship to my client.</p>
+      <p><strong>4.</strong> You are hereby called upon to pay the aforesaid amount of Rs. <strong>${amt}</strong> (Rupees <strong>${words}</strong> only) together with interest @ 18% per annum from the date of default till realisation, within <strong>15 (fifteen) days</strong> from the receipt of this notice, failing which my client shall be constrained to initiate civil/criminal proceedings against you before the competent court, at your risk, cost and consequences.</p>`;
+  }
+
+  v('paper').innerHTML = `
+    <div class="notice-header">
+      <div class="notice-law-firm">${lawFirm}</div>
+      <div class="notice-advocate">${advQual}</div>
+      <div class="notice-addr">${advAddr.replace(/\n/g,'<br>')}</div>
+      ${contact ? `<div class="notice-contact">${contact}</div>` : ''}
+    </div>
+    <hr class="notice-divider">
+    <hr class="notice-thin">
+    <div class="notice-title">Legal Notice</div>
+    <div class="notice-ref">
+      <span>Ref: LN/${new Date().getFullYear()}/${Math.floor(Math.random()*9000)+1000}</span>
+      <span>Date: ${noticeDate} &nbsp;&nbsp; Place: ${place}</span>
+    </div>
+    <div class="notice-to">
+      <div class="notice-to-label">To,</div>
+      <div><strong>${noticeName}</strong></div>
+      <div>${noticeAddr.replace(/\n/g,'<br>')}</div>
+    </div>
+    <div style="margin-bottom:4mm"><strong>Sub: Legal Notice — ${TYPES[currentType]}</strong></div>
+    <hr class="notice-thin">
+    <div class="notice-body">${bodyHTML}</div>
+    <div class="notice-closing">
+      <p>This notice is being sent without prejudice to all other rights and remedies available to my client.</p>
+      <p style="margin-top:2mm">Kindly treat this as a legal notice under the relevant provisions of law.</p>
+    </div>
+    <div class="notice-sign">
+      <div class="notice-sign-line"></div>
+      <div><strong>${lawFirm}</strong></div>
+      <div style="font-size:9.5pt">${advQual}</div>
+      <div style="font-size:9.5pt">Counsel for the Noticee</div>
+    </div>
+    <div class="notice-enc">
+      <strong>Enclosures:</strong><br>
+      ${currentType==='cheque' ? '1. Copy of cheque<br>2. Bank dishonour memo<br>3. Vakalatnama' : '1. Supporting documents<br>2. Vakalatnama'}
+    </div>
+  `;
+}
+
+function clearAll(){
+  document.querySelectorAll('.field-input').forEach(el=>el.value='');
+  render();
+}
+
+// Auto-fill date
+(function(){
+  const now = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  v('noticeDate').value = now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+  render();
+})();
+</script>
+</body>
+</html>
