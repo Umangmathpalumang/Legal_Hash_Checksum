@@ -3,73 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Old to New Law Converter — IPC/CrPC/IEA to BNS/BNSS/BSA</title>
-<meta name="description" content="Convert old Indian laws to new 2023 laws. IPC to BNS, CrPC to BNSS, Indian Evidence Act to BSA. Free section mapping tool for advocates.">
+<title>Old to New Law Converter — IPC/CrPC/IEA to BNS/BNSS/BSA 2023</title>
+<meta name="description" content="Convert IPC to BNS, CrPC to BNSS, Indian Evidence Act to BSA. Complete section mapping with key changes. Free tool for Indian advocates — updated July 2024.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0d1117;--surface:#161b22;--card:#1c2128;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--green:#22c55e;--red:#f87171;--amber:#f59e0b;--purple:#c084fc}
-@media(prefers-color-scheme:light){:root{--bg:#f6f8fa;--surface:#fff;--card:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a}}
+:root{
+  --bg:#0d1117;--surface:#161b22;--card:#1c2128;--border:#30363d;
+  --accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;
+  --green:#22c55e;--red:#f87171;--amber:#f59e0b;--purple:#c084fc;--teal:#2dd4bf;
+}
+@media(prefers-color-scheme:light){
+  :root{--bg:#f6f8fa;--surface:#fff;--card:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a}
+}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:100}
 .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
 .nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
 .nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .nav-name{font-size:14px;font-weight:700}
 .nav-links{display:flex;gap:8px}
-.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px;transition:.2s}
 .nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
 
-.hero{text-align:center;padding:48px 24px 32px}
-.hero h1{font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:8px}
+/* Alert banner */
+.alert-bar{background:rgba(37,99,235,.1);border-bottom:1px solid rgba(37,99,235,.2);padding:10px 28px;font-size:13px;color:var(--accent-light);display:flex;align-items:center;gap:8px}
+.alert-bar svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+
+.hero{text-align:center;padding:40px 24px 28px;max-width:700px;margin:0 auto}
+.hero h1{font-size:clamp(22px,4vw,34px);font-weight:800;margin-bottom:8px}
 .hero h1 span{color:var(--accent-light)}
-.hero p{color:var(--muted);font-size:15px;max-width:560px;margin:0 auto 32px}
+.hero p{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:0}
 
-/* Law selector tabs */
-.law-tabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px;padding:0 24px}
-.law-tab{padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--muted);transition:.2s;display:flex;align-items:center;gap:8px}
-.law-tab.active{border-color:var(--accent);color:var(--accent-light);background:rgba(37,99,235,.08)}
-.law-tab svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.tab-badge{font-size:10px;background:var(--accent);color:#fff;border-radius:10px;padding:1px 7px;font-weight:700}
+/* Law tabs */
+.law-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:24px 0;padding:0 24px}
+.law-tab{padding:10px 22px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--muted);transition:.2s;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:140px}
+.law-tab:hover{border-color:var(--accent);color:var(--accent-light)}
+.law-tab.active{border-color:var(--accent);color:#fff;background:var(--accent)}
+.law-tab .tab-sub{font-size:10px;opacity:.8;font-weight:400}
+.law-tab .tab-badge{font-size:10px;background:rgba(255,255,255,.2);border-radius:10px;padding:1px 8px;font-weight:700}
+.law-tab.active .tab-badge{background:rgba(255,255,255,.25)}
 
-/* Direction toggle */
-.direction-row{display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:32px}
-.dir-btn{padding:8px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:.2s}
-.dir-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.dir-arrow{color:var(--muted);font-size:18px}
-
-/* Search */
-.search-wrap{max-width:560px;margin:0 auto 40px;padding:0 24px;position:relative}
-.search-input{width:100%;background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:14px 52px 14px 18px;font-size:16px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+/* Direction + search row */
+.controls{max-width:700px;margin:0 auto;padding:0 24px 20px;display:flex;flex-direction:column;gap:12px}
+.dir-row{display:flex;align-items:center;gap:8px;justify-content:center}
+.dir-btn{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:.2s}
+.dir-btn.active{background:var(--surface);border-color:var(--accent);color:var(--accent-light)}
+.dir-sep{color:var(--muted);font-size:18px;line-height:1}
+.search-wrap{position:relative}
+.search-input{width:100%;background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:13px 48px 13px 18px;font-size:15px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
 .search-input:focus{border-color:var(--accent)}
 .search-input::placeholder{color:var(--muted)}
-.search-btn{position:absolute;right:34px;top:50%;transform:translateY(-50%);background:var(--accent);border:none;border-radius:8px;padding:8px 12px;cursor:pointer}
-.search-btn svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.search-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--accent);border:none;border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;align-items:center}
+.search-btn svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Stats bar */
+.stats-bar{display:flex;justify-content:center;gap:0;margin:0 auto 28px;max-width:700px;padding:0 24px}
+.stat-item{flex:1;text-align:center;padding:12px 8px;background:var(--surface);border:1px solid var(--border)}
+.stat-item:first-child{border-radius:10px 0 0 10px}
+.stat-item:last-child{border-radius:0 10px 10px 0}
+.stat-n{font-size:20px;font-weight:800;color:var(--accent-light)}
+.stat-l{font-size:11px;color:var(--muted);margin-top:2px}
 
 /* Results */
-.results{max-width:800px;margin:0 auto;padding:0 24px 60px}
-.result-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:14px;transition:border-color .2s}
-.result-card:hover{border-color:var(--accent)}
-.rc-laws{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
-.law-chip{font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;border:1px solid}
+.results{max-width:900px;margin:0 auto;padding:0 24px 60px}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:12px;transition:border-color .2s,transform .15s}
+.result-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+
+/* Card header */
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.card-sections{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sec-chip{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;border:1px solid;font-family:monospace;letter-spacing:.02em}
 .chip-old{background:rgba(248,113,113,.1);color:var(--red);border-color:rgba(248,113,113,.3)}
 .chip-new{background:rgba(34,197,94,.1);color:var(--green);border-color:rgba(34,197,94,.3)}
 .chip-removed{background:rgba(139,148,158,.1);color:var(--muted);border-color:var(--border)}
-.chip-new-only{background:rgba(192,132,252,.1);color:var(--purple);border-color:rgba(192,132,252,.3)}
-.arrow-icon{color:var(--muted);font-size:16px}
-.rc-title{font-size:17px;font-weight:700;margin-bottom:8px}
-.rc-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px}
-.rc-change{font-size:12px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:8px 12px;color:var(--amber)}
+.chip-added{background:rgba(192,132,252,.1);color:var(--purple);border-color:rgba(192,132,252,.3)}
+.arrow{color:var(--muted);font-size:14px;font-weight:700}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;background:rgba(37,99,235,.1);color:var(--accent-light);border:1px solid rgba(37,99,235,.2)}
+.tag-new{background:rgba(192,132,252,.1);color:var(--purple);border-color:rgba(192,132,252,.2)}
+.tag-critical{background:rgba(248,113,113,.1);color:var(--red);border-color:rgba(248,113,113,.2)}
+
+/* Card content */
+.card-title{font-size:16px;font-weight:700;margin-bottom:6px;line-height:1.3}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:0}
+
+/* Change box */
+.change-box{margin-top:12px;border-radius:8px;padding:10px 14px;font-size:12.5px;line-height:1.6;border:1px solid}
+.change-box.type-change{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.25);color:var(--amber)}
+.change-box.type-new{background:rgba(192,132,252,.07);border-color:rgba(192,132,252,.25);color:var(--purple)}
+.change-box.type-removed{background:rgba(139,148,158,.07);border-color:var(--border);color:var(--muted)}
+.change-box.type-same{background:rgba(34,197,94,.05);border-color:rgba(34,197,94,.2);color:var(--green)}
+.change-icon{margin-right:6px}
+
+/* Practical note */
+.practical{margin-top:10px;background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:var(--muted);line-height:1.6}
+.practical strong{color:var(--text)}
+
+/* Empty / no results */
 .empty{text-align:center;padding:60px 24px;color:var(--muted)}
-.empty svg{width:48px;height:48px;stroke:var(--border);fill:none;stroke-width:1.5;margin:0 auto 16px;display:block}
-.stats-row{display:flex;justify-content:center;gap:32px;margin-bottom:40px;flex-wrap:wrap}
-.stat{text-align:center}
-.stat-n{font-size:28px;font-weight:800;color:var(--accent-light)}
-.stat-l{font-size:12px;color:var(--muted)}
+.empty svg{width:52px;height:52px;stroke:var(--border);fill:none;stroke-width:1.5;margin:0 auto 16px;display:block}
+.empty p{font-size:15px;margin-bottom:6px}
+.empty small{font-size:12px}
+
+/* Quick ref pills */
+.quick-ref{max-width:900px;margin:0 auto 24px;padding:0 24px}
+.qr-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+.qr-pills{display:flex;gap:8px;flex-wrap:wrap}
+.qr-pill{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);transition:.2s}
+.qr-pill:hover{border-color:var(--accent);color:var(--accent-light)}
+
+@media(max-width:640px){
+  .law-tab{min-width:100px;padding:8px 12px}
+  .stats-bar{gap:4px}
+  .stat-item{border-radius:8px!important}
+}
 </style>
 </head>
 <body>
+
 <nav>
   <a href="/tools" class="nav-brand">
     <div class="nav-logo"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
@@ -81,263 +135,181 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
   </div>
 </nav>
 
-<div class="hero">
-  <h1>Old Laws → <span>New Laws 2023</span></h1>
-  <p>Convert IPC → BNS, CrPC → BNSS, and Indian Evidence Act → BSA. Find any section mapping instantly.</p>
+<div class="alert-bar">
+  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  Effective 1 July 2024 — For any FIR/offence on or after 1 July 2024, cite BNSS/BNS/BSA. For earlier matters, CrPC/IPC/IEA still applies under Section 531 BNSS savings clause.
 </div>
 
-<div class="law-tabs">
-  <button class="law-tab active" onclick="setLaw('crpc')">
-    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    CrPC → BNSS <span class="tab-badge">539</span>
-  </button>
-  <button class="law-tab" onclick="setLaw('ipc')">
-    <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg>
-    IPC → BNS <span class="tab-badge">511</span>
-  </button>
-  <button class="law-tab" onclick="setLaw('iea')">
-    <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-    IEA → BSA <span class="tab-badge">167</span>
-  </button>
+<div style="max-width:700px;margin:0 auto">
+  <div class="hero">
+    <h1>Old Laws → <span>New Laws 2023</span></h1>
+    <p>Convert IPC → BNS, CrPC → BNSS, and Evidence Act → BSA. Every section mapped with what changed, why it matters, and practical notes for court use.</p>
+  </div>
+
+  <div class="law-tabs">
+    <button class="law-tab active" onclick="setLaw('crpc')">
+      CrPC → BNSS
+      <span class="tab-sub">Criminal Procedure</span>
+      <span class="tab-badge">484 → 531 sections</span>
+    </button>
+    <button class="law-tab" onclick="setLaw('ipc')">
+      IPC → BNS
+      <span class="tab-sub">Substantive Criminal Law</span>
+      <span class="tab-badge">511 → 358 sections</span>
+    </button>
+    <button class="law-tab" onclick="setLaw('iea')">
+      IEA → BSA
+      <span class="tab-sub">Evidence Law</span>
+      <span class="tab-badge">167 → 170 sections</span>
+    </button>
+  </div>
+
+  <div class="controls">
+    <div class="dir-row">
+      <button class="dir-btn active" id="fwd-btn" onclick="setDir('forward')">
+        Old → New &nbsp;(cite new section)
+      </button>
+      <span class="dir-sep">⇄</span>
+      <button class="dir-btn" id="rev-btn" onclick="setDir('reverse')">
+        New → Old &nbsp;(find old section)
+      </button>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search section number or keyword — e.g. 438, FIR, bail, murder, evidence..." oninput="debounce()">
+      <button class="search-btn" onclick="doSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+    </div>
+  </div>
 </div>
 
-<div class="direction-row">
-  <button class="dir-btn active" id="fwd-btn" onclick="setDir('forward')">Old → New</button>
-  <span class="dir-arrow">⇄</span>
-  <button class="dir-btn" id="rev-btn" onclick="setDir('reverse')">New → Old</button>
+<div class="stats-bar" id="statsBar">
+  <div class="stat-item"><div class="stat-n" id="sTotal">484→531</div><div class="stat-l">Total sections</div></div>
+  <div class="stat-item"><div class="stat-n" id="sRemoved">~12</div><div class="stat-l">Sections removed</div></div>
+  <div class="stat-item"><div class="stat-n" id="sAdded">~59</div><div class="stat-l">New sections added</div></div>
+  <div class="stat-item"><div class="stat-n">1 Jul 2024</div><div class="stat-l">Effective date</div></div>
 </div>
 
-<div class="search-wrap">
-  <input class="search-input" id="searchInput" placeholder="Search section number or topic — e.g. 438, anticipatory bail, FIR..." oninput="debounce()">
-  <button class="search-btn" onclick="doSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
-</div>
-
-<div class="stats-row">
-  <div class="stat"><div class="stat-n" id="stat-n">539</div><div class="stat-l">Total mappings</div></div>
-  <div class="stat"><div class="stat-n" id="stat-removed">~20</div><div class="stat-l">Sections removed</div></div>
-  <div class="stat"><div class="stat-n" id="stat-new">~15</div><div class="stat-l">New sections added</div></div>
+<div class="quick-ref" id="quickRef">
+  <div class="qr-title">Most searched — click to jump</div>
+  <div class="qr-pills" id="qrPills"></div>
 </div>
 
 <div class="results" id="results">
   <div class="empty">
     <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
     <p>Search a section number or keyword above</p>
-    <p style="font-size:12px;margin-top:8px">e.g. "438", "FIR", "bail", "murder", "evidence"</p>
+    <small>e.g. "438", "154", "FIR", "bail", "remand", "murder", "rape", "evidence"</small>
   </div>
 </div>
 
 <script>
-let currentLaw = 'crpc';
-let currentDir = 'forward';
-let timer = null;
+let currentLaw='crpc', currentDir='forward', timer=null;
 
-// ── CrPC → BNSS (key sections — full 539 compressed) ──
-const CRPC_BNSS = [
-  {old:'1',new:'1',topic:'Short Title',change:''},
-  {old:'2',new:'2',topic:'Definitions',change:'New definitions added for electronic records, forensic expert'},
-  {old:'6',new:'6',topic:'Classes of Courts',change:''},
-  {old:'9',new:'8',topic:'Court of Session',change:''},
-  {old:'10',new:'Removed',topic:'Subordination of Judges',change:'Provision removed in BNSS'},
-  {old:'11',new:'9',topic:'Judicial Magistrates',change:''},
-  {old:'24',new:'18',topic:'Public Prosecutors',change:''},
-  {old:'41',new:'35(1)',topic:'Arrest Without Warrant',change:'Stricter guidelines — must record reasons in writing'},
-  {old:'41A',new:'35(3)',topic:'Notice of Appearance',change:'Now mandatory before arrest in most cases'},
-  {old:'41D',new:'38',topic:'Right to Advocate',change:'Accused entitled to meet advocate during interrogation'},
-  {old:'46',new:'43',topic:'Mode of Arrest',change:'Handcuffing restricted — only in exceptional cases with written reasons'},
-  {old:'50',new:'47',topic:'Grounds of Arrest',change:'Must inform grounds of arrest in language accused understands'},
-  {old:'50A',new:'48',topic:'Informing Relative of Arrest',change:'Mandatory — must inform relative/friend within 24 hours'},
-  {old:'57',new:'58',topic:'24-Hour Detention Limit',change:''},
-  {old:'82',new:'84',topic:'Proclamation for Absconder',change:'Attachment of property can be simultaneous with proclamation'},
-  {old:'91',new:'94',topic:'Summons to Produce Document',change:'Covers electronic records explicitly'},
-  {old:'125',new:'144',topic:'Maintenance Order',change:'Now includes live-in partners; increased time limit to 60 days'},
-  {old:'144',new:'163',topic:'Urgent Cases / Curfew (Sec 144)',change:'Orders now limited to 60 days; extension requires new order'},
-  {old:'154',new:'173',topic:'FIR Registration',change:'Zero FIR introduced; e-FIR allowed; 90-day chargesheet period'},
-  {old:'156',new:'175',topic:'Police Power to Investigate',change:'Preliminary inquiry allowed before registering FIR'},
-  {old:'161',new:'180',topic:'Examination of Witnesses',change:'Statement can be audio-video recorded'},
-  {old:'164',new:'183',topic:'Recording Confessions',change:'Magistrate confession can be audio-video recorded'},
-  {old:'167',new:'187',topic:'Remand / Police Custody',change:'Police custody now up to 40 days (serious offences); BNSS 187'},
-  {old:'172',new:'192',topic:'Case Diary',change:'Electronic case diary permitted'},
-  {old:'173',new:'193',topic:'Police Report / Chargesheet',change:'Chargesheet within 60/90 days; default bail if delayed'},
-  {old:'197',new:'218',topic:'Sanction for Prosecution of Public Servant',change:'Time limit of 120 days for sanction — deemed granted if not given'},
-  {old:'227',new:'250',topic:'Discharge (Sessions Court)',change:''},
-  {old:'265A',new:'289',topic:'Plea Bargaining',change:'Extended to heinous offences excluding those with life/death sentence'},
-  {old:'300',new:'337',topic:'Double Jeopardy',change:''},
-  {old:'304',new:'341',topic:'Legal Aid',change:'Mandatory legal aid for accused — expanded scope'},
-  {old:'309',new:'346',topic:'Adjournments',change:'Maximum 2 adjournments per side; total trial in 3 years'},
-  {old:'313',new:'351',topic:'Examination of Accused',change:'Can be done via electronic means'},
-  {old:'317',new:'355',topic:'Absence of Accused',change:''},
-  {old:'Nil',new:'356',topic:'Trial in Absentia (NEW)',change:'NEW in BNSS — trial can proceed even if accused absconds after charges framed'},
-  {old:'353',new:'392',topic:'Judgment',change:'Judgment must be pronounced within 45 days of arguments'},
-  {old:'357',new:'395',topic:'Compensation Order',change:'Victim compensation expanded; mandatory consideration'},
-  {old:'Nil',new:'398',topic:'Witness Protection Scheme (NEW)',change:'NEW in BNSS — statutory recognition of witness protection'},
-  {old:'360',new:'401',topic:'Probation',change:''},
-  {old:'382',new:'423',topic:'Petition of Appeal',change:''},
-  {old:'389',new:'430',topic:'Suspend Sentence During Appeal',change:''},
-  {old:'395',new:'436',topic:'Reference to High Court',change:''},
-  {old:'401',new:'442',topic:'High Court Revision',change:''},
-  {old:'406',new:'446',topic:'Transfer (Supreme Court)',change:''},
-  {old:'407',new:'447',topic:'Transfer (High Court)',change:''},
-  {old:'432',new:'473',topic:'Remission Power',change:'Remission guidelines standardised'},
-  {old:'436',new:'478',topic:'Bail (Bailable Offence)',change:''},
-  {old:'436A',new:'479',topic:'Undertrial Release (Half Period)',change:'Undertrial release if half sentence served — mandatory bail'},
-  {old:'437',new:'480',topic:'Bail (Non-Bailable)',change:'Bail conditions tightened for repeat offenders'},
-  {old:'438',new:'482',topic:'Anticipatory Bail',change:'Now can be granted for limited period; court must give reasons'},
-  {old:'439',new:'483',topic:'Special Powers of HC/Sessions for Bail',change:''},
-  {old:'451',new:'497',topic:'Custody of Property',change:''},
-  {old:'482',new:'528',topic:'Inherent Powers of High Court',change:''},
-  {old:'Nil',new:'530',topic:'Electronic Trial (NEW)',change:'NEW in BNSS — entire trial can be conducted electronically'},
+// ── CRPC → BNSS DATA ──────────────────────────────────────────
+const CRPC=[
+  {old:'1',new:'1',topic:'Short Title, Extent & Commencement',desc:'Defines territorial and temporal application of the Code.',change:'BNSS renamed from Code of Criminal Procedure to Bharatiya Nagarik Suraksha Sanhita, 2023.',type:'same',practical:'All drafts and petitions after 1 Jul 2024 must cite BNSS, not CrPC.',tags:[]},
+  {old:'2',new:'2',topic:'Definitions',desc:'Defines key terms used throughout the Code — complaint, cognizable offence, inquiry, investigation, judicial proceeding, etc.',change:'New definitions added: "electronic communication", "forensic expert", "audio-video electronic means". Digital evidence now formally defined.',type:'change',practical:'Electronic records and digital evidence are now primary evidence — cite BNSS Sec 2 for digital definitions.',tags:['Digital Evidence']},
+  {old:'41',new:'35(1)',topic:'Arrest Without Warrant',desc:'Specifies the circumstances under which a police officer may arrest without a magistrate\'s warrant — mainly cognizable offences.',change:'BNSS mandates officer must record reasons in writing before arrest. Arrest must be "necessary" — not just possible. Proportionality test introduced.',type:'change',practical:'Challenge arrests where officer has not recorded written reasons — this is now a statutory requirement under BNSS 35.',tags:['Bail','Arrest','Critical']},
+  {old:'41A',new:'35(3)',topic:'Notice of Appearance (before arrest)',desc:'Police must issue a notice to appear instead of arresting, in cases where arrest may not be necessary.',change:'Now mandatory in almost all cases before arrest. Non-compliance makes arrest potentially illegal.',type:'change',practical:'Before filing bail application, check if 41A/35(3) notice was given. If not, challenge the arrest itself.',tags:['Arrest','Bail','Critical']},
+  {old:'41D',new:'38',topic:'Right to Meet Advocate During Interrogation',desc:'Arrested person has the right to meet an advocate of their choice during interrogation.',change:'Right strengthened — advocate can be present at interrogation. Denial is now a rights violation.',type:'change',practical:'Inform client of right to have advocate present during questioning — denial can be raised before court.',tags:['Arrest','Rights']},
+  {old:'46',new:'43',topic:'Mode of Arrest — Handcuffing',desc:'Procedure for effecting an arrest — manner, restraint, and grounds.',change:'Handcuffing now prohibited as a rule. Only permitted in exceptional cases with written reasons recorded — repeat offenders, habitual offenders, organised crime cases.',type:'change',practical:'Challenge illegal handcuffing — it requires written reasons under BNSS 43. File habeas corpus if violated.',tags:['Arrest','Critical']},
+  {old:'50',new:'47',topic:'Grounds of Arrest Must Be Communicated',desc:'Arrested person must be informed of grounds of arrest.',change:'Must inform in a language the arrested person understands. Must also inform of right to bail if offence is bailable.',type:'change',practical:'Non-communication of grounds in comprehensible language is a ground to challenge the arrest.',tags:['Arrest','Rights']},
+  {old:'50A',new:'48',topic:'Inform Relative/Friend of Arrest',desc:'Police must inform a relative or friend of the arrested person about the arrest and place of detention.',change:'Now mandatory. Must be done within 24 hours. Name of relative/friend must be recorded in police station diary.',type:'change',practical:'Violation of this provision can be raised to challenge the arrest. Useful in habeas corpus petitions.',tags:['Arrest','Rights']},
+  {old:'57',new:'58',topic:'24-Hour Detention Limit',desc:'Person arrested without warrant cannot be detained for more than 24 hours without magistrate order.',change:'Provision retained. Critical constitutional requirement — any breach is illegal detention.',type:'same',practical:'Produce before magistrate within 24 hours of arrest — failure makes detention illegal regardless of offence.',tags:['Detention','Critical']},
+  {old:'154',new:'173',topic:'FIR — First Information Report',desc:'Registration of first information about commission of a cognizable offence at police station.',change:'THREE major changes: (1) Zero FIR — any police station must register FIR regardless of jurisdiction, transfer to concerned station within 15 days. (2) e-FIR — electronic/online FIR registration now permitted. (3) Preliminary inquiry — permitted for offences carrying 3-7 years imprisonment before FIR registration.',type:'change',practical:'Exam trap: CrPC 154 = BNSS 173. Zero FIR is landmark — police cannot now refuse FIR on jurisdictional grounds.',tags:['FIR','Critical','New Provision']},
+  {old:'155',new:'174',topic:'Non-Cognizable Offence Report',desc:'Procedure for non-cognizable offences — police must record in prescribed book and refer to magistrate.',change:'Retained with minor modification.',type:'same',practical:'',tags:[]},
+  {old:'160',new:'179',topic:'Police Power to Summon Witness',desc:'Police officer can require attendance of any person acquainted with the facts.',change:'Women, disabled persons, and those aged 60+ can now be examined at their residence.',type:'change',practical:'Special protection for vulnerable witnesses — demand compliance if client falls in these categories.',tags:['Investigation','Rights']},
+  {old:'161',new:'180',topic:'Examination of Witnesses by Police',desc:'Police can examine persons acquainted with facts of the case during investigation.',change:'Statement may now be recorded via audio-video electronic means. Victim of sexual offence must be examined by female officer.',type:'change',practical:'Audio-video recording of statements strengthens evidence but also creates accountability — preserve recordings.',tags:['Investigation','Evidence','Digital']},
+  {old:'164',new:'183',topic:'Recording of Confessions and Statements',desc:'Magistrate records confessions and statements of witnesses during investigation.',change:'Audio-video recording of confessions now permitted and recognized. Must be preserved as evidence.',type:'change',practical:'Confessions recorded via audio-video are more credible — harder to later deny. BNSS 183 is now more robust.',tags:['Evidence','Confession','Digital']},
+  {old:'167',new:'187',topic:'Remand — Police and Judicial Custody',desc:'When investigation cannot be completed in 24 hours, magistrate can authorize detention.',change:'CRITICAL CHANGE — "Staggered Remand": Police custody (formerly only in first 15 days) can now be taken in multiple staggered intervals across the first 40 days (regular offences) or 60 days (offences with life/death punishment). You CANNOT assure client they are safe from interrogation after 2 weeks.',type:'change',practical:'MAJOR CHANGE for bail lawyers. In BNSS, police can seek custody at day 30 or day 55 — not limited to first 15 days. Challenge remand applications carefully.',tags:['Remand','Bail','Critical','Changed Significantly']},
+  {old:'173',new:'193',topic:'Police Report / Chargesheet',desc:'Final report submitted by police to magistrate after completing investigation.',change:'Chargesheet time limits: 60 days (magistrate cases), 90 days (sessions cases). Failure entitles accused to default bail. Electronic chargesheets now recognized.',type:'change',practical:'Track chargesheet deadlines. If not filed in time, immediately apply for default bail under BNSS 187(4). This is statutory entitlement.',tags:['Chargesheet','Bail','Default Bail','Critical']},
+  {old:'197',new:'218',topic:'Sanction for Prosecution of Public Servants',desc:'Government sanction required before prosecuting public servants for acts done in official capacity.',change:'120-day time limit introduced — if government does not grant or refuse sanction within 120 days, sanction is deemed granted.',type:'change',practical:'File complaint noting the 120-day clock. If no response, proceed citing deemed grant of sanction under BNSS 218.',tags:['Prosecution','Public Servant']},
+  {old:'269',new:'Removed',topic:'Juvenile Jurisdiction',desc:'Provision for trial of juveniles.',change:'Removed from BNSS — Juvenile Justice Act now exclusively governs juvenile offenders.',type:'removed',practical:'All juvenile matters now exclusively under Juvenile Justice (Care and Protection of Children) Act 2015.',tags:['Juvenile']},
+  {old:'309',new:'346',topic:'Adjournments / Postponements',desc:'Court power to adjourn proceedings.',change:'Maximum 2 adjournments per side throughout trial. Total trial must conclude within 3 years (45-day limit after arguments for judgment). Strict timelines enforced.',type:'change',practical:'Track adjournment count — courts may refuse further adjournments. Use this to expedite protracted trials.',tags:['Trial','Timelines']},
+  {old:'313',new:'351',topic:'Examination of Accused',desc:'Court must examine accused after prosecution evidence to give opportunity to explain incriminating circumstances.',change:'Can now be conducted via electronic means/video conferencing.',type:'change',practical:'Accused in custody can participate in examination via video conferencing — reduces transportation risk.',tags:['Trial','Digital']},
+  {old:'Nil',new:'356',topic:'Trial in Absentia (NEW)',desc:'NEW provision — trial can proceed even if accused absconds after charges have been framed.',change:'Completely new provision. Previously, if accused absconded after charges framed, trial was stalled. Now court can proceed and convict in absentia. Declared absconder loses right to be heard.',type:'new',practical:'Important for cases where accused has fled India. Proceed to trial — get warrant issued, declare absconder, then proceed under BNSS 356.',tags:['Trial','New Provision','Critical']},
+  {old:'353',new:'392',topic:'Judgment Pronouncement',desc:'Delivery of judgment after trial.',change:'Judgment must be pronounced within 45 days of completion of arguments (extendable to 90 days with recorded reasons).',type:'change',practical:'Application can be filed if court exceeds 45 days without pronouncing — cite BNSS 392.',tags:['Judgment','Timelines']},
+  {old:'357',new:'395',topic:'Compensation Order',desc:'Court may order compensation for victim out of fine imposed on accused.',change:'Victim compensation expanded — court must apply its mind on compensation in every conviction. Victim Compensation Scheme now statutory.',type:'change',practical:'Always apply for victim compensation in convictions — court has duty to consider it under BNSS 395.',tags:['Victim','Compensation']},
+  {old:'Nil',new:'398',topic:'Witness Protection Scheme (NEW)',desc:'NEW statutory provision for witness protection.',change:'Completely new. Witness protection scheme given statutory recognition. Court can direct protection measures for endangered witnesses.',type:'new',practical:'Apply for witness protection where witnesses are threatened — now available under statute.',tags:['Witness','New Provision']},
+  {old:'436',new:'478',topic:'Bail in Bailable Offences',desc:'When accused is charged with bailable offence, bail is a matter of right.',change:'Bail remains a right in bailable offences. Police/magistrate must grant bail — cannot refuse.',type:'same',practical:'In bailable offences, demand bail as a right. Any refusal is illegal and challengeable.',tags:['Bail','Critical']},
+  {old:'436A',new:'479',topic:'Undertrial Release (Half-Sentence Rule)',desc:'Undertrial prisoner who has served half the maximum sentence for offence must be released on bail.',change:'MAJOR CHANGE — First-time offenders (no prior conviction) entitled to bail after serving ONE-THIRD of maximum sentence (reduced from one-half). Regular offenders still need half.',type:'change',practical:'Critical for undertrial clients. First-timers can apply for bail after 1/3 of max sentence. File application immediately when threshold crossed.',tags:['Bail','Undertrial','Critical','Changed Significantly']},
+  {old:'437',new:'480',topic:'Bail in Non-Bailable Offences',desc:'Court discretion to grant bail in non-bailable offences.',change:'Additional conditions added for repeat offenders and those charged with terrorism/organised crime. Electronic monitoring (ankle bracelet) can be imposed as bail condition.',type:'change',practical:'Bail conditions may include electronic monitoring — negotiate conditions during bail hearing.',tags:['Bail','Non-Bailable','Critical']},
+  {old:'437A',new:'481',topic:'Bail for Appearance Before Appellate Court',desc:'Trial court must require accused to execute bail bond for appearance before appellate court after conviction.',change:'Retained with minor modifications.',type:'same',practical:'Get bail bond executed at trial stage before appealing — essential for pending appeal.',tags:['Bail','Appeal']},
+  {old:'438',new:'482',topic:'Anticipatory Bail',desc:'Sessions Court or High Court can grant bail in anticipation of arrest.',change:'CRITICAL: Now 438 CrPC (anticipatory bail) = 482 BNSS. BUT 482 CrPC (inherent powers) = 528 BNSS. The NUMBER 482 now means anticipatory bail. Anticipatory bail can be granted for a limited period — court must give reasons for duration.',type:'change',practical:'EXAM TRAP — 482 BNSS is anticipatory bail, NOT inherent powers. Inherent powers moved to 528 BNSS. Double-check section numbers in every petition.',tags:['Bail','Critical','Changed Significantly']},
+  {old:'439',new:'483',topic:'Special Powers of HC/Sessions for Bail',desc:'High Court and Sessions Court have special powers to grant bail in any case.',change:'Retained. Courts can still grant bail in any case including those tried by subordinate courts.',type:'same',practical:'File bail application before Sessions Court as initial step — if refused, approach High Court.',tags:['Bail']},
+  {old:'482',new:'528',topic:'Inherent Powers of High Court',desc:'High Court can make any order to prevent abuse of court process or secure ends of justice.',change:'CRITICAL: Moved from 482 to 528. The number 482 now means anticipatory bail, not inherent powers.',type:'change',practical:'Cite BNSS 528 for inherent powers petitions — NOT 482. Citing 482 will refer to anticipatory bail.',tags:['High Court','Critical','Changed Significantly']},
+  {old:'Nil',new:'530',topic:'Electronic Trial (NEW)',desc:'Entire trial, including arguments and examination of witnesses, can be conducted via electronic means.',change:'Completely new. Virtual courts, video-conferencing trials, electronic documents — all legally recognized.',type:'new',practical:'Apply for virtual proceedings where physical attendance is difficult. Valid for all stages of trial.',tags:['Digital','New Provision','Trial']},
+  {old:'484',new:'531',topic:'Repeal and Savings',desc:'Provision for repeal of CrPC and savings for pending proceedings.',change:'Ongoing proceedings under CrPC continue under old law. New law applies to offences committed after 1 July 2024.',type:'same',practical:'For FIRs before 1 Jul 2024 — cite CrPC. For FIRs after — cite BNSS. Check FIR date before drafting any petition.',tags:['Transition','Critical']},
+  {old:'125',new:'144',topic:'Maintenance Orders',desc:'Magistrate can order maintenance for wives, children, and parents unable to maintain themselves.',change:'Live-in partners now explicitly covered for maintenance. Time limit for disposal increased to 60 days.',type:'change',practical:'Apply under BNSS 144 for live-in partner maintenance — now statutory recognition.',tags:['Maintenance','Family']},
+  {old:'144',new:'163',topic:'Section 144 — Urgent Orders (Curfew)',desc:'Executive magistrate can impose restrictions on assembly and movement in urgent cases.',change:'Orders now limited maximum 60 days. Extension requires fresh order with fresh application of mind. Previously orders were extended indefinitely.',type:'change',practical:'Challenge Section 144/163 orders beyond 60 days without fresh order — now a statutory violation.',tags:['Public Order']},
+  {old:'176',new:'196',topic:'Magistrate Inquiry into Death',desc:'Mandatory magisterial inquiry in cases of death in police custody or encounter.',change:'Audio-video recording of inquiry proceedings now mandatory. Family of deceased must be informed.',type:'change',practical:'Demand audio-video recording of custody death inquiry — mandatory under BNSS 196.',tags:['Custody Death','Rights']},
+  {old:'304',new:'341',topic:'Legal Aid to Accused',desc:'Accused who cannot afford an advocate must be provided legal aid at state expense.',change:'Expanded scope — applies from time of arrest, not just at trial. Must be offered before any interrogation.',type:'change',practical:'If client was interrogated without being offered legal aid — challenge statements made during such interrogation.',tags:['Legal Aid','Rights','Critical']},
 ];
 
-// ── IPC → BNS (key sections) ──
-const IPC_BNS = [
-  {old:'1',new:'1',topic:'Short Title',change:''},
-  {old:'2',new:'2',topic:'Punishment of Offences',change:''},
-  {old:'34',new:'3(5)',topic:'Common Intention',change:''},
-  {old:'52',new:'2(19)',topic:'Good Faith — Definition',change:'Updated definition'},
-  {old:'76',new:'21',topic:'Act Done by Person Bound by Law',change:''},
-  {old:'84',new:'22',topic:'Act of Person of Unsound Mind',change:''},
-  {old:'96',new:'34',topic:'Right of Private Defence',change:''},
-  {old:'103',new:'39',topic:'Right to Private Defence of Property',change:''},
-  {old:'107',new:'45',topic:'Abetment',change:''},
-  {old:'120A',new:'61',topic:'Criminal Conspiracy',change:''},
-  {old:'120B',new:'62',topic:'Punishment for Criminal Conspiracy',change:''},
-  {old:'121',new:'147',topic:'Waging War Against India',change:''},
-  {old:'124A',new:'152',topic:'Sedition',change:'Old sedition law replaced — now "acts endangering sovereignty"'},
-  {old:'141',new:'189',topic:'Unlawful Assembly',change:''},
-  {old:'146',new:'191',topic:'Rioting',change:''},
-  {old:'153A',new:'196',topic:'Promoting Enmity (Religion/Race)',change:''},
-  {old:'171E',new:'10',topic:'Bribery',change:''},
-  {old:'191',new:'227',topic:'Giving False Evidence',change:''},
-  {old:'193',new:'229',topic:'Punishment for False Evidence',change:''},
-  {old:'201',new:'238',topic:'Causing Disappearance of Evidence',change:''},
-  {old:'268',new:'269',topic:'Public Nuisance',change:''},
-  {old:'292',new:'294',topic:'Obscene Material',change:'Extended to digital/electronic content'},
-  {old:'295A',new:'302',topic:'Deliberate Outrage of Religious Feelings',change:''},
-  {old:'302',new:'103',topic:'Murder',change:'Death penalty maintained; added provision for organized crime'},
-  {old:'304',new:'104',topic:'Culpable Homicide',change:''},
-  {old:'304A',new:'106',topic:'Causing Death by Negligence',change:'Hit and run — new provision: 10 yr imprisonment if driver flees'},
-  {old:'304B',new:'80',topic:'Dowry Death',change:''},
-  {old:'306',new:'108',topic:'Abetment of Suicide',change:''},
-  {old:'307',new:'109',topic:'Attempt to Murder',change:''},
-  {old:'309',new:'226',topic:'Attempt to Commit Suicide',change:'Decriminalized — now only in specific circumstances'},
-  {old:'312',new:'88',topic:'Causing Miscarriage',change:''},
-  {old:'323',new:'115',topic:'Voluntarily Causing Hurt',change:'Fine increased'},
-  {old:'324',new:'117',topic:'Hurt by Dangerous Weapons',change:''},
-  {old:'325',new:'116',topic:'Voluntarily Causing Grievous Hurt',change:''},
-  {old:'326A',new:'124',topic:'Acid Attack',change:'Minimum 10 years; victim compensation strengthened'},
-  {old:'354',new:'74',topic:'Assault on Woman (Modesty)',change:''},
-  {old:'354A',new:'75',topic:'Sexual Harassment',change:''},
-  {old:'354B',new:'76',topic:'Assault to Disrobe Woman',change:''},
-  {old:'354C',new:'77',topic:'Voyeurism',change:''},
-  {old:'354D',new:'78',topic:'Stalking',change:''},
-  {old:'363',new:'137',topic:'Kidnapping',change:''},
-  {old:'375',new:'63',topic:'Rape — Definition',change:''},
-  {old:'376',new:'64',topic:'Punishment for Rape',change:'Minimum 10 years; gang rape 20 years to life'},
-  {old:'376D',new:'70',topic:'Gang Rape',change:'Minimum 20 years — up to life imprisonment'},
-  {old:'378',new:'303',topic:'Theft',change:''},
-  {old:'379',new:'304',topic:'Punishment for Theft',change:''},
-  {old:'383',new:'308',topic:'Extortion',change:''},
-  {old:'390',new:'309',topic:'Robbery',change:''},
-  {old:'395',new:'310',topic:'Dacoity',change:''},
-  {old:'Nil',new:'111',topic:'Organised Crime (NEW)',change:'NEW in BNS — organized crime explicitly defined and punished'},
-  {old:'Nil',new:'113',topic:'Terrorist Act (NEW)',change:'NEW in BNS — terrorism incorporated from UAPA'},
-  {old:'405',new:'316',topic:'Criminal Breach of Trust',change:''},
-  {old:'406',new:'316',topic:'Punishment for Criminal Breach of Trust',change:''},
-  {old:'415',new:'318',topic:'Cheating',change:''},
-  {old:'417',new:'318',topic:'Punishment for Cheating',change:''},
-  {old:'420',new:'318(4)',topic:'Cheating (Dishonestly Inducing Delivery)',change:'7 years; added digital/cyber cheating'},
-  {old:'441',new:'329',topic:'Criminal Trespass',change:''},
-  {old:'499',new:'356',topic:'Defamation',change:''},
-  {old:'500',new:'356',topic:'Punishment for Defamation',change:''},
-  {old:'503',new:'351',topic:'Criminal Intimidation',change:''},
-  {old:'506',new:'351',topic:'Punishment for Criminal Intimidation',change:''},
-  {old:'509',new:'79',topic:'Insulting Modesty of Woman',change:'Includes cyber/digital acts'},
+// ── IPC → BNS DATA ──────────────────────────────────────────
+const IPC=[
+  {old:'Nil',new:'Nil',topic:'Structure Change',desc:'IPC had 511 sections across 23 chapters. BNS has 358 sections across 20 chapters. Many sections consolidated, some expanded.',change:'MAJOR RESTRUCTURING — Section numbers completely changed. IPC 302 (murder) = BNS 103. IPC 420 (cheating) = BNS 318(4). Always verify the new section.',type:'change',practical:'Never assume IPC number = BNS number. Always verify using this converter before filing any petition.',tags:['Critical','Structure']},
+  {old:'124A',new:'152',topic:'Sedition (Replaced)',desc:'IPC 124A made sedition punishable — caused significant controversy and misuse.',change:'OLD SEDITION LAW ABOLISHED. BNS 152 replaces with "acts endangering sovereignty, unity and integrity of India". Higher threshold — requires actual acts, not just words.',type:'change',practical:'Challenge old sedition charges under CrPC era — new law is harder to invoke. Sedition as known under IPC no longer exists.',tags:['Critical','Changed Significantly','Constitutional']},
+  {old:'302',new:'103',topic:'Murder',desc:'Whoever commits murder shall be punished with death or life imprisonment.',change:'Punishment retained. New additions: organised crime murder and group murders get enhanced treatment. BNS 103(2) adds provision for murder by group of 5+ persons on grounds of race/caste — mandatory death or life.',type:'change',practical:'In mob lynching/hate crime murders, cite BNS 103(2) — mandatory minimum life imprisonment for all members of group.',tags:['Murder','Critical']},
+  {old:'304A',new:'106',topic:'Causing Death by Negligence — Hit and Run',desc:'Causing death by negligent act not amounting to culpable homicide.',change:'MAJOR CHANGE — New provision BNS 106(2) for "hit and run": if driver causes death by rash/negligent driving AND flees without reporting to police, punishment is 10 years rigorous imprisonment. Previously only 2 years.',type:'change',practical:'BNS 106(2) is a major tool in road accident deaths where driver fled. Punishment increased 5x.',tags:['Accident','Critical','Changed Significantly']},
+  {old:'Nil',new:'111',topic:'Organised Crime (NEW)',desc:'NEW section defining and punishing organised crime — previously only in MCOCA (Maharashtra) and similar state laws.',change:'COMPLETELY NEW — First time organised crime incorporated into central criminal law. Includes extortion, contract killing, kidnapping, illegal trade in narcotics/weapons done by criminal syndicate. Minimum 5 years to life imprisonment.',type:'new',practical:'File charge under BNS 111 in cases involving criminal syndicates, drug networks, extortion rings. Previously only state-specific laws applied.',tags:['New Provision','Critical','Organised Crime']},
+  {old:'Nil',new:'113',topic:'Terrorist Act (NEW)',desc:'NEW section incorporating terrorism-related offences into main criminal code.',change:'COMPLETELY NEW in BNS — Terrorism offences incorporated from UAPA into substantive criminal law. Defined as acts threatening sovereignty, security, or causing terror.',type:'new',practical:'Works alongside UAPA — BNS 113 provides additional charging option. Consult UAPA specialist in terrorism matters.',tags:['New Provision','Terrorism']},
+  {old:'307',new:'109',topic:'Attempt to Murder',desc:'Whoever does any act with intent to commit murder.',change:'Retained. Punishment: up to 10 years. If hurt caused — life imprisonment. If committed by life convict — death.',type:'same',practical:'Charge under BNS 109. Corroboration with medical evidence essential.',tags:['Murder']},
+  {old:'309',new:'226',topic:'Attempt to Commit Suicide',desc:'Attempt to commit suicide was punishable under IPC 309.',change:'DE-CRIMINALIZED — BNS 226 retains a narrow version: person who attempts suicide to compel government/public servant is punishable. Ordinary suicide attempt is no longer an offence — Mental Healthcare Act 2017 governs.',type:'change',practical:'Ordinary suicide attempts should NOT be prosecuted. Only suicide to compel government action remains an offence.',tags:['Changed Significantly','Mental Health']},
+  {old:'323',new:'115',topic:'Voluntarily Causing Hurt',desc:'Causing hurt to a person voluntarily.',change:'Fine increased significantly. Punishment retained at 1 year or fine or both.',type:'change',practical:'Fine enhanced — consider filing criminal complaint where civil remedy is sought alongside.',tags:['Assault']},
+  {old:'326A',new:'124',topic:'Acid Attack',desc:'Throwing or administering acid on any person.',change:'Minimum 10 years rigorous imprisonment — unchanged. Victim compensation mandatory. Regulation of acid sale reinforced.',type:'same',practical:'Victim compensation is mandatory — apply simultaneously with criminal complaint.',tags:['Assault','Women','Critical']},
+  {old:'354',new:'74',topic:'Assault on Woman — Outraging Modesty',desc:'Assault or use of criminal force with intent to outrage modesty of woman.',change:'Minimum 1 year retained. Now explicitly includes cyber/digital acts — sending obscene messages counts.',type:'change',practical:'File complaint for online harassment/obscene messages under BNS 74 read with IT Act.',tags:['Women','Digital','Critical']},
+  {old:'354D',new:'78',topic:'Stalking',desc:'Following or contacting a woman repeatedly despite clear indication of disinterest.',change:'Explicitly covers cyber-stalking and monitoring of internet/social media use.',type:'change',practical:'Digital stalking — screen recording, monitoring WhatsApp status — actionable under BNS 78.',tags:['Women','Digital','Stalking']},
+  {old:'375',new:'63',topic:'Rape — Definition',desc:'Definition of rape under Indian law.',change:'Definition retained and expanded. Digital penetration included explicitly. Marital rape exception for women over 18 retained (this remains controversial).',type:'change',practical:'Digital rape (fingers, objects) explicitly covered under BNS 63 — cite this in complaints.',tags:['Women','Critical']},
+  {old:'376D',new:'70',topic:'Gang Rape',desc:'Rape by a group of persons.',change:'Minimum sentence: 20 years rigorous imprisonment — unchanged. All members of group guilty regardless of act.',type:'same',practical:'All present and participating in gang rape are equally liable — cite BNS 70 for all accused.',tags:['Women','Critical']},
+  {old:'420',new:'318(4)',topic:'Cheating — Dishonestly Inducing Delivery',desc:'Cheating by dishonestly inducing a person to deliver property.',change:'Now BNS 318(4). Scope expanded to include digital/cyber cheating explicitly.',type:'change',practical:'Online fraud, UPI scams, cryptocurrency fraud — file under BNS 318(4) read with IT Act.',tags:['Cheating','Digital','Critical']},
+  {old:'405',new:'316',topic:'Criminal Breach of Trust',desc:'Dishonest misappropriation of property entrusted to a person.',change:'Retained. Enhanced penalty for breach by public servant or banker.',type:'change',practical:'File under BNS 316 with enhanced punishment provisions when accused is banker/public servant.',tags:['Property','Fraud']},
+  {old:'499',new:'356',topic:'Defamation',desc:'Making or publishing imputation to harm reputation of a person.',change:'Retained. Now explicitly includes digital defamation — online posts, social media.',type:'change',practical:'File defamation complaint for social media posts and online content under BNS 356.',tags:['Defamation','Digital']},
+  {old:'503',new:'351',topic:'Criminal Intimidation',desc:'Threatening another with injury to person, reputation or property.',change:'Retained. Now covers threatening through electronic communication.',type:'change',practical:'WhatsApp threats, phone calls, email threats — file under BNS 351.',tags:['Intimidation','Digital']},
 ];
 
-// ── IEA → BSA (key sections) ──
-const IEA_BSA = [
-  {old:'1',new:'1',topic:'Short Title & Application',change:'BSA applicable from July 1, 2024'},
-  {old:'3',new:'2',topic:'Definitions',change:'Electronic records, digital evidence included in definitions'},
-  {old:'4',new:'4',topic:'May Presume',change:''},
-  {old:'5',new:'5',topic:'Relevancy of Facts',change:''},
-  {old:'8',new:'8',topic:'Motive, Preparation & Conduct',change:''},
-  {old:'10',new:'10',topic:'Facts Relating to Conspiracy',change:''},
-  {old:'17',new:'16',topic:'Admission Defined',change:''},
-  {old:'24',new:'23',topic:'Confession caused by Inducement',change:''},
-  {old:'25',new:'23(1)',topic:'Confession to Police Officer',change:''},
-  {old:'27',new:'23(2)',topic:'Discovery of Fact (Partial Confession)',change:''},
-  {old:'32',new:'26',topic:'Dying Declaration',change:''},
-  {old:'45',new:'39',topic:'Expert Opinion',change:'Forensic expert opinion — scientific reports admissible directly'},
-  {old:'45A',new:'39(2)',topic:'Expert Opinion on Digital Evidence',change:'Explicitly covers electronic evidence and cyber forensics'},
-  {old:'46',new:'40',topic:'Facts Bearing on Opinion',change:''},
-  {old:'51',new:'44',topic:'Opinion on Character',change:''},
-  {old:'57',new:'52',topic:'Facts Judicially Noticeable',change:''},
-  {old:'58',new:'53',topic:'Admitted Facts',change:''},
-  {old:'59',new:'57',topic:'Proof of Facts by Oral Evidence',change:''},
-  {old:'60',new:'58',topic:'Oral Evidence Must Be Direct',change:'Video/audio evidence explicitly included'},
-  {old:'61',new:'59',topic:'Proof of Contents of Documents',change:''},
-  {old:'63',new:'61',topic:'Secondary Evidence',change:'Electronic records treated as primary evidence now (Sec 57 BSA)'},
-  {old:'65A',new:'57',topic:'Electronic Records as Evidence',change:'Electronic records = primary evidence; no secondary classification'},
-  {old:'65B',new:'63',topic:'Admissibility of Electronic Records',change:'Section 65B certificate requirement modified — easier admission'},
-  {old:'Nil',new:'61(2)',topic:'Admissibility of Electronic Records (NEW)',change:'NEW — expanded to include social media, email, cloud data'},
-  {old:'67A',new:'65',topic:'Proof of Digital Signature',change:''},
-  {old:'73A',new:'71',topic:'Proof of Electronic Signatures',change:''},
-  {old:'74',new:'72',topic:'Public Documents',change:''},
-  {old:'75',new:'73',topic:'Private Documents',change:''},
-  {old:'85A',new:'82',topic:'Presumption of Electronic Agreements',change:''},
-  {old:'85B',new:'82',topic:'Presumption of Electronic Records',change:''},
-  {old:'88A',new:'85',topic:'Presumption of Electronic Messages',change:'WhatsApp, email messages covered'},
-  {old:'90A',new:'86',topic:'Presumption of Electronic Records (5 years)',change:''},
-  {old:'101',new:'104',topic:'Burden of Proof',change:''},
-  {old:'102',new:'105',topic:'On Whom Burden Lies',change:''},
-  {old:'105',new:'108',topic:'Burden of Proving Exception',change:''},
-  {old:'112',new:'115',topic:'Presumption of Legitimacy',change:'DNA test for paternity — admissible under BSA'},
-  {old:'113A',new:'116(1)',topic:'Presumption (Abetment of Suicide by Husband)',change:''},
-  {old:'113B',new:'117',topic:'Presumption of Dowry Death',change:''},
-  {old:'114',new:'118',topic:'Court May Presume Existence of Certain Facts',change:'New presumptions added for electronic crimes'},
-  {old:'114A',new:'119',topic:'Presumption in Rape Cases',change:'No consent presumed if victim says so'},
-  {old:'118',new:'119(new)',topic:'Competency of Witnesses',change:'Video conferencing permitted for witness examination'},
-  {old:'119',new:'119',topic:'Dumb Witnesses',change:''},
-  {old:'122',new:'122',topic:'Communications Between Spouses',change:''},
-  {old:'123',new:'123',topic:'State Affairs — Unpublished Records',change:''},
-  {old:'124',new:'124',topic:'Official Communications',change:''},
-  {old:'125',new:'125',topic:'Magistrates / Police Cannot be Compelled',change:''},
-  {old:'126',new:'126',topic:'Professional Communications',change:''},
-  {old:'129',new:'129',topic:'Confidential Communication with Lawyer',change:''},
-  {old:'132',new:'132',topic:'Witness Not Excused from Answering',change:''},
-  {old:'133',new:'133',topic:'Accomplice',change:''},
-  {old:'136',new:'136',topic:'Judge to Decide Admissibility',change:''},
-  {old:'137',new:'137',topic:'Examination-in-Chief',change:''},
-  {old:'138',new:'138',topic:'Order of Examination',change:''},
-  {old:'140',new:'140',topic:'Cross-Examination of Witnesses',change:''},
-  {old:'145',new:'145',topic:'Cross-Examination on Previous Statements',change:''},
-  {old:'146',new:'146',topic:'Questions Lawful in Cross-Examination',change:'Rape victim — no question on past sexual conduct allowed'},
-  {old:'148',new:'148',topic:'Court to Decide Decency of Question',change:''},
-  {old:'154',new:'154',topic:'Hostile Witness',change:''},
-  {old:'155',new:'155',topic:'Impeaching Credit of Witness',change:''},
-  {old:'157',new:'157',topic:'Prior Consistent Statement',change:''},
-  {old:'158',new:'158',topic:'Prior Inconsistent Statement',change:''},
-  {old:'165',new:'167',topic:'Judge May Ask Any Question',change:''},
+// ── IEA → BSA DATA ──────────────────────────────────────────
+const IEA=[
+  {old:'1',new:'1',topic:'Short Title and Application',desc:'Indian Evidence Act 1872 (167 sections) replaced by Bharatiya Sakshya Adhiniyam 2023 (170 sections).',change:'Effective 1 July 2024 alongside BNS and BNSS. Same territorial application.',type:'same',practical:'Cite BSA in all evidence-related arguments for cases after 1 July 2024.',tags:[]},
+  {old:'3',new:'2',topic:'Definitions',desc:'Key definitions used throughout the Evidence Act.',change:'Major addition: "electronic or digital record" comprehensively defined. Courts now bound by this definition for all digital evidence.',type:'change',practical:'Digital records — WhatsApp messages, emails, CCTV footage — are formally "documents" under BSA definitions.',tags:['Digital Evidence','Critical']},
+  {old:'32',new:'26',topic:'Dying Declaration',desc:'Statement made by a dying person about the cause of their death is admissible as an exception to hearsay.',change:'Now can be recorded by audio-video means. Video-recorded dying declarations are explicitly admissible.',type:'change',practical:'Ensure video recording of dying declaration where possible — more credible and harder to challenge.',tags:['Dying Declaration','Evidence','Digital']},
+  {old:'45',new:'39',topic:'Expert Opinion / Expert Evidence',desc:'Opinion of expert on matters of science, art, foreign law, handwriting, finger impressions is relevant.',change:'Forensic expert reports now admissible directly without expert appearing in court (where government forensic report). Private forensic expert must still appear.',type:'change',practical:'Government forensic reports (CFSL, FSL) admissible without the expert — saves time in trial.',tags:['Expert Evidence','Forensic','Critical']},
+  {old:'45A',new:'39(2)',topic:'Expert Opinion on Electronic Evidence',desc:'Expert opinion on authenticity and source of electronic records.',change:'Explicitly covers cyber forensics, digital signatures, and metadata analysis.',type:'change',practical:'Cyber forensic expert reports are now specifically governed — essential in all digital crime cases.',tags:['Digital Evidence','Expert Evidence','Cyber']},
+  {old:'63',new:'61',topic:'Secondary Evidence',desc:'Copies and secondary evidence of documents.',change:'MAJOR CHANGE — Electronic records are now PRIMARY evidence, not secondary. No need to prove original — electronic record stands on its own.',type:'change',practical:'No need to produce "original" for electronic records — the electronic record IS the original under BSA.',tags:['Electronic Evidence','Critical','Changed Significantly']},
+  {old:'65A',new:'57',topic:'Electronic Records as Primary Evidence',desc:'Earlier provision made electronic records secondary evidence requiring certificate.',change:'Electronic records are now PRIMARY evidence under BSA 57 — same status as paper documents.',type:'change',practical:'Challenge any court that still treats electronic records as secondary evidence — BSA has changed this fundamentally.',tags:['Electronic Evidence','Critical','Changed Significantly']},
+  {old:'65B',new:'63',topic:'65B Certificate for Electronic Evidence',desc:'Certificate required to make electronic records admissible, to be given by responsible official.',change:'MODIFIED — Certificate requirements simplified. Any person in a responsible position with knowledge of the system can give the certificate. No longer required to produce the "computer output" certificate in the rigid old format.',type:'change',practical:'65B/BSA 63 certificate requirement is now more flexible. A simple certificate from IT manager or system administrator is sufficient.',tags:['Electronic Evidence','Certificate','Critical','Changed Significantly']},
+  {old:'114',new:'118',topic:'Presumptions — Court May Presume',desc:'Court may presume existence of certain facts in certain situations.',change:'New presumptions added for electronic records and digital offences. Court may presume that electronic record was sent by the person whose name appears as sender.',type:'change',practical:'Use presumption against accused when their phone/email was used to send threatening or criminal messages.',tags:['Presumptions','Digital']},
+  {old:'114A',new:'119',topic:'Presumption as to Absence of Consent in Rape',desc:'If victim states she did not consent, court shall presume absence of consent in certain rape cases.',change:'Retained. Crucial protection for rape survivors — places burden on accused to prove consent.',type:'same',practical:'Cite BSA 119 to invoke presumption — accused must prove consent, not victim prove lack of it.',tags:['Rape','Evidence','Critical']},
+  {old:'122',new:'122',topic:'Communications Between Husband and Wife',desc:'Communications during marriage are privileged and cannot be compelled in court.',change:'Retained.',type:'same',practical:'',tags:['Privilege']},
+  {old:'126',new:'126',topic:'Professional Communications — Advocate-Client Privilege',desc:'Advocate cannot be compelled to disclose communications made in professional confidence.',change:'Retained. Absolute privilege — no court can compel disclosure of client communications.',type:'same',practical:'Assert privilege firmly — no court order can break advocate-client privilege under BSA 126.',tags:['Privilege','Advocate','Critical']},
+  {old:'132',new:'132',topic:'Witness Not Excused from Answering Incriminating Question',desc:'Witness cannot refuse to answer questions on ground that answer may incriminate them.',change:'Retained. However, answer cannot be used as evidence against the witness in subsequent proceedings.',type:'same',practical:'Protect witnesses who must answer self-incriminating questions — their answers cannot be used against them.',tags:['Witness','Privilege']},
+  {old:'146',new:'146',topic:'Cross-Examination — Questions About Rape Victim\'s Past',desc:'Restrictions on questions about character and past sexual conduct of rape victims.',change:'Strengthened — absolutely no questions about past sexual history of rape victim in cross-examination. Judge must prevent such questions.',type:'change',practical:'Object immediately to any question about victim\'s sexual past — judge must not permit under BSA 146.',tags:['Rape','Victim','Critical']},
+  {old:'Nil',new:'New',topic:'Video Conferencing for Witnesses (NEW)',desc:'NEW provision — Witnesses can now be examined via video conferencing.',change:'Completely new — victims and witnesses can depose via video conferencing, especially in sexual offence cases.',type:'new',practical:'Apply for witness examination via video conferencing to protect vulnerable witnesses from face-to-face confrontation.',tags:['Witness','New Provision','Digital']},
 ];
 
-function getData(){
-  if(currentLaw==='crpc') return {data:CRPC_BNSS,oldLabel:'CrPC',newLabel:'BNSS'};
-  if(currentLaw==='ipc')  return {data:IPC_BNS,oldLabel:'IPC',newLabel:'BNS'};
-  return {data:IEA_BSA,oldLabel:'IEA',newLabel:'BSA'};
-}
+const QUICK={
+  crpc:['438→482','154→173','167→187','436A→479','482→528','144→163','173→193'],
+  ipc:['302→103','420→318','124A→152','309→226','Sec 111 New','Sec 113 New'],
+  iea:['65B→63','45→39','63→61','114A→119'],
+};
+
+const STATS={
+  crpc:{total:'484 → 531',removed:'~12',added:'~59'},
+  ipc:{total:'511 → 358',removed:'~70+',added:'~5'},
+  iea:{total:'167 → 170',removed:'~5',added:'~8'},
+};
 
 function setLaw(law){
   currentLaw=law;
   document.querySelectorAll('.law-tab').forEach((b,i)=>{
     b.classList.toggle('active',['crpc','ipc','iea'][i]===law);
   });
-  const counts={crpc:{n:'539',r:'~20',nw:'~15'},ipc:{n:'511',r:'~19',nw:'~5'},iea:{n:'167',r:'~8',nw:'~12'}};
-  const c=counts[law];
-  document.getElementById('stat-n').textContent=c.n;
-  document.getElementById('stat-removed').textContent=c.r;
-  document.getElementById('stat-new').textContent=c.nw;
+  const s=STATS[law];
+  document.getElementById('sTotal').textContent=s.total;
+  document.getElementById('sRemoved').textContent=s.removed;
+  document.getElementById('sAdded').textContent=s.added;
   document.getElementById('searchInput').value='';
   document.getElementById('results').innerHTML=emptyHTML();
+  renderQuickRef();
 }
 
 function setDir(dir){
@@ -347,13 +319,44 @@ function setDir(dir){
   doSearch();
 }
 
-function emptyHTML(){
-  return `<div class="empty"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><p>Search a section number or keyword above</p><p style="font-size:12px;margin-top:8px">e.g. "438", "FIR", "bail", "murder", "evidence"</p></div>`;
+function renderQuickRef(){
+  const pills=QUICK[currentLaw]||[];
+  document.getElementById('qrPills').innerHTML=pills.map(p=>`<button class="qr-pill" onclick="searchQuick('${p}')">${p}</button>`).join('');
 }
 
-function debounce(){
-  clearTimeout(timer);
-  timer=setTimeout(doSearch,250);
+function searchQuick(q){
+  document.getElementById('searchInput').value=q.split('→')[0].replace('Sec ','').replace(' New','').trim();
+  doSearch();
+}
+
+function debounce(){clearTimeout(timer);timer=setTimeout(doSearch,250);}
+
+function getData(){
+  if(currentLaw==='crpc') return {data:CRPC,oldLabel:'CrPC',newLabel:'BNSS'};
+  if(currentLaw==='ipc')  return {data:IPC,oldLabel:'IPC',newLabel:'BNS'};
+  return {data:IEA,oldLabel:'IEA',newLabel:'BSA'};
+}
+
+function emptyHTML(){
+  return `<div class="empty"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><p>Search a section number or keyword above</p><small>e.g. "438", "154", "FIR", "bail", "remand", "murder", "rape", "evidence"</small></div>`;
+}
+
+function changeBox(r){
+  if(!r.change)return'';
+  const icons={change:'⚡',new:'✨',removed:'🚫',same:'✅'};
+  const cls={change:'type-change',new:'type-new',removed:'type-removed',same:'type-same'};
+  return`<div class="change-box ${cls[r.type]||'type-change'}"><span class="change-icon">${icons[r.type]||'⚡'}</span>${r.change}</div>`;
+}
+
+function practicalBox(r){
+  if(!r.practical)return'';
+  return`<div class="practical"><strong>💼 Practical note:</strong> ${r.practical}</div>`;
+}
+
+function tagHTML(tags){
+  if(!tags||!tags.length)return'';
+  const critical=tags.includes('Critical')||tags.includes('Changed Significantly');
+  return tags.map(t=>`<span class="tag${t==='New Provision'?' tag-new':t==='Critical'||t==='Changed Significantly'?' tag-critical':''}">${t}</span>`).join('');
 }
 
 function doSearch(){
@@ -361,27 +364,62 @@ function doSearch(){
   const el=document.getElementById('results');
   if(!q){el.innerHTML=emptyHTML();return;}
   const {data,oldLabel,newLabel}=getData();
+
   const filtered=data.filter(s=>{
-    const searchOld = currentDir==='forward' ? s.old : s.new;
-    const searchNew = currentDir==='forward' ? s.new : s.old;
-    return searchOld.toLowerCase().includes(q)||searchNew.toLowerCase().includes(q)||s.topic.toLowerCase().includes(q)||(s.change&&s.change.toLowerCase().includes(q));
+    if(s.old==='Nil'&&s.new==='Nil')return false; // skip structure-only entries unless specific search
+    const secMatch=currentDir==='forward'
+      ?s.old.toLowerCase().includes(q)||s.new.toLowerCase().includes(q)
+      :s.new.toLowerCase().includes(q)||s.old.toLowerCase().includes(q);
+    const textMatch=s.topic.toLowerCase().includes(q)||s.desc.toLowerCase().includes(q)||s.change.toLowerCase().includes(q)||(s.tags&&s.tags.some(t=>t.toLowerCase().includes(q)));
+    return secMatch||textMatch;
   });
+
+  // Sort: exact section matches first, then by old section
+  filtered.sort((a,b)=>{
+    const aExact=a.old===q||a.new===q?0:1;
+    const bExact=b.old===q||b.new===q?0:1;
+    return aExact-bExact;
+  });
+
   if(!filtered.length){
-    el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><p>No results for "<strong>${q}</strong>"</p></div>`;
+    el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><p>No results for "<strong>${q}</strong>"</p><small>Try a different section number or keyword</small></div>`;
     return;
   }
+
   el.innerHTML=filtered.map(s=>{
     const isRemoved=s.new==='Removed';
     const isNew=s.old==='Nil';
-    let oldChip=isNew?`<span class="law-chip chip-new-only">New in ${newLabel}</span>`:`<span class="law-chip chip-old">${oldLabel} ${s.old}</span>`;
-    let newChip=isRemoved?`<span class="law-chip chip-removed">Removed</span>`:`<span class="law-chip chip-new">${newLabel} ${s.new}</span>`;
-    return `<div class="result-card">
-      <div class="rc-laws">${currentDir==='forward'?oldChip:''}${!isNew&&!isRemoved?`<span class="arrow-icon">→</span>`:''} ${currentDir==='forward'?newChip:oldChip}</div>
-      <div class="rc-title">${s.topic}</div>
-      ${s.change?`<div class="rc-change">⚡ ${s.change}</div>`:''}
+    const isStructure=s.old==='Nil'&&s.new==='Nil';
+
+    let oldChip=isNew
+      ?`<span class="sec-chip chip-added">New in ${newLabel}</span>`
+      :`<span class="sec-chip chip-old">${oldLabel} ${s.old}</span>`;
+
+    let newChip=isRemoved
+      ?`<span class="sec-chip chip-removed">Removed in ${newLabel}</span>`
+      :isNew?''
+      :`<span class="sec-chip chip-new">${newLabel} ${s.new}</span>`;
+
+    const arrow=(!isNew&&!isRemoved)?`<span class="arrow">→</span>`:'';
+
+    return`<div class="result-card">
+      <div class="card-header">
+        <div class="card-sections">
+          ${currentDir==='forward'?oldChip:newChip}
+          ${arrow}
+          ${currentDir==='forward'?newChip:oldChip}
+        </div>
+        <div class="card-tags">${tagHTML(s.tags)}</div>
+      </div>
+      <div class="card-title">${s.topic}</div>
+      <div class="card-desc">${s.desc}</div>
+      ${changeBox(s)}
+      ${practicalBox(s)}
     </div>`;
   }).join('');
 }
+
+renderQuickRef();
 </script>
 </body>
 </html>
