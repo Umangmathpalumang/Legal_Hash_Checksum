@@ -172,6 +172,15 @@ async def legal_dictionary(request: Request):
     p = os.path.join(os.path.dirname(__file__), "templates", "legal-dictionary.html")
     return HTMLResponse(content=open(p).read())
 
+
+@app.get("/women-children-law", response_class=HTMLResponse)
+async def women_children_law(request: Request):
+    p = os.path.join(os.path.dirname(__file__), "templates", "women-children-law.html")
+    try:
+        return HTMLResponse(content=open(p).read())
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Template not found")
+
 @app.get("/health")
 async def health():
     return {
