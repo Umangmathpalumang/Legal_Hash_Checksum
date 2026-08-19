@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Legal Notice Generator – Indian Courts</title>
-<meta name="description" content="Draft professional legal notices with logo, rich-text editor and templates. Print to Legal size PDF.">
+<meta name="description" content="Professional legal notice with logo, rich‑text editor, and page numbers. Print to Legal size PDF.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -62,32 +62,34 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
 .preview-panel{background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 105px)}
 .preview-label{font-size:11px;color:#888;margin-bottom:12px;text-align:center}
 
-.paper{width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:16mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.7}
-.notice-header{text-align:center;margin-bottom:6mm}
-.notice-logo{max-height:40px;margin-bottom:3mm}
-.notice-law-firm{font-size:14pt;font-weight:700;margin-bottom:1mm}
-.notice-advocate{font-size:10pt;margin-bottom:1mm}
-.notice-addr{font-size:9.5pt;color:#333;margin-bottom:1mm}
-.notice-contact{font-size:9.5pt;color:#333}
-.notice-divider{border:none;border-top:2px solid #111;margin:4mm 0}
-.notice-thin{border:none;border-top:1px solid #111;margin:2mm 0}
-.notice-title{text-align:center;font-size:13pt;font-weight:700;text-decoration:underline;margin:4mm 0;text-transform:uppercase;letter-spacing:.05em}
-.notice-without{text-align:center;font-size:10pt;font-style:italic;margin:2mm 0 3mm}
-.notice-delivery{text-align:right;font-size:9.5pt;font-weight:600;margin-bottom:4mm}
-.notice-ref{font-size:9.5pt;margin-bottom:4mm;display:flex;justify-content:space-between}
-.notice-to{font-size:10.5pt;margin-bottom:4mm}
-.notice-to-label{font-weight:700;text-decoration:underline;margin-bottom:1mm}
-.notice-to-extra{font-size:10pt;margin-top:1mm;color:#333}
-.notice-body{font-size:10.5pt;line-height:1.75;text-align:justify}
-.notice-body p{margin-bottom:3mm}
-.notice-body strong{font-weight:700}
-.notice-closing{margin-top:6mm;font-size:10.5pt}
-.notice-sign{margin-top:14mm;text-align:right;font-size:10.5pt}
-.notice-sign-line{border-top:1px solid #111;display:inline-block;width:60mm;margin-bottom:2px}
-.notice-through{font-size:9.5pt;font-style:italic;margin-top:1mm}
-.notice-enc{margin-top:6mm;font-size:9.5pt}
+.paper{width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:16mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.7;position:relative}
+.paper .header{text-align:center;margin-bottom:6mm}
+.paper .logo-img{max-height:40px;margin-bottom:3mm}
+.paper .law-firm{font-size:14pt;font-weight:700;margin-bottom:1mm}
+.paper .adv-qual{font-size:10pt;margin-bottom:1mm}
+.paper .adv-addr{font-size:9.5pt;color:#333;margin-bottom:1mm}
+.paper .adv-contact{font-size:9.5pt;color:#333}
+.paper .divider{border:none;border-top:2px solid #111;margin:4mm 0}
+.paper .thin{border:none;border-top:1px solid #111;margin:2mm 0}
+.paper .notice-title{text-align:center;font-size:13pt;font-weight:700;text-decoration:underline;margin:4mm 0;text-transform:uppercase;letter-spacing:.05em}
+.paper .without{text-align:center;font-size:10pt;font-style:italic;margin:2mm 0 3mm}
+.paper .delivery{text-align:right;font-size:9.5pt;font-weight:600;margin-bottom:4mm}
+.paper .ref{font-size:9.5pt;margin-bottom:4mm;display:flex;justify-content:space-between}
+.paper .to-block{font-size:10.5pt;margin-bottom:4mm}
+.paper .to-label{font-weight:700;text-decoration:underline;margin-bottom:1mm}
+.paper .to-extra{font-size:10pt;margin-top:1mm;color:#333}
+.paper .body{font-size:10.5pt;line-height:1.75;text-align:justify}
+.paper .body p{margin-bottom:3mm}
+.paper .body strong{font-weight:700}
+.paper .closing{margin-top:6mm;font-size:10.5pt}
+.paper .signature{margin-top:14mm;text-align:right;font-size:10.5pt}
+.paper .sign-line{border-top:1px solid #111;display:inline-block;width:60mm;margin-bottom:2px}
+.paper .through{font-size:9.5pt;font-style:italic;margin-top:1mm}
+.paper .encl{margin-top:6mm;font-size:9.5pt}
 
+/* Page numbers - only on print */
 @media print{
+  .paper .page-num{position:fixed;bottom:10mm;left:0;right:0;text-align:center;font-size:9pt;font-family:'EB Garamond',serif;color:#111}
   nav,.type-bar,.form-panel,.preview-label{display:none!important}
   .app{display:block}
   .preview-panel{background:#fff!important;padding:0;max-height:none;display:block}
@@ -157,6 +159,10 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
         <input class="field-input" id="advEmail" placeholder="email@example.com" oninput="render()">
       </div>
     </div>
+    <div class="field-group">
+      <label class="field-label">Date</label>
+      <input class="field-input" id="noticeDate" oninput="render()">
+    </div>
 
     <div class="section-divider">Sender (Client) – optional</div>
     <div class="field-group">
@@ -187,15 +193,9 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
       <label class="field-label">Subject Line</label>
       <input class="field-input" id="subject" placeholder="e.g. Legal Notice for defamation" oninput="render()">
     </div>
-    <div class="two-col">
-      <div class="field-group">
-        <label class="field-label">Place</label>
-        <input class="field-input" id="place" placeholder="e.g. Delhi" oninput="render()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Date</label>
-        <input class="field-input" id="noticeDate" oninput="render()">
-      </div>
+    <div class="field-group">
+      <label class="field-label">Place (for reference)</label>
+      <input class="field-input" id="place" placeholder="e.g. Delhi" oninput="render()">
     </div>
 
     <div class="section-divider">Notice Body (rich text)</div>
@@ -232,7 +232,7 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
 
   <!-- PREVIEW -->
   <div class="preview-panel">
-    <p class="preview-label">📄 Legal size (216 × 356 mm) · Live preview</p>
+    <p class="preview-label">📄 Legal size (216 × 356 mm) · Live preview · Page numbers appear on print</p>
     <div class="paper" id="paper"></div>
   </div>
 </div>
@@ -367,14 +367,14 @@ function render(){
   const advAddr = gv('advAddr') || 'Office Address';
   const advPhone = gv('advPhone') || '';
   const advEmail = gv('advEmail') || '';
+  const noticeDate = gv('noticeDate') || '';
   const clientName = gv('clientName') || '';
   const clientAddr = gv('clientAddr') || '';
   const recipientName = gv('recipientName') || '________________';
   const recipientAddr = gv('recipientAddr') || '________________';
   const recipientExtra = gv('recipientExtra') || '';
-  const place = gv('place') || '________________';
-  const noticeDate = gv('noticeDate') || '________________';
   const subject = gv('subject') || 'Legal Notice';
+  const place = gv('place') || '';
   const body = v('editor').innerHTML || '';
   const encl = gv('enclosures') || '';
   const withoutPrej = v('withoutPrejudice').checked;
@@ -385,7 +385,7 @@ function render(){
   let enclHTML = '';
   if (encl) {
     const items = encl.split('\n').filter(s=>s.trim());
-    enclHTML = `<div class="notice-enc"><strong>Enclosures:</strong><br>${items.map(i=>i.trim()).join('<br>')}</div>`;
+    enclHTML = `<div class="encl"><strong>Enclosures:</strong><br>${items.map(i=>i.trim()).join('<br>')}</div>`;
   }
 
   let clientInfo = '';
@@ -393,42 +393,52 @@ function render(){
     clientInfo = `<div style="margin-bottom:2mm;font-size:10pt">On behalf of <strong>${clientName || ''}</strong>${clientAddr ? ', residing at '+clientAddr : ''}</div>`;
   }
 
-  let extraLine = recipientExtra ? `<div class="notice-to-extra">Also through email: ${recipientExtra}</div>` : '';
+  let extraLine = recipientExtra ? `<div class="to-extra">Also through email: ${recipientExtra}</div>` : '';
 
-  v('paper').innerHTML = `
-    <div class="notice-header">
-      ${logoDataURL ? `<div class="notice-logo"><img src="${logoDataURL}" style="max-height:40px;max-width:180px" alt="Logo"></div>` : ''}
-      <div class="notice-law-firm">${lawFirm}</div>
-      <div class="notice-advocate">${advQual}</div>
-      <div class="notice-addr">${advAddr.replace(/\n/g,'<br>')}</div>
-      ${contact ? `<div class="notice-contact">${contact}</div>` : ''}
+  // Place/Date reference line
+  let placeRef = '';
+  if (place || noticeDate) {
+    placeRef = `<div style="font-size:9.5pt;text-align:right;margin-bottom:2mm">${place ? 'Place: '+place : ''}${(place && noticeDate) ? ' &nbsp;|&nbsp; ' : ''}${noticeDate ? 'Date: '+noticeDate : ''}</div>`;
+  }
+
+  const html = `
+    <div class="header">
+      ${logoDataURL ? `<div class="logo-img"><img src="${logoDataURL}" style="max-height:40px;max-width:180px" alt="Logo"></div>` : ''}
+      <div class="law-firm">${lawFirm}</div>
+      <div class="adv-qual">${advQual}</div>
+      <div class="adv-addr">${advAddr.replace(/\n/g,'<br>')}</div>
+      ${contact ? `<div class="adv-contact">${contact}</div>` : ''}
+      ${placeRef}
     </div>
-    <hr class="notice-divider">
-    ${withoutPrej ? `<div class="notice-without">WITHOUT PREJUDICE TO ALL RIGHTS AND CONTENTIONS</div>` : ''}
-    ${showDelivery ? `<div class="notice-delivery">BY SPEED POST / E-MAIL</div>` : ''}
-    <div class="notice-to">
-      <div class="notice-to-label">To,</div>
+    <hr class="divider">
+    <div class="notice-title">LEGAL NOTICE</div>
+    ${withoutPrej ? `<div class="without">WITHOUT PREJUDICE TO ALL RIGHTS AND CONTENTIONS</div>` : ''}
+    ${showDelivery ? `<div class="delivery">BY SPEED POST / E-MAIL</div>` : ''}
+    <div class="to-block">
+      <div class="to-label">To,</div>
       <div><strong>${recipientName}</strong></div>
       <div>${recipientAddr.replace(/\n/g,'<br>')}</div>
       ${extraLine}
     </div>
     <div style="margin-bottom:3mm"><strong>Subject: ${subject}</strong></div>
     ${clientInfo}
-    <hr class="notice-thin">
-    <div class="notice-body">${body}</div>
-    <div class="notice-closing">
+    <hr class="thin">
+    <div class="body">${body}</div>
+    <div class="closing">
       <p>This notice is being sent without prejudice to all other rights and remedies available to my client.</p>
       <p style="margin-top:2mm">Kindly treat this as a legal notice under the relevant provisions of law.</p>
     </div>
-    <div class="notice-sign">
-      <div class="notice-sign-line"></div>
+    <div class="signature">
+      <div class="sign-line"></div>
       <div><strong>${lawFirm}</strong></div>
       <div style="font-size:9.5pt">${advQual}</div>
-      <div class="notice-through">Through Counsel</div>
+      <div class="through">Through Counsel</div>
       <div style="font-size:9.5pt;margin-top:2mm">Counsel for the Sender</div>
     </div>
     ${enclHTML}
   `;
+
+  v('paper').innerHTML = html;
 }
 
 function clearAll(){
