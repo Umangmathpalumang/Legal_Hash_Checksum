@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Legal Notice Generator – Indian Courts</title>
-<meta name="description" content="Draft court‑ready legal notices with professional letterhead. Simple rich‑text editor – no HTML knowledge required.">
+<meta name="description" content="Draft professional legal notices with logo, rich-text editor and templates. Print to Legal size PDF.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -29,8 +29,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .type-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
 .type-btn:hover:not(.active){border-color:var(--accent-light);color:var(--accent-light)}
 
-.app{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 105px)}
-@media(max-width:900px){.app{grid-template-columns:1fr}}
+.app{display:grid;grid-template-columns:400px 1fr;min-height:calc(100vh - 105px)}
+@media(max-width:1000px){.app{grid-template-columns:1fr}}
 .form-panel{background:var(--surface);border-right:1px solid var(--border);padding:24px;overflow-y:auto;max-height:calc(100vh - 105px)}
 .form-panel h2{font-size:15px;font-weight:700;margin-bottom:4px}
 .form-panel>p{font-size:12px;color:var(--muted);margin-bottom:16px}
@@ -40,18 +40,21 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .field-input{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s;outline:none}
 .field-input:focus{border-color:var(--accent)}
 .field-input::placeholder{color:var(--muted)}
-textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',serif;font-size:11pt;line-height:1.6}
+textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',serif;font-size:11pt;line-height:1.6}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .btn-clear{width:100%;padding:8px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-size:13px;cursor:pointer;margin-top:6px}
 .btn-clear:hover{border-color:var(--accent);color:var(--accent-light)}
 .hidden{display:none}
 
-/* Rich editor */
+.logo-upload{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo-upload input[type="file"]{font-size:12px;color:var(--muted)}
+.logo-preview{max-height:50px;max-width:100px;border:1px dashed var(--border);border-radius:4px;padding:4px;background:#fff}
+.logo-preview img{max-height:46px;max-width:92px;object-fit:contain}
+
 .editor-toolbar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 8px}
 .editor-toolbar button{background:transparent;border:1px solid transparent;border-radius:4px;padding:4px 8px;cursor:pointer;color:var(--text);font-size:13px;font-weight:600}
 .editor-toolbar button:hover{background:var(--border);border-color:var(--accent)}
-.editor-toolbar button.active{background:var(--accent);color:#fff}
-.editor-content{min-height:200px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:10px 12px;font-family:'EB Garamond',serif;font-size:11pt;line-height:1.7;color:var(--text);outline:none;overflow-y:auto}
+.editor-content{min-height:180px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:10px 12px;font-family:'EB Garamond',serif;font-size:11pt;line-height:1.7;color:var(--text);outline:none;overflow-y:auto}
 .editor-content:focus{border-color:var(--accent)}
 .editor-content:empty::before{content:"Type your notice here...";color:var(--muted);font-style:italic}
 
@@ -60,7 +63,8 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
 .preview-label{font-size:11px;color:#888;margin-bottom:12px;text-align:center}
 
 .paper{width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:16mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.7}
-.notice-header{text-align:center;margin-bottom:8mm}
+.notice-header{text-align:center;margin-bottom:6mm}
+.notice-logo{max-height:40px;margin-bottom:3mm}
 .notice-law-firm{font-size:14pt;font-weight:700;margin-bottom:1mm}
 .notice-advocate{font-size:10pt;margin-bottom:1mm}
 .notice-addr{font-size:9.5pt;color:#333;margin-bottom:1mm}
@@ -68,15 +72,19 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
 .notice-divider{border:none;border-top:2px solid #111;margin:4mm 0}
 .notice-thin{border:none;border-top:1px solid #111;margin:2mm 0}
 .notice-title{text-align:center;font-size:13pt;font-weight:700;text-decoration:underline;margin:4mm 0;text-transform:uppercase;letter-spacing:.05em}
+.notice-without{text-align:center;font-size:10pt;font-style:italic;margin:2mm 0 3mm}
+.notice-delivery{text-align:right;font-size:9.5pt;font-weight:600;margin-bottom:4mm}
 .notice-ref{font-size:9.5pt;margin-bottom:4mm;display:flex;justify-content:space-between}
 .notice-to{font-size:10.5pt;margin-bottom:4mm}
 .notice-to-label{font-weight:700;text-decoration:underline;margin-bottom:1mm}
+.notice-to-extra{font-size:10pt;margin-top:1mm;color:#333}
 .notice-body{font-size:10.5pt;line-height:1.75;text-align:justify}
 .notice-body p{margin-bottom:3mm}
 .notice-body strong{font-weight:700}
 .notice-closing{margin-top:6mm;font-size:10.5pt}
 .notice-sign{margin-top:14mm;text-align:right;font-size:10.5pt}
 .notice-sign-line{border-top:1px solid #111;display:inline-block;width:60mm;margin-bottom:2px}
+.notice-through{font-size:9.5pt;font-style:italic;margin-top:1mm}
 .notice-enc{margin-top:6mm;font-size:9.5pt}
 
 @media print{
@@ -93,7 +101,7 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
 <nav>
   <a href="/tools" class="nav-brand">
     <div class="nav-logo"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div>
-    <span class="nav-name">Legal Notice Draft</span>
+    <span class="nav-name">Legal Notice</span>
   </a>
   <div class="nav-links">
     <a href="/" class="nav-link">Hash Tool</a>
@@ -105,7 +113,6 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
   </div>
 </nav>
 
-<!-- Template selector -->
 <div class="type-bar">
   <button class="type-btn active" onclick="loadTemplate('blank')">Blank</button>
   <button class="type-btn" onclick="loadTemplate('cheque')">Cheque Bounce</button>
@@ -119,9 +126,15 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
 <div class="app">
   <div class="form-panel">
     <h2>Draft Your Notice</h2>
-    <p>Fill letterhead details and write your notice using the rich‑text editor below.</p>
+    <p>Fill letterhead, upload logo, write your notice with the rich‑text editor.</p>
 
-    <div class="section-divider">Advocate / Firm</div>
+    <div class="section-divider">Letterhead</div>
+    <div class="field-group logo-upload">
+      <label class="field-label">Logo (optional)</label>
+      <input type="file" id="logoUpload" accept="image/*" onchange="handleLogo(event)">
+      <div class="logo-preview" id="logoPreview"></div>
+      <button class="btn-clear" style="width:auto;padding:4px 12px;margin:0" onclick="removeLogo()">Remove</button>
+    </div>
     <div class="field-group">
       <label class="field-label">Law Firm / Advocate Name</label>
       <input class="field-input" id="lawFirm" placeholder="e.g. Adv. Ramesh Kumar & Associates" oninput="render()">
@@ -145,7 +158,7 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
       </div>
     </div>
 
-    <div class="section-divider">Sender / Client</div>
+    <div class="section-divider">Sender (Client) – optional</div>
     <div class="field-group">
       <label class="field-label">Client Name</label>
       <input class="field-input" id="clientName" placeholder="Full name of client" oninput="render()">
@@ -164,6 +177,10 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
       <label class="field-label">Recipient Address</label>
       <textarea class="field-input" id="recipientAddr" placeholder="Full address for service" oninput="render()"></textarea>
     </div>
+    <div class="field-group">
+      <label class="field-label">Also through (email / other)</label>
+      <input class="field-input" id="recipientExtra" placeholder="e.g. email@example.com" oninput="render()">
+    </div>
 
     <div class="section-divider">Notice Details</div>
     <div class="field-group">
@@ -181,7 +198,7 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
       </div>
     </div>
 
-    <div class="section-divider">Notice Body</div>
+    <div class="section-divider">Notice Body (rich text)</div>
     <div class="field-group">
       <div class="editor-toolbar">
         <button type="button" onclick="format('bold')"><b>B</b></button>
@@ -201,12 +218,21 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
       <textarea class="field-input" id="enclosures" placeholder="List enclosures, one per line" oninput="render()"></textarea>
     </div>
 
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0">
+      <label style="font-size:12px;display:flex;align-items:center;gap:6px">
+        <input type="checkbox" id="withoutPrejudice" checked onchange="render()"> Without Prejudice
+      </label>
+      <label style="font-size:12px;display:flex;align-items:center;gap:6px">
+        <input type="checkbox" id="showDelivery" checked onchange="render()"> BY SPEED POST / E-MAIL
+      </label>
+    </div>
+
     <button class="btn-clear" onclick="clearAll()">Clear all fields</button>
   </div>
 
   <!-- PREVIEW -->
   <div class="preview-panel">
-    <p class="preview-label">📄 Legal size (216 × 356 mm) · Live preview · Click "Print / PDF" to download</p>
+    <p class="preview-label">📄 Legal size (216 × 356 mm) · Live preview</p>
     <div class="paper" id="paper"></div>
   </div>
 </div>
@@ -253,17 +279,37 @@ const TEMPLATES = {
 <p><strong>4.</strong> Failing compliance, my client shall initiate civil recovery proceedings against you, at your risk, cost and consequences.</p>`
 };
 
-function gv(id){ const el=document.getElementById(id); return el?el.value.trim():'';}
+function gv(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
 function v(id){ return document.getElementById(id); }
 
-// Rich text formatting
+// ====== Logo handling ======
+let logoDataURL = null;
+function handleLogo(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    logoDataURL = ev.target.result;
+    document.getElementById('logoPreview').innerHTML = `<img src="${logoDataURL}" alt="Logo">`;
+    render();
+  };
+  reader.readAsDataURL(file);
+}
+function removeLogo(){
+  logoDataURL = null;
+  document.getElementById('logoPreview').innerHTML = '';
+  document.getElementById('logoUpload').value = '';
+  render();
+}
+
+// ====== Rich text formatting ======
 function format(cmd){
   document.execCommand(cmd, false, null);
   render();
 }
 
+// ====== Templates ======
 function loadTemplate(type){
-  // highlight button
   document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
   event.target.classList.add('active');
 
@@ -274,7 +320,6 @@ function loadTemplate(type){
     return;
   }
 
-  // Replace placeholders with field values if they exist
   const replacements = {
     'CLIENT_NAME': gv('clientName') || '[Client Name]',
     'CLIENT_ADDRESS': gv('clientAddr') || '[Client Address]',
@@ -308,7 +353,6 @@ function loadTemplate(type){
     'TRANSACTION_DETAILS': gv('transactionDetails') || '[Nature of transaction]',
     'DUE_DATE': gv('dueDate') || '[Due Date]'
   };
-
   for (const [key, val] of Object.entries(replacements)) {
     body = body.replace(new RegExp(key, 'g'), val);
   }
@@ -316,21 +360,25 @@ function loadTemplate(type){
   render();
 }
 
+// ====== Render ======
 function render(){
   const lawFirm = gv('lawFirm') || 'LAW FIRM / ADVOCATE NAME';
   const advQual = gv('advQual') || 'Advocate';
   const advAddr = gv('advAddr') || 'Office Address';
   const advPhone = gv('advPhone') || '';
   const advEmail = gv('advEmail') || '';
-  const clientName = gv('clientName') || '________________';
-  const clientAddr = gv('clientAddr') || '________________';
+  const clientName = gv('clientName') || '';
+  const clientAddr = gv('clientAddr') || '';
   const recipientName = gv('recipientName') || '________________';
   const recipientAddr = gv('recipientAddr') || '________________';
+  const recipientExtra = gv('recipientExtra') || '';
   const place = gv('place') || '________________';
   const noticeDate = gv('noticeDate') || '________________';
   const subject = gv('subject') || 'Legal Notice';
   const body = v('editor').innerHTML || '';
   const encl = gv('enclosures') || '';
+  const withoutPrej = v('withoutPrejudice').checked;
+  const showDelivery = v('showDelivery').checked;
 
   const contact = [advPhone, advEmail].filter(Boolean).join(' | ');
 
@@ -340,26 +388,32 @@ function render(){
     enclHTML = `<div class="notice-enc"><strong>Enclosures:</strong><br>${items.map(i=>i.trim()).join('<br>')}</div>`;
   }
 
+  let clientInfo = '';
+  if (clientName || clientAddr) {
+    clientInfo = `<div style="margin-bottom:2mm;font-size:10pt">On behalf of <strong>${clientName || ''}</strong>${clientAddr ? ', residing at '+clientAddr : ''}</div>`;
+  }
+
+  let extraLine = recipientExtra ? `<div class="notice-to-extra">Also through email: ${recipientExtra}</div>` : '';
+
   v('paper').innerHTML = `
     <div class="notice-header">
+      ${logoDataURL ? `<div class="notice-logo"><img src="${logoDataURL}" style="max-height:40px;max-width:180px" alt="Logo"></div>` : ''}
       <div class="notice-law-firm">${lawFirm}</div>
       <div class="notice-advocate">${advQual}</div>
       <div class="notice-addr">${advAddr.replace(/\n/g,'<br>')}</div>
       ${contact ? `<div class="notice-contact">${contact}</div>` : ''}
     </div>
     <hr class="notice-divider">
-    <hr class="notice-thin">
-    <div class="notice-title">Legal Notice</div>
-    <div class="notice-ref">
-      <span>Ref: LN/${new Date().getFullYear()}/${Math.floor(Math.random()*9000)+1000}</span>
-      <span>Date: ${noticeDate} &nbsp;&nbsp; Place: ${place}</span>
-    </div>
+    ${withoutPrej ? `<div class="notice-without">WITHOUT PREJUDICE TO ALL RIGHTS AND CONTENTIONS</div>` : ''}
+    ${showDelivery ? `<div class="notice-delivery">BY SPEED POST / E-MAIL</div>` : ''}
     <div class="notice-to">
       <div class="notice-to-label">To,</div>
       <div><strong>${recipientName}</strong></div>
       <div>${recipientAddr.replace(/\n/g,'<br>')}</div>
+      ${extraLine}
     </div>
-    <div style="margin-bottom:4mm"><strong>Sub: ${subject}</strong></div>
+    <div style="margin-bottom:3mm"><strong>Subject: ${subject}</strong></div>
+    ${clientInfo}
     <hr class="notice-thin">
     <div class="notice-body">${body}</div>
     <div class="notice-closing">
@@ -370,7 +424,8 @@ function render(){
       <div class="notice-sign-line"></div>
       <div><strong>${lawFirm}</strong></div>
       <div style="font-size:9.5pt">${advQual}</div>
-      <div style="font-size:9.5pt">Counsel for the Sender</div>
+      <div class="notice-through">Through Counsel</div>
+      <div style="font-size:9.5pt;margin-top:2mm">Counsel for the Sender</div>
     </div>
     ${enclHTML}
   `;
@@ -379,6 +434,7 @@ function render(){
 function clearAll(){
   document.querySelectorAll('.field-input').forEach(el=>el.value='');
   v('editor').innerHTML = '';
+  removeLogo();
   render();
 }
 
