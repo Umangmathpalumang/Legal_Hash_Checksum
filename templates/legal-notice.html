@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Legal Notice Generator – Indian Courts</title>
-<meta name="description" content="Draft court‑ready legal notices with professional letterhead. Templates for defamation, employment, cheque bounce, property, consumer, and more.">
+<meta name="description" content="Draft court‑ready legal notices with professional letterhead. Simple rich‑text editor – no HTML knowledge required.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--input-bg:#0d1117;--input-border:#30363d;--amber:#f59e0b}
+:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--input-bg:#0d1117;--input-border:#30363d}
 @media(prefers-color-scheme:light){:root{--bg:#f6f8fa;--surface:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a;--input-bg:#fff;--input-border:#d1d9e0}}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
@@ -24,7 +24,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .btn-print{font-size:13px;font-weight:600;color:#fff;background:var(--accent);border:none;padding:8px 18px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:6px}
 .btn-print svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* Type selector – now as template buttons */
 .type-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 28px;display:flex;gap:8px;flex-wrap:wrap}
 .type-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:.2s;white-space:nowrap}
 .type-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -38,7 +37,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .section-divider{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-light);padding:10px 0 8px;border-top:1px solid var(--border);margin-top:6px;margin-bottom:12px}
 .field-group{margin-bottom:14px}
 .field-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between}
-.field-limit{font-weight:400;text-transform:none;letter-spacing:0;font-size:10px}
 .field-input{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s;outline:none}
 .field-input:focus{border-color:var(--accent)}
 .field-input::placeholder{color:var(--muted)}
@@ -48,11 +46,19 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
 .btn-clear:hover{border-color:var(--accent);color:var(--accent-light)}
 .hidden{display:none}
 
+/* Rich editor */
+.editor-toolbar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 8px}
+.editor-toolbar button{background:transparent;border:1px solid transparent;border-radius:4px;padding:4px 8px;cursor:pointer;color:var(--text);font-size:13px;font-weight:600}
+.editor-toolbar button:hover{background:var(--border);border-color:var(--accent)}
+.editor-toolbar button.active{background:var(--accent);color:#fff}
+.editor-content{min-height:200px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:10px 12px;font-family:'EB Garamond',serif;font-size:11pt;line-height:1.7;color:var(--text);outline:none;overflow-y:auto}
+.editor-content:focus{border-color:var(--accent)}
+.editor-content:empty::before{content:"Type your notice here...";color:var(--muted);font-style:italic}
+
 /* Preview */
 .preview-panel{background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 105px)}
 .preview-label{font-size:11px;color:#888;margin-bottom:12px;text-align:center}
 
-/* Paper – white legal notice */
 .paper{width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:16mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.7}
 .notice-header{text-align:center;margin-bottom:8mm}
 .notice-law-firm{font-size:14pt;font-weight:700;margin-bottom:1mm}
@@ -65,7 +71,7 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
 .notice-ref{font-size:9.5pt;margin-bottom:4mm;display:flex;justify-content:space-between}
 .notice-to{font-size:10.5pt;margin-bottom:4mm}
 .notice-to-label{font-weight:700;text-decoration:underline;margin-bottom:1mm}
-.notice-body{font-size:10.5pt;line-height:1.75;text-align:justify;white-space:pre-wrap;word-break:break-word}
+.notice-body{font-size:10.5pt;line-height:1.75;text-align:justify}
 .notice-body p{margin-bottom:3mm}
 .notice-body strong{font-weight:700}
 .notice-closing{margin-top:6mm;font-size:10.5pt}
@@ -113,9 +119,8 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
 <div class="app">
   <div class="form-panel">
     <h2>Draft Your Notice</h2>
-    <p>Fill the letterhead details and write your notice body below.</p>
+    <p>Fill letterhead details and write your notice using the rich‑text editor below.</p>
 
-    <!-- Advocate / Sender -->
     <div class="section-divider">Advocate / Firm</div>
     <div class="field-group">
       <label class="field-label">Law Firm / Advocate Name</label>
@@ -128,7 +133,6 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
     <div class="field-group">
       <label class="field-label">Office Address</label>
       <textarea class="field-input" id="advAddr" placeholder="Full address" oninput="render()"></textarea>
-
     </div>
     <div class="two-col">
       <div class="field-group">
@@ -141,7 +145,6 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
       </div>
     </div>
 
-    <!-- Sender (Client) -->
     <div class="section-divider">Sender / Client</div>
     <div class="field-group">
       <label class="field-label">Client Name</label>
@@ -150,10 +153,8 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
     <div class="field-group">
       <label class="field-label">Client Address</label>
       <textarea class="field-input" id="clientAddr" placeholder="Address" oninput="render()"></textarea>
-
     </div>
 
-    <!-- Recipient -->
     <div class="section-divider">Recipient (Noticee)</div>
     <div class="field-group">
       <label class="field-label">Recipient Name</label>
@@ -162,10 +163,8 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
     <div class="field-group">
       <label class="field-label">Recipient Address</label>
       <textarea class="field-input" id="recipientAddr" placeholder="Full address for service" oninput="render()"></textarea>
-
     </div>
 
-    <!-- Subject & Date/Place -->
     <div class="section-divider">Notice Details</div>
     <div class="field-group">
       <label class="field-label">Subject Line</label>
@@ -182,19 +181,24 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
       </div>
     </div>
 
-    <!-- Main body -->
-    <div class="section-divider">Notice Body (write or paste)</div>
+    <div class="section-divider">Notice Body</div>
     <div class="field-group">
-      <label class="field-label">Body <span class="field-limit">Use <b>strong</b> tags for emphasis</span></label>
-      <textarea class="field-input" id="bodyText" rows="12" placeholder="Write the full content of your notice here. Use HTML tags like <p>, <strong>, <br> for formatting." oninput="render()"></textarea>
-
+      <div class="editor-toolbar">
+        <button type="button" onclick="format('bold')"><b>B</b></button>
+        <button type="button" onclick="format('italic')"><i>I</i></button>
+        <button type="button" onclick="format('underline')"><u>U</u></button>
+        <button type="button" onclick="format('insertOrderedList')">1.</button>
+        <button type="button" onclick="format('insertUnorderedList')">•</button>
+        <button type="button" onclick="format('indent')" style="font-size:16px">↗</button>
+        <button type="button" onclick="format('outdent')" style="font-size:16px">↘</button>
+        <button type="button" onclick="format('removeFormat')" style="color:var(--muted);font-size:12px">Clear</button>
+      </div>
+      <div class="editor-content" id="editor" contenteditable="true" spellcheck="true" oninput="render()"></div>
     </div>
 
-    <!-- Enclosures -->
+    <div class="section-divider">Enclosures (optional)</div>
     <div class="field-group">
-      <label class="field-label">Enclosures (optional)</label>
       <textarea class="field-input" id="enclosures" placeholder="List enclosures, one per line" oninput="render()"></textarea>
-
     </div>
 
     <button class="btn-clear" onclick="clearAll()">Clear all fields</button>
@@ -202,7 +206,7 @@ textarea.field-input{resize:vertical;min-height:80px;font-family:'EB Garamond',s
 
   <!-- PREVIEW -->
   <div class="preview-panel">
-    <p class="preview-label">📄 Legal size (216 × 356 mm) · Live preview · Click "Print / PDF"</p>
+    <p class="preview-label">📄 Legal size (216 × 356 mm) · Live preview · Click "Print / PDF" to download</p>
     <div class="paper" id="paper"></div>
   </div>
 </div>
@@ -218,35 +222,30 @@ const TEMPLATES = {
 <p><strong>4.</strong> That the dishonour constitutes an offence under <strong>Section 138 of the Negotiable Instruments Act, 1881</strong>, punishable with imprisonment up to two years or fine up to twice the cheque amount.</p>
 <p><strong>5.</strong> You are hereby called upon to make payment of the entire cheque amount of Rs. <strong>AMOUNT</strong> (Rupees AMOUNT_WORDS only) together with interest and costs, within <strong>15 (fifteen) days</strong> from receipt of this notice.</p>
 <p><strong>6.</strong> Failing compliance, my client shall initiate criminal proceedings under Section 138 NI Act and/or civil recovery, at your risk and peril.</p>`,
-
   defamation: `<p>Under the instructions and on behalf of my client <strong>CLIENT_NAME</strong>, residing at CLIENT_ADDRESS, I hereby serve upon you the following legal notice:</p>
 <p><strong>1.</strong> That my client is a person of unimpeachable character and holds a position of respect in society/profession.</p>
 <p><strong>2.</strong> That on <strong>DEFAMATION_DATE</strong>, you published/circulated false, malicious and defamatory imputations against my client, including <strong>DEFAMATORY_STATEMENT</strong>, to third parties through <strong>MEDIUM</strong>.</p>
 <p><strong>3.</strong> The said imputations are entirely false, baseless, and were made with malice and reckless disregard for truth. They have caused grave injury to my client's reputation, dignity, and social standing.</p>
 <p><strong>4.</strong> You are hereby called upon to (a) immediately remove all defamatory content, (b) tender an unconditional public apology, (c) retract the statements through the same medium, and (d) pay damages of Rs. <strong>DAMAGES_AMOUNT</strong> (Rupees DAMAGES_WORDS only) to my client within <strong>15 (fifteen) days</strong> from receipt of this notice.</p>
 <p><strong>5.</strong> Failing compliance, my client shall initiate civil and criminal defamation proceedings against you, at your cost and consequences.</p>`,
-
   employment: `<p>Under the instructions and on behalf of my client <strong>CLIENT_NAME</strong>, I hereby serve upon you the following legal notice:</p>
 <p><strong>1.</strong> That my client was employed with your organization as <strong>DESIGNATION</strong> from <strong>JOINING_DATE</strong> to <strong>TERMINATION_DATE</strong>.</p>
 <p><strong>2.</strong> That my client has not been paid the following dues: (a) unpaid salary for <strong>PERIOD</strong> amounting to Rs. <strong>UNPAID_SALARY</strong>, (b) notice period compensation of Rs. <strong>NOTICE_PAY</strong>, and (c) other benefits such as gratuity/leave encashment.</p>
 <p><strong>3.</strong> That the withholding of legitimate salary and service certificate is illegal and violates fundamental rights under Article 21 and contractual obligations.</p>
 <p><strong>4.</strong> You are hereby called upon to release all outstanding dues amounting to Rs. <strong>TOTAL_DUES</strong> (Rupees TOTAL_DUES_WORDS only) and issue the experience/relieving certificate within <strong>15 (fifteen) days</strong>.</p>
 <p><strong>5.</strong> Failing compliance, my client shall institute recovery proceedings before the Labour Court/High Court and also approach the appropriate consumer/corporate authorities, at your risk and cost.</p>`,
-
   property: `<p>Under the instructions and on behalf of my client <strong>CLIENT_NAME</strong>, residing at CLIENT_ADDRESS, I hereby serve upon you the following legal notice:</p>
 <p><strong>1.</strong> That my client is the lawful owner/occupant of the property described as: <strong>PROPERTY_DESC</strong>.</p>
 <p><strong>2.</strong> That you have (encroached upon/illegally occupied/constructed upon) the said property without any right or title.</p>
 <p><strong>3.</strong> That your acts amount to trespass and infringement of my client's legal rights, causing irreparable loss and injury.</p>
 <p><strong>4.</strong> You are hereby called upon to <strong>RELIEF_SOUGHT</strong> (vacate/remove construction/stop interference) within <strong>15 (fifteen) days</strong> from receipt of this notice.</p>
 <p><strong>5.</strong> Failing compliance, my client shall initiate appropriate civil/criminal proceedings against you for injunction, damages, and other reliefs, at your risk and cost.</p>`,
-
   consumer: `<p>Under the instructions and on behalf of my client <strong>CLIENT_NAME</strong>, residing at CLIENT_ADDRESS, I hereby serve upon you the following legal notice under the <strong>Consumer Protection Act, 2019</strong>:</p>
 <p><strong>1.</strong> That my client availed your product/service namely <strong>PRODUCT</strong> on <strong>PURCHASE_DATE</strong> for a consideration of Rs. <strong>AMOUNT</strong>.</p>
 <p><strong>2.</strong> That the product/service suffers from the following deficiency/defect: <strong>DEFICIENCY</strong>.</p>
 <p><strong>3.</strong> Despite repeated requests, you have failed to provide adequate remedy/replacement/refund, causing mental agony and financial loss to my client.</p>
 <p><strong>4.</strong> You are hereby called upon to provide <strong>RELIEF</strong> (refund/replacement/compensation) within <strong>15 (fifteen) days</strong> from receipt of this notice.</p>
 <p><strong>5.</strong> Failing compliance, my client shall file a complaint before the appropriate Consumer Disputes Redressal Commission, seeking refund, compensation, and litigation costs.</p>`,
-
   recovery: `<p>Under the instructions and on behalf of my client <strong>CLIENT_NAME</strong>, residing at CLIENT_ADDRESS, I hereby serve upon you the following legal notice:</p>
 <p><strong>1.</strong> That you are liable to pay my client a sum of Rs. <strong>AMOUNT</strong> (Rupees AMOUNT_WORDS only) arising out of <strong>TRANSACTION_DETAILS</strong>.</p>
 <p><strong>2.</strong> The said amount became due and payable on <strong>DUE_DATE</strong>, and despite repeated demands you have failed to make payment.</p>
@@ -254,10 +253,15 @@ const TEMPLATES = {
 <p><strong>4.</strong> Failing compliance, my client shall initiate civil recovery proceedings against you, at your risk, cost and consequences.</p>`
 };
 
-function gv(id){const el=document.getElementById(id);return el?el.value.trim():'';}
-function v(id){return document.getElementById(id);}
+function gv(id){ const el=document.getElementById(id); return el?el.value.trim():'';}
+function v(id){ return document.getElementById(id); }
 
-// Load template and replace placeholders
+// Rich text formatting
+function format(cmd){
+  document.execCommand(cmd, false, null);
+  render();
+}
+
 function loadTemplate(type){
   // highlight button
   document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
@@ -265,7 +269,7 @@ function loadTemplate(type){
 
   let body = TEMPLATES[type] || '';
   if (type === 'blank') {
-    v('bodyText').value = '';
+    v('editor').innerHTML = '';
     render();
     return;
   }
@@ -308,7 +312,7 @@ function loadTemplate(type){
   for (const [key, val] of Object.entries(replacements)) {
     body = body.replace(new RegExp(key, 'g'), val);
   }
-  v('bodyText').value = body;
+  v('editor').innerHTML = body;
   render();
 }
 
@@ -325,12 +329,11 @@ function render(){
   const place = gv('place') || '________________';
   const noticeDate = gv('noticeDate') || '________________';
   const subject = gv('subject') || 'Legal Notice';
-  const body = gv('bodyText') || '';
+  const body = v('editor').innerHTML || '';
   const encl = gv('enclosures') || '';
 
   const contact = [advPhone, advEmail].filter(Boolean).join(' | ');
 
-  // Build HTML
   let enclHTML = '';
   if (encl) {
     const items = encl.split('\n').filter(s=>s.trim());
@@ -375,10 +378,7 @@ function render(){
 
 function clearAll(){
   document.querySelectorAll('.field-input').forEach(el=>el.value='');
-  // Reset template selection to blank
-  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelector('.type-btn:first-child').classList.add('active');
-  v('bodyText').value = '';
+  v('editor').innerHTML = '';
   render();
 }
 
