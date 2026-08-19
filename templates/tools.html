@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Legal Tools India — Free Tools for Advocates & Law Firms</title>
@@ -314,6 +323,16 @@ document.querySelectorAll('.tool-card:not(.soon)').forEach(card=>{
     const r=card.getBoundingClientRect();
     card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
     card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.tool-card.live').forEach(function(c){
+    c.addEventListener('click',function(){
+      var t=this.querySelector('.card-title');
+      gaEvent('tool_click',{tool_name:t?t.textContent.trim():'unknown',from_page:'tools_hub'});
+    });
   });
 });
 </script>

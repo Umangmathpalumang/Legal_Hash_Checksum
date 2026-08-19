@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Memorandum of Appearance — Indian Courts</title>
@@ -208,6 +217,11 @@ function clearAll(){
   v('date').value=now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
   render();
 })();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('[onclick*="print"]').forEach(function(b){b.addEventListener('click',function(){gaEvent('print_document',{tool:'memo_appearance'});});});
+});
 </script>
 </body>
 </html>

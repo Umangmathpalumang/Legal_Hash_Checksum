@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Court Fee Calculator — Indian Courts</title>
@@ -177,6 +186,11 @@ function calculate(){
   document.getElementById('breakdown').innerHTML=rows.map(r=>`<div class="breakdown-row"><span>${r.label}</span><span>${fmt(r.fee)}</span></div>`).join('')+`<div class="breakdown-row"><span>Total Court Fee</span><span>${fmt(fee)}</span></div>`;
   box.classList.add('show');
 }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.btn').forEach(function(b){b.addEventListener('click',function(){var st=document.getElementById('state'),su=document.getElementById('suitType'),am=document.getElementById('amount');gaEvent('calculate',{tool:'court_fee_calculator',state:st?st.value:'',suit_type:su?su.value:'',amount:am?am.value:''});});});
+});
 </script>
 </body>
 </html>

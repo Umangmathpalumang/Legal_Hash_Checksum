@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
 <meta charset="UTF-8">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
 <meta name="google-site-verification" content="google75decac8b13364d6">
@@ -1482,5 +1491,12 @@ self.onmessage = function(e) {
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
   Legal Tools
 </a>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var fi=document.getElementById('fileInput');
+  if(fi)fi.addEventListener('change',function(){gaEvent('file_selected',{tool:'hash_checksum',file_count:this.files.length});});
+  document.querySelectorAll('[onclick*="print"]').forEach(function(b){b.addEventListener('click',function(){gaEvent('generate_certificate',{tool:'hash_checksum'});});});
+});
+</script>
 </body>
 </html>

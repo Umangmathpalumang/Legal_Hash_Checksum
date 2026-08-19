@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Old to New Law Converter — IPC/CrPC/IEA to BNS/BNSS/BSA 2023</title>
@@ -420,6 +429,13 @@ function doSearch(){
 }
 
 renderQuickRef();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var si=document.getElementById('searchInput');
+  if(si){var t;si.addEventListener('input',function(){clearTimeout(t);var v=this.value;t=setTimeout(function(){if(v.trim().length>1)gaEvent('search',{tool:'law_converter',law:typeof currentLaw!=='undefined'?currentLaw:'',search_term:v.trim()});},1200);});}
+  document.querySelectorAll('.law-tab').forEach(function(b){b.addEventListener('click',function(){gaEvent('select_law',{tool:'law_converter',law:this.textContent.trim().substring(0,20)});});});
+});
 </script>
 </body>
 </html>

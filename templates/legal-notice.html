@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Legal Notice Generator – Indian Courts</title>
@@ -485,6 +494,12 @@ function clearAll(){
   v('noticeDate').value = now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
   render();
 })();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('[onclick*="print"]').forEach(function(b){b.addEventListener('click',function(){gaEvent('print_document',{tool:'legal_notice',notice_type:typeof currentType!=='undefined'?currentType:''});});});
+  document.querySelectorAll('.type-btn').forEach(function(b){b.addEventListener('click',function(){gaEvent('select_notice_type',{tool:'legal_notice',type:this.textContent.trim().substring(0,30)});});});
+});
 </script>
 </body>
 </html>

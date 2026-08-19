@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BNS / IPC Section Lookup — Indian Courts</title>
@@ -199,6 +208,12 @@ function doSearch(){
     </div>
   `).join('');
 }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var si=document.getElementById('searchInput');
+  if(si){var t;si.addEventListener('input',function(){clearTimeout(t);var v=this.value;t=setTimeout(function(){if(v.trim().length>1)gaEvent('search',{tool:'bns_lookup',search_term:v.trim()});},1000);});}
+});
 </script>
 </body>
 </html>
