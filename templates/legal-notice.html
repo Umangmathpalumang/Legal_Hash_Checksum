@@ -223,7 +223,7 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
         <input type="checkbox" id="withoutPrejudice" checked onchange="render()"> Without Prejudice
       </label>
       <label style="font-size:12px;display:flex;align-items:center;gap:6px">
-        <input type="checkbox" id="showDelivery" checked onchange="render()"> BY SPEED POST / E-MAIL
+        <input type="checkbox" id="showDelivery" checked onchange="render()"> BY SPEED POST / E-MAIL / WHATSAPP
       </label>
     </div>
 
@@ -413,7 +413,7 @@ function render(){
     <hr class="divider">
     <div class="notice-title">LEGAL NOTICE</div>
     ${withoutPrej ? `<div class="without">WITHOUT PREJUDICE TO ALL RIGHTS AND CONTENTIONS</div>` : ''}
-    ${showDelivery ? `<div class="delivery">BY SPEED POST / E-MAIL</div>` : ''}
+    ${showDelivery ? `<div class="delivery">BY SPEED POST / E-MAIL / WHATSAPP</div>` : ''}
     <div class="to-block">
       <div class="to-label">To,</div>
       <div><strong>${recipientName}</strong></div>
