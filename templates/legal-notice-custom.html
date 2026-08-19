@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Legal Notice – Indian Courts</title>
+<meta name="description" content="Create professional legal notices with your own logo and letterhead. Free‑form body, print to Legal size PDF.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--input-bg:#0d1117;--input-border:#30363d}
+@media(prefers-color-scheme:light){:root{--bg:#f6f8fa;--surface:#fff;--border:#d1d9e0;--text:#1a1f2e;--muted:#57606a;--input-bg:#fff;--input-border:#d1d9e0}}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
+.nav-name{font-size:14px;font-weight:700}
+.nav-links{display:flex;gap:8px}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px;transition:border-color .2s}
+.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
+.btn-print{font-size:13px;font-weight:600;color:#fff;background:var(--accent);border:none;padding:8px 18px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn-print svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+
+.app{display:grid;grid-template-columns:420px 1fr;min-height:calc(100vh - 105px)}
+@media(max-width:1000px){.app{grid-template-columns:1fr}}
+.form-panel{background:var(--surface);border-right:1px solid var(--border);padding:24px;overflow-y:auto;max-height:calc(100vh - 105px)}
+.form-panel h2{font-size:15px;font-weight:700;margin-bottom:4px}
+.form-panel>p{font-size:12px;color:var(--muted);margin-bottom:16px}
+.section-divider{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-light);padding:10px 0 8px;border-top:1px solid var(--border);margin-top:6px;margin-bottom:12px}
+.field-group{margin-bottom:14px}
+.field-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between}
+.field-input{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s;outline:none}
+.field-input:focus{border-color:var(--accent)}
+.field-input::placeholder{color:var(--muted)}
+textarea.field-input{resize:vertical;min-height:120px;font-family:'EB Garamond',serif;font-size:11pt;line-height:1.6}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-clear{width:100%;padding:8px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-size:13px;cursor:pointer;margin-top:6px}
+.btn-clear:hover{border-color:var(--accent);color:var(--accent-light)}
+.hidden{display:none}
+.logo-upload{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo-upload input[type="file"]{font-size:12px;color:var(--muted)}
+.logo-preview{max-height:60px;max-width:120px;border:1px dashed var(--border);border-radius:4px;padding:4px;background:#fff}
+.logo-preview img{max-height:56px;max-width:112px;object-fit:contain}
+
+/* Preview */
+.preview-panel{background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 105px)}
+.preview-label{font-size:11px;color:#888;margin-bottom:12px;text-align:center}
+
+/* Paper – white legal notice */
+.paper{width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:16mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.7}
+.notice-header{text-align:center;margin-bottom:6mm}
+.notice-logo{max-height:40px;margin-bottom:3mm}
+.notice-law-firm{font-size:14pt;font-weight:700;margin-bottom:1mm}
+.notice-advocate{font-size:10pt;margin-bottom:1mm}
+.notice-addr{font-size:9.5pt;color:#333;margin-bottom:1mm}
+.notice-contact{font-size:9.5pt;color:#333}
+.notice-divider{border:none;border-top:2px solid #111;margin:4mm 0}
+.notice-thin{border:none;border-top:1px solid #111;margin:2mm 0}
+.notice-title{text-align:center;font-size:14pt;font-weight:700;margin:3mm 0 1mm;letter-spacing:.05em}
+.notice-subtitle{text-align:center;font-size:10.5pt;font-style:italic;margin-bottom:3mm;color:#333}
+.notice-delivery{text-align:right;font-size:9.5pt;font-weight:600;margin-bottom:4mm}
+.notice-ref{font-size:9.5pt;margin-bottom:3mm;display:flex;justify-content:space-between}
+.notice-to{font-size:10.5pt;margin-bottom:4mm}
+.notice-to-label{font-weight:700;text-decoration:underline;margin-bottom:1mm}
+.notice-body{font-size:10.5pt;line-height:1.75;text-align:justify;white-space:pre-wrap;word-break:break-word}
+.notice-body p{margin-bottom:3mm}
+.notice-body strong{font-weight:700}
+.notice-closing{margin-top:6mm;font-size:10.5pt}
+.notice-sign{margin-top:14mm;text-align:right;font-size:10.5pt}
+.notice-sign-line{border-top:1px solid #111;display:inline-block;width:60mm;margin-bottom:2px}
+.notice-enc{margin-top:6mm;font-size:9.5pt}
+.notice-through{font-size:9.5pt;margin-top:2mm;font-style:italic}
+
+@media print{
+  nav,.form-panel,.preview-label{display:none!important}
+  .app{display:block}
+  .preview-panel{background:#fff!important;padding:0;max-height:none;display:block}
+  .paper{box-shadow:none;margin:0;width:100%;border:none;min-height:0;padding:15mm 20mm;background:#fff!important}
+  @page{size:legal portrait;margin:0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/tools" class="nav-brand">
+    <div class="nav-logo"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div>
+    <span class="nav-name">Custom Legal Notice</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
+    <button class="btn-print" onclick="window.print()">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / PDF
+    </button>
+  </div>
+</nav>
+
+<div class="app">
+  <div class="form-panel">
+    <h2>Custom Legal Notice</h2>
+    <p>Upload your logo, fill letterhead, write your notice – save for reuse.</p>
+
+    <!-- Letterhead -->
+    <div class="section-divider">Letterhead</div>
+    <div class="field-group logo-upload">
+      <label class="field-label">Logo (optional)</label>
+      <input type="file" id="logoUpload" accept="image/*" onchange="handleLogo(event)">
+      <div class="logo-preview" id="logoPreview"></div>
+      <button class="btn-clear" style="width:auto;padding:4px 12px;margin:0" onclick="removeLogo()">Remove</button>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Law Firm / Advocate Name</label>
+      <input class="field-input" id="firmName" placeholder="e.g. Adv. Ramesh Kumar & Associates" oninput="render()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Qualifications / Designation</label>
+      <input class="field-input" id="advQual" placeholder="e.g. B.A. LL.B., Advocate, High Court" oninput="render()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Office Address</label>
+      <textarea class="field-input" id="advAddr" placeholder="Full address" oninput="render()"></textarea>
+    </div>
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label">Phone</label>
+        <input class="field-input" id="advPhone" placeholder="Mobile / Office" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Email</label>
+        <input class="field-input" id="advEmail" placeholder="email@example.com" oninput="render()">
+      </div>
+    </div>
+
+    <!-- Recipient -->
+    <div class="section-divider">Recipient</div>
+    <div class="field-group">
+      <label class="field-label">Recipient Name</label>
+      <input class="field-input" id="recipientName" placeholder="Full name" oninput="render()">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Recipient Address</label>
+      <textarea class="field-input" id="recipientAddr" placeholder="Full address for service" oninput="render()"></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Also through (email / other)</label>
+      <input class="field-input" id="recipientEmail" placeholder="e.g. email@example.com" oninput="render()">
+    </div>
+
+    <!-- Notice details -->
+    <div class="section-divider">Notice Details</div>
+    <div class="field-group">
+      <label class="field-label">Subject Line</label>
+      <input class="field-input" id="subject" placeholder="e.g. Legal Notice for defamation" oninput="render()">
+    </div>
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label">Place</label>
+        <input class="field-input" id="place" placeholder="e.g. Delhi" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Date</label>
+        <input class="field-input" id="noticeDate" oninput="render()">
+      </div>
+    </div>
+
+    <!-- Free body -->
+    <div class="section-divider">Notice Body (write your own)</div>
+    <div class="field-group">
+      <label class="field-label">Body <span class="field-limit">Use HTML tags for formatting</span></label>
+      <textarea class="field-input" id="bodyText" rows="14" placeholder="Paste your full notice here. Use &lt;p&gt;, &lt;strong&gt;, &lt;br&gt;, &lt;ul&gt;, &lt;li&gt; etc." oninput="render()"></textarea>
+    </div>
+
+    <!-- Enclosures -->
+    <div class="field-group">
+      <label class="field-label">Enclosures (optional)</label>
+      <textarea class="field-input" id="enclosures" placeholder="List enclosures, one per line" oninput="render()"></textarea>
+    </div>
+
+    <!-- Without Prejudice checkbox -->
+    <div class="field-group" style="display:flex;align-items:center;gap:10px;margin-top:10px">
+      <input type="checkbox" id="withoutPrejudice" checked onchange="render()">
+      <label for="withoutPrejudice" style="font-size:12px;font-weight:500">Include "WITHOUT PREJUDICE TO ALL RIGHTS AND CONTENTIONS"</label>
+    </div>
+
+    <div class="two-col">
+      <button class="btn-clear" onclick="saveSettings()">💾 Save as default</button>
+      <button class="btn-clear" onclick="clearAll()">🗑️ Clear all</button>
+    </div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-panel">
+    <p class="preview-label">📄 Legal size (216 × 356 mm) · Live preview</p>
+    <div class="paper" id="paper"></div>
+  </div>
+</div>
+
+<script>
+// ====== LocalStorage helpers ======
+function saveSettings(){
+  const fields = ['firmName','advQual','advAddr','advPhone','advEmail','place'];
+  const obj = {};
+  fields.forEach(id=>{ obj[id]=document.getElementById(id).value; });
+  localStorage.setItem('legalNoticeSettings', JSON.stringify(obj));
+  alert('Letterhead settings saved for next time.');
+}
+function loadSettings(){
+  const raw = localStorage.getItem('legalNoticeSettings');
+  if(!raw) return;
+  try {
+    const obj = JSON.parse(raw);
+    for(const [key,val] of Object.entries(obj)){
+      const el = document.getElementById(key);
+      if(el) el.value = val;
+    }
+  }catch(e){}
+}
+
+// ====== Logo handling ======
+let logoDataURL = null;
+function handleLogo(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    logoDataURL = ev.target.result;
+    document.getElementById('logoPreview').innerHTML = `<img src="${logoDataURL}" alt="Logo">`;
+    render();
+  };
+  reader.readAsDataURL(file);
+}
+function removeLogo(){
+  logoDataURL = null;
+  document.getElementById('logoPreview').innerHTML = '';
+  document.getElementById('logoUpload').value = '';
+  render();
+}
+
+// ====== Render ======
+function gv(id){ const el=document.getElementById(id); return el ? el.value.trim() : ''; }
+
+function render(){
+  const firm = gv('firmName') || 'LAW FIRM / ADVOCATE NAME';
+  const qual = gv('advQual') || 'Advocate';
+  const addr = gv('advAddr') || 'Office Address';
+  const phone = gv('advPhone');
+  const email = gv('advEmail');
+  const contact = [phone, email].filter(Boolean).join(' | ');
+
+  const recipient = gv('recipientName') || '________________';
+  const recAddr = gv('recipientAddr') || '________________';
+  const recEmail = gv('recipientEmail');
+  const subject = gv('subject') || 'Legal Notice';
+  const place = gv('place') || '________________';
+  const noticeDate = gv('noticeDate') || '________________';
+  const body = gv('bodyText') || '';
+  const encl = gv('enclosures') || '';
+  const withoutPrej = document.getElementById('withoutPrejudice').checked;
+
+  // Build enclosure list
+  let enclHTML = '';
+  if(encl){
+    const items = encl.split('\n').filter(s=>s.trim());
+    enclHTML = `<div class="notice-enc"><strong>Enclosures:</strong><br>${items.map(i=>i.trim()).join('<br>')}</div>`;
+  }
+
+  // Recipient "also through"
+  let recExtra = '';
+  if(recEmail) recExtra = `<div style="font-size:10pt;margin-top:1mm">Also through email: ${recEmail}</div>`;
+
+  // Build paper
+  const paper = document.getElementById('paper');
+  paper.innerHTML = `
+    <div class="notice-header">
+      ${logoDataURL ? `<div class="notice-logo"><img src="${logoDataURL}" style="max-height:40px;max-width:180px" alt="Logo"></div>` : ''}
+      <div class="notice-law-firm">${firm}</div>
+      <div class="notice-advocate">${qual}</div>
+      <div class="notice-addr">${addr.replace(/\n/g,'<br>')}</div>
+      ${contact ? `<div class="notice-contact">${contact}</div>` : ''}
+    </div>
+    <hr class="notice-divider">
+    ${withoutPrej ? `<div style="text-align:center;font-size:10pt;font-style:italic;margin:2mm 0 3mm">WITHOUT PREJUDICE TO ALL RIGHTS AND CONTENTIONS</div>` : ''}
+    <div style="text-align:right;font-size:9.5pt;font-weight:600;margin-bottom:4mm">BY SPEED POST / E-MAIL</div>
+    <div class="notice-to">
+      <div class="notice-to-label">To,</div>
+      <div><strong>${recipient}</strong></div>
+      <div>${recAddr.replace(/\n/g,'<br>')}</div>
+      ${recExtra}
+    </div>
+    <div style="margin-bottom:3mm"><strong>Subject: ${subject}</strong></div>
+    <hr class="notice-thin">
+    <div class="notice-body">${body}</div>
+    <div class="notice-closing">
+      <p>This notice is being sent without prejudice to all other rights and remedies available to my client.</p>
+      <p style="margin-top:2mm">Kindly treat this as a legal notice under the relevant provisions of law.</p>
+    </div>
+    <div class="notice-sign">
+      <div class="notice-sign-line"></div>
+      <div><strong>${firm}</strong></div>
+      <div style="font-size:9.5pt">${qual}</div>
+      <div class="notice-through">Through Counsel</div>
+      <div style="font-size:9.5pt;margin-top:2mm">Counsel for the Sender</div>
+    </div>
+    ${enclHTML}
+  `;
+}
+
+// ====== Clear all ======
+function clearAll(){
+  document.querySelectorAll('.field-input').forEach(el=>el.value='');
+  removeLogo();
+  render();
+}
+
+// ====== Auto-fill date ======
+(function(){
+  const now = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const d = document.getElementById('noticeDate');
+  d.value = now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+  loadSettings();
+  render();
+})();
+</script>
+</body>
+</html>

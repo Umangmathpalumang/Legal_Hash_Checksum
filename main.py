@@ -181,6 +181,12 @@ async def women_children_law(request: Request):
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Template not found")
 
+
+@app.get("/legal-notice-custom", response_class=HTMLResponse)
+async def legal_notice_custom(request: Request):
+    p = os.path.join(os.path.dirname(__file__), "templates", "legal-notice-custom.html")
+    return HTMLResponse(content=open(p).read())
+
 @app.get("/health")
 async def health():
     return {
