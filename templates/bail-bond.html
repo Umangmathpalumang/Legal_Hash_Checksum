@@ -52,7 +52,8 @@ textarea.field-input{resize:vertical;min-height:52px}
 .preview-label{font-size:11px;color:#888;margin-bottom:12px}
 
 /* Paper */
-.paper{width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:14mm 16mm;font-family:'EB Garamond',serif;font-size:10.5pt;color:#111;line-height:1.6}
+.paper{
+  position:relative;width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:14mm 16mm;font-family:'EB Garamond',serif;font-size:10.5pt;color:#111;line-height:1.6}
 .paper-header{text-align:center;margin-bottom:4mm}
 .paper-title{font-size:14pt;font-weight:700;text-decoration:underline;margin-bottom:1mm}
 .paper-formno{font-size:9pt;margin-bottom:1mm}
@@ -877,40 +878,55 @@ function placeStamp(img, srcCanvas){
 }
 
 // ── Drag logic ────────────────────────────────────────────────────────────────
-function getPaperScale(){
-  var paper=getPaper();
-  var rect=paper.getBoundingClientRect();
-  // getBoundingClientRect returns the *rendered* size; offsetWidth is the *layout* size
-  // dividing gives us the CSS scale factor applied via transform
-  return rect.width / paper.offsetWidth;
-}
 function initStampDrag(el){
-  function start(cx,cy){
-    stampDragging=true;
-    var scale=getPaperScale();
-    var r=el.getBoundingClientRect();
-    // offset in screen px → divide by scale to get paper-local px
-    sdx=(cx-r.left)/scale; sdy=(cy-r.top)/scale;
+  var startX, startY, startLeft, startTop;
+
+  function getScale(){
+    // actual rendered width / layout width = CSS scale factor
+    var p = getPaper();
+    return p.getBoundingClientRect().width / p.offsetWidth;
   }
-  function move(cx,cy){
+
+  function onDown(cx, cy){
+    stampDragging = true;
+    var scale = getScale();
+    // current stamp position in paper-local px
+    startLeft = parseFloat(el.style.left) || 0;
+    startTop  = parseFloat(el.style.top)  || 0;
+    // pointer position in paper-local px
+    startX = cx / scale;
+    startY = cy / scale;
+    el.setPointerCapture && el.setPointerCapture(el._pid);
+  }
+
+  function onMove(cx, cy){
     if(!stampDragging) return;
-    var scale=getPaperScale();
-    var pr=getPaper().getBoundingClientRect();
-    // convert screen px difference → paper-local px
-    var x=(cx-pr.left)/scale - sdx;
-    var y=(cy-pr.top)/scale  - sdy;
-    var pw=getPaper().offsetWidth, ph=getPaper().offsetHeight;
-    x=Math.max(-el.offsetWidth/2,  Math.min(pw-el.offsetWidth/2,  x));
-    y=Math.max(-el.offsetHeight/2, Math.min(ph-el.offsetHeight/2, y));
-    el.style.left=x+'px'; el.style.top=y+'px';
+    var scale = getScale();
+    var dx = cx / scale - startX;
+    var dy = cy / scale - startY;
+    var p  = getPaper();
+    var x  = Math.max(0, Math.min(p.offsetWidth  - el.offsetWidth,  startLeft + dx));
+    var y  = Math.max(0, Math.min(p.offsetHeight - el.offsetHeight, startTop  + dy));
+    el.style.left = x + 'px';
+    el.style.top  = y + 'px';
   }
-  function end(){ stampDragging=false; }
-  el.addEventListener('mousedown',function(e){ start(e.clientX,e.clientY); e.preventDefault(); });
-  document.addEventListener('mousemove',function(e){ move(e.clientX,e.clientY); });
-  document.addEventListener('mouseup',end);
-  el.addEventListener('touchstart',function(e){ var t=e.touches[0]; start(t.clientX,t.clientY); e.preventDefault(); },{passive:false});
-  document.addEventListener('touchmove',function(e){ if(!stampDragging) return; var t=e.touches[0]; move(t.clientX,t.clientY); e.preventDefault(); },{passive:false});
-  document.addEventListener('touchend',end);
+
+  function onUp(){ stampDragging = false; }
+
+  // Pointer events (covers mouse + touch + stylus, single handler)
+  el.addEventListener('pointerdown', function(e){
+    el._pid = e.pointerId;
+    el.setPointerCapture(e.pointerId);
+    onDown(e.clientX, e.clientY);
+    e.preventDefault();
+  });
+  el.addEventListener('pointermove', function(e){
+    if(!stampDragging) return;
+    onMove(e.clientX, e.clientY);
+    e.preventDefault();
+  });
+  el.addEventListener('pointerup',   onUp);
+  el.addEventListener('pointercancel', onUp);
 }
 
 // ── Clear stamp ───────────────────────────────────────────────────────────────
