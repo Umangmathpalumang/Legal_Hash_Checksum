@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Q&A — Ask Indian Law Questions</title>
+<meta name="description" content="Ask any legal question. Get answers from verified Indian advocates. Free community Q&A platform.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--green:#10B981;--red:#f87171}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{font-size:14px;font-weight:700}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px;transition:.2s}
+.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
+.hero{text-align:center;padding:40px 24px 28px;border-bottom:1px solid var(--border)}
+.hero h1{font-size:26px;font-weight:700;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:14px;max-width:500px;margin:0 auto 20px}
+.badge-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;border:1px solid}
+.badge-blue{border-color:rgba(37,99,235,.4);background:rgba(37,99,235,.1);color:#60a5fa}
+.badge-green{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.1);color:#10B981}
+.badge-amber{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.1);color:#fbbf24}
+.ask-box{max-width:700px;margin:28px auto;padding:0 16px}
+.ask-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.ask-card h2{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.ask-card h2 svg{width:18px;height:18px;stroke:var(--accent-light);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.field input,.field textarea,.field select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent)}
+.field textarea{resize:vertical;min-height:90px;line-height:1.6}
+.field select option{background:var(--surface)}
+.anon-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px}
+.anon-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent)}
+.anon-row label{font-size:13px;color:var(--muted);cursor:pointer}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.two-col{grid-template-columns:1fr}}
+.btn-submit{width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s}
+.btn-submit:hover{opacity:.88}
+.btn-submit svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.filter-bar{max-width:700px;margin:0 auto 16px;padding:0 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filter-btn{font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:.2s;white-space:nowrap}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.filter-btn:hover:not(.active){border-color:var(--accent-light);color:var(--accent-light)}
+.q-count{font-size:12px;color:var(--muted);margin-left:auto}
+.questions{max-width:700px;margin:0 auto;padding:0 16px 40px}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:12px;cursor:pointer;transition:border-color .2s}
+.q-card:hover{border-color:var(--accent)}
+.q-card.open{border-color:var(--accent-light)}
+.q-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.q-cat{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:12px;background:rgba(37,99,235,.12);color:var(--accent-light);border:1px solid rgba(37,99,235,.25)}
+.q-asker{font-size:11px;color:var(--muted)}
+.q-time{font-size:11px;color:var(--muted);margin-left:auto}
+.q-text{font-family:'EB Garamond',serif;font-size:14pt;line-height:1.5;margin-bottom:12px;color:var(--text)}
+.q-footer{display:flex;gap:14px;align-items:center}
+.q-stat{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.q-stat svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ans-count{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px}
+.ans-count.has-ans{background:rgba(16,185,129,.12);color:#10B981;border:1px solid rgba(16,185,129,.25)}
+.ans-count.no-ans{background:rgba(245,158,11,.1);color:#fbbf24;border:1px solid rgba(245,158,11,.2)}
+.answers-wrap{display:none;margin-top:16px;border-top:1px solid var(--border);padding-top:16px}
+.q-card.open .answers-wrap{display:block}
+.answer-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
+.ans-adv{font-size:12px;font-weight:700;color:var(--accent-light);display:flex;align-items:center;gap:5px;margin-bottom:6px}
+.ans-adv svg{width:13px;height:13px;stroke:#10B981;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ans-adv .enroll{font-size:10px;font-weight:400;color:var(--muted);margin-left:4px}
+.ans-text{font-family:'EB Garamond',serif;font-size:13pt;line-height:1.6;color:var(--text)}
+.ans-time{font-size:10px;color:var(--muted);margin-top:6px}
+.upvote-btn{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;margin-top:8px;transition:.2s}
+.upvote-btn:hover{border-color:var(--green);color:var(--green)}
+.upvote-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ans-form{margin-top:14px;background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.2);border-radius:10px;padding:14px}
+.ans-form h4{font-size:12px;font-weight:700;color:var(--accent-light);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.ans-form h4 svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ans-form input,.ans-form textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;margin-bottom:8px;transition:border-color .2s}
+.ans-form input:focus,.ans-form textarea:focus{border-color:var(--accent)}
+.ans-form textarea{font-family:'EB Garamond',serif;font-size:12pt;resize:vertical;min-height:80px;line-height:1.6}
+.ans-form .two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn-ans{padding:8px 18px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .2s}
+.btn-ans:hover{opacity:.85}
+.btn-ans svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.empty{text-align:center;padding:40px 16px;color:var(--muted)}
+.empty svg{width:40px;height:40px;stroke:var(--border);fill:none;stroke-width:1.5;margin:0 auto 12px;display:block;stroke-linecap:round;stroke-linejoin:round}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#10B981;color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:10px;z-index:999;display:none;align-items:center;gap:7px;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.toast.err{background:#ef4444}
+.toast svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/tools" class="nav-brand">
+    <div class="nav-logo"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+    <span class="nav-name">Legal Q&A</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
+  </div>
+</nav>
+<div class="hero">
+  <h1>Ask. Answer. Understand Indian Law.</h1>
+  <p>Anyone can ask a legal question. Only verified advocates answer.</p>
+  <div class="badge-row">
+    <span class="badge badge-blue">Ask Anonymously</span>
+    <span class="badge badge-green">Verified Advocates Only</span>
+    <span class="badge badge-amber">100% Free</span>
+  </div>
+</div>
+<div class="ask-box">
+  <div class="ask-card">
+    <h2>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Ask a Legal Question
+    </h2>
+    <div class="field">
+      <label>Your Question *</label>
+      <textarea id="qText" placeholder="e.g. My landlord is not returning my security deposit after 3 months. What legal options do I have under Indian law?" rows="3"></textarea>
+    </div>
+    <div class="two-col">
+      <div class="field">
+        <label>Category</label>
+        <select id="qCat">
+          <option>General</option>
+          <option>Property / Real Estate</option>
+          <option>Criminal / FIR / Bail</option>
+          <option>Family / Matrimonial</option>
+          <option>Consumer / NCDRC</option>
+          <option>Labour / Employment</option>
+          <option>Cheque Bounce / NI Act</option>
+          <option>Cyber / IT Law</option>
+          <option>Civil / Suit</option>
+          <option>Contract / Agreement</option>
+          <option>Constitutional</option>
+          <option>Women & Children</option>
+          <option>Motor Accident / MACT</option>
+          <option>Tax / GST</option>
+          <option>Company / Business</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Your Name (optional)</label>
+        <input id="qName" type="text" placeholder="Leave blank to stay anonymous">
+      </div>
+    </div>
+    <div class="anon-row">
+      <input type="checkbox" id="qAnon" checked>
+      <label for="qAnon">Post anonymously — your name will show as <strong>Anonymous</strong> publicly</label>
+    </div>
+    <button class="btn-submit" onclick="submitQuestion()">
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      Post Question
+    </button>
+  </div>
+</div>
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="setFilter('All',this)">All</button>
+  <button class="filter-btn" onclick="setFilter('Unanswered',this)">Unanswered</button>
+  <button class="filter-btn" onclick="setFilter('Answered',this)">Answered</button>
+  <button class="filter-btn" onclick="setFilter('Criminal / FIR / Bail',this)">Criminal</button>
+  <button class="filter-btn" onclick="setFilter('Property / Real Estate',this)">Property</button>
+  <button class="filter-btn" onclick="setFilter('Family / Matrimonial',this)">Family</button>
+  <button class="filter-btn" onclick="setFilter('Cheque Bounce / NI Act',this)">Cheque Bounce</button>
+  <span class="q-count" id="qCount"></span>
+</div>
+<div class="questions" id="questionsList"></div>
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMsg"></span>
+</div>
+<script>
+var allQuestions=[];
+var currentFilter='All';
+async function loadQuestions(){
+  try{
+    var r=await fetch('/api/qa/questions');
+    allQuestions=await r.json();
+    renderQuestions();
+  }catch(e){console.error(e);}
+}
+function renderQuestions(){
+  var list=allQuestions;
+  if(currentFilter==='Unanswered') list=list.filter(q=>q.answer_count===0);
+  else if(currentFilter==='Answered') list=list.filter(q=>q.answer_count>0);
+  else if(currentFilter!=='All') list=list.filter(q=>q.category===currentFilter);
+  document.getElementById('qCount').textContent=list.length+' question'+(list.length!==1?'s':'');
+  var el=document.getElementById('questionsList');
+  if(!list.length){
+    el.innerHTML='<div class="empty"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><p>No questions yet in this category.<br>Be the first to ask!</p></div>';
+    return;
+  }
+  el.innerHTML=list.map(function(q){
+    var ansClass=q.answer_count>0?'has-ans':'no-ans';
+    var ansLabel=q.answer_count>0?q.answer_count+' answer'+(q.answer_count>1?'s':''):'Unanswered';
+    var asker=q.anonymous?'Anonymous':(q.asker_name||'Anonymous');
+    return `
+    <div class="q-card" id="qcard-${q.id}" onclick="toggleQuestion(${q.id},this)">
+      <div class="q-meta">
+        <span class="q-cat">${q.category}</span>
+        <span class="q-asker">Asked by ${asker}</span>
+        <span class="q-time">${getTimeAgo(q.created_at)}</span>
+      </div>
+      <div class="q-text">${escHtml(q.question)}</div>
+      <div class="q-footer">
+        <span class="ans-count ${ansClass}">${ansLabel}</span>
+        <span class="q-stat"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>${q.views||0} views</span>
+      </div>
+      <div class="answers-wrap" id="ans-${q.id}">
+        <div id="ans-list-${q.id}"><p style="font-size:12px;color:var(--muted)">Loading...</p></div>
+        <div class="ans-form" onclick="event.stopPropagation()">
+          <h4><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Answer as Advocate</h4>
+          <div class="two-col">
+            <input id="advName-${q.id}" placeholder="Your full name *" onclick="event.stopPropagation()">
+            <input id="advEnroll-${q.id}" placeholder="Enrolment No." onclick="event.stopPropagation()">
+          </div>
+          <input id="advCourt-${q.id}" placeholder="Court / Bar (e.g. Advocate, Nainital High Court)" onclick="event.stopPropagation()">
+          <textarea id="advAns-${q.id}" placeholder="Write your legal answer here..." rows="4" onclick="event.stopPropagation()"></textarea>
+          <button class="btn-ans" onclick="event.stopPropagation();submitAnswer(${q.id})">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Post Answer
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+async function toggleQuestion(id,card){
+  var isOpen=card.classList.contains('open');
+  document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('open'));
+  if(isOpen) return;
+  card.classList.add('open');
+  loadAnswers(id);
+  fetch('/api/qa/view/'+id,{method:'POST'}).catch(()=>{});
+}
+async function loadAnswers(qid){
+  var el=document.getElementById('ans-list-'+qid);
+  try{
+    var r=await fetch('/api/qa/answers/'+qid);
+    var ans=await r.json();
+    if(!ans.length){el.innerHTML='<p style="font-size:12px;color:var(--muted);margin-bottom:14px">No answers yet. Be the first advocate to answer.</p>';return;}
+    el.innerHTML=ans.map(function(a){
+      return `<div class="answer-card">
+        <div class="ans-adv">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          ${escHtml(a.advocate_name)}
+          ${a.advocate_enroll?'<span class="enroll">· '+escHtml(a.advocate_enroll)+'</span>':''}
+          ${a.advocate_court?'<span class="enroll">· '+escHtml(a.advocate_court)+'</span>':''}
+        </div>
+        <div class="ans-text">${escHtml(a.answer)}</div>
+        <div class="ans-time">${getTimeAgo(a.created_at)}</div>
+        <button class="upvote-btn" onclick="upvote(${a.id},this)">
+          <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>Helpful (${a.upvotes||0})
+        </button>
+      </div>`;
+    }).join('');
+  }catch(e){el.innerHTML='<p style="color:var(--red);font-size:12px">Error loading answers.</p>';}
+}
+async function submitQuestion(){
+  var q=document.getElementById('qText').value.trim();
+  if(!q||q.length<10){showToast('Please write a proper question (min 10 chars)',true);return;}
+  var anon=document.getElementById('qAnon').checked;
+  var name=document.getElementById('qName').value.trim()||'Anonymous';
+  var cat=document.getElementById('qCat').value;
+  try{
+    var r=await fetch('/api/qa/questions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,category:cat,asker_name:name,anonymous:anon})});
+    if(r.ok){document.getElementById('qText').value='';document.getElementById('qName').value='';showToast('Question posted! Advocates will answer soon.');loadQuestions();}
+    else{showToast('Error posting question',true);}
+  }catch(e){showToast('Network error',true);}
+}
+async function submitAnswer(qid){
+  var name=document.getElementById('advName-'+qid).value.trim();
+  var ans=document.getElementById('advAns-'+qid).value.trim();
+  if(!name){showToast('Please enter your advocate name',true);return;}
+  if(!ans||ans.length<20){showToast('Please write a proper answer (min 20 chars)',true);return;}
+  var enroll=document.getElementById('advEnroll-'+qid).value.trim();
+  var court=document.getElementById('advCourt-'+qid).value.trim();
+  try{
+    var r=await fetch('/api/qa/answers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question_id:qid,answer:ans,advocate_name:name,advocate_enroll:enroll,advocate_court:court})});
+    if(r.ok){document.getElementById('advAns-'+qid).value='';showToast('Answer posted!');loadAnswers(qid);loadQuestions();}
+    else{showToast('Error posting answer',true);}
+  }catch(e){showToast('Network error',true);}
+}
+async function upvote(aid,btn){
+  try{
+    var r=await fetch('/api/qa/upvote/'+aid,{method:'POST'});
+    if(r.ok){var d=await r.json();btn.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg> Helpful ('+d.upvotes+')';btn.style.color='var(--green)';btn.style.borderColor='var(--green)';btn.disabled=true;}
+  }catch(e){}
+}
+function setFilter(f,btn){
+  currentFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderQuestions();
+}
+function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function getTimeAgo(ts){
+  var d=new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);
+  if(diff<60) return 'just now';
+  if(diff<3600) return Math.floor(diff/60)+'m ago';
+  if(diff<86400) return Math.floor(diff/3600)+'h ago';
+  return Math.floor(diff/86400)+'d ago';
+}
+function showToast(msg,err){
+  var t=document.getElementById('toast');
+  t.className='toast'+(err?' err':'');
+  t.style.display='flex';
+  document.getElementById('toastMsg').textContent=msg;
+  setTimeout(function(){t.style.display='none';},3500);
+}
+loadQuestions();
+setInterval(loadQuestions,30000);
+</script>
+</body>
+</html>

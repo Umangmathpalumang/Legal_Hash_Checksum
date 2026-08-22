@@ -91,11 +91,11 @@ async def security_headers(request: Request, call_next):
     # CSP: allows Web Crypto (self), Google Fonts, no inline scripts except hashes
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
-        "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; "
+        "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; "
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
         "font-src https://fonts.gstatic.com; "
         "img-src 'self' data:; "
-        "connect-src 'self' https://www.google-analytics.com; worker-src blob:; "
+        "connect-src 'self' https://www.google-analytics.com https://static.cloudflareinsights.com; worker-src blob:; "
         "frame-ancestors 'none'"
     )
     return response
@@ -302,3 +302,115 @@ async def robots():
         content="User-agent: *\nAllow: /\nDisallow: /health\n",
         media_type="text/plain",
     )
+
+
+# ══════════════════════════════════════════════════════
+#  LEGAL Q&A — PostgreSQL backend
+# ══════════════════════════════════════════════════════
+import asyncpg
+from typing import Optional
+from pydantic import BaseModel as PydanticBase
+
+QA_DB_URL = os.environ.get("QA_DATABASE_URL",
+    "postgresql://legalqa_user:legalqa_pass_2026@localhost:5432/legalqa")
+
+class QuestionIn(PydanticBase):
+    question: str
+    category: str = "General"
+    asker_name: str = "Anonymous"
+    anonymous: bool = True
+
+class AnswerIn(PydanticBase):
+    question_id: int
+    answer: str
+    advocate_name: str
+    advocate_enroll: Optional[str] = ""
+    advocate_court: Optional[str] = ""
+
+@app.get("/legal-qa")
+async def qa_page():
+    p = os.path.join(os.path.dirname(__file__), "templates", "legal-qa.html")
+    return HTMLResponse(content=open(p).read())
+
+@app.get("/api/qa/questions")
+async def get_questions():
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        rows = await conn.fetch("""
+            SELECT q.id, q.question, q.category, q.asker_name, q.anonymous,
+                   q.created_at::text, q.views, COUNT(a.id)::int AS answer_count
+            FROM legal_questions q
+            LEFT JOIN legal_answers a ON a.question_id = q.id
+            GROUP BY q.id ORDER BY q.created_at DESC LIMIT 100
+        """)
+        return [dict(r) for r in rows]
+    finally:
+        await conn.close()
+
+@app.post("/api/qa/questions")
+async def post_question(q: QuestionIn):
+    if len(q.question.strip()) < 10:
+        raise HTTPException(400, "Question too short")
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        await conn.execute("""
+            INSERT INTO legal_questions (question, category, asker_name, anonymous)
+            VALUES ($1,$2,$3,$4)
+        """, q.question.strip(), q.category, q.asker_name or "Anonymous", q.anonymous)
+        return {"ok": True}
+    finally:
+        await conn.close()
+
+@app.get("/api/qa/answers/{qid}")
+async def get_answers(qid: int):
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        rows = await conn.fetch("""
+            SELECT id, question_id, answer, advocate_name, advocate_enroll,
+                   advocate_court, created_at::text, upvotes
+            FROM legal_answers WHERE question_id=$1
+            ORDER BY upvotes DESC, created_at ASC
+        """, qid)
+        return [dict(r) for r in rows]
+    finally:
+        await conn.close()
+
+@app.post("/api/qa/answers")
+async def post_answer(a: AnswerIn):
+    if len(a.answer.strip()) < 20:
+        raise HTTPException(400, "Answer too short")
+    if not a.advocate_name.strip():
+        raise HTTPException(400, "Advocate name required")
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        await conn.execute("""
+            INSERT INTO legal_answers
+              (question_id, answer, advocate_name, advocate_enroll, advocate_court)
+            VALUES ($1,$2,$3,$4,$5)
+        """, a.question_id, a.answer.strip(), a.advocate_name.strip(),
+             a.advocate_enroll or "", a.advocate_court or "")
+        return {"ok": True}
+    finally:
+        await conn.close()
+
+@app.post("/api/qa/view/{qid}")
+async def increment_view(qid: int):
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        await conn.execute(
+            "UPDATE legal_questions SET views=views+1 WHERE id=$1", qid)
+        return {"ok": True}
+    finally:
+        await conn.close()
+
+@app.post("/api/qa/upvote/{aid}")
+async def upvote_answer(aid: int):
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        row = await conn.fetchrow("""
+            UPDATE legal_answers SET upvotes=upvotes+1
+            WHERE id=$1 RETURNING upvotes
+        """, aid)
+        return {"upvotes": row["upvotes"]}
+    finally:
+        await conn.close()
