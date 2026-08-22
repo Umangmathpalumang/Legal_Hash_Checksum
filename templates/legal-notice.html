@@ -233,10 +233,25 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
 
     <div class="stamp-preview-wrap"><canvas id="smCanvas"></canvas></div>
 
-    <div class="stamp-modal-btns">
-      <button class="btn-sm-cancel" onclick="closeStampMaker()">Cancel</button>
-      <button class="btn-sm-apply" onclick="applyCreatedStamp()">✓ Apply Stamp to Document</button>
+    <div class="stamp-modal-btns" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+      <button class="btn-sm-apply" style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:7px" onclick="applyCreatedStamp()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Apply Stamp to Document
+      </button>
+      <button class="btn-sm-cancel" style="display:flex;align-items:center;justify-content:center;gap:6px" onclick="saveStampToStorage()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save to Browser
+      </button>
+      <button class="btn-sm-cancel" style="display:flex;align-items:center;justify-content:center;gap:6px" onclick="downloadStampPNG()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PNG
+      </button>
+      <button class="btn-sm-cancel" style="display:flex;align-items:center;justify-content:center;gap:6px;grid-column:1/-1" onclick="closeStampMaker()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Cancel
+      </button>
     </div>
+    <div id="smSaveMsg" style="font-size:11px;color:#10B981;text-align:center;margin-top:8px;min-height:16px;display:flex;align-items:center;justify-content:center;gap:5px"></div>
   </div>
 </div>
 
@@ -733,6 +748,60 @@ window.downloadStampPNG = function(){
   var bw=parseInt(document.getElementById('smBw').value);
   var tmpCanvas=document.createElement('canvas');
   drawStamp(tmpCanvas, lines, smShape, smColor, size, bw, op);
+  var a=document.createElement('a');
+  a.download='advocate-stamp.png';
+  a.href=tmpCanvas.toDataURL('image/png');
+  a.click();
+};
+
+// ── Auto-load saved stamp on page open ───────────────────────────────────────
+function autoLoadSavedStamp(){
+  try{
+    var saved=localStorage.getItem('advocateStamp');
+    if(!saved) return;
+    var data=JSON.parse(saved);
+    ['sm1','sm2','sm3','sm4','sm5'].forEach(function(id,i){
+      var el=document.getElementById(id);
+      if(el) el.value = data.lines[i]||'';
+    });
+    smShape=data.shape||'round';
+    document.querySelectorAll('.stamp-shape-btn').forEach(function(b){
+      b.classList.toggle('active', b.dataset.shape===smShape);
+    });
+    smSetColor(data.color||'#1A3A6B', document.querySelector('[data-c="'+(data.color||'#1A3A6B')+'"]'));
+    document.getElementById('smSize').value=data.size||160;
+    document.getElementById('smOp').value=data.op||85;
+    document.getElementById('smBw').value=data.bw||2;
+    smPreview();
+    document.getElementById('stampStatus').textContent='Saved stamp loaded — click Create Stamp to apply or edit';
+  } catch(e){}
+}
+
+// ── Save stamp to localStorage ───────────────────────────────────────────────
+window.saveStampToStorage = function(){
+  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; });
+  var size=parseInt(document.getElementById('smSize').value);
+  var op=parseInt(document.getElementById('smOp').value);
+  var bw=parseInt(document.getElementById('smBw').value);
+  var data={ lines:lines, shape:smShape, color:smColor, size:size, op:op, bw:bw };
+  try{
+    localStorage.setItem('advocateStamp', JSON.stringify(data));
+    var msg=document.getElementById('smSaveMsg');
+    msg.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Stamp saved — auto-loads next visit';
+    setTimeout(function(){ msg.innerHTML=''; }, 4000);
+  } catch(e){ alert('Storage not available in this browser.'); }
+};
+
+// ── Download stamp as high-res PNG (3x scale) ─────────────────────────────────
+window.downloadStampPNG = function(){
+  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
+  var size=parseInt(document.getElementById('smSize').value);
+  var op=parseInt(document.getElementById('smOp').value);
+  var bw=parseInt(document.getElementById('smBw').value);
+  var SCALE=3; // 3x for high-res print quality
+  var tmpCanvas=document.createElement('canvas');
+  // Draw at 3x size
+  drawStamp(tmpCanvas, lines, smShape, smColor, size*SCALE, bw*SCALE, op);
   var a=document.createElement('a');
   a.download='advocate-stamp.png';
   a.href=tmpCanvas.toDataURL('image/png');
