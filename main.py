@@ -414,3 +414,81 @@ async def upvote_answer(aid: int):
         return {"upvotes": row["upvotes"]}
     finally:
         await conn.close()
+
+
+# ══════════════════════════════════════════════════════
+#  LEGAL Q&A — ADMIN PANEL
+# ══════════════════════════════════════════════════════
+import hmac, hashlib
+
+ADMIN_PASSWORD = os.environ.get("QA_ADMIN_PASSWORD", "legaladmin2026")
+ADMIN_TOKEN    = hashlib.sha256(ADMIN_PASSWORD.encode()).hexdigest()
+
+class AdminLogin(PydanticBase):
+    password: str
+
+def verify_admin(request: Request):
+    token = request.headers.get("X-Admin-Token","")
+    if token != ADMIN_TOKEN:
+        raise HTTPException(403, "Unauthorized")
+
+@app.get("/admin-lhc-qa-panel")
+async def admin_page():
+    p = os.path.join(os.path.dirname(__file__), "templates", "admin-qa.html")
+    return HTMLResponse(content=open(p).read())
+
+@app.post("/api/admin/qa/login")
+async def admin_login(body: AdminLogin):
+    if body.password == ADMIN_PASSWORD:
+        return {"token": ADMIN_TOKEN}
+    return {"error": "wrong password"}
+
+@app.get("/api/admin/qa/questions")
+async def admin_get_questions(request: Request):
+    verify_admin(request)
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        rows = await conn.fetch("""
+            SELECT q.id, q.question, q.category, q.asker_name, q.anonymous,
+                   q.created_at::text, q.views, COUNT(a.id)::int AS answer_count
+            FROM legal_questions q
+            LEFT JOIN legal_answers a ON a.question_id = q.id
+            GROUP BY q.id ORDER BY q.created_at DESC
+        """)
+        return [dict(r) for r in rows]
+    finally:
+        await conn.close()
+
+@app.get("/api/admin/qa/answers")
+async def admin_get_answers(request: Request):
+    verify_admin(request)
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        rows = await conn.fetch("""
+            SELECT id, question_id, answer, advocate_name, advocate_enroll,
+                   advocate_court, created_at::text, upvotes
+            FROM legal_answers ORDER BY created_at DESC
+        """)
+        return [dict(r) for r in rows]
+    finally:
+        await conn.close()
+
+@app.delete("/api/admin/qa/questions/{qid}")
+async def admin_delete_question(qid: int, request: Request):
+    verify_admin(request)
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        await conn.execute("DELETE FROM legal_questions WHERE id=$1", qid)
+        return {"ok": True}
+    finally:
+        await conn.close()
+
+@app.delete("/api/admin/qa/answers/{aid}")
+async def admin_delete_answer(aid: int, request: Request):
+    verify_admin(request)
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        await conn.execute("DELETE FROM legal_answers WHERE id=$1", aid)
+        return {"ok": True}
+    finally:
+        await conn.close()

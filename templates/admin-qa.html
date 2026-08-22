@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Legal Q&A</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--green:#10B981;--red:#ef4444;--amber:#f59e0b}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* Login */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;width:100%;max-width:380px}
+.login-card h1{font-size:18px;font-weight:700;margin-bottom:4px}
+.login-card p{font-size:12px;color:var(--muted);margin-bottom:24px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.field input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);outline:none;transition:border-color .2s;font-family:inherit}
+.field input:focus{border-color:var(--accent)}
+.btn-login{width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s}
+.btn-login:hover{opacity:.88}
+.login-err{font-size:12px;color:var(--red);margin-top:10px;text-align:center;min-height:16px}
+
+/* Admin layout */
+.admin-wrap{display:none;max-width:960px;margin:0 auto;padding:24px 16px 60px}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.admin-header h1{font-size:18px;font-weight:700}
+.admin-header span{font-size:12px;color:var(--muted)}
+.btn-logout{font-size:12px;padding:6px 14px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;cursor:pointer;transition:.2s}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
+
+/* Stats row */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px}
+.stat-card .num{font-size:24px;font-weight:700;margin-bottom:2px}
+.stat-card .lbl{font-size:11px;color:var(--muted)}
+.stat-card.blue .num{color:var(--accent-light)}
+.stat-card.green .num{color:var(--green)}
+.stat-card.amber .num{color:var(--amber)}
+.stat-card.red .num{color:var(--red)}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0}
+.tab{padding:8px 16px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.2s;background:none;border-top:none;border-left:none;border-right:none}
+.tab.active{color:var(--accent-light);border-bottom-color:var(--accent)}
+.tab:hover:not(.active){color:var(--text)}
+
+/* Search */
+.admin-search{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);outline:none;margin-bottom:16px;font-family:inherit;transition:border-color .2s}
+.admin-search:focus{border-color:var(--accent)}
+
+/* Cards */
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px}
+.q-card.flagged{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.04)}
+.q-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.q-cat{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(37,99,235,.12);color:var(--accent-light);border:1px solid rgba(37,99,235,.2)}
+.q-asker{font-size:11px;color:var(--muted)}
+.q-time{font-size:11px;color:var(--muted);margin-left:auto}
+.q-text{font-size:13px;line-height:1.6;margin-bottom:12px;color:var(--text)}
+.q-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn-action{font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;transition:.2s}
+.btn-action svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn-del{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+.btn-del:hover{background:rgba(239,68,68,.25)}
+.btn-view{background:rgba(37,99,235,.1);color:var(--accent-light);border:1px solid rgba(37,99,235,.2)}
+.btn-view:hover{background:rgba(37,99,235,.2)}
+.btn-flag{background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
+.btn-flag:hover{background:rgba(245,158,11,.2)}
+.ans-count-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.2)}
+.no-ans-badge{background:rgba(245,158,11,.1);color:var(--amber);border-color:rgba(245,158,11,.2)}
+
+/* Answer cards */
+.ans-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px}
+.ans-adv{font-size:12px;font-weight:700;color:var(--accent-light);margin-bottom:6px}
+.ans-text{font-size:13px;line-height:1.6;color:var(--text);margin-bottom:8px}
+
+.empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:10px;z-index:999;display:none;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.toast.err{background:var(--red)}
+
+/* Expanded answers */
+.ans-wrap{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.ans-wrap.open{display:block}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <h1>Admin Panel</h1>
+    <p>Legal Q&A — Moderation Dashboard</p>
+    <div class="field">
+      <label>Admin Password</label>
+      <input type="password" id="pwdInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-login" onclick="doLogin()">Sign In</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-wrap" id="adminWrap">
+  <div class="admin-header">
+    <div>
+      <h1>Legal Q&A — Admin</h1>
+      <span id="lastRefresh"></span>
+    </div>
+    <button class="btn-logout" onclick="logout()">Sign Out</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card blue"><div class="num" id="statTotal">—</div><div class="lbl">Total Questions</div></div>
+    <div class="stat-card green"><div class="num" id="statAnswered">—</div><div class="lbl">Answered</div></div>
+    <div class="stat-card amber"><div class="num" id="statUnanswered">—</div><div class="lbl">Unanswered</div></div>
+    <div class="stat-card red"><div class="num" id="statAnswers">—</div><div class="lbl">Total Answers</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="setTab('all',this)">All Questions</button>
+    <button class="tab" onclick="setTab('unanswered',this)">Unanswered</button>
+    <button class="tab" onclick="setTab('answers',this)">All Answers</button>
+  </div>
+
+  <input class="admin-search" id="adminSearch" type="text" placeholder="Search questions or answers..." oninput="renderAdmin()">
+
+  <div id="adminList"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var ADMIN_TOKEN = '';
+var allQ = [];
+var allA = [];
+var currentTab = 'all';
+
+// ── Login ──────────────────────────────────────────────────────────────────────
+function doLogin(){
+  var pwd = document.getElementById('pwdInput').value;
+  fetch('/api/admin/qa/login', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({password: pwd})
+  }).then(r=>r.json()).then(d=>{
+    if(d.token){
+      ADMIN_TOKEN = d.token;
+      sessionStorage.setItem('adminToken', d.token);
+      showAdmin();
+    } else {
+      document.getElementById('loginErr').textContent = 'Incorrect password';
+    }
+  }).catch(()=>{ document.getElementById('loginErr').textContent = 'Server error'; });
+}
+
+function logout(){
+  ADMIN_TOKEN='';
+  sessionStorage.removeItem('adminToken');
+  document.getElementById('adminWrap').style.display='none';
+  document.getElementById('loginWrap').style.display='flex';
+  document.getElementById('pwdInput').value='';
+}
+
+function showAdmin(){
+  document.getElementById('loginWrap').style.display='none';
+  document.getElementById('adminWrap').style.display='block';
+  loadAll();
+}
+
+// Auto-login from session
+window.onload = function(){
+  var t = sessionStorage.getItem('adminToken');
+  if(t){ ADMIN_TOKEN=t; showAdmin(); }
+};
+
+// ── Load all data ──────────────────────────────────────────────────────────────
+async function loadAll(){
+  var headers = {'X-Admin-Token': ADMIN_TOKEN};
+  try{
+    var [qr, ar] = await Promise.all([
+      fetch('/api/admin/qa/questions', {headers}).then(r=>r.json()),
+      fetch('/api/admin/qa/answers', {headers}).then(r=>r.json())
+    ]);
+    allQ = qr; allA = ar;
+    updateStats();
+    renderAdmin();
+    document.getElementById('lastRefresh').textContent = 'Last refresh: ' + new Date().toLocaleTimeString();
+  } catch(e){ showToast('Failed to load data', true); }
+}
+
+function updateStats(){
+  document.getElementById('statTotal').textContent = allQ.length;
+  document.getElementById('statAnswered').textContent = allQ.filter(q=>q.answer_count>0).length;
+  document.getElementById('statUnanswered').textContent = allQ.filter(q=>q.answer_count===0).length;
+  document.getElementById('statAnswers').textContent = allA.length;
+}
+
+// ── Render ─────────────────────────────────────────────────────────────────────
+function setTab(tab, btn){
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAdmin();
+}
+
+function renderAdmin(){
+  var search = document.getElementById('adminSearch').value.toLowerCase().trim();
+  var el = document.getElementById('adminList');
+
+  if(currentTab === 'answers'){
+    var list = allA;
+    if(search) list = list.filter(a=>a.answer.toLowerCase().includes(search)||a.advocate_name.toLowerCase().includes(search));
+    if(!list.length){ el.innerHTML='<div class="empty">No answers found.</div>'; return; }
+    el.innerHTML = list.map(a=>`
+      <div class="q-card">
+        <div class="q-meta">
+          <span class="q-cat">${escHtml(a.advocate_name)}</span>
+          ${a.advocate_enroll ? '<span class="q-asker">'+escHtml(a.advocate_enroll)+'</span>' : ''}
+          ${a.advocate_court ? '<span class="q-asker">'+escHtml(a.advocate_court)+'</span>' : ''}
+          <span class="q-time">${getTimeAgo(a.created_at)}</span>
+        </div>
+        <div class="q-text">${escHtml(a.answer)}</div>
+        <div class="q-actions">
+          <button class="btn-action btn-del" onclick="deleteAnswer(${a.id})">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            Delete Answer
+          </button>
+          <span style="font-size:11px;color:var(--muted);align-self:center">Q#${a.question_id} · ${a.upvotes} upvotes</span>
+        </div>
+      </div>`).join('');
+    return;
+  }
+
+  var list = allQ;
+  if(currentTab==='unanswered') list=list.filter(q=>q.answer_count===0);
+  if(search) list=list.filter(q=>q.question.toLowerCase().includes(search)||q.category.toLowerCase().includes(search)||(q.asker_name||'').toLowerCase().includes(search));
+  if(!list.length){ el.innerHTML='<div class="empty">No questions found.</div>'; return; }
+
+  el.innerHTML = list.map(q=>{
+    var ansBadge = q.answer_count>0
+      ? `<span class="ans-count-badge">${q.answer_count} answer${q.answer_count>1?'s':''}</span>`
+      : `<span class="ans-count-badge no-ans-badge">Unanswered</span>`;
+    var asker = q.anonymous ? 'Anonymous' : (q.asker_name||'Anonymous');
+    var qAnswers = allA.filter(a=>a.question_id===q.id);
+    return `
+    <div class="q-card" id="qadmin-${q.id}">
+      <div class="q-meta">
+        <span class="q-cat">${escHtml(q.category)}</span>
+        <span class="q-asker">${escHtml(asker)}</span>
+        <span class="q-time">${getTimeAgo(q.created_at)} · ${q.views||0} views</span>
+      </div>
+      <div class="q-text">${escHtml(q.question)}</div>
+      <div class="q-actions">
+        ${ansBadge}
+        <button class="btn-action btn-view" onclick="toggleAnswers(${q.id})">
+          <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          ${qAnswers.length ? 'View Answers' : 'No Answers'}
+        </button>
+        <button class="btn-action btn-del" onclick="deleteQuestion(${q.id})">
+          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+          Delete
+        </button>
+      </div>
+      <div class="ans-wrap" id="ans-admin-${q.id}">
+        ${qAnswers.map(a=>`
+          <div class="ans-card">
+            <div class="ans-adv">${escHtml(a.advocate_name)}${a.advocate_enroll?' · '+escHtml(a.advocate_enroll):''}${a.advocate_court?' · '+escHtml(a.advocate_court):''} · ${a.upvotes} upvotes</div>
+            <div class="ans-text">${escHtml(a.answer)}</div>
+            <button class="btn-action btn-del" onclick="deleteAnswer(${a.id})">
+              <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+              Delete Answer
+            </button>
+          </div>`).join('')}
+        ${!qAnswers.length ? '<p style="font-size:12px;color:var(--muted)">No answers yet.</p>' : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleAnswers(qid){
+  var el = document.getElementById('ans-admin-'+qid);
+  el.classList.toggle('open');
+}
+
+// ── Delete question ────────────────────────────────────────────────────────────
+async function deleteQuestion(qid){
+  if(!confirm('Delete this question and ALL its answers? This cannot be undone.')) return;
+  var r = await fetch('/api/admin/qa/questions/'+qid, {
+    method:'DELETE', headers:{'X-Admin-Token': ADMIN_TOKEN}
+  });
+  if(r.ok){
+    showToast('Question deleted');
+    allQ = allQ.filter(q=>q.id!==qid);
+    allA = allA.filter(a=>a.question_id!==qid);
+    updateStats(); renderAdmin();
+  } else { showToast('Error deleting question', true); }
+}
+
+// ── Delete answer ──────────────────────────────────────────────────────────────
+async function deleteAnswer(aid){
+  if(!confirm('Delete this answer?')) return;
+  var r = await fetch('/api/admin/qa/answers/'+aid, {
+    method:'DELETE', headers:{'X-Admin-Token': ADMIN_TOKEN}
+  });
+  if(r.ok){
+    showToast('Answer deleted');
+    allA = allA.filter(a=>a.id!==aid);
+    allQ = allQ.map(q=>{
+      if(allA.filter(a=>a.question_id===q.id).length < q.answer_count)
+        return {...q, answer_count: q.answer_count-1};
+      return q;
+    });
+    updateStats(); renderAdmin();
+  } else { showToast('Error deleting answer', true); }
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────────
+function escHtml(s){ if(!s) return ''; var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function getTimeAgo(ts){
+  var d=new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);
+  if(diff<60) return 'just now';
+  if(diff<3600) return Math.floor(diff/60)+'m ago';
+  if(diff<86400) return Math.floor(diff/3600)+'h ago';
+  return Math.floor(diff/86400)+'d ago';
+}
+function showToast(msg, err){
+  var t=document.getElementById('toast');
+  t.className='toast'+(err?' err':'');
+  t.textContent=msg;
+  t.style.display='block';
+  setTimeout(()=>t.style.display='none', 3000);
+}
+
+setInterval(loadAll, 60000);
+</script>
+</body>
+</html>
