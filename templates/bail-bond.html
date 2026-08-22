@@ -877,18 +877,31 @@ function placeStamp(img, srcCanvas){
 }
 
 // ── Drag logic ────────────────────────────────────────────────────────────────
+function getPaperScale(){
+  var paper=getPaper();
+  var rect=paper.getBoundingClientRect();
+  // getBoundingClientRect returns the *rendered* size; offsetWidth is the *layout* size
+  // dividing gives us the CSS scale factor applied via transform
+  return rect.width / paper.offsetWidth;
+}
 function initStampDrag(el){
   function start(cx,cy){
     stampDragging=true;
+    var scale=getPaperScale();
     var r=el.getBoundingClientRect();
-    sdx=cx-r.left; sdy=cy-r.top;
+    // offset in screen px → divide by scale to get paper-local px
+    sdx=(cx-r.left)/scale; sdy=(cy-r.top)/scale;
   }
   function move(cx,cy){
     if(!stampDragging) return;
+    var scale=getPaperScale();
     var pr=getPaper().getBoundingClientRect();
-    var x=cx-pr.left-sdx, y=cy-pr.top-sdy;
-    x=Math.max(-el.offsetWidth/2, Math.min(getPaper().offsetWidth-el.offsetWidth/2, x));
-    y=Math.max(-el.offsetHeight/2, Math.min(getPaper().offsetHeight-el.offsetHeight/2, y));
+    // convert screen px difference → paper-local px
+    var x=(cx-pr.left)/scale - sdx;
+    var y=(cy-pr.top)/scale  - sdy;
+    var pw=getPaper().offsetWidth, ph=getPaper().offsetHeight;
+    x=Math.max(-el.offsetWidth/2,  Math.min(pw-el.offsetWidth/2,  x));
+    y=Math.max(-el.offsetHeight/2, Math.min(ph-el.offsetHeight/2, y));
     el.style.left=x+'px'; el.style.top=y+'px';
   }
   function end(){ stampDragging=false; }
