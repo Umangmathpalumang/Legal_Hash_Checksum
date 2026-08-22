@@ -48,7 +48,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .btn-clear{width:100%;padding:8px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-size:13px;cursor:pointer;margin-top:6px}
 .btn-clear:hover{border-color:var(--accent);color:var(--accent-light)}
-.preview-panel{background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 57px)}
+.preview-panel{background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 57px);overflow-x:hidden}
 .preview-label{font-size:11px;color:#888;margin-bottom:12px}
 
 /* Paper */
@@ -82,7 +82,64 @@ textarea.field-input{resize:vertical;min-height:52px}
   .paper{box-shadow:none;margin:0;width:100%;border:none;min-height:0;padding:10mm 14mm}
   @page{size:legal;margin:0}
 }
-</style>
+
+/* ── STAMP SYSTEM ── */
+.stamp-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--surface,#161b22);border-bottom:1px solid var(--border,#30363d);flex-wrap:wrap}
+.stamp-bar-label{font-size:12px;font-weight:600;color:var(--muted,#8b949e);white-space:nowrap}
+.btn-stamp{font-size:12px;font-weight:600;padding:6px 14px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;transition:.2s;white-space:nowrap}
+.btn-stamp-has{background:rgba(16,185,129,.15);color:#10B981;border:1px solid rgba(16,185,129,.3)}
+.btn-stamp-has:hover{background:rgba(16,185,129,.25)}
+.btn-stamp-create{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
+.btn-stamp-create:hover{background:rgba(59,130,246,.25)}
+.btn-stamp-clear{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25)}
+.btn-stamp-clear:hover{background:rgba(239,68,68,.22)}
+.stamp-status{font-size:11px;color:var(--muted,#8b949e);margin-left:auto}
+
+/* Stamp modal */
+.stamp-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;padding:16px}
+.stamp-modal-overlay.open{display:flex}
+.stamp-modal{background:#161b24;border:1px solid #2a2f3e;border-radius:16px;padding:24px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto}
+.stamp-modal h3{font-size:15px;font-weight:700;color:#E8EDF5;margin-bottom:4px}
+.stamp-modal p{font-size:12px;color:#8A96AA;margin-bottom:16px}
+.stamp-field{margin-bottom:12px}
+.stamp-field label{display:block;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#8A96AA;margin-bottom:5px}
+.stamp-field input{width:100%;background:#0F1117;border:1px solid #2A2F3E;border-radius:8px;padding:8px 11px;font-size:13px;color:#E8EDF5;font-family:inherit;outline:none;transition:border-color .2s}
+.stamp-field input:focus{border-color:#3B82F6}
+.stamp-field input::placeholder{color:#556070}
+.stamp-shapes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 12px}
+.stamp-shape-btn{padding:8px 4px;border:1px solid #2A2F3E;border-radius:8px;background:transparent;color:#8A96AA;cursor:pointer;font-size:10px;font-weight:600;text-align:center;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:3px}
+.stamp-shape-btn svg{width:24px;height:24px}
+.stamp-shape-btn.active{border-color:#3B82F6;color:#60a5fa;background:rgba(59,130,246,.1)}
+.stamp-colors{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 12px}
+.stamp-color-sw{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.15s;flex-shrink:0}
+.stamp-color-sw.active{border-color:#fff;transform:scale(1.15)}
+.stamp-slider-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.stamp-slider-row label{font-size:11px;color:#8A96AA;min-width:80px}
+.stamp-slider-row input[type=range]{flex:1;accent-color:#3B82F6}
+.stamp-slider-val{font-size:11px;color:#E8EDF5;min-width:32px;text-align:right}
+.stamp-preview-wrap{background:#f0f0f0;border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;min-height:120px}
+.stamp-modal-btns{display:flex;gap:8px}
+.stamp-modal-btns button{flex:1;padding:9px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none}
+.btn-sm-apply{background:#3B82F6;color:#fff}
+.btn-sm-cancel{background:#1E2535;color:#8A96AA}
+
+/* Draggable stamp on paper */
+.paper-stamp{position:absolute;cursor:grab;touch-action:none;user-select:none;z-index:20;filter:drop-shadow(0 1px 3px rgba(0,0,0,.15))}
+.paper-stamp:active{cursor:grabbing}
+.paper-stamp canvas{display:block}
+.paper-stamp-hint{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:#3B82F6;white-space:nowrap;pointer-events:none;font-family:system-ui,sans-serif;font-weight:600}
+@media print{
+  .stamp-bar,.stamp-modal-overlay,.paper-stamp-hint{display:none!important}
+  .paper-stamp{cursor:default!important}
+}
+
+@media(max-width:768px){
+  .preview-panel{padding:16px 8px;}
+  .paper{transform-origin:top center;transform:scale(0.42);margin-bottom:calc((356mm * 0.42) - 356mm);width:216mm!important;}
+}
+@media(min-width:769px) and (max-width:1000px){
+  .paper{transform-origin:top center;transform:scale(0.65);margin-bottom:calc((356mm * 0.65) - 356mm);}
+}</style>
 </head>
 <body>
 <nav>
@@ -99,6 +156,73 @@ textarea.field-input{resize:vertical;min-height:52px}
     </button>
   </div>
 </nav>
+
+<!-- STAMP BAR -->
+<div class="stamp-bar" id="stampBar">
+  <span class="stamp-bar-label">🖂 Stamp:</span>
+  <button class="btn-stamp btn-stamp-has" onclick="stampUpload()" title="Upload your existing stamp image">
+    ⬆ I Have a Stamp
+  </button>
+  <button class="btn-stamp btn-stamp-create" onclick="openStampMaker()" title="Create a new stamp">
+    ✦ Create Stamp
+  </button>
+  <button class="btn-stamp btn-stamp-clear" id="btnClearStamp" onclick="clearStamp()" style="display:none">
+    ✕ Remove Stamp
+  </button>
+  <input type="file" id="stampFileInput" accept="image/*" style="display:none" onchange="loadStampFile(this)">
+  <span class="stamp-status" id="stampStatus">No stamp — drag one onto your document</span>
+</div>
+
+<!-- STAMP MAKER MODAL -->
+<div class="stamp-modal-overlay" id="stampModal">
+  <div class="stamp-modal">
+    <h3>✦ Create Your Advocate Stamp</h3>
+    <p>Fill in your details, choose a shape and colour, then click Apply to place it on the document.</p>
+
+    <div class="stamp-field"><label>Line 1 — Name</label><input id="sm1" placeholder="ADV. YOUR NAME" value="ADV. YOUR NAME"></div>
+    <div class="stamp-field"><label>Line 2 — Designation</label><input id="sm2" placeholder="Advocate, High Court" value="Advocate, High Court"></div>
+    <div class="stamp-field"><label>Line 3 — Enrolment No.</label><input id="sm3" placeholder="Enrl. No. XX/0000/0000" value="Enrl. No. XX/0000/0000"></div>
+    <div class="stamp-field"><label>Line 4 — Phone</label><input id="sm4" placeholder="Mob: 98XXXXXXXX" value="Mob: 98XXXXXXXX"></div>
+    <div class="stamp-field"><label>Line 5 — Optional</label><input id="sm5" placeholder="Chamber / Address"></div>
+
+    <div class="stamp-field"><label>Shape</label></div>
+    <div class="stamp-shapes">
+      <button class="stamp-shape-btn active" data-shape="round" onclick="smSetShape('round',this)">
+        <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Round
+      </button>
+      <button class="stamp-shape-btn" data-shape="rect" onclick="smSetShape('rect',this)">
+        <svg viewBox="0 0 32 32"><rect x="2" y="6" width="28" height="20" rx="2" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Rect
+      </button>
+      <button class="stamp-shape-btn" data-shape="oval" onclick="smSetShape('oval',this)">
+        <svg viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="13" ry="9" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Oval
+      </button>
+      <button class="stamp-shape-btn" data-shape="hex" onclick="smSetShape('hex',this)">
+        <svg viewBox="0 0 32 32"><polygon points="16,2 28,9 28,23 16,30 4,23 4,9" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Hex
+      </button>
+    </div>
+
+    <div class="stamp-field"><label>Ink Colour</label></div>
+    <div class="stamp-colors">
+      <div class="stamp-color-sw active" style="background:#1A3A6B" data-c="#1A3A6B" onclick="smSetColor('#1A3A6B',this)"></div>
+      <div class="stamp-color-sw" style="background:#C41E3A" data-c="#C41E3A" onclick="smSetColor('#C41E3A',this)"></div>
+      <div class="stamp-color-sw" style="background:#006400" data-c="#006400" onclick="smSetColor('#006400',this)"></div>
+      <div class="stamp-color-sw" style="background:#111111" data-c="#111111" onclick="smSetColor('#111111',this)"></div>
+      <div class="stamp-color-sw" style="background:#4B0082" data-c="#4B0082" onclick="smSetColor('#4B0082',this)"></div>
+      <input type="color" id="smColorPicker" value="#1A3A6B" onchange="smSetColor(this.value,null)" style="width:26px;height:26px;border:none;border-radius:50%;cursor:pointer;padding:0;background:none">
+    </div>
+
+    <div class="stamp-slider-row"><label>Size</label><input type="range" id="smSize" min="100" max="260" value="160" oninput="smPreview()"><span class="stamp-slider-val" id="smSzV">160</span></div>
+    <div class="stamp-slider-row"><label>Opacity</label><input type="range" id="smOp" min="30" max="100" value="85" oninput="smPreview()"><span class="stamp-slider-val" id="smOpV">85%</span></div>
+    <div class="stamp-slider-row"><label>Border</label><input type="range" id="smBw" min="1" max="5" value="2" oninput="smPreview()"><span class="stamp-slider-val" id="smBwV">2</span></div>
+
+    <div class="stamp-preview-wrap"><canvas id="smCanvas"></canvas></div>
+
+    <div class="stamp-modal-btns">
+      <button class="btn-sm-cancel" onclick="closeStampMaker()">Cancel</button>
+      <button class="btn-sm-apply" onclick="applyCreatedStamp()">✓ Apply Stamp to Document</button>
+    </div>
+  </div>
+</div>
 
 <div class="app">
   <div class="form-panel">
@@ -574,5 +698,219 @@ document.addEventListener('DOMContentLoaded',function(){
 })();
 </script>
 <!-- ── End Feedback Widget ── -->
+
+<script>
+(function(){
+// ── Stamp state ──────────────────────────────────────────────────────────────
+var smColor = '#1A3A6B', smShape = 'round';
+var stampImg = null; // current stamp Image object
+var stampDragging = false, sdx=0, sdy=0;
+
+// ── Find paper element ───────────────────────────────────────────────────────
+function getPaper(){ return document.querySelector('.paper'); }
+
+// ── Upload existing stamp ─────────────────────────────────────────────────────
+window.stampUpload = function(){
+  document.getElementById('stampFileInput').click();
+};
+window.loadStampFile = function(inp){
+  var file = inp.files[0]; if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var img = new Image();
+    img.onload = function(){ placeStamp(img, null); };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+// ── Open/close modal ──────────────────────────────────────────────────────────
+window.openStampMaker = function(){
+  document.getElementById('stampModal').classList.add('open');
+  smPreview();
+};
+window.closeStampMaker = function(){
+  document.getElementById('stampModal').classList.remove('open');
+};
+
+// ── Shape / color setters ─────────────────────────────────────────────────────
+window.smSetShape = function(s, el){
+  smShape = s;
+  document.querySelectorAll('.stamp-shape-btn').forEach(function(b){ b.classList.remove('active'); });
+  el.classList.add('active');
+  smPreview();
+};
+window.smSetColor = function(c, el){
+  smColor = c;
+  document.querySelectorAll('.stamp-color-sw').forEach(function(sw){ sw.classList.remove('active'); });
+  if(el) el.classList.add('active');
+  document.getElementById('smColorPicker').value = c;
+  smPreview();
+};
+
+// ── Draw stamp onto a canvas ──────────────────────────────────────────────────
+function drawStamp(canvas, lines, shape, color, size, bw, op){
+  var ctx = canvas.getContext('2d');
+  var cw, ch;
+  if(shape==='round'||shape==='hex'){ cw=ch=size; }
+  else if(shape==='rect'){ cw=size*1.5; ch=size*0.65; }
+  else { cw=size*1.4; ch=size*0.72; } // oval
+  canvas.width=Math.ceil(cw); canvas.height=Math.ceil(ch);
+  ctx.clearRect(0,0,cw,ch);
+  ctx.globalAlpha=op/100;
+  ctx.strokeStyle=color; ctx.fillStyle=color; ctx.lineWidth=bw;
+  var cx=cw/2, cy=ch/2;
+
+  function hexPth(r){
+    ctx.beginPath();
+    for(var i=0;i<6;i++){
+      var a=Math.PI/180*(60*i-30);
+      var x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    } ctx.closePath();
+  }
+
+  ctx.beginPath();
+  if(shape==='round'){
+    ctx.arc(cx,cy,size/2-bw,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx,cy,size/2-bw*3.5,0,Math.PI*2); ctx.stroke();
+  } else if(shape==='rect'){
+    var p=bw+2;
+    ctx.roundRect(p,p,cw-p*2,ch-p*2,3); ctx.stroke();
+    ctx.beginPath(); ctx.roundRect(p+bw+2,p+bw+2,cw-(p+bw+2)*2,ch-(p+bw+2)*2,2); ctx.stroke();
+  } else if(shape==='oval'){
+    ctx.ellipse(cx,cy,cw/2-bw,ch/2-bw,0,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(cx,cy,cw/2-bw*3,ch/2-bw*3,0,0,Math.PI*2); ctx.stroke();
+  } else {
+    hexPth(size/2-bw); ctx.stroke();
+    hexPth(size/2-bw*3.5); ctx.stroke();
+  }
+
+  var fs=Math.max(8,Math.round(size/14));
+  var lh=fs*1.35, total=lines.length, startY=cy-(total*lh)/2+fs/2;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.save();
+  if(shape==='round'||shape==='oval'){
+    ctx.beginPath();
+    shape==='round'?ctx.arc(cx,cy,size/2-bw*5,0,Math.PI*2):ctx.ellipse(cx,cy,cw/2-bw*4,ch/2-bw*4,0,0,Math.PI*2);
+    ctx.clip();
+  }
+  lines.forEach(function(line,i){
+    ctx.font=(i===0?'bold ':'')+fs+'px Inter,system-ui,sans-serif';
+    if(i===0){
+      ctx.lineWidth=bw*0.6;
+      ctx.beginPath();
+      var lw2=Math.min(size*0.38,55);
+      ctx.moveTo(cx-lw2/2,startY-fs*0.9); ctx.lineTo(cx+lw2/2,startY-fs*0.9);
+      ctx.stroke(); ctx.lineWidth=bw;
+    }
+    ctx.fillText(line,cx,startY+i*lh);
+  });
+  ctx.restore();
+}
+
+// ── Preview in modal ──────────────────────────────────────────────────────────
+window.smPreview = function(){
+  var size=parseInt(document.getElementById('smSize').value);
+  var op=parseInt(document.getElementById('smOp').value);
+  var bw=parseInt(document.getElementById('smBw').value);
+  document.getElementById('smSzV').textContent=size;
+  document.getElementById('smOpV').textContent=op+'%';
+  document.getElementById('smBwV').textContent=bw;
+  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
+  drawStamp(document.getElementById('smCanvas'), lines, smShape, smColor, size, bw, op);
+};
+
+// Live preview on text input
+['sm1','sm2','sm3','sm4','sm5'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el) el.addEventListener('input', smPreview);
+});
+
+// ── Apply created stamp ───────────────────────────────────────────────────────
+window.applyCreatedStamp = function(){
+  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
+  var size=parseInt(document.getElementById('smSize').value);
+  var op=parseInt(document.getElementById('smOp').value);
+  var bw=parseInt(document.getElementById('smBw').value);
+  var tmpCanvas=document.createElement('canvas');
+  drawStamp(tmpCanvas, lines, smShape, smColor, size, bw, op);
+  var img=new Image();
+  img.onload=function(){ placeStamp(img, tmpCanvas); };
+  img.src=tmpCanvas.toDataURL('image/png');
+  closeStampMaker();
+};
+
+// ── Place stamp on paper ──────────────────────────────────────────────────────
+function placeStamp(img, srcCanvas){
+  stampImg = img;
+  // Remove existing stamp
+  var old=getPaper().querySelector('.paper-stamp');
+  if(old) old.remove();
+
+  var wrap=document.createElement('div');
+  wrap.className='paper-stamp';
+  wrap.style.left='60mm'; wrap.style.top='140mm';
+
+  var c=document.createElement('canvas');
+  if(srcCanvas){
+    c.width=srcCanvas.width; c.height=srcCanvas.height;
+    c.getContext('2d').drawImage(srcCanvas,0,0);
+  } else {
+    // Uploaded image — draw at reasonable size
+    var maxW=180, scale=Math.min(1, maxW/img.width);
+    c.width=Math.round(img.width*scale); c.height=Math.round(img.height*scale);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+  }
+  wrap.appendChild(c);
+
+  var hint=document.createElement('div');
+  hint.className='paper-stamp-hint'; hint.textContent='drag to position';
+  wrap.appendChild(hint);
+
+  getPaper().appendChild(wrap);
+  initStampDrag(wrap);
+
+  document.getElementById('btnClearStamp').style.display='flex';
+  document.getElementById('stampStatus').textContent='Stamp placed — drag to reposition, then Print / PDF';
+  setTimeout(function(){ hint.style.display='none'; }, 4000);
+}
+
+// ── Drag logic ────────────────────────────────────────────────────────────────
+function initStampDrag(el){
+  function start(cx,cy){
+    stampDragging=true;
+    var r=el.getBoundingClientRect();
+    sdx=cx-r.left; sdy=cy-r.top;
+  }
+  function move(cx,cy){
+    if(!stampDragging) return;
+    var pr=getPaper().getBoundingClientRect();
+    var x=cx-pr.left-sdx, y=cy-pr.top-sdy;
+    x=Math.max(-el.offsetWidth/2, Math.min(getPaper().offsetWidth-el.offsetWidth/2, x));
+    y=Math.max(-el.offsetHeight/2, Math.min(getPaper().offsetHeight-el.offsetHeight/2, y));
+    el.style.left=x+'px'; el.style.top=y+'px';
+  }
+  function end(){ stampDragging=false; }
+  el.addEventListener('mousedown',function(e){ start(e.clientX,e.clientY); e.preventDefault(); });
+  document.addEventListener('mousemove',function(e){ move(e.clientX,e.clientY); });
+  document.addEventListener('mouseup',end);
+  el.addEventListener('touchstart',function(e){ var t=e.touches[0]; start(t.clientX,t.clientY); e.preventDefault(); },{passive:false});
+  document.addEventListener('touchmove',function(e){ if(!stampDragging) return; var t=e.touches[0]; move(t.clientX,t.clientY); e.preventDefault(); },{passive:false});
+  document.addEventListener('touchend',end);
+}
+
+// ── Clear stamp ───────────────────────────────────────────────────────────────
+window.clearStamp = function(){
+  var old=getPaper().querySelector('.paper-stamp');
+  if(old) old.remove();
+  stampImg=null;
+  document.getElementById('btnClearStamp').style.display='none';
+  document.getElementById('stampStatus').textContent='Stamp removed';
+};
+
+})();
+</script>
+
 </body>
 </html>

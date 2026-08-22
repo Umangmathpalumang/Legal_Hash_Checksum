@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
-  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Legal Notice Generator – Indian Courts</title>
@@ -68,7 +59,15 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
 .editor-content:empty::before{content:"Type your notice here...";color:var(--muted);font-style:italic}
 
 /* Preview */
-.preview-panel{background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 105px)}
+.preview-panel{background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 105px);overflow-x:hidden}
+@media(max-width:768px){
+  .preview-panel{padding:16px 8px;}
+  .paper{transform-origin:top center;transform:scale(0.42);margin-bottom:calc((356mm * 0.42) - 356mm);width:216mm!important;}
+  .preview-label{font-size:10px;}
+}
+@media(min-width:769px) and (max-width:1000px){
+  .paper{transform-origin:top center;transform:scale(0.65);margin-bottom:calc((356mm * 0.65) - 356mm);}
+}
 .preview-label{font-size:11px;color:#888;margin-bottom:12px;text-align:center}
 
 .paper{width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:16mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.7;position:relative}
@@ -105,6 +104,56 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
   .paper{box-shadow:none;margin:0;width:100%;border:none;min-height:0;padding:15mm 20mm;background:#fff!important}
   @page{size:legal portrait;margin:0}
 }
+
+/* ── STAMP SYSTEM ── */
+.stamp-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--surface,#161b22);border-bottom:1px solid var(--border,#30363d);flex-wrap:wrap}
+.stamp-bar-label{font-size:12px;font-weight:600;color:var(--muted,#8b949e);white-space:nowrap}
+.btn-stamp{font-size:12px;font-weight:600;padding:6px 14px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;transition:.2s;white-space:nowrap}
+.btn-stamp-has{background:rgba(16,185,129,.15);color:#10B981;border:1px solid rgba(16,185,129,.3)}
+.btn-stamp-has:hover{background:rgba(16,185,129,.25)}
+.btn-stamp-create{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
+.btn-stamp-create:hover{background:rgba(59,130,246,.25)}
+.btn-stamp-clear{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25)}
+.btn-stamp-clear:hover{background:rgba(239,68,68,.22)}
+.stamp-status{font-size:11px;color:var(--muted,#8b949e);margin-left:auto}
+
+/* Stamp modal */
+.stamp-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;padding:16px}
+.stamp-modal-overlay.open{display:flex}
+.stamp-modal{background:#161b24;border:1px solid #2a2f3e;border-radius:16px;padding:24px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto}
+.stamp-modal h3{font-size:15px;font-weight:700;color:#E8EDF5;margin-bottom:4px}
+.stamp-modal p{font-size:12px;color:#8A96AA;margin-bottom:16px}
+.stamp-field{margin-bottom:12px}
+.stamp-field label{display:block;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#8A96AA;margin-bottom:5px}
+.stamp-field input{width:100%;background:#0F1117;border:1px solid #2A2F3E;border-radius:8px;padding:8px 11px;font-size:13px;color:#E8EDF5;font-family:inherit;outline:none;transition:border-color .2s}
+.stamp-field input:focus{border-color:#3B82F6}
+.stamp-field input::placeholder{color:#556070}
+.stamp-shapes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 12px}
+.stamp-shape-btn{padding:8px 4px;border:1px solid #2A2F3E;border-radius:8px;background:transparent;color:#8A96AA;cursor:pointer;font-size:10px;font-weight:600;text-align:center;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:3px}
+.stamp-shape-btn svg{width:24px;height:24px}
+.stamp-shape-btn.active{border-color:#3B82F6;color:#60a5fa;background:rgba(59,130,246,.1)}
+.stamp-colors{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 12px}
+.stamp-color-sw{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.15s;flex-shrink:0}
+.stamp-color-sw.active{border-color:#fff;transform:scale(1.15)}
+.stamp-slider-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.stamp-slider-row label{font-size:11px;color:#8A96AA;min-width:80px}
+.stamp-slider-row input[type=range]{flex:1;accent-color:#3B82F6}
+.stamp-slider-val{font-size:11px;color:#E8EDF5;min-width:32px;text-align:right}
+.stamp-preview-wrap{background:#f0f0f0;border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;min-height:120px}
+.stamp-modal-btns{display:flex;gap:8px}
+.stamp-modal-btns button{flex:1;padding:9px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none}
+.btn-sm-apply{background:#3B82F6;color:#fff}
+.btn-sm-cancel{background:#1E2535;color:#8A96AA}
+
+/* Draggable stamp on paper */
+.paper-stamp{position:absolute;cursor:grab;touch-action:none;user-select:none;z-index:20;filter:drop-shadow(0 1px 3px rgba(0,0,0,.15))}
+.paper-stamp:active{cursor:grabbing}
+.paper-stamp canvas{display:block}
+.paper-stamp-hint{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:#3B82F6;white-space:nowrap;pointer-events:none;font-family:system-ui,sans-serif;font-weight:600}
+@media print{
+  .stamp-bar,.stamp-modal-overlay,.paper-stamp-hint{display:none!important}
+  .paper-stamp{cursor:default!important}
+}
 </style>
 </head>
 <body>
@@ -123,6 +172,73 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
     </button>
   </div>
 </nav>
+
+<!-- STAMP BAR -->
+<div class="stamp-bar" id="stampBar">
+  <span class="stamp-bar-label">🖂 Stamp:</span>
+  <button class="btn-stamp btn-stamp-has" onclick="stampUpload()" title="Upload your existing stamp image">
+    ⬆ I Have a Stamp
+  </button>
+  <button class="btn-stamp btn-stamp-create" onclick="openStampMaker()" title="Create a new stamp">
+    ✦ Create Stamp
+  </button>
+  <button class="btn-stamp btn-stamp-clear" id="btnClearStamp" onclick="clearStamp()" style="display:none">
+    ✕ Remove Stamp
+  </button>
+  <input type="file" id="stampFileInput" accept="image/*" style="display:none" onchange="loadStampFile(this)">
+  <span class="stamp-status" id="stampStatus">No stamp — drag one onto your document</span>
+</div>
+
+<!-- STAMP MAKER MODAL -->
+<div class="stamp-modal-overlay" id="stampModal">
+  <div class="stamp-modal">
+    <h3>✦ Create Your Advocate Stamp</h3>
+    <p>Fill in your details, choose a shape and colour, then click Apply to place it on the document.</p>
+
+    <div class="stamp-field"><label>Line 1 — Name</label><input id="sm1" placeholder="ADV. YOUR NAME" value="ADV. YOUR NAME"></div>
+    <div class="stamp-field"><label>Line 2 — Designation</label><input id="sm2" placeholder="Advocate, High Court" value="Advocate, High Court"></div>
+    <div class="stamp-field"><label>Line 3 — Enrolment No.</label><input id="sm3" placeholder="Enrl. No. XX/0000/0000" value="Enrl. No. XX/0000/0000"></div>
+    <div class="stamp-field"><label>Line 4 — Phone</label><input id="sm4" placeholder="Mob: 98XXXXXXXX" value="Mob: 98XXXXXXXX"></div>
+    <div class="stamp-field"><label>Line 5 — Optional</label><input id="sm5" placeholder="Chamber / Address"></div>
+
+    <div class="stamp-field"><label>Shape</label></div>
+    <div class="stamp-shapes">
+      <button class="stamp-shape-btn active" data-shape="round" onclick="smSetShape('round',this)">
+        <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Round
+      </button>
+      <button class="stamp-shape-btn" data-shape="rect" onclick="smSetShape('rect',this)">
+        <svg viewBox="0 0 32 32"><rect x="2" y="6" width="28" height="20" rx="2" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Rect
+      </button>
+      <button class="stamp-shape-btn" data-shape="oval" onclick="smSetShape('oval',this)">
+        <svg viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="13" ry="9" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Oval
+      </button>
+      <button class="stamp-shape-btn" data-shape="hex" onclick="smSetShape('hex',this)">
+        <svg viewBox="0 0 32 32"><polygon points="16,2 28,9 28,23 16,30 4,23 4,9" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Hex
+      </button>
+    </div>
+
+    <div class="stamp-field"><label>Ink Colour</label></div>
+    <div class="stamp-colors">
+      <div class="stamp-color-sw active" style="background:#1A3A6B" data-c="#1A3A6B" onclick="smSetColor('#1A3A6B',this)"></div>
+      <div class="stamp-color-sw" style="background:#C41E3A" data-c="#C41E3A" onclick="smSetColor('#C41E3A',this)"></div>
+      <div class="stamp-color-sw" style="background:#006400" data-c="#006400" onclick="smSetColor('#006400',this)"></div>
+      <div class="stamp-color-sw" style="background:#111111" data-c="#111111" onclick="smSetColor('#111111',this)"></div>
+      <div class="stamp-color-sw" style="background:#4B0082" data-c="#4B0082" onclick="smSetColor('#4B0082',this)"></div>
+      <input type="color" id="smColorPicker" value="#1A3A6B" onchange="smSetColor(this.value,null)" style="width:26px;height:26px;border:none;border-radius:50%;cursor:pointer;padding:0;background:none">
+    </div>
+
+    <div class="stamp-slider-row"><label>Size</label><input type="range" id="smSize" min="100" max="260" value="160" oninput="smPreview()"><span class="stamp-slider-val" id="smSzV">160</span></div>
+    <div class="stamp-slider-row"><label>Opacity</label><input type="range" id="smOp" min="30" max="100" value="85" oninput="smPreview()"><span class="stamp-slider-val" id="smOpV">85%</span></div>
+    <div class="stamp-slider-row"><label>Border</label><input type="range" id="smBw" min="1" max="5" value="2" oninput="smPreview()"><span class="stamp-slider-val" id="smBwV">2</span></div>
+
+    <div class="stamp-preview-wrap"><canvas id="smCanvas"></canvas></div>
+
+    <div class="stamp-modal-btns">
+      <button class="btn-sm-cancel" onclick="closeStampMaker()">Cancel</button>
+      <button class="btn-sm-apply" onclick="applyCreatedStamp()">✓ Apply Stamp to Document</button>
+    </div>
+  </div>
+</div>
 
 <div class="type-bar">
   <button class="type-btn active" onclick="loadTemplate('blank')">Blank</button>
@@ -232,7 +348,7 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
         <input type="checkbox" id="withoutPrejudice" checked onchange="render()"> Without Prejudice
       </label>
       <label style="font-size:12px;display:flex;align-items:center;gap:6px">
-        <input type="checkbox" id="showDelivery" checked onchange="render()"> BY SPEED POST / E-MAIL / WHATSAPP
+        <input type="checkbox" id="showDelivery" checked onchange="render()"> BY SPEED POST / E-MAIL
       </label>
     </div>
 
@@ -263,33 +379,12 @@ const TEMPLATES = {
 <p><strong>3.</strong> The said imputations are entirely false, baseless, and were made with malice and reckless disregard for truth. They have caused grave injury to my client's reputation, dignity, and social standing.</p>
 <p><strong>4.</strong> You are hereby called upon to (a) immediately remove all defamatory content, (b) tender an unconditional public apology, (c) retract the statements through the same medium, and (d) pay damages of Rs. <strong>DAMAGES_AMOUNT</strong> (Rupees DAMAGES_WORDS only) to my client within <strong>15 (fifteen) days</strong> from receipt of this notice.</p>
 <p><strong>5.</strong> Failing compliance, my client shall initiate civil and criminal defamation proceedings against you, at your cost and consequences.</p>`,
-  employment: `<p>Under instructions from and on behalf of my client <strong>CLIENT_NAME</strong>, resident of CLIENT_ADDRESS (hereinafter referred to as "My Client"), I hereby serve upon you this formal Demand Cum Legal Notice as follows:</p>
-<p><strong>1.</strong> That My Client was duly appointed and engaged by your esteemed institution as a <strong>DESIGNATION</strong> vide formal Offer of Appointment dated <strong>JOINING_DATE</strong>, at a mutually agreed consolidated remuneration of ₹<strong>MONTHLY_SALARY</strong> per month. Pursuant thereto, My Client discharged her professional and instructional duties with utmost dedication, efficiency, diligence, and an unblemished service record for an uninterrupted tenure.</p>
-<p><strong>2.</strong> That owing to compelling and unavoidable personal circumstances, My Client formally submitted her written resignation on <strong>RESIGNATION_DATE</strong>, requesting to be relieved from her duties effective <strong>LAST_WORKING_DATE</strong>. However, immediately upon receipt of the said resignation, your management acted in an exceedingly arbitrary, high-handed, and unethical manner. Instead of processing the resignation as per established service norms, your management unilaterally revoked her official communication access and peremptorily removed her from all official groups, thereby prematurely and constructively terminating her active employment on the spot without serving any prior written notice or paying notice pay in lieu thereof.</p>
-<p><strong>3.</strong> That My Client rendered continuous and uninterrupted professional service for the period spanning <strong>PERIOD_START</strong> to <strong>PERIOD_END</strong>. However, despite repeated oral requests and written reminders, your management has illegally failed, neglected, and refused to disburse her earned salary dues, itemized as under:</p>
-<p><strong>a)</strong> Full Earned Salary for the month of <strong>SALARY_MONTH</strong>: ₹<strong>MONTHLY_SALARY</strong>/-<br>
-<strong>b)</strong> Proportionate Earned Salary for <strong>DAYS_WORKED</strong> days: ₹<strong>PROPORTIONATE_SALARY</strong>/-<br>
-<strong>Total Principal Unpaid Salary Outstanding:</strong> ₹<strong>TOTAL_SALARY</strong>/-</p>
-<p><strong>4.</strong> That the aforesaid illegal, high-handed, and deliberate acts of omission and commission on the part of your management constitute grave violations of law and statutory obligations, including but not limited to:</p>
-<p><strong>i.</strong> Breach of Employment Contract &amp; Section 73 of the Indian Contract Act, 1872: Entitling My Client to full compensation for damages resulting from breach of contract and summary termination without notice pay.<br>
-<strong>ii.</strong> Infringement of Constitutional Guarantee under Article 21: Withholding legitimately earned salary directly violates the fundamental Right to Livelihood and Dignity guaranteed under Article 21 of the Constitution of India.<br>
-<strong>iii.</strong> Non-compliance with State Educational Regulations &amp; Affiliation Bye-Laws: Private recognized educational institutions are under a mandatory obligation to disburse staff salaries regularly and issue service certificates upon cessation of employment.<br>
-<strong>iv.</strong> Unlawful Retention of Service Credentials: The statutory guidelines established by judicial precedents dictate that an employer cannot withhold service credentials (such as Relieving Letter, Experience Certificate, and Salary Slips) as punitive leverage against a departing employee.</p>
-<p><strong>5. ITEMIZED RECOVERY CLAIM AND FINANCIAL DEMANDS:</strong></p>
-<p><strong>1.</strong> Unpaid Principal Salary Dues: ₹<strong>TOTAL_SALARY</strong>/-<br>
-<strong>2.</strong> Notice Period Compensation: ₹<strong>NOTICE_PAY</strong>/-<br>
-<strong>3.</strong> Statutory Commercial Interest @ 18% p.a.: ₹<strong>INTEREST</strong>/-<br>
-<strong>4.</strong> Damages for mental agony, harassment, and illegal withholding of Experience Certificate: ₹<strong>DAMAGES</strong>/-<br>
-<strong>5.</strong> Legal Notice Charges &amp; Litigation Expenses: ₹<strong>LEGAL_CHARGES</strong>/-<br>
-<strong>TOTAL CUMULATIVE RECOVERY DEMAND: ₹<strong>TOTAL_DUES</strong>/-</p>
-<p><strong>FINAL DIRECTIVES AND REQUISITIONS:</strong></p>
-<p>I hereby call upon your management to unconditionally fulfill and comply with the following requisitions within a strict period of <strong>15 (FIFTEEN) DAYS</strong> from the receipt of this legal notice:</p>
-<p><strong>1.</strong> Remit the total cumulative amount of ₹<strong>TOTAL_DUES</strong>/- (Rupees TOTAL_DUES_WORDS only) directly into My Client's designated bank account towards full and final settlement of her claims.<br>
-<strong>2.</strong> Issue and deliver an official Experience Certificate and Relieving Letter certifying her tenure with satisfactory conduct.<br>
-<strong>3.</strong> Furnish complete and itemized Salary Slips for the entire tenure of her service.</p>
-<p><strong>TAKE NOTICE</strong> that in the event of your failure to comply with the legitimate demands set out hereinabove within the stipulated 15-day period, My Client has issued clear and peremptory instructions to institute appropriate legal actions against your management and responsible officers. Such actions shall include filing a Civil Suit for Recovery of Dues and Damages under Section 73 of the Indian Contract Act, instituting formal complaints before the District Consumer Disputes Redressal Commission for deficiency of service, and lodging representations before the appropriate authorities for penal action and suspension of affiliation for illegal employment practices. Your management shall be solely held responsible for all consequences, additional commercial interest, legal expenses, and court costs arising therefrom.</p>
-<p>A copy of this Legal Notice is retained in my office for record and future legal proceedings.</p>
-<p><strong>You are advised to govern yourself accordingly.</strong></p>`,
+  employment: `<p>Under the instructions and on behalf of my client <strong>CLIENT_NAME</strong>, I hereby serve upon you the following legal notice:</p>
+<p><strong>1.</strong> That my client was employed with your organization as <strong>DESIGNATION</strong> from <strong>JOINING_DATE</strong> to <strong>TERMINATION_DATE</strong>.</p>
+<p><strong>2.</strong> That my client has not been paid the following dues: (a) unpaid salary for <strong>PERIOD</strong> amounting to Rs. <strong>UNPAID_SALARY</strong>, (b) notice period compensation of Rs. <strong>NOTICE_PAY</strong>, and (c) other benefits such as gratuity/leave encashment.</p>
+<p><strong>3.</strong> That the withholding of legitimate salary and service certificate is illegal and violates fundamental rights under Article 21 and contractual obligations.</p>
+<p><strong>4.</strong> You are hereby called upon to release all outstanding dues amounting to Rs. <strong>TOTAL_DUES</strong> (Rupees TOTAL_DUES_WORDS only) and issue the experience/relieving certificate within <strong>15 (fifteen) days</strong>.</p>
+<p><strong>5.</strong> Failing compliance, my client shall institute recovery proceedings before the Labour Court/High Court and also approach the appropriate consumer/corporate authorities, at your risk and cost.</p>`,
   property: `<p>Under the instructions and on behalf of my client <strong>CLIENT_NAME</strong>, residing at CLIENT_ADDRESS, I hereby serve upon you the following legal notice:</p>
 <p><strong>1.</strong> That my client is the lawful owner/occupant of the property described as: <strong>PROPERTY_DESC</strong>.</p>
 <p><strong>2.</strong> That you have (encroached upon/illegally occupied/constructed upon) the said property without any right or title.</p>
@@ -368,18 +463,9 @@ function loadTemplate(type){
     'DAMAGES_WORDS': gv('damagesWords') || '[Damages in Words]',
     'DESIGNATION': gv('designation') || '[Designation]',
     'JOINING_DATE': gv('joiningDate') || '[Joining Date]',
-    'MONTHLY_SALARY': gv('monthlySalary') || '[Monthly Salary]',
-    'PROPORTIONATE_SALARY': gv('proportionateSalary') || '[Proportionate Salary]',
-    'TOTAL_SALARY': gv('totalSalary') || '[Total Salary]',
-    'SALARY_MONTH': gv('salaryMonth') || '[Salary Month]',
-    'DAYS_WORKED': gv('daysWorked') || '[Days Worked]',
-    'RESIGNATION_DATE': gv('resignationDate') || '[Resignation Date]',
-    'LAST_WORKING_DATE': gv('lastWorkingDate') || '[Last Working Date]',
-    'PERIOD_START': gv('periodStart') || '[Period Start]',
-    'PERIOD_END': gv('periodEnd') || '[Period End]',
-    'INTEREST': gv('interest') || '[Interest Amount]',
-    'DAMAGES': gv('damages') || '[Damages Amount]',
-    'LEGAL_CHARGES': gv('legalCharges') || '[Legal Charges]',
+    'TERMINATION_DATE': gv('terminationDate') || '[Termination Date]',
+    'PERIOD': gv('period') || '[period of unpaid salary]',
+    'UNPAID_SALARY': gv('unpaidSalary') || '[Unpaid Salary Amount]',
     'NOTICE_PAY': gv('noticePay') || '[Notice Pay Amount]',
     'TOTAL_DUES': gv('totalDues') || '[Total Dues Amount]',
     'TOTAL_DUES_WORDS': gv('totalDuesWords') || '[Total Dues in Words]',
@@ -452,7 +538,7 @@ function render(){
     <hr class="divider">
     <div class="notice-title">LEGAL NOTICE</div>
     ${withoutPrej ? `<div class="without">WITHOUT PREJUDICE TO ALL RIGHTS AND CONTENTIONS</div>` : ''}
-    ${showDelivery ? `<div class="delivery">BY SPEED POST / E-MAIL / WHATSAPP</div>` : ''}
+    ${showDelivery ? `<div class="delivery">BY SPEED POST / E-MAIL</div>` : ''}
     <div class="to-block">
       <div class="to-label">To,</div>
       <div><strong>${recipientName}</strong></div>
@@ -495,121 +581,219 @@ function clearAll(){
   render();
 })();
 </script>
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('[onclick*="print"]').forEach(function(b){b.addEventListener('click',function(){gaEvent('print_document',{tool:'legal_notice',notice_type:typeof currentType!=='undefined'?currentType:''});});});
-  document.querySelectorAll('.type-btn').forEach(function(b){b.addEventListener('click',function(){gaEvent('select_notice_type',{tool:'legal_notice',type:this.textContent.trim().substring(0,30)});});});
-});
-</script>
-<!-- ── Feedback Widget ── -->
-<style>
-.fb-btn{position:fixed;bottom:24px;right:24px;z-index:900;width:52px;height:52px;border-radius:50%;background:#2563EB;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,99,235,.4);transition:transform .2s,box-shadow .2s}
-.fb-btn:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(37,99,235,.5)}
-.fb-btn svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.fb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;display:flex;align-items:flex-end;justify-content:flex-end;padding:24px;opacity:0;pointer-events:none;transition:opacity .2s}
-.fb-overlay.open{opacity:1;pointer-events:all}
-.fb-modal{background:var(--surface,#161b22);border:1px solid var(--border,#30363d);border-radius:16px;padding:24px;width:100%;max-width:380px;transform:translateY(20px) scale(.97);transition:transform .2s;font-family:'Inter',system-ui,sans-serif}
-.fb-overlay.open .fb-modal{transform:translateY(0) scale(1)}
-.fb-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.fb-title{font-size:16px;font-weight:700;color:var(--text,#e6edf3)}
-.fb-close{width:28px;height:28px;border-radius:8px;background:transparent;border:1px solid var(--border,#30363d);cursor:pointer;display:flex;align-items:center;justify-content:center}
-.fb-close svg{width:13px;height:13px;stroke:var(--text,#e6edf3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.fb-types{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.fb-type{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border,#30363d);background:transparent;color:var(--muted,#8b949e);transition:.15s;white-space:nowrap}
-.fb-type.active,.fb-type:hover{border-color:#2563EB;color:#60a5fa;background:rgba(37,99,235,.1)}
-.fb-field{width:100%;background:var(--bg,#0d1117);border:1.5px solid var(--border,#30363d);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--text,#e6edf3);font-family:'Inter',system-ui,sans-serif;outline:none;resize:none;transition:border-color .2s;margin-bottom:10px;box-sizing:border-box}
-.fb-field:focus{border-color:#2563EB}
-.fb-field::placeholder{color:var(--muted,#8b949e)}
-.fb-submit{width:100%;padding:11px;background:#2563EB;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.fb-submit:hover{opacity:.88}
-.fb-submit svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.fb-submit:disabled{opacity:.5;cursor:not-allowed}
-.fb-success{text-align:center;padding:20px 0;display:none}
-.fb-success svg{width:40px;height:40px;stroke:#22c55e;fill:none;stroke-width:1.5;margin:0 auto 12px;display:block}
-.fb-success h3{font-size:15px;font-weight:700;color:var(--text,#e6edf3);margin-bottom:6px}
-.fb-success p{font-size:13px;color:var(--muted,#8b949e)}
-.fb-error{font-size:12px;color:#f87171;margin-bottom:8px;display:none}
-.fb-page-tag{font-size:11px;color:var(--muted,#8b949e);margin-bottom:12px;display:flex;align-items:center;gap:4px}
-.fb-page-tag svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
-</style>
-<button class="fb-btn" onclick="fbOpen()" aria-label="Send feedback" title="Feedback / Report issue">
-  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-</button>
-<div class="fb-overlay" id="fbOverlay" onclick="fbBgClose(event)">
-  <div class="fb-modal">
-    <div id="fbForm">
-      <div class="fb-header">
-        <div class="fb-title">Send Feedback</div>
-        <button class="fb-close" onclick="fbClose()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-      </div>
-      <div class="fb-page-tag">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Page: <span id="fbPageName"></span>
-      </div>
-      <div class="fb-types">
-        <button class="fb-type active" onclick="fbSetType(this,'Bug / Error')">Bug / Error</button>
-        <button class="fb-type" onclick="fbSetType(this,'Improvement')">Improvement</button>
-        <button class="fb-type" onclick="fbSetType(this,'New Feature')">New Feature</button>
-        <button class="fb-type" onclick="fbSetType(this,'General')">General</button>
-      </div>
-      <textarea class="fb-field" id="fbMsg" rows="4" placeholder="Describe the issue or suggestion..." maxlength="1000"></textarea>
-      <input class="fb-field" type="email" id="fbEmail" placeholder="Your email (optional, for reply)" maxlength="80">
-      <div class="fb-error" id="fbError">Please write your feedback before submitting.</div>
-      <button class="fb-submit" id="fbSubmit" onclick="fbSubmit()">
-        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Send Feedback
-      </button>
-    </div>
-    <div class="fb-success" id="fbSuccess">
-      <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      <h3>Thank you!</h3>
-      <p>Your feedback has been sent.<br>We review every message and improve accordingly.</p>
-    </div>
-  </div>
-</div>
+
 <script>
 (function(){
-  var fbType='Bug / Error';
-  var T={'/':'Legal Hash Checksum','/tools':'Tools Hub','/vakalatnama':'Vakalatnama Generator','/bail-bond':'Bail Bond Form 45','/memo-appearance':'Memo of Appearance','/bns-lookup':'BNS / IPC Lookup','/limitation-calculator':'Limitation Calculator','/court-fee':'Court Fee Calculator','/legal-notice':'Legal Notice Generator','/law-converter':'Law Converter','/legal-dictionary':'Legal Dictionary','/women-children-law':'Women & Children BNS'};
-  var path=window.location.pathname.replace(/\/$/,'')||'/';
-  var label=T[path]||path;
-  var pn=document.getElementById('fbPageName');
-  if(pn)pn.textContent=label;
-  window.fbOpen=function(){document.getElementById('fbOverlay').classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){var m=document.getElementById('fbMsg');if(m)m.focus();},200);};
-  window.fbClose=function(){document.getElementById('fbOverlay').classList.remove('open');document.body.style.overflow='';};
-  window.fbBgClose=function(e){if(e.target===document.getElementById('fbOverlay'))fbClose();};
-  window.fbSetType=function(btn,type){fbType=type;document.querySelectorAll('.fb-type').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');};
-  var SVG_SEND='<svg viewBox="0 0 24 24" width="14" height="14" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
-  window.fbSubmit=function(){
-    var msg=document.getElementById('fbMsg').value.trim();
-    var email=document.getElementById('fbEmail').value.trim();
-    var errEl=document.getElementById('fbError');
-    var btn=document.getElementById('fbSubmit');
-    if(!msg){errEl.style.display='block';return;}
-    errEl.style.display='none';
-    btn.disabled=true;btn.innerHTML=SVG_SEND+' Sending...';
-    if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:label,has_email:!!email});
-    fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:fbType,page:label,message:msg,email:email||'',url:window.location.href})})
-    .then(function(r){return r.json();})
-    .then(function(d){
-      if(d.ok){document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
-      else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Failed to send. Try again.';errEl.style.display='block';}
-    }).catch(function(){btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Network error. Check connection.';errEl.style.display='block';});
+// ── Stamp state ──────────────────────────────────────────────────────────────
+var smColor = '#1A3A6B', smShape = 'round';
+var stampImg = null; // current stamp Image object
+var stampDragging = false, sdx=0, sdy=0;
+
+// ── Find paper element ───────────────────────────────────────────────────────
+function getPaper(){ return document.querySelector('.paper'); }
+
+// ── Upload existing stamp ─────────────────────────────────────────────────────
+window.stampUpload = function(){
+  document.getElementById('stampFileInput').click();
+};
+window.loadStampFile = function(inp){
+  var file = inp.files[0]; if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var img = new Image();
+    img.onload = function(){ placeStamp(img, null); };
+    img.src = e.target.result;
   };
-  document.getElementById('fbOverlay').addEventListener('transitionend',function(){
-    if(!this.classList.contains('open')){
-      setTimeout(function(){
-        var f=document.getElementById('fbForm'),s=document.getElementById('fbSuccess');
-        if(f)f.style.display='block';if(s)s.style.display='none';
-        var m=document.getElementById('fbMsg');if(m)m.value='';
-        var em=document.getElementById('fbEmail');if(em)em.value='';
-        var btn=document.getElementById('fbSubmit');
-        if(btn){btn.disabled=false;btn.innerHTML=SVG_SEND+' Send Feedback';}
-      },300);
+  reader.readAsDataURL(file);
+};
+
+// ── Open/close modal ──────────────────────────────────────────────────────────
+window.openStampMaker = function(){
+  document.getElementById('stampModal').classList.add('open');
+  smPreview();
+};
+window.closeStampMaker = function(){
+  document.getElementById('stampModal').classList.remove('open');
+};
+
+// ── Shape / color setters ─────────────────────────────────────────────────────
+window.smSetShape = function(s, el){
+  smShape = s;
+  document.querySelectorAll('.stamp-shape-btn').forEach(function(b){ b.classList.remove('active'); });
+  el.classList.add('active');
+  smPreview();
+};
+window.smSetColor = function(c, el){
+  smColor = c;
+  document.querySelectorAll('.stamp-color-sw').forEach(function(sw){ sw.classList.remove('active'); });
+  if(el) el.classList.add('active');
+  document.getElementById('smColorPicker').value = c;
+  smPreview();
+};
+
+// ── Draw stamp onto a canvas ──────────────────────────────────────────────────
+function drawStamp(canvas, lines, shape, color, size, bw, op){
+  var ctx = canvas.getContext('2d');
+  var cw, ch;
+  if(shape==='round'||shape==='hex'){ cw=ch=size; }
+  else if(shape==='rect'){ cw=size*1.5; ch=size*0.65; }
+  else { cw=size*1.4; ch=size*0.72; } // oval
+  canvas.width=Math.ceil(cw); canvas.height=Math.ceil(ch);
+  ctx.clearRect(0,0,cw,ch);
+  ctx.globalAlpha=op/100;
+  ctx.strokeStyle=color; ctx.fillStyle=color; ctx.lineWidth=bw;
+  var cx=cw/2, cy=ch/2;
+
+  function hexPth(r){
+    ctx.beginPath();
+    for(var i=0;i<6;i++){
+      var a=Math.PI/180*(60*i-30);
+      var x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    } ctx.closePath();
+  }
+
+  ctx.beginPath();
+  if(shape==='round'){
+    ctx.arc(cx,cy,size/2-bw,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx,cy,size/2-bw*3.5,0,Math.PI*2); ctx.stroke();
+  } else if(shape==='rect'){
+    var p=bw+2;
+    ctx.roundRect(p,p,cw-p*2,ch-p*2,3); ctx.stroke();
+    ctx.beginPath(); ctx.roundRect(p+bw+2,p+bw+2,cw-(p+bw+2)*2,ch-(p+bw+2)*2,2); ctx.stroke();
+  } else if(shape==='oval'){
+    ctx.ellipse(cx,cy,cw/2-bw,ch/2-bw,0,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(cx,cy,cw/2-bw*3,ch/2-bw*3,0,0,Math.PI*2); ctx.stroke();
+  } else {
+    hexPth(size/2-bw); ctx.stroke();
+    hexPth(size/2-bw*3.5); ctx.stroke();
+  }
+
+  var fs=Math.max(8,Math.round(size/14));
+  var lh=fs*1.35, total=lines.length, startY=cy-(total*lh)/2+fs/2;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.save();
+  if(shape==='round'||shape==='oval'){
+    ctx.beginPath();
+    shape==='round'?ctx.arc(cx,cy,size/2-bw*5,0,Math.PI*2):ctx.ellipse(cx,cy,cw/2-bw*4,ch/2-bw*4,0,0,Math.PI*2);
+    ctx.clip();
+  }
+  lines.forEach(function(line,i){
+    ctx.font=(i===0?'bold ':'')+fs+'px Inter,system-ui,sans-serif';
+    if(i===0){
+      ctx.lineWidth=bw*0.6;
+      ctx.beginPath();
+      var lw2=Math.min(size*0.38,55);
+      ctx.moveTo(cx-lw2/2,startY-fs*0.9); ctx.lineTo(cx+lw2/2,startY-fs*0.9);
+      ctx.stroke(); ctx.lineWidth=bw;
     }
+    ctx.fillText(line,cx,startY+i*lh);
   });
+  ctx.restore();
+}
+
+// ── Preview in modal ──────────────────────────────────────────────────────────
+window.smPreview = function(){
+  var size=parseInt(document.getElementById('smSize').value);
+  var op=parseInt(document.getElementById('smOp').value);
+  var bw=parseInt(document.getElementById('smBw').value);
+  document.getElementById('smSzV').textContent=size;
+  document.getElementById('smOpV').textContent=op+'%';
+  document.getElementById('smBwV').textContent=bw;
+  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
+  drawStamp(document.getElementById('smCanvas'), lines, smShape, smColor, size, bw, op);
+};
+
+// Live preview on text input
+['sm1','sm2','sm3','sm4','sm5'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el) el.addEventListener('input', smPreview);
+});
+
+// ── Apply created stamp ───────────────────────────────────────────────────────
+window.applyCreatedStamp = function(){
+  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
+  var size=parseInt(document.getElementById('smSize').value);
+  var op=parseInt(document.getElementById('smOp').value);
+  var bw=parseInt(document.getElementById('smBw').value);
+  var tmpCanvas=document.createElement('canvas');
+  drawStamp(tmpCanvas, lines, smShape, smColor, size, bw, op);
+  var img=new Image();
+  img.onload=function(){ placeStamp(img, tmpCanvas); };
+  img.src=tmpCanvas.toDataURL('image/png');
+  closeStampMaker();
+};
+
+// ── Place stamp on paper ──────────────────────────────────────────────────────
+function placeStamp(img, srcCanvas){
+  stampImg = img;
+  // Remove existing stamp
+  var old=getPaper().querySelector('.paper-stamp');
+  if(old) old.remove();
+
+  var wrap=document.createElement('div');
+  wrap.className='paper-stamp';
+  wrap.style.left='60mm'; wrap.style.top='140mm';
+
+  var c=document.createElement('canvas');
+  if(srcCanvas){
+    c.width=srcCanvas.width; c.height=srcCanvas.height;
+    c.getContext('2d').drawImage(srcCanvas,0,0);
+  } else {
+    // Uploaded image — draw at reasonable size
+    var maxW=180, scale=Math.min(1, maxW/img.width);
+    c.width=Math.round(img.width*scale); c.height=Math.round(img.height*scale);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+  }
+  wrap.appendChild(c);
+
+  var hint=document.createElement('div');
+  hint.className='paper-stamp-hint'; hint.textContent='drag to position';
+  wrap.appendChild(hint);
+
+  getPaper().appendChild(wrap);
+  initStampDrag(wrap);
+
+  document.getElementById('btnClearStamp').style.display='flex';
+  document.getElementById('stampStatus').textContent='Stamp placed — drag to reposition, then Print / PDF';
+  setTimeout(function(){ hint.style.display='none'; }, 4000);
+}
+
+// ── Drag logic ────────────────────────────────────────────────────────────────
+function initStampDrag(el){
+  function start(cx,cy){
+    stampDragging=true;
+    var r=el.getBoundingClientRect();
+    sdx=cx-r.left; sdy=cy-r.top;
+  }
+  function move(cx,cy){
+    if(!stampDragging) return;
+    var pr=getPaper().getBoundingClientRect();
+    var x=cx-pr.left-sdx, y=cy-pr.top-sdy;
+    x=Math.max(-el.offsetWidth/2, Math.min(getPaper().offsetWidth-el.offsetWidth/2, x));
+    y=Math.max(-el.offsetHeight/2, Math.min(getPaper().offsetHeight-el.offsetHeight/2, y));
+    el.style.left=x+'px'; el.style.top=y+'px';
+  }
+  function end(){ stampDragging=false; }
+  el.addEventListener('mousedown',function(e){ start(e.clientX,e.clientY); e.preventDefault(); });
+  document.addEventListener('mousemove',function(e){ move(e.clientX,e.clientY); });
+  document.addEventListener('mouseup',end);
+  el.addEventListener('touchstart',function(e){ var t=e.touches[0]; start(t.clientX,t.clientY); e.preventDefault(); },{passive:false});
+  document.addEventListener('touchmove',function(e){ if(!stampDragging) return; var t=e.touches[0]; move(t.clientX,t.clientY); e.preventDefault(); },{passive:false});
+  document.addEventListener('touchend',end);
+}
+
+// ── Clear stamp ───────────────────────────────────────────────────────────────
+window.clearStamp = function(){
+  var old=getPaper().querySelector('.paper-stamp');
+  if(old) old.remove();
+  stampImg=null;
+  document.getElementById('btnClearStamp').style.display='none';
+  document.getElementById('stampStatus').textContent='Stamp removed';
+};
+
 })();
 </script>
-<!-- ── End Feedback Widget ── -->
+
 </body>
 </html>
