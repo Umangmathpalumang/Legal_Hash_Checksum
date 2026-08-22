@@ -80,6 +80,20 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:10px;z-index:999;display:none;box-shadow:0 4px 20px rgba(0,0,0,.3)}
 .toast.err{background:var(--red)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:#161b22;border:1px solid #2a2f3e;border-radius:16px;padding:24px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto}
+.modal h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:16px}
+.modal label{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;margin-top:12px}
+.modal input,.modal textarea,.modal select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.modal input:focus,.modal textarea:focus,.modal select:focus{border-color:var(--accent)}
+.modal textarea{resize:vertical;min-height:120px;line-height:1.6}
+.modal-btns{display:flex;gap:8px;margin-top:16px}
+.btn-save{flex:1;padding:9px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+.btn-cancel-modal{flex:1;padding:9px;background:#1e2535;color:var(--muted);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+.btn-edit{background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.2)}
+.btn-edit:hover{background:rgba(16,185,129,.2)}
+.toast.err{background:var(--red)}
 
 /* Expanded answers */
 .ans-wrap{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
@@ -133,6 +147,60 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- EDIT QUESTION MODAL -->
+<div class="modal-overlay" id="editQModal">
+  <div class="modal">
+    <h3>Edit Question</h3>
+    <input type="hidden" id="editQId">
+    <label>Question</label>
+    <textarea id="editQText" rows="5"></textarea>
+    <label>Category</label>
+    <select id="editQCat">
+      <option>General</option>
+      <option>Property / Real Estate</option>
+      <option>Criminal / FIR / Bail</option>
+      <option>Family / Matrimonial</option>
+      <option>Consumer / NCDRC</option>
+      <option>Labour / Employment</option>
+      <option>Cheque Bounce / NI Act</option>
+      <option>Cyber / IT Law</option>
+      <option>Civil / Suit</option>
+      <option>Contract / Agreement</option>
+      <option>Constitutional</option>
+      <option>Women & Children</option>
+      <option>Motor Accident / MACT</option>
+      <option>Tax / GST</option>
+      <option>Company / Business</option>
+    </select>
+    <label>Asker Name</label>
+    <input type="text" id="editQName">
+    <div class="modal-btns">
+      <button class="btn-save" onclick="saveQuestion()">Save Changes</button>
+      <button class="btn-cancel-modal" onclick="closeModals()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT ANSWER MODAL -->
+<div class="modal-overlay" id="editAModal">
+  <div class="modal">
+    <h3>Edit Answer</h3>
+    <input type="hidden" id="editAId">
+    <label>Answer</label>
+    <textarea id="editAText" rows="6"></textarea>
+    <label>Advocate Name</label>
+    <input type="text" id="editAName">
+    <label>Enrolment No.</label>
+    <input type="text" id="editAEnroll">
+    <label>Court / Bar</label>
+    <input type="text" id="editACourt">
+    <div class="modal-btns">
+      <button class="btn-save" onclick="saveAnswer()">Save Changes</button>
+      <button class="btn-cancel-modal" onclick="closeModals()">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <script>
 var ADMIN_TOKEN = '';
@@ -226,6 +294,10 @@ function renderAdmin(){
         </div>
         <div class="q-text">${escHtml(a.answer)}</div>
         <div class="q-actions">
+          <button class="btn-action btn-edit" onclick="openEditAnswer(${a.id})">
+            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Edit Answer
+          </button>
           <button class="btn-action btn-del" onclick="deleteAnswer(${a.id})">
             <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
             Delete Answer
@@ -261,6 +333,10 @@ function renderAdmin(){
           <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           ${qAnswers.length ? 'View Answers' : 'No Answers'}
         </button>
+        <button class="btn-action btn-edit" onclick="openEditQuestion(${q.id})">
+          <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit
+        </button>
         <button class="btn-action btn-del" onclick="deleteQuestion(${q.id})">
           <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
           Delete
@@ -271,6 +347,10 @@ function renderAdmin(){
           <div class="ans-card">
             <div class="ans-adv">${escHtml(a.advocate_name)}${a.advocate_enroll?' · '+escHtml(a.advocate_enroll):''}${a.advocate_court?' · '+escHtml(a.advocate_court):''} · ${a.upvotes} upvotes</div>
             <div class="ans-text">${escHtml(a.answer)}</div>
+            <button class="btn-action btn-edit" onclick="openEditAnswer(${a.id})">
+              <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit
+            </button>
             <button class="btn-action btn-del" onclick="deleteAnswer(${a.id})">
               <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
               Delete Answer
@@ -335,6 +415,75 @@ function showToast(msg, err){
   t.style.display='block';
   setTimeout(()=>t.style.display='none', 3000);
 }
+
+// ── Edit Question ─────────────────────────────────────────────────────────────
+function openEditQuestion(qid){
+  var q = allQ.find(q=>q.id===qid);
+  if(!q) return;
+  document.getElementById('editQId').value = qid;
+  document.getElementById('editQText').value = q.question;
+  document.getElementById('editQName').value = q.asker_name||'';
+  var sel = document.getElementById('editQCat');
+  for(var i=0;i<sel.options.length;i++){
+    if(sel.options[i].value===q.category) sel.selectedIndex=i;
+  }
+  document.getElementById('editQModal').classList.add('open');
+}
+
+async function saveQuestion(){
+  var qid = parseInt(document.getElementById('editQId').value);
+  var text = document.getElementById('editQText').value.trim();
+  var cat  = document.getElementById('editQCat').value;
+  var name = document.getElementById('editQName').value.trim();
+  if(!text){ showToast('Question cannot be empty', true); return; }
+  var r = await fetch('/api/admin/qa/questions/'+qid, {
+    method:'PATCH',
+    headers:{'Content-Type':'application/json','X-Admin-Token':ADMIN_TOKEN},
+    body: JSON.stringify({question:text, category:cat, asker_name:name})
+  });
+  if(r.ok){
+    allQ = allQ.map(q=>q.id===qid?{...q,question:text,category:cat,asker_name:name}:q);
+    closeModals(); renderAdmin(); showToast('Question updated');
+  } else { showToast('Error saving', true); }
+}
+
+// ── Edit Answer ────────────────────────────────────────────────────────────────
+function openEditAnswer(aid){
+  var a = allA.find(a=>a.id===aid);
+  if(!a) return;
+  document.getElementById('editAId').value = aid;
+  document.getElementById('editAText').value = a.answer;
+  document.getElementById('editAName').value = a.advocate_name||'';
+  document.getElementById('editAEnroll').value = a.advocate_enroll||'';
+  document.getElementById('editACourt').value = a.advocate_court||'';
+  document.getElementById('editAModal').classList.add('open');
+}
+
+async function saveAnswer(){
+  var aid    = parseInt(document.getElementById('editAId').value);
+  var text   = document.getElementById('editAText').value.trim();
+  var name   = document.getElementById('editAName').value.trim();
+  var enroll = document.getElementById('editAEnroll').value.trim();
+  var court  = document.getElementById('editACourt').value.trim();
+  if(!text){ showToast('Answer cannot be empty', true); return; }
+  var r = await fetch('/api/admin/qa/answers/'+aid, {
+    method:'PATCH',
+    headers:{'Content-Type':'application/json','X-Admin-Token':ADMIN_TOKEN},
+    body: JSON.stringify({answer:text, advocate_name:name, advocate_enroll:enroll, advocate_court:court})
+  });
+  if(r.ok){
+    allA = allA.map(a=>a.id===aid?{...a,answer:text,advocate_name:name,advocate_enroll:enroll,advocate_court:court}:a);
+    closeModals(); renderAdmin(); showToast('Answer updated');
+  } else { showToast('Error saving', true); }
+}
+
+function closeModals(){
+  document.getElementById('editQModal').classList.remove('open');
+  document.getElementById('editAModal').classList.remove('open');
+}
+// Close modal on overlay click
+document.getElementById('editQModal').addEventListener('click', function(e){ if(e.target===this) closeModals(); });
+document.getElementById('editAModal').addEventListener('click', function(e){ if(e.target===this) closeModals(); });
 
 setInterval(loadAll, 60000);
 </script>

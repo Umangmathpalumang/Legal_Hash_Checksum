@@ -492,3 +492,42 @@ async def admin_delete_answer(aid: int, request: Request):
         return {"ok": True}
     finally:
         await conn.close()
+
+class QuestionEdit(PydanticBase):
+    question: str
+    category: str
+    asker_name: str
+
+class AnswerEdit(PydanticBase):
+    answer: str
+    advocate_name: str
+    advocate_enroll: Optional[str] = ""
+    advocate_court: Optional[str] = ""
+
+@app.patch("/api/admin/qa/questions/{qid}")
+async def admin_edit_question(qid: int, body: QuestionEdit, request: Request):
+    verify_admin(request)
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        await conn.execute("""
+            UPDATE legal_questions
+            SET question=$1, category=$2, asker_name=$3
+            WHERE id=$4
+        """, body.question.strip(), body.category, body.asker_name, qid)
+        return {"ok": True}
+    finally:
+        await conn.close()
+
+@app.patch("/api/admin/qa/answers/{aid}")
+async def admin_edit_answer(aid: int, body: AnswerEdit, request: Request):
+    verify_admin(request)
+    conn = await asyncpg.connect(QA_DB_URL)
+    try:
+        await conn.execute("""
+            UPDATE legal_answers
+            SET answer=$1, advocate_name=$2, advocate_enroll=$3, advocate_court=$4
+            WHERE id=$5
+        """, body.answer.strip(), body.advocate_name, body.advocate_enroll or "", body.advocate_court or "", aid)
+        return {"ok": True}
+    finally:
+        await conn.close()
