@@ -50,6 +50,13 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
 .filter-btn:hover:not(.active){border-color:var(--accent-light);color:var(--accent-light)}
 .q-count{font-size:12px;color:var(--muted);margin-left:auto}
+.search-wrap{max-width:700px;margin:20px auto 0;padding:0 16px}
+.search-box{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px 10px 38px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center}
+.search-box:focus{border-color:var(--accent)}
+.search-box::placeholder{color:var(--muted)}
+.wa-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid rgba(37,211,102,.3);background:rgba(37,211,102,.08);color:#25D366;cursor:pointer;margin-top:8px;text-decoration:none;transition:.2s}
+.wa-btn:hover{background:rgba(37,211,102,.18)}
+.wa-btn svg{width:12px;height:12px;fill:#25D366}
 .questions{max-width:700px;margin:0 auto;padding:0 16px 40px}
 .q-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:12px;cursor:pointer;transition:border-color .2s}
 .q-card:hover{border-color:var(--accent)}
@@ -159,6 +166,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
     </button>
   </div>
 </div>
+<div class="search-wrap">
+  <input class="search-box" id="searchBox" type="text" placeholder="Search questions... e.g. landlord, cheque bounce, FIR" oninput="onSearch(this.value)">
+</div>
+
 <div class="filter-bar">
   <button class="filter-btn active" onclick="setFilter('All',this)">All</button>
   <button class="filter-btn" onclick="setFilter('Unanswered',this)">Unanswered</button>
@@ -177,6 +188,17 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 <script>
 var allQuestions=[];
 var currentFilter='All';
+var searchTerm = '';
+function onSearch(val){
+  searchTerm = val.toLowerCase().trim();
+  renderQuestions();
+}
+
+function waLink(q){
+  var text = '*Legal Question — LegalHashChecksum.com*\n\n' + q.question + '\n\nCategory: ' + q.category + '\n\nAnswer here: https://legalhashchecksum.com/legal-qa';
+  return 'https://wa.me/?text=' + encodeURIComponent(text);
+}
+
 async function loadQuestions(){
   try{
     var r=await fetch('/api/qa/questions');
@@ -189,6 +211,7 @@ function renderQuestions(){
   if(currentFilter==='Unanswered') list=list.filter(q=>q.answer_count===0);
   else if(currentFilter==='Answered') list=list.filter(q=>q.answer_count>0);
   else if(currentFilter!=='All') list=list.filter(q=>q.category===currentFilter);
+  if(searchTerm) list=list.filter(q=>q.question.toLowerCase().includes(searchTerm)||q.category.toLowerCase().includes(searchTerm)||(q.asker_name||'').toLowerCase().includes(searchTerm));
   document.getElementById('qCount').textContent=list.length+' question'+(list.length!==1?'s':'');
   var el=document.getElementById('questionsList');
   if(!list.length){
@@ -210,6 +233,10 @@ function renderQuestions(){
       <div class="q-footer">
         <span class="ans-count ${ansClass}">${ansLabel}</span>
         <span class="q-stat"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>${q.views||0} views</span>
+        <a class="wa-btn" href="${waLink(q)}" target="_blank" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          Share
+        </a>
       </div>
       <div class="answers-wrap" id="ans-${q.id}">
         <div id="ans-list-${q.id}"><p style="font-size:12px;color:var(--muted)">Loading...</p></div>
