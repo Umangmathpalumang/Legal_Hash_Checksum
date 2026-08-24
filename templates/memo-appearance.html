@@ -53,12 +53,11 @@ textarea.field-input{resize:vertical;min-height:52px}
 .btn-clear{width:100%;padding:8px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-size:13px;cursor:pointer;margin-top:6px}
 .btn-clear:hover{border-color:var(--accent);color:var(--accent-light)}
 
-.preview-panel{background:#f0f0f0;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 57px);overflow-x:hidden}
+.preview-panel{background:#f0f0f0;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 57px)}
 .preview-label{font-size:11px;color:#888;margin-bottom:12px}
 
 /* Paper */
-.paper{
-  position:relative;width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:20mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.6}
+.paper{width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:20mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.6;position:relative}
 
 .paper-title{text-align:center;font-size:14pt;font-weight:700;margin-bottom:2mm;text-decoration:underline}
 .paper-subtitle{text-align:center;font-size:11pt;margin-bottom:1mm}
@@ -74,12 +73,33 @@ textarea.field-input{resize:vertical;min-height:52px}
 
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  html,body{background:#fff!important}
-  nav,.form-panel,.preview-label{display:none!important}
-  .app{display:block}
-  .preview-panel{background:#fff!important;padding:0;max-height:none;display:block}
-  .paper{box-shadow:none;margin:0 auto;width:216mm!important;border:none;min-height:0;transform:none!important;padding:15mm 18mm}
-  @page{size:legal;margin:0}
+  @page{size:216mm 356mm;margin:0}
+  html,body{background:#fff!important;height:auto!important;overflow:visible!important}
+  nav,.form-panel,.preview-label,
+  .stamp-bar,.stamp-modal-overlay,.paper-stamp-hint,
+  .fb-btn,.fb-overlay{display:none!important}
+  .app{display:block!important;padding:0!important;margin:0!important}
+  .preview-panel{
+    background:#fff!important;
+    padding:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+    display:block!important;
+  }
+  .paper{
+    box-shadow:none!important;
+    border:none!important;
+    margin:0 auto!important;
+    width:216mm!important;
+    max-width:216mm!important;
+    min-height:356mm!important;
+    padding:18mm 20mm!important;
+    overflow:visible!important;
+    position:relative!important;
+    font-size:11pt!important;
+  }
+  .paper *{overflow:visible!important}
+  .paper-stamp{cursor:default!important}
 }
 
 /* ── STAMP SYSTEM ── */
@@ -127,18 +147,8 @@ textarea.field-input{resize:vertical;min-height:52px}
 .paper-stamp:active{cursor:grabbing}
 .paper-stamp canvas{display:block}
 .paper-stamp-hint{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:#3B82F6;white-space:nowrap;pointer-events:none;font-family:system-ui,sans-serif;font-weight:600}
-@media print{
-  .stamp-bar,.stamp-modal-overlay,.paper-stamp-hint{display:none!important}
-  .paper-stamp{cursor:default!important}
-}
-
-@media(max-width:768px){
-  .preview-panel{padding:16px 8px;}
-  .paper{transform-origin:top center;transform:scale(0.42);margin-bottom:calc((356mm * 0.42) - 356mm);width:216mm!important;}
-}
-@media(min-width:769px) and (max-width:1000px){
-  .paper{transform-origin:top center;transform:scale(0.65);margin-bottom:calc((356mm * 0.65) - 356mm);}
-}</style>
+/* stamp print rules merged into main @media print above */
+</style>
 </head>
 <body>
 <nav>
@@ -147,8 +157,8 @@ textarea.field-input{resize:vertical;min-height:52px}
     <span class="nav-name">Memo of Appearance</span>
   </a>
   <div class="nav-links">
-    <a href="/" class="nav-link">Hash Tool</a>
-    <a href="/tools" class="nav-link">All Tools</a>
+    <a href="https://legalhashchecksum.com/" class="nav-link">Hash Tool</a>
+    <a href="https://legalhashchecksum.com/tools" class="nav-link">All Tools</a>
     <button class="btn-print" onclick="window.print()">
       <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Print / Save PDF
@@ -216,25 +226,10 @@ textarea.field-input{resize:vertical;min-height:52px}
 
     <div class="stamp-preview-wrap"><canvas id="smCanvas"></canvas></div>
 
-    <div class="stamp-modal-btns" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
-      <button class="btn-sm-apply" style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:7px" onclick="applyCreatedStamp()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Apply Stamp to Document
-      </button>
-      <button class="btn-sm-cancel" style="display:flex;align-items:center;justify-content:center;gap:6px" onclick="saveStampToStorage()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-        Save to Browser
-      </button>
-      <button class="btn-sm-cancel" style="display:flex;align-items:center;justify-content:center;gap:6px" onclick="downloadStampPNG()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download PNG
-      </button>
-      <button class="btn-sm-cancel" style="display:flex;align-items:center;justify-content:center;gap:6px;grid-column:1/-1" onclick="closeStampMaker()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        Cancel
-      </button>
+    <div class="stamp-modal-btns">
+      <button class="btn-sm-cancel" onclick="closeStampMaker()">Cancel</button>
+      <button class="btn-sm-apply" onclick="applyCreatedStamp()">✓ Apply Stamp to Document</button>
     </div>
-    <div id="smSaveMsg" style="font-size:11px;color:#10B981;text-align:center;margin-top:8px;min-height:16px;display:flex;align-items:center;justify-content:center;gap:5px"></div>
   </div>
 </div>
 
@@ -602,112 +597,6 @@ window.smPreview = function(){
   if(el) el.addEventListener('input', smPreview);
 });
 
-// ── Save stamp to localStorage ───────────────────────────────────────────────
-window.saveStampToStorage = function(){
-  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; });
-  var size=parseInt(document.getElementById('smSize').value);
-  var op=parseInt(document.getElementById('smOp').value);
-  var bw=parseInt(document.getElementById('smBw').value);
-  var data={ lines:lines, shape:smShape, color:smColor, size:size, op:op, bw:bw };
-  try{
-    localStorage.setItem('advocateStamp', JSON.stringify(data));
-    var msg=document.getElementById('smSaveMsg');
-    msg.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Stamp saved — auto-loads next visit';
-    setTimeout(function(){ msg.innerHTML=''; }, 4000);
-  } catch(e){ alert('Storage not available in this browser.'); }
-};
-
-// ── Download stamp as PNG ─────────────────────────────────────────────────────
-window.downloadStampPNG = function(){
-  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
-  var size=parseInt(document.getElementById('smSize').value);
-  var op=parseInt(document.getElementById('smOp').value);
-  var bw=parseInt(document.getElementById('smBw').value);
-  var tmpCanvas=document.createElement('canvas');
-  drawStamp(tmpCanvas, lines, smShape, smColor, size, bw, op);
-  var a=document.createElement('a');
-  a.download='advocate-stamp.png';
-  a.href=tmpCanvas.toDataURL('image/png');
-  a.click();
-};
-
-// ── Auto-load saved stamp on page open ───────────────────────────────────────
-function autoLoadSavedStamp(){
-  try{
-    var saved=localStorage.getItem('advocateStamp');
-    if(!saved) return;
-    var data=JSON.parse(saved);
-    ['sm1','sm2','sm3','sm4','sm5'].forEach(function(id,i){
-      var el=document.getElementById(id);
-      if(el) el.value = data.lines[i]||'';
-    });
-    smShape=data.shape||'round';
-    document.querySelectorAll('.stamp-shape-btn').forEach(function(b){
-      b.classList.toggle('active', b.dataset.shape===smShape);
-    });
-    smSetColor(data.color||'#1A3A6B', document.querySelector('[data-c="'+(data.color||'#1A3A6B')+'"]'));
-    document.getElementById('smSize').value=data.size||160;
-    document.getElementById('smOp').value=data.op||85;
-    document.getElementById('smBw').value=data.bw||2;
-    smPreview();
-    document.getElementById('stampStatus').textContent='Saved stamp loaded — click Create Stamp to apply or edit';
-  } catch(e){}
-}
-
-// ── Save stamp to localStorage ───────────────────────────────────────────────
-window.saveStampToStorage = function(){
-  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; });
-  var size=parseInt(document.getElementById('smSize').value);
-  var op=parseInt(document.getElementById('smOp').value);
-  var bw=parseInt(document.getElementById('smBw').value);
-  var data={ lines:lines, shape:smShape, color:smColor, size:size, op:op, bw:bw };
-  try{
-    localStorage.setItem('advocateStamp', JSON.stringify(data));
-    var msg=document.getElementById('smSaveMsg');
-    msg.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Stamp saved — auto-loads next visit';
-    setTimeout(function(){ msg.innerHTML=''; }, 4000);
-  } catch(e){ alert('Storage not available in this browser.'); }
-};
-
-// ── Download stamp as high-res PNG (3x scale) ─────────────────────────────────
-window.downloadStampPNG = function(){
-  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
-  var size=parseInt(document.getElementById('smSize').value);
-  var op=parseInt(document.getElementById('smOp').value);
-  var bw=parseInt(document.getElementById('smBw').value);
-  var SCALE=3; // 3x for high-res print quality
-  var tmpCanvas=document.createElement('canvas');
-  // Draw at 3x size
-  drawStamp(tmpCanvas, lines, smShape, smColor, size*SCALE, bw*SCALE, op);
-  var a=document.createElement('a');
-  a.download='advocate-stamp.png';
-  a.href=tmpCanvas.toDataURL('image/png');
-  a.click();
-};
-
-// ── Auto-load saved stamp on page open ───────────────────────────────────────
-function autoLoadSavedStamp(){
-  try{
-    var saved=localStorage.getItem('advocateStamp');
-    if(!saved) return;
-    var data=JSON.parse(saved);
-    ['sm1','sm2','sm3','sm4','sm5'].forEach(function(id,i){
-      var el=document.getElementById(id);
-      if(el) el.value = data.lines[i]||'';
-    });
-    smShape=data.shape||'round';
-    document.querySelectorAll('.stamp-shape-btn').forEach(function(b){
-      b.classList.toggle('active', b.dataset.shape===smShape);
-    });
-    smSetColor(data.color||'#1A3A6B', document.querySelector('[data-c="'+(data.color||'#1A3A6B')+'"]'));
-    document.getElementById('smSize').value=data.size||160;
-    document.getElementById('smOp').value=data.op||85;
-    document.getElementById('smBw').value=data.bw||2;
-    smPreview();
-    document.getElementById('stampStatus').textContent='Saved stamp loaded — click Create Stamp to apply or edit';
-  } catch(e){}
-}
-
 // ── Apply created stamp ───────────────────────────────────────────────────────
 window.applyCreatedStamp = function(){
   var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
@@ -759,54 +648,26 @@ function placeStamp(img, srcCanvas){
 
 // ── Drag logic ────────────────────────────────────────────────────────────────
 function initStampDrag(el){
-  var startX, startY, startLeft, startTop;
-
-  function getScale(){
-    // actual rendered width / layout width = CSS scale factor
-    var p = getPaper();
-    return p.getBoundingClientRect().width / p.offsetWidth;
+  function start(cx,cy){
+    stampDragging=true;
+    var r=el.getBoundingClientRect();
+    sdx=cx-r.left; sdy=cy-r.top;
   }
-
-  function onDown(cx, cy){
-    stampDragging = true;
-    var scale = getScale();
-    // current stamp position in paper-local px
-    startLeft = parseFloat(el.style.left) || 0;
-    startTop  = parseFloat(el.style.top)  || 0;
-    // pointer position in paper-local px
-    startX = cx / scale;
-    startY = cy / scale;
-    el.setPointerCapture && el.setPointerCapture(el._pid);
-  }
-
-  function onMove(cx, cy){
+  function move(cx,cy){
     if(!stampDragging) return;
-    var scale = getScale();
-    var dx = cx / scale - startX;
-    var dy = cy / scale - startY;
-    var p  = getPaper();
-    var x  = Math.max(0, Math.min(p.offsetWidth  - el.offsetWidth,  startLeft + dx));
-    var y  = Math.max(0, Math.min(p.offsetHeight - el.offsetHeight, startTop  + dy));
-    el.style.left = x + 'px';
-    el.style.top  = y + 'px';
+    var pr=getPaper().getBoundingClientRect();
+    var x=cx-pr.left-sdx, y=cy-pr.top-sdy;
+    x=Math.max(-el.offsetWidth/2, Math.min(getPaper().offsetWidth-el.offsetWidth/2, x));
+    y=Math.max(-el.offsetHeight/2, Math.min(getPaper().offsetHeight-el.offsetHeight/2, y));
+    el.style.left=x+'px'; el.style.top=y+'px';
   }
-
-  function onUp(){ stampDragging = false; }
-
-  // Pointer events (covers mouse + touch + stylus, single handler)
-  el.addEventListener('pointerdown', function(e){
-    el._pid = e.pointerId;
-    el.setPointerCapture(e.pointerId);
-    onDown(e.clientX, e.clientY);
-    e.preventDefault();
-  });
-  el.addEventListener('pointermove', function(e){
-    if(!stampDragging) return;
-    onMove(e.clientX, e.clientY);
-    e.preventDefault();
-  });
-  el.addEventListener('pointerup',   onUp);
-  el.addEventListener('pointercancel', onUp);
+  function end(){ stampDragging=false; }
+  el.addEventListener('mousedown',function(e){ start(e.clientX,e.clientY); e.preventDefault(); });
+  document.addEventListener('mousemove',function(e){ move(e.clientX,e.clientY); });
+  document.addEventListener('mouseup',end);
+  el.addEventListener('touchstart',function(e){ var t=e.touches[0]; start(t.clientX,t.clientY); e.preventDefault(); },{passive:false});
+  document.addEventListener('touchmove',function(e){ if(!stampDragging) return; var t=e.touches[0]; move(t.clientX,t.clientY); e.preventDefault(); },{passive:false});
+  document.addEventListener('touchend',end);
 }
 
 // ── Clear stamp ───────────────────────────────────────────────────────────────

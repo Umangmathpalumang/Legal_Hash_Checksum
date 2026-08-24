@@ -6,129 +6,209 @@
 <title>Legal Q&A — Ask Indian Law Questions</title>
 <meta name="description" content="Ask any legal question. Get answers from verified Indian advocates. Free community Q&A platform.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--green:#10B981;--red:#f87171}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
-.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
-.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.nav-name{font-size:14px;font-weight:700}
-.nav-links{display:flex;gap:8px;flex-wrap:wrap}
-.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:8px;transition:.2s}
-.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
-.hero{text-align:center;padding:40px 24px 28px;border-bottom:1px solid var(--border)}
-.hero h1{font-size:26px;font-weight:700;margin-bottom:8px}
-.hero p{color:var(--muted);font-size:14px;max-width:500px;margin:0 auto 20px}
-.badge-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
-.badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;border:1px solid}
-.badge-blue{border-color:rgba(37,99,235,.4);background:rgba(37,99,235,.1);color:#60a5fa}
-.badge-green{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.1);color:#10B981}
-.badge-amber{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.1);color:#fbbf24}
-.ask-box{max-width:700px;margin:28px auto;padding:0 16px}
-.ask-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
-.ask-card h2{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.ask-card h2 svg{width:18px;height:18px;stroke:var(--accent-light);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+:root{
+  --bg:#0d1117;--s1:#161b22;--s2:#1c2128;--bd:#30363d;--bd2:#3d444d;
+  --tx:#e6edf3;--tx2:#8b949e;--tx3:#656d76;
+  --ac:#2563EB;--acl:#60a5fa;--ac2:#1d4ed8;
+  --ok:#10B981;--er:#f87171;--am:#fbbf24;
+  --r:12px;--sans:'Inter',system-ui,sans-serif;--serif:'EB Garamond',Georgia,serif;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh;line-height:1.6}
+
+/* ── NAV ── */
+nav{display:flex;align-items:center;justify-content:space-between;padding:13px 24px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:rgba(13,17,23,.95);backdrop-filter:blur(12px);z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.nav-logo{width:34px;height:34px;background:linear-gradient(135deg,var(--ac),var(--acl));border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(37,99,235,.4)}
+.nav-logo svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-title{font-size:14px;font-weight:700;letter-spacing:-.2px}
+.nav-links{display:flex;gap:6px}
+.nav-link{font-size:12px;color:var(--tx2);text-decoration:none;padding:6px 12px;border:1px solid var(--bd);border-radius:8px;transition:.2s;font-weight:500}
+.nav-link:hover{border-color:var(--ac);color:var(--acl)}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(180deg,rgba(37,99,235,.06) 0%,transparent 100%);border-bottom:1px solid var(--bd);padding:48px 24px 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(37,99,235,.08),transparent);pointer-events:none}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acl);background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.25);border-radius:20px;padding:4px 12px;margin-bottom:16px}
+.hero-eyebrow svg{width:10px;height:10px;fill:var(--acl)}
+.hero h1{font-size:clamp(22px,4vw,34px);font-weight:800;margin-bottom:10px;letter-spacing:-.5px;line-height:1.2}
+.hero h1 span{background:linear-gradient(90deg,var(--acl),var(--ok));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--tx2);font-size:15px;max-width:460px;margin:0 auto 24px;line-height:1.7}
+.badge-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid;display:inline-flex;align-items:center;gap:5px}
+.badge svg{width:10px;height:10px}
+.badge-blue{border-color:rgba(96,165,250,.3);background:rgba(96,165,250,.08);color:var(--acl)}
+.badge-green{border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08);color:var(--ok)}
+.badge-amber{border-color:rgba(251,191,36,.3);background:rgba(251,191,36,.08);color:var(--am)}
+
+/* ── LAYOUT ── */
+.main{max-width:780px;margin:0 auto;padding:28px 16px 60px}
+
+/* ── ASK CARD ── */
+.ask-card{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:24px;margin-bottom:28px;position:relative;overflow:hidden}
+.ask-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ac),var(--acl),var(--ok))}
+.ask-title{font-size:15px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:8px;color:var(--tx)}
+.ask-title svg{width:18px;height:18px;stroke:var(--acl);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .field{margin-bottom:14px}
-.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.field input,.field textarea,.field select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent)}
-.field textarea{resize:vertical;min-height:90px;line-height:1.6}
-.field select option{background:var(--surface)}
-.anon-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px}
-.anon-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent)}
-.anon-row label{font-size:13px;color:var(--muted);cursor:pointer}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:500px){.two-col{grid-template-columns:1fr}}
-.btn-submit{width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s}
-.btn-submit:hover{opacity:.88}
+.field label{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);margin-bottom:5px}
+.field input,.field textarea,.field select{
+  width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:10px;
+  padding:10px 13px;font-size:13px;color:var(--tx);font-family:var(--sans);
+  outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.field textarea{resize:vertical;min-height:96px;line-height:1.65}
+.field select option{background:var(--s2)}
+.field input::placeholder,.field textarea::placeholder{color:var(--tx3)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.two-col{grid-template-columns:1fr}}
+.anon-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:11px 13px;background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.15);border-radius:10px}
+.anon-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--ac);cursor:pointer;flex-shrink:0}
+.anon-row label{font-size:13px;color:var(--tx2);cursor:pointer;line-height:1.4}
+.btn-submit{width:100%;padding:12px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s;letter-spacing:.01em;box-shadow:0 2px 12px rgba(37,99,235,.3)}
+.btn-submit:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,.4)}
+.btn-submit:active{transform:translateY(0)}
 .btn-submit svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.filter-bar{max-width:700px;margin:0 auto 16px;padding:0 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.filter-btn{font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:.2s;white-space:nowrap}
-.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.filter-btn:hover:not(.active){border-color:var(--accent-light);color:var(--accent-light)}
-.q-count{font-size:12px;color:var(--muted);margin-left:auto}
-.search-wrap{max-width:700px;margin:20px auto 0;padding:0 16px}
-.search-box{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px 10px 38px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center}
-.search-box:focus{border-color:var(--accent)}
-.search-box::placeholder{color:var(--muted)}
-.wa-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid rgba(37,211,102,.3);background:rgba(37,211,102,.08);color:#25D366;cursor:pointer;margin-top:8px;text-decoration:none;transition:.2s}
-.wa-btn:hover{background:rgba(37,211,102,.18)}
-.wa-btn svg{width:12px;height:12px;fill:#25D366}
-.questions{max-width:700px;margin:0 auto;padding:0 16px 40px}
-.q-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:12px;cursor:pointer;transition:border-color .2s}
-.q-card:hover{border-color:var(--accent)}
-.q-card.open{border-color:var(--accent-light)}
+
+/* ── SEARCH + FILTERS ── */
+.search-filter-wrap{margin-bottom:20px}
+.search-wrap{margin-bottom:12px}
+.search-inner{position:relative}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--tx3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.search-box{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:10px 13px 10px 40px;font-size:13px;color:var(--tx);font-family:var(--sans);outline:none;transition:border-color .2s,box-shadow .2s}
+.search-box:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.search-box::placeholder{color:var(--tx3)}
+.filter-bar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.filter-btn{font-size:12px;padding:5px 13px;border-radius:20px;border:1px solid var(--bd);background:transparent;color:var(--tx2);cursor:pointer;transition:.2s;white-space:nowrap;font-weight:500}
+.filter-btn.active{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+.filter-btn:hover:not(.active){border-color:var(--acl);color:var(--acl)}
+.q-count{font-size:11px;color:var(--tx3);margin-left:auto;font-weight:500}
+
+/* ── QUESTION CARDS ── */
+.q-card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:18px 20px;margin-bottom:10px;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .15s}
+.q-card:hover{border-color:var(--bd2);box-shadow:0 2px 12px rgba(0,0,0,.2);transform:translateY(-1px)}
+.q-card.open{border-color:var(--acl);box-shadow:0 0 0 1px rgba(96,165,250,.2)}
 .q-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-.q-cat{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:12px;background:rgba(37,99,235,.12);color:var(--accent-light);border:1px solid rgba(37,99,235,.25)}
-.q-asker{font-size:11px;color:var(--muted)}
-.q-time{font-size:11px;color:var(--muted);margin-left:auto}
-.q-text{font-family:'EB Garamond',serif;font-size:14pt;line-height:1.5;margin-bottom:12px;color:var(--text)}
-.q-footer{display:flex;gap:14px;align-items:center}
-.q-stat{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
-.q-stat svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ans-count{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px}
-.ans-count.has-ans{background:rgba(16,185,129,.12);color:#10B981;border:1px solid rgba(16,185,129,.25)}
-.ans-count.no-ans{background:rgba(245,158,11,.1);color:#fbbf24;border:1px solid rgba(245,158,11,.2)}
-.answers-wrap{display:none;margin-top:16px;border-top:1px solid var(--border);padding-top:16px}
+.q-cat{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:12px;background:rgba(37,99,235,.1);color:var(--acl);border:1px solid rgba(37,99,235,.2)}
+.q-asker{font-size:11px;color:var(--tx3);display:flex;align-items:center;gap:4px}
+.q-asker svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.q-time{font-size:11px;color:var(--tx3);margin-left:auto}
+.q-text{font-family:var(--serif);font-size:15pt;line-height:1.5;margin-bottom:12px;color:var(--tx);font-weight:400}
+.q-footer{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.ans-count{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;display:inline-flex;align-items:center;gap:4px}
+.ans-count svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.ans-count.has-ans{background:rgba(16,185,129,.1);color:var(--ok);border:1px solid rgba(16,185,129,.2)}
+.ans-count.no-ans{background:rgba(251,191,36,.08);color:var(--am);border:1px solid rgba(251,191,36,.2)}
+.q-stat{font-size:11px;color:var(--tx3);display:flex;align-items:center;gap:4px}
+.q-stat svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wa-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid rgba(37,211,102,.25);background:rgba(37,211,102,.06);color:#25D366;cursor:pointer;text-decoration:none;transition:.2s;margin-left:auto;font-weight:600}
+.wa-btn:hover{background:rgba(37,211,102,.15)}
+.wa-btn svg{width:12px;height:12px;fill:none;stroke:#25D366;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── ANSWERS ── */
+.answers-wrap{display:none;margin-top:18px;border-top:1px solid var(--bd);padding-top:18px}
 .q-card.open .answers-wrap{display:block}
-.answer-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
-.ans-adv{font-size:12px;font-weight:700;color:var(--accent-light);display:flex;align-items:center;gap:5px;margin-bottom:6px}
-.ans-adv svg{width:13px;height:13px;stroke:#10B981;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ans-adv .enroll{font-size:10px;font-weight:400;color:var(--muted);margin-left:4px}
-.ans-text{font-family:'EB Garamond',serif;font-size:13pt;line-height:1.6;color:var(--text)}
-.ans-time{font-size:10px;color:var(--muted);margin-top:6px}
-.upvote-btn{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;margin-top:8px;transition:.2s}
-.upvote-btn:hover{border-color:var(--green);color:var(--green)}
+.answer-card{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:10px;position:relative}
+.answer-card::before{content:'';position:absolute;left:0;top:12px;bottom:12px;width:3px;background:linear-gradient(180deg,var(--ok),rgba(16,185,129,.2));border-radius:0 2px 2px 0}
+.ans-adv{font-size:12px;font-weight:700;color:var(--acl);display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.ans-adv svg{width:13px;height:13px;stroke:var(--ok);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.ans-adv .enroll{font-size:10px;font-weight:400;color:var(--tx3)}
+.ans-text{font-family:var(--serif);font-size:13pt;line-height:1.7;color:var(--tx)}
+.ans-time{font-size:10px;color:var(--tx3);margin-top:8px}
+.upvote-btn{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:5px 12px;border-radius:8px;border:1px solid var(--bd);background:transparent;color:var(--tx2);cursor:pointer;margin-top:10px;transition:.2s;font-weight:500}
+.upvote-btn:hover{border-color:var(--ok);color:var(--ok);background:rgba(16,185,129,.05)}
 .upvote-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ans-form{margin-top:14px;background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.2);border-radius:10px;padding:14px}
-.ans-form h4{font-size:12px;font-weight:700;color:var(--accent-light);margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.ans-form h4 svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ans-form input,.ans-form textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;margin-bottom:8px;transition:border-color .2s}
-.ans-form input:focus,.ans-form textarea:focus{border-color:var(--accent)}
-.ans-form textarea{font-family:'EB Garamond',serif;font-size:12pt;resize:vertical;min-height:80px;line-height:1.6}
+
+/* ── ANSWER FORM ── */
+.ans-form{margin-top:16px;background:rgba(37,99,235,.04);border:1px solid rgba(37,99,235,.15);border-radius:12px;padding:16px}
+.ans-form-title{font-size:12px;font-weight:700;color:var(--acl);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.ans-form-title svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ans-form input,.ans-form textarea{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:9px 12px;font-size:13px;color:var(--tx);font-family:var(--sans);outline:none;margin-bottom:8px;transition:border-color .2s}
+.ans-form input:focus,.ans-form textarea:focus{border-color:var(--ac)}
+.ans-form input::placeholder{color:var(--tx3)}
+.ans-form textarea{font-family:var(--serif);font-size:12pt;resize:vertical;min-height:90px;line-height:1.65}
+.ans-form textarea::placeholder{font-family:var(--sans);font-size:13px}
 .ans-form .two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.btn-ans{padding:8px 18px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .2s}
-.btn-ans:hover{opacity:.85}
+@media(max-width:520px){.ans-form .two-col{grid-template-columns:1fr}}
+.btn-ans{padding:9px 20px;background:var(--ac);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.btn-ans:hover{background:var(--ac2);transform:translateY(-1px)}
 .btn-ans svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.empty{text-align:center;padding:40px 16px;color:var(--muted)}
-.empty svg{width:40px;height:40px;stroke:var(--border);fill:none;stroke-width:1.5;margin:0 auto 12px;display:block;stroke-linecap:round;stroke-linejoin:round}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#10B981;color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:10px;z-index:999;display:none;align-items:center;gap:7px;box-shadow:0 4px 20px rgba(0,0,0,.3)}
-.toast.err{background:#ef4444}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:48px 16px;color:var(--tx2)}
+.empty-icon{width:56px;height:56px;background:var(--s1);border:1px solid var(--bd);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.empty-icon svg{width:28px;height:28px;stroke:var(--tx3);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.empty h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.empty p{font-size:13px;color:var(--tx3)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ok);color:#fff;font-size:13px;font-weight:600;padding:11px 22px;border-radius:12px;z-index:999;display:flex;align-items:center;gap:8px;box-shadow:0 4px 24px rgba(0,0,0,.4);transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .3s;opacity:0;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.err{background:var(--er)}
 .toast svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  .hero{padding:32px 16px 24px}
+  .ask-card{padding:16px}
+  .q-card{padding:14px 16px}
+  .q-text{font-size:13pt}
+}
 </style>
 </head>
 <body>
+
 <nav>
   <a href="/tools" class="nav-brand">
-    <div class="nav-logo"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-    <span class="nav-name">Legal Q&A</span>
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    </div>
+    <span class="nav-title">Legal Q&amp;A</span>
   </a>
   <div class="nav-links">
     <a href="/" class="nav-link">Hash Tool</a>
     <a href="/tools" class="nav-link">All Tools</a>
   </div>
 </nav>
+
 <div class="hero">
-  <h1>Ask. Answer. Understand Indian Law.</h1>
-  <p>Anyone can ask a legal question. Only verified advocates answer.</p>
+  <div class="hero-eyebrow">
+    <svg viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+    Free Community Platform
+  </div>
+  <h1>Ask. Answer. <span>Understand Indian Law.</span></h1>
+  <p class="hero-sub">Anyone can ask a legal question. Only verified advocates answer. 100% free, no registration needed.</p>
   <div class="badge-row">
-    <span class="badge badge-blue">Ask Anonymously</span>
-    <span class="badge badge-green">Verified Advocates Only</span>
-    <span class="badge badge-amber">100% Free</span>
+    <span class="badge badge-blue">
+      <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Ask Anonymously
+    </span>
+    <span class="badge badge-green">
+      <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Verified Advocates Only
+    </span>
+    <span class="badge badge-amber">
+      <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg>
+      BSA 2023 &amp; BNS Aware
+    </span>
   </div>
 </div>
-<div class="ask-box">
+
+<div class="main">
+
+  <!-- ASK FORM -->
   <div class="ask-card">
-    <h2>
+    <div class="ask-title">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       Ask a Legal Question
-    </h2>
+    </div>
     <div class="field">
       <label>Your Question *</label>
-      <textarea id="qText" placeholder="e.g. My landlord is not returning my security deposit after 3 months. What legal options do I have under Indian law?" rows="3"></textarea>
+      <textarea id="qText" placeholder="e.g. My landlord is not returning my security deposit after 3 months. What legal options do I have under Indian law?"></textarea>
     </div>
     <div class="two-col">
       <div class="field">
@@ -145,7 +225,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
           <option>Civil / Suit</option>
           <option>Contract / Agreement</option>
           <option>Constitutional</option>
-          <option>Women & Children</option>
+          <option>Women &amp; Children</option>
           <option>Motor Accident / MACT</option>
           <option>Tax / GST</option>
           <option>Company / Business</option>
@@ -165,38 +245,50 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
       Post Question
     </button>
   </div>
-</div>
-<div class="search-wrap">
-  <input class="search-box" id="searchBox" type="text" placeholder="Search questions... e.g. landlord, cheque bounce, FIR" oninput="onSearch(this.value)">
+
+  <!-- SEARCH + FILTERS -->
+  <div class="search-filter-wrap">
+    <div class="search-wrap">
+      <div class="search-inner">
+        <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-box" id="searchBox" type="text" placeholder="Search questions — e.g. landlord, cheque bounce, FIR, bail..." oninput="onSearch(this.value)">
+      </div>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="setFilter('All',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('Unanswered',this)">Unanswered</button>
+      <button class="filter-btn" onclick="setFilter('Answered',this)">Answered</button>
+      <button class="filter-btn" onclick="setFilter('Criminal / FIR / Bail',this)">Criminal</button>
+      <button class="filter-btn" onclick="setFilter('Property / Real Estate',this)">Property</button>
+      <button class="filter-btn" onclick="setFilter('Family / Matrimonial',this)">Family</button>
+      <button class="filter-btn" onclick="setFilter('Cheque Bounce / NI Act',this)">Cheque Bounce</button>
+      <span class="q-count" id="qCount"></span>
+    </div>
+  </div>
+
+  <!-- QUESTIONS LIST -->
+  <div id="questionsList"></div>
+
 </div>
 
-<div class="filter-bar">
-  <button class="filter-btn active" onclick="setFilter('All',this)">All</button>
-  <button class="filter-btn" onclick="setFilter('Unanswered',this)">Unanswered</button>
-  <button class="filter-btn" onclick="setFilter('Answered',this)">Answered</button>
-  <button class="filter-btn" onclick="setFilter('Criminal / FIR / Bail',this)">Criminal</button>
-  <button class="filter-btn" onclick="setFilter('Property / Real Estate',this)">Property</button>
-  <button class="filter-btn" onclick="setFilter('Family / Matrimonial',this)">Family</button>
-  <button class="filter-btn" onclick="setFilter('Cheque Bounce / NI Act',this)">Cheque Bounce</button>
-  <span class="q-count" id="qCount"></span>
-</div>
-<div class="questions" id="questionsList"></div>
 <div class="toast" id="toast">
   <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
   <span id="toastMsg"></span>
 </div>
+
 <script>
 var allQuestions=[];
 var currentFilter='All';
-var searchTerm = '';
+var searchTerm='';
+
 function onSearch(val){
-  searchTerm = val.toLowerCase().trim();
+  searchTerm=val.toLowerCase().trim();
   renderQuestions();
 }
 
 function waLink(q){
-  var text = '*Legal Question — LegalHashChecksum.com*\n\n' + q.question + '\n\nCategory: ' + q.category + '\n\nAnswer here: https://legalhashchecksum.com/legal-qa';
-  return 'https://wa.me/?text=' + encodeURIComponent(text);
+  var text='*Legal Question — LegalHashChecksum.com*\n\n'+q.question+'\n\nCategory: '+q.category+'\n\nAnswer here: https://legalhashchecksum.com/legal-qa';
+  return 'https://wa.me/?text='+encodeURIComponent(text);
 }
 
 async function loadQuestions(){
@@ -206,6 +298,7 @@ async function loadQuestions(){
     renderQuestions();
   }catch(e){console.error(e);}
 }
+
 function renderQuestions(){
   var list=allQuestions;
   if(currentFilter==='Unanswered') list=list.filter(q=>q.answer_count===0);
@@ -215,47 +308,60 @@ function renderQuestions(){
   document.getElementById('qCount').textContent=list.length+' question'+(list.length!==1?'s':'');
   var el=document.getElementById('questionsList');
   if(!list.length){
-    el.innerHTML='<div class="empty"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><p>No questions yet in this category.<br>Be the first to ask!</p></div>';
+    el.innerHTML='<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><h3>No questions found</h3><p>No questions in this category yet.<br>Be the first to ask!</p></div>';
     return;
   }
   el.innerHTML=list.map(function(q){
     var ansClass=q.answer_count>0?'has-ans':'no-ans';
     var ansLabel=q.answer_count>0?q.answer_count+' answer'+(q.answer_count>1?'s':''):'Unanswered';
     var asker=q.anonymous?'Anonymous':(q.asker_name||'Anonymous');
-    return `
-    <div class="q-card" id="qcard-${q.id}" onclick="toggleQuestion(${q.id},this)">
+    return `<div class="q-card" id="qcard-${q.id}" onclick="toggleQuestion(${q.id},this)">
       <div class="q-meta">
         <span class="q-cat">${q.category}</span>
-        <span class="q-asker">Asked by ${asker}</span>
+        <span class="q-asker">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          ${asker}
+        </span>
         <span class="q-time">${getTimeAgo(q.created_at)}</span>
       </div>
       <div class="q-text">${escHtml(q.question)}</div>
       <div class="q-footer">
-        <span class="ans-count ${ansClass}">${ansLabel}</span>
-        <span class="q-stat"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>${q.views||0} views</span>
+        <span class="ans-count ${ansClass}">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          ${ansLabel}
+        </span>
+        <span class="q-stat">
+          <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          ${q.views||0} views
+        </span>
         <a class="wa-btn" href="${waLink(q)}" target="_blank" onclick="event.stopPropagation()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
           Share
         </a>
       </div>
       <div class="answers-wrap" id="ans-${q.id}">
-        <div id="ans-list-${q.id}"><p style="font-size:12px;color:var(--muted)">Loading...</p></div>
+        <div id="ans-list-${q.id}"><p style="font-size:12px;color:var(--tx3);padding:8px 0">Loading answers...</p></div>
         <div class="ans-form" onclick="event.stopPropagation()">
-          <h4><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Answer as Advocate</h4>
+          <div class="ans-form-title">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Answer as Advocate
+          </div>
           <div class="two-col">
             <input id="advName-${q.id}" placeholder="Your full name *" onclick="event.stopPropagation()">
             <input id="advEnroll-${q.id}" placeholder="Enrolment No." onclick="event.stopPropagation()">
           </div>
-          <input id="advCourt-${q.id}" placeholder="Court / Bar (e.g. Advocate, Nainital High Court)" onclick="event.stopPropagation()">
-          <textarea id="advAns-${q.id}" placeholder="Write your legal answer here..." rows="4" onclick="event.stopPropagation()"></textarea>
+          <input id="advCourt-${q.id}" placeholder="Court / Bar — e.g. Advocate, Allahabad High Court" onclick="event.stopPropagation()">
+          <textarea id="advAns-${q.id}" placeholder="Write your legal answer here — cite relevant sections of BNS, BNSS, BSA, CPC etc." onclick="event.stopPropagation()"></textarea>
           <button class="btn-ans" onclick="event.stopPropagation();submitAnswer(${q.id})">
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Post Answer
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Post Answer
           </button>
         </div>
       </div>
     </div>`;
   }).join('');
 }
+
 async function toggleQuestion(id,card){
   var isOpen=card.classList.contains('open');
   document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('open'));
@@ -264,12 +370,16 @@ async function toggleQuestion(id,card){
   loadAnswers(id);
   fetch('/api/qa/view/'+id,{method:'POST'}).catch(()=>{});
 }
+
 async function loadAnswers(qid){
   var el=document.getElementById('ans-list-'+qid);
   try{
     var r=await fetch('/api/qa/answers/'+qid);
     var ans=await r.json();
-    if(!ans.length){el.innerHTML='<p style="font-size:12px;color:var(--muted);margin-bottom:14px">No answers yet. Be the first advocate to answer.</p>';return;}
+    if(!ans.length){
+      el.innerHTML='<p style="font-size:12px;color:var(--tx3);margin-bottom:14px;padding:4px 0">No answers yet. Be the first advocate to answer.</p>';
+      return;
+    }
     el.innerHTML=ans.map(function(a){
       return `<div class="answer-card">
         <div class="ans-adv">
@@ -281,12 +391,16 @@ async function loadAnswers(qid){
         <div class="ans-text">${escHtml(a.answer)}</div>
         <div class="ans-time">${getTimeAgo(a.created_at)}</div>
         <button class="upvote-btn" onclick="upvote(${a.id},this)">
-          <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>Helpful (${a.upvotes||0})
+          <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          Helpful (${a.upvotes||0})
         </button>
       </div>`;
     }).join('');
-  }catch(e){el.innerHTML='<p style="color:var(--red);font-size:12px">Error loading answers.</p>';}
+  }catch(e){
+    el.innerHTML='<p style="color:var(--er);font-size:12px">Error loading answers.</p>';
+  }
 }
+
 async function submitQuestion(){
   var q=document.getElementById('qText').value.trim();
   if(!q||q.length<10){showToast('Please write a proper question (min 10 chars)',true);return;}
@@ -295,10 +409,15 @@ async function submitQuestion(){
   var cat=document.getElementById('qCat').value;
   try{
     var r=await fetch('/api/qa/questions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,category:cat,asker_name:name,anonymous:anon})});
-    if(r.ok){document.getElementById('qText').value='';document.getElementById('qName').value='';showToast('Question posted! Advocates will answer soon.');loadQuestions();}
-    else{showToast('Error posting question',true);}
+    if(r.ok){
+      document.getElementById('qText').value='';
+      document.getElementById('qName').value='';
+      showToast('Question posted! Advocates will answer soon.');
+      loadQuestions();
+    }else{showToast('Error posting question',true);}
   }catch(e){showToast('Network error',true);}
 }
+
 async function submitAnswer(qid){
   var name=document.getElementById('advName-'+qid).value.trim();
   var ans=document.getElementById('advAns-'+qid).value.trim();
@@ -308,37 +427,52 @@ async function submitAnswer(qid){
   var court=document.getElementById('advCourt-'+qid).value.trim();
   try{
     var r=await fetch('/api/qa/answers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question_id:qid,answer:ans,advocate_name:name,advocate_enroll:enroll,advocate_court:court})});
-    if(r.ok){document.getElementById('advAns-'+qid).value='';showToast('Answer posted!');loadAnswers(qid);loadQuestions();}
-    else{showToast('Error posting answer',true);}
+    if(r.ok){
+      document.getElementById('advAns-'+qid).value='';
+      showToast('Answer posted!');
+      loadAnswers(qid);
+      loadQuestions();
+    }else{showToast('Error posting answer',true);}
   }catch(e){showToast('Network error',true);}
 }
+
 async function upvote(aid,btn){
   try{
     var r=await fetch('/api/qa/upvote/'+aid,{method:'POST'});
-    if(r.ok){var d=await r.json();btn.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg> Helpful ('+d.upvotes+')';btn.style.color='var(--green)';btn.style.borderColor='var(--green)';btn.disabled=true;}
+    if(r.ok){
+      var d=await r.json();
+      btn.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg> Helpful ('+d.upvotes+')';
+      btn.style.color='var(--ok)';btn.style.borderColor='var(--ok)';btn.disabled=true;
+    }
   }catch(e){}
 }
+
 function setFilter(f,btn){
   currentFilter=f;
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderQuestions();
 }
+
 function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+
 function getTimeAgo(ts){
   var d=new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);
   if(diff<60) return 'just now';
   if(diff<3600) return Math.floor(diff/60)+'m ago';
   if(diff<86400) return Math.floor(diff/3600)+'h ago';
-  return Math.floor(diff/86400)+'d ago';
+  if(diff<604800) return Math.floor(diff/86400)+'d ago';
+  return d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
 }
+
 function showToast(msg,err){
   var t=document.getElementById('toast');
   t.className='toast'+(err?' err':'');
-  t.style.display='flex';
   document.getElementById('toastMsg').textContent=msg;
-  setTimeout(function(){t.style.display='none';},3500);
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>t.classList.remove('show'),3500);
 }
+
 loadQuestions();
 setInterval(loadQuestions,30000);
 </script>

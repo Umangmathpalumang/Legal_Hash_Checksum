@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
-  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bail Bond Generator — Indian Courts</title>
@@ -48,12 +39,16 @@ textarea.field-input{resize:vertical;min-height:52px}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .btn-clear{width:100%;padding:8px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;font-size:13px;cursor:pointer;margin-top:6px}
 .btn-clear:hover{border-color:var(--accent);color:var(--accent-light)}
-.preview-panel{background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 57px);overflow-x:hidden}
+
+/* Preview panel */
+.preview-panel{background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:28px 16px;overflow-y:auto;max-height:calc(100vh - 57px)}
 .preview-label{font-size:11px;color:#888;margin-bottom:12px}
 
-/* Paper */
-.paper{
-  position:relative;width:216mm;min-height:356mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:14mm 16mm;font-family:'EB Garamond',serif;font-size:10.5pt;color:#111;line-height:1.6}
+/* ── Paper shared styles — Legal size: 216mm × 356mm ── */
+.paper{width:216mm;background:#fff;border:1px solid #ccc;box-shadow:0 4px 24px rgba(0,0,0,.12);font-family:'EB Garamond',serif;font-size:10.5pt;color:#111;line-height:1.6}
+.paper-p1{padding:14mm 16mm 10mm;margin-bottom:12px;min-height:356mm}
+.paper-p2{padding:10mm 16mm 14mm;min-height:356mm}
+
 .paper-header{text-align:center;margin-bottom:4mm}
 .paper-title{font-size:14pt;font-weight:700;text-decoration:underline;margin-bottom:1mm}
 .paper-formno{font-size:9pt;margin-bottom:1mm}
@@ -63,25 +58,44 @@ textarea.field-input{resize:vertical;min-height:52px}
 .top-row{display:flex;gap:4px;align-items:baseline}
 .top-label{white-space:nowrap;font-size:9pt}
 .fill{border-bottom:1px solid #333;display:inline-block;min-width:30px;vertical-align:bottom}
-.fill-line{border-bottom:1px solid #333;display:block;width:100%;min-height:6mm;padding:0 2px;margin:1mm 0;word-break:break-word;font-size:10pt}
-.section-head{font-size:11pt;font-weight:700;text-decoration:underline;margin:5mm 0 3mm}
+.section-head{font-size:11pt;font-weight:700;text-decoration:underline;margin:4mm 0 2mm}
 .body-para{font-size:9.5pt;line-height:1.6;margin-bottom:2mm;text-align:justify}
-.sign-row{display:flex;justify-content:space-between;margin-top:12mm;font-size:9.5pt}
-.sign-col{text-align:center}
-.sign-line{border-top:1px solid #333;width:50mm;margin:0 auto 2px}
 .aff-item{font-size:9pt;line-height:1.6;margin-bottom:1.5mm;display:flex;gap:4px}
 .aff-num{flex-shrink:0;min-width:6mm}
 .aff-fill{border-bottom:1px solid #333;display:inline-block;min-width:30mm;vertical-align:bottom}
-.divider-line{border-top:1px solid #333;margin:5mm 0}
+.divider-line{border-top:1px solid #333;margin:4mm 0}
+.page-label{text-align:right;font-size:8pt;color:#888;margin-top:3mm}
 
+/* ── Print — Legal size 216mm × 356mm ── */
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  html,body{background:#fff!important}
-  nav,.form-panel,.preview-label{display:none!important}
-  .app{display:block}
-  .preview-panel{background:#fff!important;padding:0;max-height:none;display:block}
-  .paper{box-shadow:none;margin:0 auto;width:216mm!important;border:none;min-height:0;padding:10mm 14mm;transform:none!important}
-  @page{size:legal;margin:0}
+  @page{size:216mm 356mm;margin:0}
+  html,body{background:#fff!important;height:auto!important;overflow:visible!important}
+  nav,.btn-print,.form-panel,.preview-panel>*:not(.paper),.preview-label,
+  .stamp-bar,.stamp-modal-overlay,.paper-stamp-hint,.format-bar{display:none!important}
+  .app,.preview-panel{display:block!important;padding:0!important;margin:0!important;background:#fff!important;max-height:none!important;overflow:visible!important}
+  .paper{
+    display:block!important;
+    width:216mm!important;
+    max-width:216mm!important;
+    box-shadow:none!important;
+    border:none!important;
+    margin:0 auto!important;
+    overflow:visible!important;
+    position:relative!important;
+  }
+  .paper-p1{
+    padding:12mm 16mm 10mm!important;
+    min-height:356mm!important;
+    page-break-after:always;
+  }
+  .paper-p2{
+    padding:10mm 16mm 12mm!important;
+    min-height:356mm!important;
+    page-break-after:auto;
+  }
+  .page-label{display:none!important}
+  .paper-stamp{cursor:default!important}
 }
 
 /* ── STAMP SYSTEM ── */
@@ -119,38 +133,33 @@ textarea.field-input{resize:vertical;min-height:52px}
 .stamp-slider-row input[type=range]{flex:1;accent-color:#3B82F6}
 .stamp-slider-val{font-size:11px;color:#E8EDF5;min-width:32px;text-align:right}
 .stamp-preview-wrap{background:#f0f0f0;border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;min-height:120px}
-.stamp-modal-btns{display:flex;gap:8px}
-.stamp-modal-btns button{flex:1;padding:9px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none}
+.stamp-modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stamp-modal-btns button{padding:9px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none}
 .btn-sm-apply{background:#3B82F6;color:#fff}
 .btn-sm-cancel{background:#1E2535;color:#8A96AA}
 
 /* Draggable stamp on paper */
+.paper{position:relative}
 .paper-stamp{position:absolute;cursor:grab;touch-action:none;user-select:none;z-index:20;filter:drop-shadow(0 1px 3px rgba(0,0,0,.15))}
 .paper-stamp:active{cursor:grabbing}
 .paper-stamp canvas{display:block}
 .paper-stamp-hint{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:#3B82F6;white-space:nowrap;pointer-events:none;font-family:system-ui,sans-serif;font-weight:600}
-@media print{
-  .stamp-bar,.stamp-modal-overlay,.paper-stamp-hint{display:none!important}
-  .paper-stamp{cursor:default!important}
-}
 
-@media(max-width:768px){
-  .preview-panel{padding:16px 8px;}
-  .paper{transform-origin:top center;transform:scale(0.42);margin-bottom:calc((356mm * 0.42) - 356mm);width:216mm!important;}
-}
-@media(min-width:769px) and (max-width:1000px){
-  .paper{transform-origin:top center;transform:scale(0.65);margin-bottom:calc((356mm * 0.65) - 356mm);}
-}</style>
+/* ── Format Selector Bar ── */
+.format-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.fmt-btn{font-size:13px;font-weight:600;padding:6px 18px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:.18s;white-space:nowrap;font-family:'Inter',sans-serif}
+.fmt-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.fmt-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+@media print{.format-bar{display:none!important}}
+</style>
 </head>
 <body>
 <nav>
-  <a href="/tools" class="nav-brand">
+  <a href="#" class="nav-brand">
     <div class="nav-logo"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
     <span class="nav-name">Bail Bond Generator</span>
   </a>
   <div class="nav-links">
-    <a href="/" class="nav-link">Hash Tool</a>
-    <a href="/tools" class="nav-link">All Tools</a>
     <button class="btn-print" onclick="window.print()">
       <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Print / Save PDF
@@ -158,34 +167,26 @@ textarea.field-input{resize:vertical;min-height:52px}
   </div>
 </nav>
 
-<!-- STAMP BAR -->
+<!-- ── STAMP BAR ── -->
 <div class="stamp-bar" id="stampBar">
   <span class="stamp-bar-label">🖂 Stamp:</span>
-  <button class="btn-stamp btn-stamp-has" onclick="stampUpload()" title="Upload your existing stamp image">
-    ⬆ I Have a Stamp
-  </button>
-  <button class="btn-stamp btn-stamp-create" onclick="openStampMaker()" title="Create a new stamp">
-    ✦ Create Stamp
-  </button>
-  <button class="btn-stamp btn-stamp-clear" id="btnClearStamp" onclick="clearStamp()" style="display:none">
-    ✕ Remove Stamp
-  </button>
+  <button class="btn-stamp btn-stamp-has" onclick="stampUpload()" title="Upload your existing stamp image">⬆ I Have a Stamp</button>
+  <button class="btn-stamp btn-stamp-create" onclick="openStampMaker()" title="Create a new stamp">✦ Create Stamp</button>
+  <button class="btn-stamp btn-stamp-clear" id="btnClearStamp" onclick="clearStamp()" style="display:none">✕ Remove Stamp</button>
   <input type="file" id="stampFileInput" accept="image/*" style="display:none" onchange="loadStampFile(this)">
   <span class="stamp-status" id="stampStatus">No stamp — drag one onto your document</span>
 </div>
 
-<!-- STAMP MAKER MODAL -->
+<!-- ── STAMP MAKER MODAL ── -->
 <div class="stamp-modal-overlay" id="stampModal">
   <div class="stamp-modal">
     <h3>✦ Create Your Advocate Stamp</h3>
     <p>Fill in your details, choose a shape and colour, then click Apply to place it on the document.</p>
-
     <div class="stamp-field"><label>Line 1 — Name</label><input id="sm1" placeholder="ADV. YOUR NAME" value="ADV. YOUR NAME"></div>
     <div class="stamp-field"><label>Line 2 — Designation</label><input id="sm2" placeholder="Advocate, High Court" value="Advocate, High Court"></div>
     <div class="stamp-field"><label>Line 3 — Enrolment No.</label><input id="sm3" placeholder="Enrl. No. XX/0000/0000" value="Enrl. No. XX/0000/0000"></div>
     <div class="stamp-field"><label>Line 4 — Phone</label><input id="sm4" placeholder="Mob: 98XXXXXXXX" value="Mob: 98XXXXXXXX"></div>
     <div class="stamp-field"><label>Line 5 — Optional</label><input id="sm5" placeholder="Chamber / Address"></div>
-
     <div class="stamp-field"><label>Shape</label></div>
     <div class="stamp-shapes">
       <button class="stamp-shape-btn active" data-shape="round" onclick="smSetShape('round',this)">
@@ -201,7 +202,6 @@ textarea.field-input{resize:vertical;min-height:52px}
         <svg viewBox="0 0 32 32"><polygon points="16,2 28,9 28,23 16,30 4,23 4,9" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>Hex
       </button>
     </div>
-
     <div class="stamp-field"><label>Ink Colour</label></div>
     <div class="stamp-colors">
       <div class="stamp-color-sw active" style="background:#1A3A6B" data-c="#1A3A6B" onclick="smSetColor('#1A3A6B',this)"></div>
@@ -211,14 +211,11 @@ textarea.field-input{resize:vertical;min-height:52px}
       <div class="stamp-color-sw" style="background:#4B0082" data-c="#4B0082" onclick="smSetColor('#4B0082',this)"></div>
       <input type="color" id="smColorPicker" value="#1A3A6B" onchange="smSetColor(this.value,null)" style="width:26px;height:26px;border:none;border-radius:50%;cursor:pointer;padding:0;background:none">
     </div>
-
     <div class="stamp-slider-row"><label>Size</label><input type="range" id="smSize" min="100" max="260" value="160" oninput="smPreview()"><span class="stamp-slider-val" id="smSzV">160</span></div>
     <div class="stamp-slider-row"><label>Opacity</label><input type="range" id="smOp" min="30" max="100" value="85" oninput="smPreview()"><span class="stamp-slider-val" id="smOpV">85%</span></div>
     <div class="stamp-slider-row"><label>Border</label><input type="range" id="smBw" min="1" max="5" value="2" oninput="smPreview()"><span class="stamp-slider-val" id="smBwV">2</span></div>
-
     <div class="stamp-preview-wrap"><canvas id="smCanvas"></canvas></div>
-
-    <div class="stamp-modal-btns" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+    <div class="stamp-modal-btns">
       <button class="btn-sm-apply" style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:7px" onclick="applyCreatedStamp()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         Apply Stamp to Document
@@ -240,11 +237,50 @@ textarea.field-input{resize:vertical;min-height:52px}
   </div>
 </div>
 
+<!-- ── FORMAT SELECTOR BAR ── -->
+<div class="format-bar">
+  <button class="fmt-btn active" onclick="setFormat('form45',this)">Form No. 45</button>
+  <button class="fmt-btn" onclick="setFormat('bailbond',this)">Bail Bond</button>
+  <button class="fmt-btn" onclick="setFormat('surety',this)">Surety Bond</button>
+</div>
+
 <div class="app">
+  <!-- ══ FORM PANEL ══ -->
   <div class="form-panel">
     <h2>Fill Bail Bond Details</h2>
     <p>Form No. 45 — Sections 436, 437, 438(3), 441 CrPC</p>
 
+<!-- BAIL BOND FORMAT EXTRA FIELDS -->
+<div id="form-section-bailbond">
+  <div class="section-divider">Court Details</div>
+  <div class="field-group">
+    <label class="field-label">Case No.</label>
+    <input class="field-input" id="bb-caseno-in" placeholder="e.g. SC/123/2024" oninput="renderBailBond()">
+  </div>
+  <div class="section-divider">Accused Details</div>
+  <div class="field-group">
+    <label class="field-label">Age</label>
+    <input class="field-input" id="bb-age-in" placeholder="e.g. 32" maxlength="5" oninput="renderBailBond()">
+  </div>
+  <div class="field-group">
+    <label class="field-label">Bail Amount in Words</label>
+    <input class="field-input" id="bb-bailWords-in" placeholder="e.g. Fifty Thousand Only" oninput="renderBailBond()">
+  </div>
+  <p style="font-size:11px;color:var(--muted);margin-top:8px">Other fields (Name, Address, Court, PS, Offence, Amount, Date) are shared with Form 45 fields above.</p>
+</div>
+
+<!-- SURETY BOND FORMAT EXTRA FIELDS -->
+<div id="form-section-surety">
+  <div class="section-divider">Surety Details</div>
+  <div class="field-group">
+    <label class="field-label">Surety Amount in Words</label>
+    <input class="field-input" id="sb-surWords-in" placeholder="e.g. Fifty Thousand Only" oninput="renderSurety()">
+  </div>
+  <p style="font-size:11px;color:var(--muted);margin-top:8px">Other fields (Surety Name, Surety Address, Accused Name, Accused Address, Court, Amount, Date) are shared with Form 45 fields above.</p>
+</div>
+
+<!-- FORM 45 FIELDS -->
+<div id="form-section-main">
     <div class="section-divider">Court Details</div>
     <div class="field-group">
       <label class="field-label">In the Court of <span class="field-limit">max 80</span></label>
@@ -338,7 +374,7 @@ textarea.field-input{resize:vertical;min-height:52px}
         <input class="field-input" id="surDay" placeholder="e.g. 17th" maxlength="10" oninput="render()">
       </div>
       <div class="field-group">
-        <label class="field-label">Month & Year <span class="field-limit">max 20</span></label>
+        <label class="field-label">Month &amp; Year <span class="field-limit">max 20</span></label>
         <input class="field-input" id="surMonth" placeholder="August 2024" maxlength="20" oninput="render()">
       </div>
     </div>
@@ -458,15 +494,16 @@ textarea.field-input{resize:vertical;min-height:52px}
       <label class="field-label">Verification Date <span class="field-limit">max 20</span></label>
       <input class="field-input" id="verDate" maxlength="20" oninput="render()">
     </div>
-
+</div><!-- end form-section-main -->
     <button class="btn-clear" onclick="clearAll()">Clear all fields</button>
-  </div>
+  </div><!-- end form-panel -->
 
+  <!-- ══ PREVIEW PANEL ══ -->
   <div class="preview-panel">
-    <p class="preview-label">Live preview · Click "Print / Save PDF" to download</p>
-    <div class="paper">
+    <p class="preview-label">Live preview · Click "Print / Save PDF" to download (2 pages)</p>
 
-      <!-- Header -->
+    <!-- ═══ PAGE 1 — Bail Bond + Surety Bond ═══ -->
+    <div class="paper paper-p1">
       <div class="paper-header">
         <div class="paper-formno">FORM NO. 45</div>
         <div class="paper-title">BAIL BOND</div>
@@ -475,90 +512,179 @@ textarea.field-input{resize:vertical;min-height:52px}
         <div class="paper-sections">(Section 436, 437, 438(3) and 441)</div>
       </div>
 
-      <!-- Court details grid -->
       <div class="top-grid">
-        <div class="top-row"><span class="top-label">Police Station:</span> <span class="fill" id="p-ps">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
-        <div class="top-row"><span class="top-label">Next date:</span> <span class="fill" id="p-nextDate">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
-        <div class="top-row"><span class="top-label">Under Section:</span> <span class="fill" id="p-us">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
-        <div class="top-row"><span class="top-label">Sent to Jail on:</span> <span class="fill" id="p-jailDate">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
-        <div class="top-row" style="grid-column:1/-1"><span class="top-label">F.I.R. No.:</span> <span class="fill" id="p-firNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">Police Station:</span>&nbsp;<span class="fill" id="p-ps" style="min-width:40mm">&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">Next date:</span>&nbsp;<span class="fill" id="p-nextDate" style="min-width:28mm">&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">Under Section:</span>&nbsp;<span class="fill" id="p-us" style="min-width:38mm">&nbsp;</span></div>
+        <div class="top-row"><span class="top-label">Sent to Jail on:</span>&nbsp;<span class="fill" id="p-jailDate" style="min-width:26mm">&nbsp;</span></div>
+        <div class="top-row" style="grid-column:1/-1"><span class="top-label">F.I.R. No.:</span>&nbsp;<span class="fill" id="p-firNo" style="min-width:50mm">&nbsp;</span></div>
       </div>
 
-      <div style="margin-bottom:2mm;font-size:10pt">In the court of Shri <span class="fill" id="p-court" style="min-width:100mm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      <div style="margin-bottom:3mm;font-size:10pt">In the court of Shri <span class="fill" id="p-court" style="min-width:100mm">&nbsp;</span></div>
 
-      <!-- Bail Bond Section -->
+      <div class="divider-line" style="margin:3mm 0"></div>
+
+      <!-- Bail Bond -->
       <div class="section-head">Bail Bond</div>
       <div class="body-para">
-        I <span class="fill" id="p-accName">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        Son of Shri <span class="fill" id="p-accFather">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        Residence <span class="fill" id="p-accAddr" style="min-width:60mm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        having been arrested or detained without warrant by the Officer In charge of <span class="fill" id="p-arrestedBy">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        Police Station for having been brought before this Honourable Court charged with the offence of <span class="fill" id="p-offence">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        and required to give surety for my attendance before such Officer or Court on condition that I shall attend such Officer or Court on every day on which any investigation or trial is held with regard to such charge and in case of my making default herein I bind myself to forfeit to Government the sum of Rs. <span class="fill" id="p-bailAmt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        I <span class="fill" id="p-accName" style="min-width:45mm">&nbsp;</span>
+        Son of Shri <span class="fill" id="p-accFather" style="min-width:45mm">&nbsp;</span>
+        Residence <span class="fill" id="p-accAddr" style="min-width:70mm">&nbsp;</span>
+        having been arrested or detained without warrant by the Officer In charge of
+        <span class="fill" id="p-arrestedBy" style="min-width:40mm">&nbsp;</span>
+        Police Station for having been brought before this Honourable Court charged with the offence of
+        <span class="fill" id="p-offence" style="min-width:55mm">&nbsp;</span>
+        and required to give surety for my attendance before such Officer or Court on condition that I shall attend such Officer or Court on every day on which any investigation or trial is held with regard to such charge and in case of my making default herein I bind myself to forfeit to Government the sum of Rs.
+        <span class="fill" id="p-bailAmt" style="min-width:30mm">&nbsp;</span>
       </div>
 
-      <div style="display:flex;justify-content:space-between;margin-top:4mm;font-size:9.5pt">
-        <span id="p-place">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <span>Signature ___________________</span>
+      <div style="display:flex;justify-content:space-between;margin-top:5mm;font-size:9.5pt">
+        <span id="p-place">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span>Signature ___________________________</span>
       </div>
-      <div style="font-size:9.5pt;margin-bottom:1mm">DATED: <span id="p-date">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      <div style="font-size:9.5pt;margin-top:1mm;margin-bottom:2mm">DATED: <span id="p-date">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
 
-      <!-- Surety Bond Section -->
       <div class="divider-line"></div>
+
+      <!-- Surety Bond -->
       <div class="section-head">Surety Bond</div>
       <div class="body-para">
-        I <span class="fill" id="p-surName">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        Son of Shri <span class="fill" id="p-surFather">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        Residence <span class="fill" id="p-surAddr" style="min-width:60mm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        hereby declare myself surety for the above said Shri <span class="fill" id="p-accName2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        That he shall attend the Officer-in-charge of <span class="fill" id="p-surPS">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        Police Station or the Court of Shri <span class="fill" id="p-surCourt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        every day on which any investigation in the charge is made or any trial on such charge is held and in case of his making default herein I have bind myself to forfeit to Government the sum of Rs. <span class="fill" id="p-surAmt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        I <span class="fill" id="p-surName" style="min-width:45mm">&nbsp;</span>
+        Son of Shri <span class="fill" id="p-surFather" style="min-width:45mm">&nbsp;</span>
+        Residence <span class="fill" id="p-surAddr" style="min-width:70mm">&nbsp;</span>
+        hereby declare myself surety for the above said Shri <span class="fill" id="p-accName2" style="min-width:45mm">&nbsp;</span>
+        That he shall attend the Officer-in-charge of <span class="fill" id="p-surPS" style="min-width:35mm">&nbsp;</span>
+        Police Station or the Court of Shri <span class="fill" id="p-surCourt" style="min-width:45mm">&nbsp;</span>
+        every day on which any investigation in the charge is made or any trial on such charge is held and in case of his making default herein I have bind myself to forfeit to Government the sum of Rs.
+        <span class="fill" id="p-surAmt" style="min-width:30mm">&nbsp;</span>
       </div>
 
-      <div style="font-size:9.5pt;margin-bottom:2mm">Dated this <span class="fill" id="p-surDay">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> day of <span class="fill" id="p-surMonth">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Signature ___________________</div>
-
-      <div style="font-size:9pt;margin-bottom:1mm">Witness: 1. <span class="fill" id="p-wit1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
-      <div style="font-size:9pt;margin-bottom:3mm">2. <span class="fill" id="p-wit2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
-
-      <!-- Affidavit -->
-      <div class="divider-line"></div>
-      <div class="section-head" style="font-size:10pt">AFFIDAVIT</div>
-      <div class="body-para">
-        I <span class="fill" id="p-depName">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        son/daughter/wife of <span class="fill" id="p-depParent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        Aged about <span class="fill" id="p-depAge">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> do hereby solemnly affirm and declare as under:
+      <div style="font-size:9.5pt;margin-bottom:2mm">
+        Dated this <span class="fill" id="p-surDay" style="min-width:16mm">&nbsp;</span>
+        day of <span class="fill" id="p-surMonth" style="min-width:30mm">&nbsp;</span>
+        &nbsp;&nbsp;&nbsp;Signature ___________________________
       </div>
 
-      <div class="aff-item"><span class="aff-num">1.</span><span>That deponent is the resident of above said address and having his/her Ration Card no. is <span class="fill" id="p-rationNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> and Election Card No. <span class="fill" id="p-electionNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></div>
-      <div class="aff-item"><span class="aff-num">2.</span><span>That accused is <span class="fill" id="p-relation">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> of the deponent and deponent has full control over him/her and capable to produce him/her before this hon'ble court.</span></div>
-      <div class="aff-item"><span class="aff-num">3.</span><span>That deponent is working as <span class="fill" id="p-depOccup">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> at <span class="fill" id="p-depWorkplace">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> T/C No. <span class="fill" id="p-tcNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> earns Rs. <span class="fill" id="p-income">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> per month.</span></div>
-      <div class="aff-item"><span class="aff-num">4.</span><span>That deponent is the owner of household articles valued about Rs. <span class="fill" id="p-hhVal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></div>
-      <div class="aff-item"><span class="aff-num">5.</span><span>That deponent is the owner of immovable property bearing No. <span class="fill" id="p-propNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Measuring <span class="fill" id="p-propArea">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> sq. yards situated at <span class="fill" id="p-propAddr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> valued not less than Rs. <span class="fill" id="p-propVal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></div>
-      <div class="aff-item"><span class="aff-num">6.</span><span>That deponent undertakes to produce the accused before the honourable court on every date of hearing.</span></div>
-      <div class="aff-item"><span class="aff-num">7.</span><span>That I have an F.D.R. No. <span class="fill" id="p-fdrNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Issued by <span class="fill" id="p-fdrBank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> For Rs. <span class="fill" id="p-fdrAmt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></div>
-      <div class="aff-item"><span class="aff-num">8.</span><span>That I own a vehicle No. <span class="fill" id="p-vehNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> make <span class="fill" id="p-vehMake">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> R/C no. <span class="fill" id="p-rcNo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> at present valued not less than Rs. <span class="fill" id="p-vehVal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></div>
+      <div style="font-size:9pt;margin-bottom:1mm">Witness: 1. <span class="fill" id="p-wit1" style="min-width:60mm">&nbsp;</span></div>
+      <div style="font-size:9pt;margin-bottom:2mm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. <span class="fill" id="p-wit2" style="min-width:60mm">&nbsp;</span></div>
 
-      <div style="margin-top:3mm;font-size:9pt;font-weight:700">DEPONENT</div>
-      <div class="divider-line"></div>
-      <div style="font-size:9pt;font-weight:700;margin-bottom:2mm">VERIFICATION</div>
-      <div style="font-size:8.5pt;text-align:justify">Verified at Delhi on this <span class="fill" id="p-verDate">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> that the contents of this Affidavit are true and correct to the best of my knowledge &amp; nothing material has been concealed therefrom, no part of it is untrue.</div>
-      <div style="margin-top:8mm;font-size:9pt;font-weight:700;text-align:right">DEPONENT</div>
-
+      <div class="page-label">Page 1 of 2</div>
     </div>
-  </div>
-</div>
+    <!-- END PAGE 1 -->
+
+    <!-- ═══ PAGE 2 — Affidavit + Verification ═══ -->
+    <div class="paper paper-p2">
+      <div class="divider-line" style="margin:0 0 3mm"></div>
+      <div class="section-head" style="font-size:10pt;margin-top:0">AFFIDAVIT</div>
+      <div class="body-para">
+        I <span class="fill" id="p-depName" style="min-width:50mm">&nbsp;</span>
+        son/daughter/wife of <span class="fill" id="p-depParent" style="min-width:50mm">&nbsp;</span>
+        Aged about <span class="fill" id="p-depAge" style="min-width:12mm">&nbsp;</span>
+        R/o <span class="fill" id="p-depAddr" style="min-width:70mm">&nbsp;</span>
+        do hereby solemnly affirm and declare as under:
+      </div>
+
+      <div class="aff-item"><span class="aff-num">1.</span><span>That deponent is the resident of above said address and having his/her Ration Card no. is <span class="fill" id="p-rationNo" style="min-width:28mm">&nbsp;</span> and Election Card No. <span class="fill" id="p-electionNo" style="min-width:28mm">&nbsp;</span></span></div>
+      <div class="aff-item"><span class="aff-num">2.</span><span>That accused is <span class="fill" id="p-relation" style="min-width:28mm">&nbsp;</span> of the deponent and deponent has full control over him/her and capable to produce him/her before this hon'ble court.</span></div>
+      <div class="aff-item"><span class="aff-num">3.</span><span>That deponent is working as <span class="fill" id="p-depOccup" style="min-width:32mm">&nbsp;</span> at <span class="fill" id="p-depWorkplace" style="min-width:40mm">&nbsp;</span> T/C No. <span class="fill" id="p-tcNo" style="min-width:22mm">&nbsp;</span> earns Rs. <span class="fill" id="p-income" style="min-width:20mm">&nbsp;</span> per month.</span></div>
+      <div class="aff-item"><span class="aff-num">4.</span><span>That deponent is the owner of household articles valued about Rs. <span class="fill" id="p-hhVal" style="min-width:28mm">&nbsp;</span></span></div>
+      <div class="aff-item"><span class="aff-num">5.</span><span>That deponent is the owner of immovable property bearing No. <span class="fill" id="p-propNo" style="min-width:22mm">&nbsp;</span> Measuring <span class="fill" id="p-propArea" style="min-width:18mm">&nbsp;</span> sq. yards situated at <span class="fill" id="p-propAddr" style="min-width:45mm">&nbsp;</span> valued not less than Rs. <span class="fill" id="p-propVal" style="min-width:22mm">&nbsp;</span></span></div>
+      <div class="aff-item"><span class="aff-num">6.</span><span>That deponent undertakes to produce the accused before the honourable court on every date of hearing.</span></div>
+      <div class="aff-item"><span class="aff-num">7.</span><span>That I have an F.D.R. No. <span class="fill" id="p-fdrNo" style="min-width:28mm">&nbsp;</span> Issued by <span class="fill" id="p-fdrBank" style="min-width:36mm">&nbsp;</span> For Rs. <span class="fill" id="p-fdrAmt" style="min-width:22mm">&nbsp;</span></span></div>
+      <div class="aff-item"><span class="aff-num">8.</span><span>That I own a vehicle No. <span class="fill" id="p-vehNo" style="min-width:22mm">&nbsp;</span> make <span class="fill" id="p-vehMake" style="min-width:28mm">&nbsp;</span> R/C no. <span class="fill" id="p-rcNo" style="min-width:22mm">&nbsp;</span> at present valued not less than Rs. <span class="fill" id="p-vehVal" style="min-width:22mm">&nbsp;</span></span></div>
+
+      <div style="margin-top:6mm;font-size:9pt;font-weight:700;text-align:right">DEPONENT</div>
+
+      <div class="divider-line"></div>
+
+      <div style="font-size:9pt;font-weight:700;margin-bottom:2mm">VERIFICATION</div>
+      <div style="font-size:8.5pt;text-align:justify;line-height:1.7">
+        Verified at Delhi on this <span class="fill" id="p-verDate" style="min-width:45mm">&nbsp;</span> that the contents of this Affidavit are true and correct to the best of my knowledge &amp; nothing material has been concealed therefrom, no part of it is untrue.
+      </div>
+
+      <div style="margin-top:10mm;font-size:9pt;font-weight:700;text-align:right">DEPONENT</div>
+
+      <div class="page-label">Page 2 of 2</div>
+    </div>
+    <!-- END PAGE 2 -->
+
+    <!-- ═══ BAIL BOND FORMAT (single page) ═══ -->
+    <div class="paper paper-p1" id="fmt-bailbond" style="display:none">
+      <div class="paper-header">
+        <div class="paper-title" style="font-size:13pt">BAIL BOND</div>
+      </div>
+      <div style="font-size:9.5pt;margin-bottom:3mm">IN THE COURT OF <span class="fill" id="bb-court" style="min-width:80mm">&nbsp;</span></div>
+      <div style="font-size:9.5pt;margin-bottom:4mm">Case No. <span class="fill" id="bb-caseno" style="min-width:40mm">&nbsp;</span></div>
+      <div style="font-size:9pt;font-weight:600;text-align:center;text-transform:uppercase;margin-bottom:4mm;line-height:1.5">
+        BOND OR BAIL BOND FOR ATTENDANCE BEFORE OFFICER IN CHARGE OF THE POLICE STATION OR COURT.
+      </div>
+      <div class="body-para">
+        I, (Name) <span class="fill" id="bb-accName" style="min-width:80mm">&nbsp;</span><br/>
+        Age <span class="fill" id="bb-age" style="min-width:12mm">&nbsp;</span>
+        R/o. <span class="fill" id="bb-accAddr" style="min-width:80mm">&nbsp;</span>
+        having been arrested or detained without warrant by the officer in‐charge of Police Station
+        <span class="fill" id="bb-ps" style="min-width:50mm">&nbsp;</span>
+        (or having been brought before the court of <span class="fill" id="bb-court2" style="min-width:60mm">&nbsp;</span>)
+        charged with the offences on <span class="fill" id="bb-offence" style="min-width:60mm">&nbsp;</span>
+        and required to give surety for my attendance before such officer or court and required on condition, that I shall attend such officer or court on everyday on which any investigation or trial is held with regard to such charges and in case of making default therein, I bind myself to forfeit to the Government the sum of Rs.
+        <span class="fill" id="bb-bailAmt" style="min-width:30mm">&nbsp;</span>
+      </div>
+      <div style="font-size:9.5pt;margin-top:3mm">
+        In words Rs. <span class="fill" id="bb-bailWords" style="min-width:70mm">&nbsp;</span>
+        &nbsp;&nbsp;Dated this <span class="fill" id="bb-day" style="min-width:16mm">&nbsp;</span>
+        day of <span class="fill" id="bb-month" style="min-width:30mm">&nbsp;</span>
+      </div>
+      <div style="text-align:right;margin-top:16mm;font-size:9.5pt">
+        <div style="border-top:1px solid #333;display:inline-block;min-width:60mm;margin-bottom:3px"></div><br/>
+        (Signature of the accused.)
+      </div>
+      <div class="page-label">Bail Bond Format</div>
+    </div>
+
+    <!-- ═══ SURETY BOND FORMAT (single page) ═══ -->
+    <div class="paper paper-p1" id="fmt-surety" style="display:none">
+      <div class="paper-header">
+        <div class="paper-title" style="font-size:13pt">SURETY BOND</div>
+      </div>
+      <div class="body-para">
+        I, <span class="fill" id="sb-surName" style="min-width:90mm">&nbsp;</span>
+        R/o <span class="fill" id="sb-surAddr" style="min-width:90mm">&nbsp;</span>
+        hereby declare myself or (we jointly and severally declare ourselves and such of us) surety / or (sureties) for the above said name
+        <span class="fill" id="sb-accName" style="min-width:70mm">&nbsp;</span>
+        R/o <span class="fill" id="sb-accAddr" style="min-width:70mm">&nbsp;</span>
+        that he shall attend the <span class="fill" id="sb-court" style="min-width:60mm">&nbsp;</span>
+        Court for the purpose of on every day on which any Investigation, officer or Court for the purpose of such investigation, or to answer the charge against him (as the case may be and in case of his making default therein) I hereby bind my self (we hereby bind ourselves)
+      </div>
+      <div style="font-size:9.5pt;margin:4mm 0 2mm;font-weight:600">
+        To forfeit to the Government the sum of Rs. <span class="fill" id="sb-surAmt" style="min-width:50mm">&nbsp;</span>
+      </div>
+      <div style="font-size:9.5pt;margin-bottom:2mm">
+        (in words) <span class="fill" id="sb-surWords" style="min-width:80mm">&nbsp;</span>
+      </div>
+      <div style="font-size:9.5pt;margin-top:4mm">
+        Dated this <span class="fill" id="sb-day" style="min-width:40mm">&nbsp;</span>
+        day of <span class="fill" id="sb-month" style="min-width:30mm">&nbsp;</span>
+      </div>
+      <div style="text-align:right;margin-top:16mm;font-size:9.5pt">
+        <div style="border-top:1px solid #333;display:inline-block;min-width:60mm;margin-bottom:3px"></div><br/>
+        (Signature of the surety.)
+      </div>
+      <div class="page-label">Surety Bond Format</div>
+    </div>
+
+  </div><!-- end preview-panel -->
+</div><!-- end app -->
 
 <script>
 function v(id){return document.getElementById(id)}
-function gv(id){return v(id)?v(id).value.trim():''}
-function set(id,val){const el=v(id);if(el)el.textContent=val||'\u00a0'}
+function gv(id){var el=v(id);return el?el.value.trim():''}
+function set(id,val){var el=v(id);if(el)el.textContent=val||'\u00a0'}
 
 function render(){
-  set('p-ps',gv('ps')); set('p-nextDate',gv('nextDate'));
-  set('p-us',gv('us')); set('p-jailDate',gv('jailDate'));
-  set('p-firNo',gv('firNo')); set('p-court',gv('court'));
-  set('p-accName',gv('accName')); set('p-accName2',gv('accName'));
+  set('p-ps',gv('ps'));         set('p-nextDate',gv('nextDate'));
+  set('p-us',gv('us'));         set('p-jailDate',gv('jailDate'));
+  set('p-firNo',gv('firNo'));   set('p-court',gv('court'));
+  set('p-accName',gv('accName'));  set('p-accName2',gv('accName'));
   set('p-accFather',gv('accFather')); set('p-accAddr',gv('accAddr'));
   set('p-arrestedBy',gv('arrestedBy')); set('p-offence',gv('offence'));
   set('p-bailAmt',gv('bailAmt')); set('p-place',gv('place'));
@@ -566,501 +692,440 @@ function render(){
   set('p-surName',gv('surName')); set('p-surFather',gv('surFather'));
   set('p-surAddr',gv('surAddr')); set('p-surPS',gv('ps'));
   set('p-surCourt',gv('surCourt')); set('p-surAmt',gv('surAmt'));
-  set('p-surDay',gv('surDay')); set('p-surMonth',gv('surMonth'));
-  set('p-wit1',gv('wit1')); set('p-wit2',gv('wit2'));
+  set('p-surDay',gv('surDay'));   set('p-surMonth',gv('surMonth'));
+  set('p-wit1',gv('wit1'));       set('p-wit2',gv('wit2'));
   set('p-depName',gv('depName')); set('p-depParent',gv('depParent'));
-  set('p-depAge',gv('depAge')); set('p-rationNo',gv('rationNo'));
-  set('p-electionNo',gv('electionNo')); set('p-relation',gv('relation'));
-  set('p-depOccup',gv('depOccup')); set('p-depWorkplace',gv('depWorkplace'));
-  set('p-tcNo',gv('tcNo')); set('p-income',gv('income'));
-  set('p-hhVal',gv('hhVal')); set('p-propNo',gv('propNo'));
-  set('p-propArea',gv('propArea')); set('p-propAddr',gv('propAddr'));
-  set('p-propVal',gv('propVal')); set('p-fdrNo',gv('fdrNo'));
-  set('p-fdrBank',gv('fdrBank')); set('p-fdrAmt',gv('fdrAmt'));
-  set('p-vehNo',gv('vehNo')); set('p-vehMake',gv('vehMake'));
-  set('p-rcNo',gv('rcNo')); set('p-vehVal',gv('vehVal'));
-  set('p-verDate',gv('verDate'));
+  set('p-depAge',gv('depAge'));   set('p-depAddr',gv('accAddr'));
+  set('p-rationNo',gv('rationNo')); set('p-electionNo',gv('electionNo'));
+  set('p-relation',gv('relation')); set('p-depOccup',gv('depOccup'));
+  set('p-depWorkplace',gv('depWorkplace')); set('p-tcNo',gv('tcNo'));
+  set('p-income',gv('income'));   set('p-hhVal',gv('hhVal'));
+  set('p-propNo',gv('propNo'));   set('p-propArea',gv('propArea'));
+  set('p-propAddr',gv('propAddr')); set('p-propVal',gv('propVal'));
+  set('p-fdrNo',gv('fdrNo'));     set('p-fdrBank',gv('fdrBank'));
+  set('p-fdrAmt',gv('fdrAmt'));   set('p-vehNo',gv('vehNo'));
+  set('p-vehMake',gv('vehMake')); set('p-rcNo',gv('rcNo'));
+  set('p-vehVal',gv('vehVal'));   set('p-verDate',gv('verDate'));
+  // also update alternate formats with shared fields
+  if(typeof renderBailBond==='function') renderBailBond();
+  if(typeof renderSurety==='function') renderSurety();
 }
 
 function clearAll(){
-  document.querySelectorAll('.field-input').forEach(el=>el.value='');
-  render();
+  document.querySelectorAll('.field-input').forEach(function(el){el.value='';});
+  render(); renderBailBond(); renderSurety();
+}
+
+/* ══ FORMAT SWITCHING ══ */
+var currentFormat = 'form45';
+
+function setFormat(fmt, btn) {
+  currentFormat = fmt;
+  // Update active button
+  document.querySelectorAll('.fmt-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+
+  // Show/hide paper pages
+  var p1 = document.querySelector('.paper-p1:not([id])') || document.querySelector('.paper-p1');
+  var p2 = document.querySelector('.paper-p2');
+  var bbPaper = document.getElementById('fmt-bailbond');
+  var surPaper = document.getElementById('fmt-surety');
+
+  // Hide all first
+  document.querySelectorAll('.paper-p1, .paper-p2').forEach(function(p){ p.style.display='none'; });
+  bbPaper.style.display='none';
+  surPaper.style.display='none';
+
+  // Show/hide form sections
+  document.getElementById('form-section-main').style.display = fmt==='form45' ? '' : 'none';
+  document.getElementById('form-section-bailbond').style.display = fmt==='bailbond' ? '' : 'none';
+  document.getElementById('form-section-surety').style.display = fmt==='surety' ? '' : 'none';
+
+  // Update form panel heading
+  var headings = {'form45':'Fill Bail Bond Details','bailbond':'Fill Bail Bond Details','surety':'Fill Surety Bond Details'};
+  var subtitles = {'form45':'Form No. 45 — Sections 436, 437, 438(3), 441 CrPC','bailbond':'Bond for attendance before Officer in Charge / Court','surety':'Surety declaration for the accused'};
+  document.querySelector('.form-panel h2').textContent = headings[fmt];
+  document.querySelector('.form-panel > p').textContent = subtitles[fmt];
+
+  // Show relevant paper
+  if(fmt==='form45'){
+    var pages=document.querySelectorAll('.paper-p1:not(#fmt-bailbond):not(#fmt-surety), .paper-p2');
+    pages.forEach(function(p){ p.style.display=''; });
+  } else if(fmt==='bailbond'){
+    bbPaper.style.display='';
+    renderBailBond();
+  } else if(fmt==='surety'){
+    surPaper.style.display='';
+    renderSurety();
+  }
+}
+
+// On first load, show all form45 sections
+(function(){
+  document.getElementById('form-section-bailbond').style.display='none';
+  document.getElementById('form-section-surety').style.display='none';
+})();
+
+/* ── Bail Bond format render ── */
+function renderBailBond(){
+  set('bb-court',   gv('court'));
+  set('bb-caseno',  gv('bb-caseno-in'));
+  set('bb-accName', gv('accName'));
+  set('bb-age',     gv('bb-age-in'));
+  set('bb-accAddr', gv('accAddr'));
+  set('bb-ps',      gv('ps'));
+  set('bb-court2',  gv('court'));
+  set('bb-offence', gv('offence'));
+  set('bb-bailAmt', gv('bailAmt'));
+  set('bb-bailWords', gv('bb-bailWords-in'));
+  set('bb-day',     gv('surDay'));
+  set('bb-month',   gv('surMonth'));
+}
+
+/* ── Surety Bond format render ── */
+function renderSurety(){
+  set('sb-surName', gv('surName'));
+  set('sb-surAddr', gv('surAddr'));
+  set('sb-accName', gv('accName'));
+  set('sb-accAddr', gv('accAddr'));
+  set('sb-court',   gv('court'));
+  set('sb-surAmt',  gv('surAmt'));
+  set('sb-surWords',gv('sb-surWords-in'));
+  set('sb-day',     gv('surDay'));
+  set('sb-month',   gv('surMonth'));
 }
 
 (function(){
-  const now=new Date();
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const days=['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th','13th','14th','15th','16th','17th','18th','19th','20th','21st','22nd','23rd','24th','25th','26th','27th','28th','29th','30th','31st'];
-  const dateStr=now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+  var now=new Date();
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var days=['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th','13th','14th','15th','16th','17th','18th','19th','20th','21st','22nd','23rd','24th','25th','26th','27th','28th','29th','30th','31st'];
+  var dateStr=now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
   v('date').value=dateStr;
   v('verDate').value=dateStr;
   v('surDay').value=days[now.getDate()];
   v('surMonth').value=months[now.getMonth()]+' '+now.getFullYear();
   render();
 })();
-</script>
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('[onclick*="print"]').forEach(function(b){b.addEventListener('click',function(){gaEvent('print_document',{tool:'bail_bond'});});});
-});
-</script>
-<!-- ── Feedback Widget ── -->
-<style>
-.fb-btn{position:fixed;bottom:24px;right:24px;z-index:900;width:52px;height:52px;border-radius:50%;background:#2563EB;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,99,235,.4);transition:transform .2s,box-shadow .2s}
-.fb-btn:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(37,99,235,.5)}
-.fb-btn svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.fb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;display:flex;align-items:flex-end;justify-content:flex-end;padding:24px;opacity:0;pointer-events:none;transition:opacity .2s}
-.fb-overlay.open{opacity:1;pointer-events:all}
-.fb-modal{background:var(--surface,#161b22);border:1px solid var(--border,#30363d);border-radius:16px;padding:24px;width:100%;max-width:380px;transform:translateY(20px) scale(.97);transition:transform .2s;font-family:'Inter',system-ui,sans-serif}
-.fb-overlay.open .fb-modal{transform:translateY(0) scale(1)}
-.fb-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.fb-title{font-size:16px;font-weight:700;color:var(--text,#e6edf3)}
-.fb-close{width:28px;height:28px;border-radius:8px;background:transparent;border:1px solid var(--border,#30363d);cursor:pointer;display:flex;align-items:center;justify-content:center}
-.fb-close svg{width:13px;height:13px;stroke:var(--text,#e6edf3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.fb-types{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.fb-type{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border,#30363d);background:transparent;color:var(--muted,#8b949e);transition:.15s;white-space:nowrap}
-.fb-type.active,.fb-type:hover{border-color:#2563EB;color:#60a5fa;background:rgba(37,99,235,.1)}
-.fb-field{width:100%;background:var(--bg,#0d1117);border:1.5px solid var(--border,#30363d);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--text,#e6edf3);font-family:'Inter',system-ui,sans-serif;outline:none;resize:none;transition:border-color .2s;margin-bottom:10px;box-sizing:border-box}
-.fb-field:focus{border-color:#2563EB}
-.fb-field::placeholder{color:var(--muted,#8b949e)}
-.fb-submit{width:100%;padding:11px;background:#2563EB;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.fb-submit:hover{opacity:.88}
-.fb-submit svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.fb-submit:disabled{opacity:.5;cursor:not-allowed}
-.fb-success{text-align:center;padding:20px 0;display:none}
-.fb-success svg{width:40px;height:40px;stroke:#22c55e;fill:none;stroke-width:1.5;margin:0 auto 12px;display:block}
-.fb-success h3{font-size:15px;font-weight:700;color:var(--text,#e6edf3);margin-bottom:6px}
-.fb-success p{font-size:13px;color:var(--muted,#8b949e)}
-.fb-error{font-size:12px;color:#f87171;margin-bottom:8px;display:none}
-.fb-page-tag{font-size:11px;color:var(--muted,#8b949e);margin-bottom:12px;display:flex;align-items:center;gap:4px}
-.fb-page-tag svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
-</style>
-<button class="fb-btn" onclick="fbOpen()" aria-label="Send feedback" title="Feedback / Report issue">
-  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-</button>
-<div class="fb-overlay" id="fbOverlay" onclick="fbBgClose(event)">
-  <div class="fb-modal">
-    <div id="fbForm">
-      <div class="fb-header">
-        <div class="fb-title">Send Feedback</div>
-        <button class="fb-close" onclick="fbClose()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-      </div>
-      <div class="fb-page-tag">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Page: <span id="fbPageName"></span>
-      </div>
-      <div class="fb-types">
-        <button class="fb-type active" onclick="fbSetType(this,'Bug / Error')">Bug / Error</button>
-        <button class="fb-type" onclick="fbSetType(this,'Improvement')">Improvement</button>
-        <button class="fb-type" onclick="fbSetType(this,'New Feature')">New Feature</button>
-        <button class="fb-type" onclick="fbSetType(this,'General')">General</button>
-      </div>
-      <textarea class="fb-field" id="fbMsg" rows="4" placeholder="Describe the issue or suggestion..." maxlength="1000"></textarea>
-      <input class="fb-field" type="email" id="fbEmail" placeholder="Your email (optional, for reply)" maxlength="80">
-      <div class="fb-error" id="fbError">Please write your feedback before submitting.</div>
-      <button class="fb-submit" id="fbSubmit" onclick="fbSubmit()">
-        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Send Feedback
-      </button>
-    </div>
-    <div class="fb-success" id="fbSuccess">
-      <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      <h3>Thank you!</h3>
-      <p>Your feedback has been sent.<br>We review every message and improve accordingly.</p>
-    </div>
-  </div>
-</div>
-<script>
-(function(){
-  var fbType='Bug / Error';
-  var T={'/':'Legal Hash Checksum','/tools':'Tools Hub','/vakalatnama':'Vakalatnama Generator','/bail-bond':'Bail Bond Form 45','/memo-appearance':'Memo of Appearance','/bns-lookup':'BNS / IPC Lookup','/limitation-calculator':'Limitation Calculator','/court-fee':'Court Fee Calculator','/legal-notice':'Legal Notice Generator','/law-converter':'Law Converter','/legal-dictionary':'Legal Dictionary','/women-children-law':'Women & Children BNS'};
-  var path=window.location.pathname.replace(/\/$/,'')||'/';
-  var label=T[path]||path;
-  var pn=document.getElementById('fbPageName');
-  if(pn)pn.textContent=label;
-  window.fbOpen=function(){document.getElementById('fbOverlay').classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){var m=document.getElementById('fbMsg');if(m)m.focus();},200);};
-  window.fbClose=function(){document.getElementById('fbOverlay').classList.remove('open');document.body.style.overflow='';};
-  window.fbBgClose=function(e){if(e.target===document.getElementById('fbOverlay'))fbClose();};
-  window.fbSetType=function(btn,type){fbType=type;document.querySelectorAll('.fb-type').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');};
-  var SVG_SEND='<svg viewBox="0 0 24 24" width="14" height="14" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
-  window.fbSubmit=function(){
-    var msg=document.getElementById('fbMsg').value.trim();
-    var email=document.getElementById('fbEmail').value.trim();
-    var errEl=document.getElementById('fbError');
-    var btn=document.getElementById('fbSubmit');
-    if(!msg){errEl.style.display='block';return;}
-    errEl.style.display='none';
-    btn.disabled=true;btn.innerHTML=SVG_SEND+' Sending...';
-    if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:label,has_email:!!email});
-    fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:fbType,page:label,message:msg,email:email||'',url:window.location.href})})
-    .then(function(r){return r.json();})
-    .then(function(d){
-      if(d.ok){document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
-      else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Failed to send. Try again.';errEl.style.display='block';}
-    }).catch(function(){btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Network error. Check connection.';errEl.style.display='block';});
-  };
-  document.getElementById('fbOverlay').addEventListener('transitionend',function(){
-    if(!this.classList.contains('open')){
-      setTimeout(function(){
-        var f=document.getElementById('fbForm'),s=document.getElementById('fbSuccess');
-        if(f)f.style.display='block';if(s)s.style.display='none';
-        var m=document.getElementById('fbMsg');if(m)m.value='';
-        var em=document.getElementById('fbEmail');if(em)em.value='';
-        var btn=document.getElementById('fbSubmit');
-        if(btn){btn.disabled=false;btn.innerHTML=SVG_SEND+' Send Feedback';}
-      },300);
-    }
-  });
-})();
-</script>
-<!-- ── End Feedback Widget ── -->
 
-<script>
-(function(){
-// ── Stamp state ──────────────────────────────────────────────────────────────
-var smColor = '#1A3A6B', smShape = 'round';
-var stampImg = null; // current stamp Image object
-var stampDragging = false, sdx=0, sdy=0;
+/* ══ PRINT — show only the selected format ══ */
+var printStyleEl = null;
 
-// ── Find paper element ───────────────────────────────────────────────────────
-function getPaper(){ return document.querySelector('.paper'); }
-
-// ── Upload existing stamp ─────────────────────────────────────────────────────
-window.stampUpload = function(){
-  document.getElementById('stampFileInput').click();
-};
-window.loadStampFile = function(inp){
-  var file = inp.files[0]; if(!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e){
-    var img = new Image();
-    img.onload = function(){ placeStamp(img, null); };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-};
-
-// ── Open/close modal ──────────────────────────────────────────────────────────
-window.openStampMaker = function(){
-  document.getElementById('stampModal').classList.add('open');
-  smPreview();
-};
-window.closeStampMaker = function(){
-  document.getElementById('stampModal').classList.remove('open');
-};
-
-// ── Shape / color setters ─────────────────────────────────────────────────────
-window.smSetShape = function(s, el){
-  smShape = s;
-  document.querySelectorAll('.stamp-shape-btn').forEach(function(b){ b.classList.remove('active'); });
-  el.classList.add('active');
-  smPreview();
-};
-window.smSetColor = function(c, el){
-  smColor = c;
-  document.querySelectorAll('.stamp-color-sw').forEach(function(sw){ sw.classList.remove('active'); });
-  if(el) el.classList.add('active');
-  document.getElementById('smColorPicker').value = c;
-  smPreview();
-};
-
-// ── Draw stamp onto a canvas ──────────────────────────────────────────────────
-function drawStamp(canvas, lines, shape, color, size, bw, op){
-  var ctx = canvas.getContext('2d');
-  var cw, ch;
-  if(shape==='round'||shape==='hex'){ cw=ch=size; }
-  else if(shape==='rect'){ cw=size*1.5; ch=size*0.65; }
-  else { cw=size*1.4; ch=size*0.72; } // oval
-  canvas.width=Math.ceil(cw); canvas.height=Math.ceil(ch);
-  ctx.clearRect(0,0,cw,ch);
-  ctx.globalAlpha=op/100;
-  ctx.strokeStyle=color; ctx.fillStyle=color; ctx.lineWidth=bw;
-  var cx=cw/2, cy=ch/2;
-
-  function hexPth(r){
-    ctx.beginPath();
-    for(var i=0;i<6;i++){
-      var a=Math.PI/180*(60*i-30);
-      var x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
-      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-    } ctx.closePath();
+function beforePrint(){
+  var hideRules = '';
+  if(currentFormat === 'form45'){
+    hideRules = '#fmt-bailbond, #fmt-surety { display:none!important; }';
+  } else if(currentFormat === 'bailbond'){
+    hideRules = '.paper-p2 { display:none!important; } '
+              + '#fmt-surety { display:none!important; } '
+              + '.paper-p1:not(#fmt-bailbond):not(#fmt-surety) { display:none!important; }';
+  } else if(currentFormat === 'surety'){
+    hideRules = '.paper-p2 { display:none!important; } '
+              + '#fmt-bailbond { display:none!important; } '
+              + '.paper-p1:not(#fmt-bailbond):not(#fmt-surety) { display:none!important; }';
   }
-
-  ctx.beginPath();
-  if(shape==='round'){
-    ctx.arc(cx,cy,size/2-bw,0,Math.PI*2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(cx,cy,size/2-bw*3.5,0,Math.PI*2); ctx.stroke();
-  } else if(shape==='rect'){
-    var p=bw+2;
-    ctx.roundRect(p,p,cw-p*2,ch-p*2,3); ctx.stroke();
-    ctx.beginPath(); ctx.roundRect(p+bw+2,p+bw+2,cw-(p+bw+2)*2,ch-(p+bw+2)*2,2); ctx.stroke();
-  } else if(shape==='oval'){
-    ctx.ellipse(cx,cy,cw/2-bw,ch/2-bw,0,0,Math.PI*2); ctx.stroke();
-    ctx.beginPath(); ctx.ellipse(cx,cy,cw/2-bw*3,ch/2-bw*3,0,0,Math.PI*2); ctx.stroke();
-  } else {
-    hexPth(size/2-bw); ctx.stroke();
-    hexPth(size/2-bw*3.5); ctx.stroke();
-  }
-
-  var fs=Math.max(8,Math.round(size/14));
-  var lh=fs*1.35, total=lines.length, startY=cy-(total*lh)/2+fs/2;
-  ctx.textAlign='center'; ctx.textBaseline='middle';
-  ctx.save();
-  if(shape==='round'||shape==='oval'){
-    ctx.beginPath();
-    shape==='round'?ctx.arc(cx,cy,size/2-bw*5,0,Math.PI*2):ctx.ellipse(cx,cy,cw/2-bw*4,ch/2-bw*4,0,0,Math.PI*2);
-    ctx.clip();
-  }
-  lines.forEach(function(line,i){
-    ctx.font=(i===0?'bold ':'')+fs+'px Inter,system-ui,sans-serif';
-    if(i===0){
-      ctx.lineWidth=bw*0.6;
-      ctx.beginPath();
-      var lw2=Math.min(size*0.38,55);
-      ctx.moveTo(cx-lw2/2,startY-fs*0.9); ctx.lineTo(cx+lw2/2,startY-fs*0.9);
-      ctx.stroke(); ctx.lineWidth=bw;
-    }
-    ctx.fillText(line,cx,startY+i*lh);
-  });
-  ctx.restore();
+  if(printStyleEl) printStyleEl.remove();
+  printStyleEl = document.createElement('style');
+  printStyleEl.textContent = hideRules;
+  document.head.appendChild(printStyleEl);
 }
 
-// ── Preview in modal ──────────────────────────────────────────────────────────
-window.smPreview = function(){
+function afterPrint(){
+  if(printStyleEl){ printStyleEl.remove(); printStyleEl = null; }
+}
+
+window.addEventListener('beforeprint', beforePrint);
+window.addEventListener('afterprint',  afterPrint);
+
+var _origPrint = window.print.bind(window);
+window.print = function(){
+  beforePrint();
+  _origPrint();
+  setTimeout(afterPrint, 3000);
+};
+</script>
+
+<script>
+/* ══════════════════════════════════════════
+   STAMP SYSTEM
+══════════════════════════════════════════ */
+
+var smShape='round', smColor='#1A3A6B';
+var stampDataURL=null; // current stamp image data URL
+var activeStampEl=null; // currently placed stamp DOM element
+
+/* ── Open / close modal ── */
+function openStampMaker(){
+  document.getElementById('stampModal').classList.add('open');
+  smPreview();
+  // load saved stamp if exists
+  try{var s=localStorage.getItem('advocateStamp');if(s){smColor=JSON.parse(s).color||smColor;}}catch(e){}
+}
+function closeStampMaker(){document.getElementById('stampModal').classList.remove('open');}
+
+/* ── Shape selector ── */
+function smSetShape(shape,btn){
+  smShape=shape;
+  document.querySelectorAll('.stamp-shape-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  smPreview();
+}
+
+/* ── Color selector ── */
+function smSetColor(c,sw){
+  smColor=c;
+  document.querySelectorAll('.stamp-color-sw').forEach(function(el){el.classList.remove('active');});
+  if(sw)sw.classList.add('active');
+  document.getElementById('smColorPicker').value=c;
+  smPreview();
+}
+
+/* ── Draw stamp on canvas ── */
+function smPreview(){
   var size=parseInt(document.getElementById('smSize').value);
   var op=parseInt(document.getElementById('smOp').value);
   var bw=parseInt(document.getElementById('smBw').value);
   document.getElementById('smSzV').textContent=size;
   document.getElementById('smOpV').textContent=op+'%';
   document.getElementById('smBwV').textContent=bw;
-  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
-  drawStamp(document.getElementById('smCanvas'), lines, smShape, smColor, size, bw, op);
-};
 
-// Live preview on text input
+  var lines=[];
+  ['sm1','sm2','sm3','sm4','sm5'].forEach(function(id){
+    var val=document.getElementById(id).value.trim();
+    if(val)lines.push(val);
+  });
+
+  var c=document.getElementById('smCanvas');
+  drawStampOnCanvas(c,{size:size,opacity:op/100,borderWidth:bw,color:smColor,shape:smShape,lines:lines});
+}
+
+function drawStampOnCanvas(canvas,opts){
+  var S=opts.size, bw=opts.borderWidth, color=opts.color, op=opts.opacity;
+  var shape=opts.shape, lines=opts.lines||[];
+  canvas.width=S; canvas.height=S;
+  var ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,S,S);
+  ctx.globalAlpha=op;
+  ctx.strokeStyle=color; ctx.fillStyle=color; ctx.lineWidth=bw;
+
+  var cx=S/2, cy=S/2, r=S/2-bw-2;
+
+  ctx.beginPath();
+  if(shape==='round'){
+    ctx.arc(cx,cy,r,0,Math.PI*2);
+  } else if(shape==='rect'){
+    var rx=bw+4, ry=bw+4;
+    ctx.roundRect(rx,ry,S-rx*2,S-ry*2,6);
+  } else if(shape==='oval'){
+    ctx.ellipse(cx,cy,r,r*0.65,0,0,Math.PI*2);
+  } else if(shape==='hex'){
+    for(var i=0;i<6;i++){
+      var angle=Math.PI/180*(60*i-30);
+      var hx=cx+r*Math.cos(angle), hy=cy+r*Math.sin(angle);
+      i===0?ctx.moveTo(hx,hy):ctx.lineTo(hx,hy);
+    }
+    ctx.closePath();
+  }
+  ctx.stroke();
+
+  // inner border ring
+  ctx.beginPath();
+  if(shape==='round'){ctx.arc(cx,cy,r-bw-3,0,Math.PI*2);}
+  else if(shape==='rect'){ctx.roundRect(bw+8,bw+8,S-bw*2-16,S-bw*2-16,4);}
+  else if(shape==='oval'){ctx.ellipse(cx,cy,r-bw-4,(r*0.65)-bw-3,0,0,Math.PI*2);}
+  else if(shape==='hex'){
+    var r2=r-bw-4;
+    for(var j=0;j<6;j++){var a2=Math.PI/180*(60*j-30);j===0?ctx.moveTo(cx+r2*Math.cos(a2),cy+r2*Math.sin(a2)):ctx.lineTo(cx+r2*Math.cos(a2),cy+r2*Math.sin(a2));}
+    ctx.closePath();
+  }
+  ctx.stroke();
+
+  // Text lines
+  if(lines.length===0)return;
+  var areaH=S*(shape==='oval'?0.5:0.55);
+  var startY=cy-(areaH/2)+(areaH/(lines.length+1));
+  var baseFontSize=Math.floor(S/(lines.length===1?5:lines.length===2?6:lines.length===3?7:8));
+  baseFontSize=Math.max(9,Math.min(baseFontSize,18));
+
+  lines.forEach(function(line,i){
+    var fs=i===0?Math.min(baseFontSize+2,20):baseFontSize;
+    ctx.font=(i===0?'700 ':'')+ fs+'px Arial,sans-serif';
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    var y=startY+(i*areaH/(lines.length+1))*1.1;
+    ctx.fillText(line,cx,y,S-bw*6-16);
+  });
+}
+
+/* ── Apply stamp to document ── */
+function applyCreatedStamp(){
+  smPreview();
+  var c=document.getElementById('smCanvas');
+  stampDataURL=c.toDataURL('image/png');
+  closeStampMaker();
+  placeStampOnPaper(stampDataURL);
+}
+
+/* ── Upload existing stamp ── */
+function stampUpload(){document.getElementById('stampFileInput').click();}
+function loadStampFile(input){
+  var file=input.files[0]; if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    stampDataURL=e.target.result;
+    placeStampOnPaper(stampDataURL);
+  };
+  reader.readAsDataURL(file);
+  input.value='';
+}
+
+/* ── Place draggable stamp on paper ── */
+function placeStampOnPaper(dataURL){
+  // remove existing stamp
+  document.querySelectorAll('.paper-stamp').forEach(function(el){el.remove();});
+
+  var paper=document.querySelector('.paper-p1');
+  if(!paper)return;
+
+  var size=parseInt(document.getElementById('smSize')?document.getElementById('smSize').value:160)||160;
+
+  var wrapper=document.createElement('div');
+  wrapper.className='paper-stamp';
+  wrapper.style.width=size+'px';
+  wrapper.style.height=size+'px';
+  wrapper.style.right='12mm';
+  wrapper.style.bottom='18mm';
+
+  var hint=document.createElement('span');
+  hint.className='paper-stamp-hint';
+  hint.textContent='Drag to reposition';
+
+  var img=document.createElement('img');
+  img.src=dataURL;
+  img.style.width=size+'px';
+  img.style.height=size+'px';
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(hint);
+  paper.appendChild(wrapper);
+  activeStampEl=wrapper;
+
+  makeDraggable(wrapper,paper);
+
+  // update UI
+  document.getElementById('btnClearStamp').style.display='flex';
+  document.getElementById('stampStatus').textContent='Stamp placed — drag to reposition';
+}
+
+/* ── Drag logic ── */
+function makeDraggable(el,container){
+  var startX,startY,startLeft,startTop,isDragging=false;
+
+  function getPos(){
+    var left=parseInt(el.style.left)||0;
+    var top=parseInt(el.style.top)||0;
+    // convert right/bottom to left/top on first drag
+    if(el.style.right){
+      var cr=container.getBoundingClientRect();
+      var er=el.getBoundingClientRect();
+      left=er.left-cr.left;
+      top=er.top-cr.top;
+      el.style.right=''; el.style.bottom='';
+      el.style.left=left+'px'; el.style.top=top+'px';
+    }
+    return{left:left,top:top};
+  }
+
+  el.addEventListener('mousedown',function(e){
+    e.preventDefault();
+    isDragging=true;
+    var pos=getPos();
+    startLeft=pos.left; startTop=pos.top;
+    startX=e.clientX; startY=e.clientY;
+    el.querySelector('.paper-stamp-hint').style.display='none';
+  });
+  el.addEventListener('touchstart',function(e){
+    e.preventDefault();
+    isDragging=true;
+    var pos=getPos();
+    startLeft=pos.left; startTop=pos.top;
+    startX=e.touches[0].clientX; startY=e.touches[0].clientY;
+    el.querySelector('.paper-stamp-hint').style.display='none';
+  },{passive:false});
+
+  document.addEventListener('mousemove',function(e){
+    if(!isDragging)return;
+    var dx=e.clientX-startX, dy=e.clientY-startY;
+    var cw=container.offsetWidth, ch=container.offsetHeight;
+    var ew=el.offsetWidth, eh=el.offsetHeight;
+    var newL=Math.max(0,Math.min(startLeft+dx,cw-ew));
+    var newT=Math.max(0,Math.min(startTop+dy,ch-eh));
+    el.style.left=newL+'px'; el.style.top=newT+'px';
+  });
+  document.addEventListener('touchmove',function(e){
+    if(!isDragging)return;
+    e.preventDefault();
+    var dx=e.touches[0].clientX-startX, dy=e.touches[0].clientY-startY;
+    var cw=container.offsetWidth, ch=container.offsetHeight;
+    var ew=el.offsetWidth, eh=el.offsetHeight;
+    var newL=Math.max(0,Math.min(startLeft+dx,cw-ew));
+    var newT=Math.max(0,Math.min(startTop+dy,ch-eh));
+    el.style.left=newL+'px'; el.style.top=newT+'px';
+  },{passive:false});
+
+  document.addEventListener('mouseup',function(){isDragging=false;});
+  document.addEventListener('touchend',function(){isDragging=false;});
+}
+
+/* ── Clear stamp ── */
+function clearStamp(){
+  document.querySelectorAll('.paper-stamp').forEach(function(el){el.remove();});
+  stampDataURL=null;
+  document.getElementById('btnClearStamp').style.display='none';
+  document.getElementById('stampStatus').textContent='No stamp — drag one onto your document';
+}
+
+/* ── Save to browser (localStorage) ── */
+function saveStampToStorage(){
+  smPreview();
+  var c=document.getElementById('smCanvas');
+  var data={dataURL:c.toDataURL('image/png'),color:smColor,shape:smShape,size:document.getElementById('smSize').value};
+  try{
+    localStorage.setItem('advocateStamp',JSON.stringify(data));
+    var msg=document.getElementById('smSaveMsg');
+    msg.innerHTML='✓ Saved to browser storage';
+    setTimeout(function(){msg.innerHTML='';},3000);
+  }catch(e){alert('Storage unavailable.');}
+}
+
+/* ── Download PNG ── */
+function downloadStampPNG(){
+  smPreview();
+  var c=document.getElementById('smCanvas');
+  var a=document.createElement('a');
+  a.href=c.toDataURL('image/png');
+  a.download='advocate-stamp.png';
+  a.click();
+}
+
+/* ── Auto-load saved stamp on page load ── */
+(function(){
+  try{
+    var s=localStorage.getItem('advocateStamp');
+    if(s){
+      var data=JSON.parse(s);
+      if(data.dataURL){
+        stampDataURL=data.dataURL;
+        document.getElementById('stampStatus').textContent='Saved stamp ready — click "I Have a Stamp" or "Create Stamp"';
+      }
+    }
+  }catch(e){}
+})();
+
+/* ── Input listeners for live stamp preview ── */
 ['sm1','sm2','sm3','sm4','sm5'].forEach(function(id){
   var el=document.getElementById(id);
-  if(el) el.addEventListener('input', smPreview);
+  if(el)el.addEventListener('input',smPreview);
 });
-
-// ── Save stamp to localStorage ───────────────────────────────────────────────
-window.saveStampToStorage = function(){
-  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; });
-  var size=parseInt(document.getElementById('smSize').value);
-  var op=parseInt(document.getElementById('smOp').value);
-  var bw=parseInt(document.getElementById('smBw').value);
-  var data={ lines:lines, shape:smShape, color:smColor, size:size, op:op, bw:bw };
-  try{
-    localStorage.setItem('advocateStamp', JSON.stringify(data));
-    var msg=document.getElementById('smSaveMsg');
-    msg.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Stamp saved — auto-loads next visit';
-    setTimeout(function(){ msg.innerHTML=''; }, 4000);
-  } catch(e){ alert('Storage not available in this browser.'); }
-};
-
-// ── Download stamp as PNG ─────────────────────────────────────────────────────
-window.downloadStampPNG = function(){
-  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
-  var size=parseInt(document.getElementById('smSize').value);
-  var op=parseInt(document.getElementById('smOp').value);
-  var bw=parseInt(document.getElementById('smBw').value);
-  var tmpCanvas=document.createElement('canvas');
-  drawStamp(tmpCanvas, lines, smShape, smColor, size, bw, op);
-  var a=document.createElement('a');
-  a.download='advocate-stamp.png';
-  a.href=tmpCanvas.toDataURL('image/png');
-  a.click();
-};
-
-// ── Auto-load saved stamp on page open ───────────────────────────────────────
-function autoLoadSavedStamp(){
-  try{
-    var saved=localStorage.getItem('advocateStamp');
-    if(!saved) return;
-    var data=JSON.parse(saved);
-    ['sm1','sm2','sm3','sm4','sm5'].forEach(function(id,i){
-      var el=document.getElementById(id);
-      if(el) el.value = data.lines[i]||'';
-    });
-    smShape=data.shape||'round';
-    document.querySelectorAll('.stamp-shape-btn').forEach(function(b){
-      b.classList.toggle('active', b.dataset.shape===smShape);
-    });
-    smSetColor(data.color||'#1A3A6B', document.querySelector('[data-c="'+(data.color||'#1A3A6B')+'"]'));
-    document.getElementById('smSize').value=data.size||160;
-    document.getElementById('smOp').value=data.op||85;
-    document.getElementById('smBw').value=data.bw||2;
-    smPreview();
-    document.getElementById('stampStatus').textContent='Saved stamp loaded — click Create Stamp to apply or edit';
-  } catch(e){}
-}
-
-// ── Save stamp to localStorage ───────────────────────────────────────────────
-window.saveStampToStorage = function(){
-  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; });
-  var size=parseInt(document.getElementById('smSize').value);
-  var op=parseInt(document.getElementById('smOp').value);
-  var bw=parseInt(document.getElementById('smBw').value);
-  var data={ lines:lines, shape:smShape, color:smColor, size:size, op:op, bw:bw };
-  try{
-    localStorage.setItem('advocateStamp', JSON.stringify(data));
-    var msg=document.getElementById('smSaveMsg');
-    msg.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Stamp saved — auto-loads next visit';
-    setTimeout(function(){ msg.innerHTML=''; }, 4000);
-  } catch(e){ alert('Storage not available in this browser.'); }
-};
-
-// ── Download stamp as high-res PNG (3x scale) ─────────────────────────────────
-window.downloadStampPNG = function(){
-  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
-  var size=parseInt(document.getElementById('smSize').value);
-  var op=parseInt(document.getElementById('smOp').value);
-  var bw=parseInt(document.getElementById('smBw').value);
-  var SCALE=3; // 3x for high-res print quality
-  var tmpCanvas=document.createElement('canvas');
-  // Draw at 3x size
-  drawStamp(tmpCanvas, lines, smShape, smColor, size*SCALE, bw*SCALE, op);
-  var a=document.createElement('a');
-  a.download='advocate-stamp.png';
-  a.href=tmpCanvas.toDataURL('image/png');
-  a.click();
-};
-
-// ── Auto-load saved stamp on page open ───────────────────────────────────────
-function autoLoadSavedStamp(){
-  try{
-    var saved=localStorage.getItem('advocateStamp');
-    if(!saved) return;
-    var data=JSON.parse(saved);
-    ['sm1','sm2','sm3','sm4','sm5'].forEach(function(id,i){
-      var el=document.getElementById(id);
-      if(el) el.value = data.lines[i]||'';
-    });
-    smShape=data.shape||'round';
-    document.querySelectorAll('.stamp-shape-btn').forEach(function(b){
-      b.classList.toggle('active', b.dataset.shape===smShape);
-    });
-    smSetColor(data.color||'#1A3A6B', document.querySelector('[data-c="'+(data.color||'#1A3A6B')+'"]'));
-    document.getElementById('smSize').value=data.size||160;
-    document.getElementById('smOp').value=data.op||85;
-    document.getElementById('smBw').value=data.bw||2;
-    smPreview();
-    document.getElementById('stampStatus').textContent='Saved stamp loaded — click Create Stamp to apply or edit';
-  } catch(e){}
-}
-
-// ── Apply created stamp ───────────────────────────────────────────────────────
-window.applyCreatedStamp = function(){
-  var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
-  var size=parseInt(document.getElementById('smSize').value);
-  var op=parseInt(document.getElementById('smOp').value);
-  var bw=parseInt(document.getElementById('smBw').value);
-  var tmpCanvas=document.createElement('canvas');
-  drawStamp(tmpCanvas, lines, smShape, smColor, size, bw, op);
-  var img=new Image();
-  img.onload=function(){ placeStamp(img, tmpCanvas); };
-  img.src=tmpCanvas.toDataURL('image/png');
-  closeStampMaker();
-};
-
-// ── Place stamp on paper ──────────────────────────────────────────────────────
-function placeStamp(img, srcCanvas){
-  stampImg = img;
-  // Remove existing stamp
-  var old=getPaper().querySelector('.paper-stamp');
-  if(old) old.remove();
-
-  var wrap=document.createElement('div');
-  wrap.className='paper-stamp';
-  wrap.style.left='60mm'; wrap.style.top='140mm';
-
-  var c=document.createElement('canvas');
-  if(srcCanvas){
-    c.width=srcCanvas.width; c.height=srcCanvas.height;
-    c.getContext('2d').drawImage(srcCanvas,0,0);
-  } else {
-    // Uploaded image — draw at reasonable size
-    var maxW=180, scale=Math.min(1, maxW/img.width);
-    c.width=Math.round(img.width*scale); c.height=Math.round(img.height*scale);
-    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-  }
-  wrap.appendChild(c);
-
-  var hint=document.createElement('div');
-  hint.className='paper-stamp-hint'; hint.textContent='drag to position';
-  wrap.appendChild(hint);
-
-  getPaper().appendChild(wrap);
-  initStampDrag(wrap);
-
-  document.getElementById('btnClearStamp').style.display='flex';
-  document.getElementById('stampStatus').textContent='Stamp placed — drag to reposition, then Print / PDF';
-  setTimeout(function(){ hint.style.display='none'; }, 4000);
-}
-
-// ── Drag logic ────────────────────────────────────────────────────────────────
-function initStampDrag(el){
-  var startX, startY, startLeft, startTop;
-
-  function getScale(){
-    // actual rendered width / layout width = CSS scale factor
-    var p = getPaper();
-    return p.getBoundingClientRect().width / p.offsetWidth;
-  }
-
-  function onDown(cx, cy){
-    stampDragging = true;
-    var scale = getScale();
-    // current stamp position in paper-local px
-    startLeft = parseFloat(el.style.left) || 0;
-    startTop  = parseFloat(el.style.top)  || 0;
-    // pointer position in paper-local px
-    startX = cx / scale;
-    startY = cy / scale;
-    el.setPointerCapture && el.setPointerCapture(el._pid);
-  }
-
-  function onMove(cx, cy){
-    if(!stampDragging) return;
-    var scale = getScale();
-    var dx = cx / scale - startX;
-    var dy = cy / scale - startY;
-    var p  = getPaper();
-    var x  = Math.max(0, Math.min(p.offsetWidth  - el.offsetWidth,  startLeft + dx));
-    var y  = Math.max(0, Math.min(p.offsetHeight - el.offsetHeight, startTop  + dy));
-    el.style.left = x + 'px';
-    el.style.top  = y + 'px';
-  }
-
-  function onUp(){ stampDragging = false; }
-
-  // Pointer events (covers mouse + touch + stylus, single handler)
-  el.addEventListener('pointerdown', function(e){
-    el._pid = e.pointerId;
-    el.setPointerCapture(e.pointerId);
-    onDown(e.clientX, e.clientY);
-    e.preventDefault();
-  });
-  el.addEventListener('pointermove', function(e){
-    if(!stampDragging) return;
-    onMove(e.clientX, e.clientY);
-    e.preventDefault();
-  });
-  el.addEventListener('pointerup',   onUp);
-  el.addEventListener('pointercancel', onUp);
-}
-
-// ── Clear stamp ───────────────────────────────────────────────────────────────
-window.clearStamp = function(){
-  var old=getPaper().querySelector('.paper-stamp');
-  if(old) old.remove();
-  stampImg=null;
-  document.getElementById('btnClearStamp').style.display='none';
-  document.getElementById('stampStatus').textContent='Stamp removed';
-};
-
-})();
 </script>
-
 </body>
 </html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advocate Stamp Maker — Legal Hash Checksum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F1117;--s1:#161B24;--s2:#1E2535;--bd:#2A2F3E;
+  --tx:#E8EDF5;--tx2:#8A96AA;--ac:#3B82F6;--ac2:#1D4ED8;
+  --ok:#10B981;--er:#EF4444;--r:10px;
+  --sans:'Inter',system-ui,sans-serif;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh}
+
+/* ── NAV ── */
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--bd);background:var(--s1);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.nav-logo{width:32px;height:32px;background:var(--ac);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{font-size:14px;font-weight:700}
+.nav-links{display:flex;gap:8px}
+.nav-link{font-size:13px;color:var(--tx2);text-decoration:none;padding:6px 12px;border:1px solid var(--bd);border-radius:8px;transition:.2s}
+.nav-link:hover{border-color:var(--ac);color:var(--ac)}
+
+/* ── LAYOUT ── */
+.app{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 57px)}
+@media(max-width:900px){.app{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+
+/* ── FORM PANEL ── */
+.form-panel{background:var(--s1);border-right:1px solid var(--bd);padding:20px;overflow-y:auto;max-height:calc(100vh - 57px)}
+.panel-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.panel-sub{font-size:12px;color:var(--tx2);margin-bottom:18px}
+.section-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ac);padding:10px 0 8px;border-top:1px solid var(--bd);margin-top:4px;margin-bottom:12px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--tx2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
+.field input,.field textarea,.field select{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--tx);font-family:var(--sans);outline:none;transition:border-color .2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--ac)}
+.field input::placeholder,.field textarea::placeholder{color:var(--tx2)}
+.field textarea{resize:vertical;min-height:70px}
+.field select option{background:var(--s2)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.color-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.color-swatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.15s;flex-shrink:0}
+.color-swatch.active{border-color:#fff;transform:scale(1.15)}
+.range-row{display:flex;align-items:center;gap:10px}
+.range-row input[type=range]{flex:1;accent-color:var(--ac)}
+.range-val{font-size:12px;color:var(--tx2);min-width:30px;text-align:right}
+
+/* Shape selector */
+.shape-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:4px}
+.shape-btn{padding:10px 4px;border:1px solid var(--bd);border-radius:8px;background:transparent;color:var(--tx2);cursor:pointer;font-size:10px;font-weight:600;text-align:center;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:4px}
+.shape-btn svg{width:28px;height:28px}
+.shape-btn.active{border-color:var(--ac);color:var(--ac);background:rgba(59,130,246,.08)}
+
+/* Action buttons */
+.btn-row{display:flex;gap:8px;margin-top:16px}
+.btn-primary{flex:1;padding:10px;background:var(--ac);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s}
+.btn-primary:hover{background:var(--ac2)}
+.btn-secondary{padding:10px 16px;background:var(--s2);color:var(--tx2);border:1px solid var(--bd);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
+.btn-secondary:hover{border-color:var(--ac);color:var(--ac)}
+
+/* ── PREVIEW PANEL ── */
+.preview-panel{background:#2a2a2a;display:flex;flex-direction:column;align-items:center;padding:24px 16px;overflow-y:auto;max-height:calc(100vh - 57px);overflow-x:hidden;position:relative}
+.preview-label{font-size:11px;color:#888;margin-bottom:16px;text-align:center}
+
+/* PDF paper */
+.paper{width:216mm;min-height:200mm;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.4);padding:20mm 18mm;font-family:'EB Garamond',serif;font-size:11pt;color:#111;line-height:1.7;position:relative;cursor:default;user-select:none}
+.paper-content{color:#333;font-size:10.5pt;line-height:1.8}
+.paper-content p{margin-bottom:3mm}
+.paper-title{text-align:center;font-size:13pt;font-weight:700;text-decoration:underline;margin-bottom:6mm;text-transform:uppercase;letter-spacing:.05em}
+
+/* ── STAMP ── */
+.stamp-container{position:absolute;cursor:grab;touch-action:none;user-select:none;z-index:10}
+.stamp-container:active{cursor:grabbing}
+.stamp-container canvas{display:block}
+.stamp-hint{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--ac);white-space:nowrap;pointer-events:none;font-family:var(--sans)}
+
+/* Download stamp button */
+.stamp-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;justify-content:center}
+.btn-dl{padding:8px 18px;background:var(--ok);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer}
+.btn-dl:hover{opacity:.9}
+.btn-dl-png{background:var(--ac)}
+
+@media(max-width:900px){
+  .preview-panel{max-height:none;padding:16px 8px}
+  .paper{transform-origin:top center;transform:scale(0.42);margin-bottom:calc((200mm * 0.42) - 200mm)}
+}
+@media print{
+  nav,.form-panel,.preview-label,.stamp-hint,.stamp-actions{display:none!important}
+  .app{display:block}
+  .preview-panel{background:#fff!important;padding:0;max-height:none;display:block;overflow:visible}
+  .paper{box-shadow:none;margin:0;width:100%;border:none;padding:15mm 20mm}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/tools" class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg>
+    </div>
+    <span class="nav-name">Advocate Stamp Maker</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
+  </div>
+</nav>
+
+<div class="app">
+
+  <!-- FORM PANEL -->
+  <div class="form-panel">
+    <div class="panel-title">Create Your Advocate Stamp</div>
+    <div class="panel-sub">Design your stamp, then drag it onto the document preview</div>
+
+    <div class="section-label">Stamp Text</div>
+
+    <div class="field">
+      <label>Line 1 (Name)</label>
+      <input type="text" id="line1" placeholder="ADV. RAJESH KUMAR" value="ADV. RAJESH KUMAR">
+    </div>
+    <div class="field">
+      <label>Line 2</label>
+      <input type="text" id="line2" placeholder="Advocate, High Court" value="Advocate, High Court">
+    </div>
+    <div class="field">
+      <label>Line 3</label>
+      <input type="text" id="line3" placeholder="Enrl. No. UP/1234/2010" value="Enrl. No. UP/1234/2010">
+    </div>
+    <div class="field">
+      <label>Line 4</label>
+      <input type="text" id="line4" placeholder="Mob: 9876543210" value="Mob: 9876543210">
+    </div>
+    <div class="field">
+      <label>Line 5 (optional)</label>
+      <input type="text" id="line5" placeholder="Chamber No. 42, High Court">
+    </div>
+
+    <div class="section-label">Stamp Shape</div>
+    <div class="shape-grid">
+      <button class="shape-btn active" data-shape="round" onclick="setShape('round',this)">
+        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+        Round
+      </button>
+      <button class="shape-btn" data-shape="rect" onclick="setShape('rect',this)">
+        <svg viewBox="0 0 40 40"><rect x="3" y="8" width="34" height="24" rx="2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+        Rectangle
+      </button>
+      <button class="shape-btn" data-shape="oval" onclick="setShape('oval',this)">
+        <svg viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="17" ry="12" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+        Oval
+      </button>
+      <button class="shape-btn" data-shape="hex" onclick="setShape('hex',this)">
+        <svg viewBox="0 0 40 40"><polygon points="20,3 35,11 35,29 20,37 5,29 5,11" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+        Hexagon
+      </button>
+    </div>
+
+    <div class="section-label">Style</div>
+
+    <div class="field">
+      <label>Ink Colour</label>
+      <div class="color-row">
+        <div class="color-swatch active" style="background:#1A3A6B" data-color="#1A3A6B" onclick="setColor('#1A3A6B',this)" title="Navy"></div>
+        <div class="color-swatch" style="background:#C41E3A" data-color="#C41E3A" onclick="setColor('#C41E3A',this)" title="Red"></div>
+        <div class="color-swatch" style="background:#006400" data-color="#006400" onclick="setColor('#006400',this)" title="Green"></div>
+        <div class="color-swatch" style="background:#111111" data-color="#111111" onclick="setColor('#111111',this)" title="Black"></div>
+        <div class="color-swatch" style="background:#7B3F00" data-color="#7B3F00" onclick="setColor('#7B3F00',this)" title="Brown"></div>
+        <div class="color-swatch" style="background:#4B0082" data-color="#4B0082" onclick="setColor('#4B0082',this)" title="Indigo"></div>
+        <input type="color" id="customColor" value="#1A3A6B" onchange="setColor(this.value,null)" title="Custom colour" style="width:28px;height:28px;border:none;border-radius:50%;cursor:pointer;background:none;padding:0">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Opacity <span id="opacityVal" style="color:var(--tx)">85%</span></label>
+      <div class="range-row">
+        <input type="range" id="opacity" min="30" max="100" value="85" oninput="updateStamp()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Size <span id="sizeVal" style="color:var(--tx)">180px</span></label>
+      <div class="range-row">
+        <input type="range" id="stampSize" min="100" max="300" value="180" oninput="updateStamp()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Border Width <span id="borderVal" style="color:var(--tx)">2px</span></label>
+      <div class="range-row">
+        <input type="range" id="borderWidth" min="1" max="6" value="2" oninput="updateStamp()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Font Size <span id="fontVal" style="color:var(--tx)">11px</span></label>
+      <div class="range-row">
+        <input type="range" id="fontSize" min="7" max="18" value="11" oninput="updateStamp()">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="updateStamp()">↺ Refresh Stamp</button>
+      <button class="btn-secondary" onclick="resetPos()">⊕ Reset Position</button>
+    </div>
+
+    <div class="stamp-actions" style="margin-top:12px">
+      <button class="btn-dl btn-dl-png" onclick="downloadPNG()">⬇ Download Stamp PNG</button>
+      <button class="btn-dl" onclick="window.print()" style="background:var(--tx2)">🖨 Print with Stamp</button>
+    </div>
+
+  </div>
+
+  <!-- PREVIEW PANEL -->
+  <div class="preview-panel" id="previewPanel">
+    <div class="preview-label">← Design your stamp · Drag it anywhere on the document</div>
+
+    <div class="paper" id="paper">
+      <!-- Sample legal document content -->
+      <div style="text-align:center;margin-bottom:5mm">
+        <div style="font-size:13pt;font-weight:700">IN THE HIGH COURT OF JUDICATURE AT ALLAHABAD</div>
+        <div style="font-size:10pt;margin-top:1mm">Civil Misc. Writ Petition No. _____ of 2026</div>
+      </div>
+      <hr style="border:none;border-top:2px solid #111;margin:3mm 0">
+      <div style="display:flex;justify-content:space-between;font-size:9.5pt;margin-bottom:3mm">
+        <span><strong>Petitioner:</strong> Ram Prasad Sharma</span>
+        <span><strong>Date:</strong> 21.08.2026</span>
+      </div>
+      <div style="font-size:9.5pt;margin-bottom:4mm"><strong>Respondent:</strong> State of Uttar Pradesh & Ors.</div>
+      <hr style="border:none;border-top:1px solid #111;margin:2mm 0 4mm">
+
+      <div class="paper-title">VAKALATNAMA</div>
+
+      <div class="paper-content">
+        <p>I, Ram Prasad Sharma, S/o Shri Mohan Lal Sharma, resident of Village Rampur, District Prayagraj, the Petitioner above named, do hereby appoint, retain and authorise the Advocate named herein to appear, plead and act for me in the above mentioned case.</p>
+        <p>I authorise my Advocate to do all acts, deeds and things in my name which may be necessary or incidental to my case, including filing of petitions, applications, affidavits and such other documents as may be required from time to time.</p>
+        <p>I agree to ratify and confirm all acts done by my Advocate in pursuance of this authority. I have not executed any other Vakalatnama in favour of any other Advocate in this case.</p>
+        <p>I agree to pay the professional fees and costs as agreed between the Advocate and myself.</p>
+      </div>
+
+      <div style="margin-top:14mm;display:flex;justify-content:space-between;align-items:flex-end">
+        <div style="font-size:10pt">
+          <div style="border-top:1px solid #111;display:inline-block;width:55mm;margin-bottom:2px"></div>
+          <div>Signature of Client</div>
+          <div style="font-size:9pt;color:#555;margin-top:1mm">Ram Prasad Sharma</div>
+        </div>
+        <div style="font-size:10pt;text-align:right">
+          <div style="border-top:1px solid #111;display:inline-block;width:55mm;margin-bottom:2px"></div>
+          <div>Signature of Advocate</div>
+        </div>
+      </div>
+
+      <!-- DRAGGABLE STAMP -->
+      <div class="stamp-container" id="stampContainer">
+        <canvas id="stampCanvas"></canvas>
+        <div class="stamp-hint" id="stampHint">drag to reposition</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let stampColor = '#1A3A6B';
+let stampShape = 'round';
+let isDragging = false;
+let dragOffX = 0, dragOffY = 0;
+
+const canvas  = document.getElementById('stampCanvas');
+const ctx     = canvas.getContext('2d');
+const container = document.getElementById('stampContainer');
+const paper   = document.getElementById('paper');
+
+// Initial position — bottom right area
+function resetPos(){
+  container.style.left = '120mm';
+  container.style.top  = '155mm';
+}
+resetPos();
+
+// ── DRAW STAMP ────────────────────────────────────────────────────────────────
+function updateStamp(){
+  const size   = parseInt(document.getElementById('stampSize').value);
+  const bw     = parseInt(document.getElementById('borderWidth').value);
+  const fs     = parseInt(document.getElementById('fontSize').value);
+  const op     = parseInt(document.getElementById('opacity').value) / 100;
+
+  document.getElementById('sizeVal').textContent   = size + 'px';
+  document.getElementById('borderVal').textContent = bw + 'px';
+  document.getElementById('fontVal').textContent   = fs + 'px';
+  document.getElementById('opacityVal').textContent = Math.round(op*100) + '%';
+
+  const lines = [
+    document.getElementById('line1').value,
+    document.getElementById('line2').value,
+    document.getElementById('line3').value,
+    document.getElementById('line4').value,
+    document.getElementById('line5').value,
+  ].filter(l => l.trim());
+
+  // Canvas size based on shape
+  let cw, ch;
+  if(stampShape === 'round' || stampShape === 'hex'){
+    cw = ch = size;
+  } else if(stampShape === 'rect'){
+    cw = size * 1.5; ch = size * 0.7;
+  } else { // oval
+    cw = size * 1.4; ch = size * 0.75;
+  }
+
+  canvas.width  = Math.ceil(cw);
+  canvas.height = Math.ceil(ch);
+  ctx.clearRect(0, 0, cw, ch);
+  ctx.globalAlpha = op;
+
+  const cx = cw / 2, cy = ch / 2;
+  ctx.strokeStyle = stampColor;
+  ctx.fillStyle   = stampColor;
+  ctx.lineWidth   = bw;
+
+  // Draw shape border
+  ctx.beginPath();
+  if(stampShape === 'round'){
+    const r = size/2 - bw;
+    ctx.arc(cx, cy, r, 0, Math.PI*2);
+    // Inner ring
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r - bw*2 - 2, 0, Math.PI*2);
+    ctx.stroke();
+  } else if(stampShape === 'rect'){
+    const pad = bw + 2;
+    ctx.roundRect(pad, pad, cw - pad*2, ch - pad*2, 4);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.roundRect(pad + bw + 2, pad + bw + 2, cw - (pad+bw+2)*2, ch - (pad+bw+2)*2, 2);
+    ctx.stroke();
+  } else if(stampShape === 'oval'){
+    ctx.ellipse(cx, cy, cw/2 - bw, ch/2 - bw, 0, 0, Math.PI*2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, cw/2 - bw*3, ch/2 - bw*3, 0, 0, Math.PI*2);
+    ctx.stroke();
+  } else if(stampShape === 'hex'){
+    const r = size/2 - bw;
+    hexPath(ctx, cx, cy, r);
+    ctx.stroke();
+    hexPath(ctx, cx, cy, r - bw*2.5);
+    ctx.stroke();
+  }
+
+  // Draw text lines
+  const totalLines = lines.length;
+  const lineH = fs * 1.35;
+  const totalH = totalLines * lineH;
+  let startY = cy - totalH/2 + fs/2;
+
+  // For round/oval/hex, clip text area
+  ctx.save();
+  if(stampShape === 'round'){
+    ctx.beginPath();
+    ctx.arc(cx, cy, size/2 - bw*4, 0, Math.PI*2);
+    ctx.clip();
+  }
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  lines.forEach((line, i) => {
+    const isFirst = i === 0;
+    ctx.font = `${isFirst ? 'bold ' : ''}${isFirst ? fs+1 : fs}px 'Inter',sans-serif`;
+    // Decorative line above first text in round stamp
+    if(i === 0 && (stampShape === 'round' || stampShape === 'oval')){
+      ctx.beginPath();
+      const lw = Math.min(size * 0.4, 60);
+      ctx.moveTo(cx - lw/2, startY - fs*0.9);
+      ctx.lineTo(cx + lw/2, startY - fs*0.9);
+      ctx.lineWidth = bw * 0.7;
+      ctx.stroke();
+      ctx.lineWidth = bw;
+    }
+    ctx.fillText(line, cx, startY + i * lineH);
+  });
+
+  // Bottom decorative line for round/oval
+  if(stampShape === 'round' || stampShape === 'oval'){
+    const lastY = startY + (totalLines-1)*lineH + fs*0.7;
+    ctx.beginPath();
+    const lw = Math.min(size * 0.4, 60);
+    ctx.moveTo(cx - lw/2, lastY);
+    ctx.lineTo(cx + lw/2, lastY);
+    ctx.lineWidth = bw * 0.7;
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function hexPath(ctx, cx, cy, r){
+  ctx.beginPath();
+  for(let i = 0; i < 6; i++){
+    const angle = Math.PI/180 * (60*i - 30);
+    const x = cx + r * Math.cos(angle);
+    const y = cy + r * Math.sin(angle);
+    i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+}
+
+function setColor(hex, el){
+  stampColor = hex;
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+  if(el) el.classList.add('active');
+  document.getElementById('customColor').value = hex;
+  updateStamp();
+}
+
+function setShape(shape, el){
+  stampShape = shape;
+  document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  updateStamp();
+}
+
+// ── DRAG ─────────────────────────────────────────────────────────────────────
+container.addEventListener('mousedown', e => {
+  isDragging = true;
+  const r = container.getBoundingClientRect();
+  dragOffX = e.clientX - r.left;
+  dragOffY = e.clientY - r.top;
+  document.getElementById('stampHint').style.display = 'none';
+  e.preventDefault();
+});
+
+document.addEventListener('mousemove', e => {
+  if(!isDragging) return;
+  const pr = paper.getBoundingClientRect();
+  let x = e.clientX - pr.left - dragOffX;
+  let y = e.clientY - pr.top  - dragOffY;
+  // Clamp within paper
+  x = Math.max(-canvas.width/2, Math.min(paper.offsetWidth - canvas.width/2, x));
+  y = Math.max(-canvas.height/2, Math.min(paper.offsetHeight - canvas.height/2, y));
+  container.style.left = x + 'px';
+  container.style.top  = y + 'px';
+});
+
+document.addEventListener('mouseup', () => isDragging = false);
+
+// Touch support
+container.addEventListener('touchstart', e => {
+  const t = e.touches[0];
+  isDragging = true;
+  const r = container.getBoundingClientRect();
+  dragOffX = t.clientX - r.left;
+  dragOffY = t.clientY - r.top;
+  document.getElementById('stampHint').style.display = 'none';
+  e.preventDefault();
+}, {passive:false});
+
+document.addEventListener('touchmove', e => {
+  if(!isDragging) return;
+  const t = e.touches[0];
+  const pr = paper.getBoundingClientRect();
+  let x = t.clientX - pr.left - dragOffX;
+  let y = t.clientY - pr.top  - dragOffY;
+  x = Math.max(-canvas.width/2, Math.min(paper.offsetWidth - canvas.width/2, x));
+  y = Math.max(-canvas.height/2, Math.min(paper.offsetHeight - canvas.height/2, y));
+  container.style.left = x + 'px';
+  container.style.top  = y + 'px';
+  e.preventDefault();
+}, {passive:false});
+
+document.addEventListener('touchend', () => isDragging = false);
+
+// ── DOWNLOAD STAMP PNG ────────────────────────────────────────────────────────
+function downloadPNG(){
+  updateStamp();
+  const link = document.createElement('a');
+  link.download = 'advocate-stamp.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// ── LIVE UPDATE ON INPUT ──────────────────────────────────────────────────────
+['line1','line2','line3','line4','line5'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateStamp);
+});
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+updateStamp();
+</script>
+</body>
+</html>

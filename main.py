@@ -102,6 +102,16 @@ async def security_headers(request: Request, call_next):
 
 
 # ── Routes ────────────────────────────────────────────────────────
+
+@app.get("/favicon.ico")
+async def favicon():
+    from fastapi.responses import Response
+    # Return a minimal 1x1 blue square ICO
+    import base64
+    ico_b64 = "AAABAAEAAQEAAAEAGAAsAAAAFgAAACgAAAABAAAAAgAAAAEAGAAAAAAAAAAAAMQOAADEDgAAAAAAAAAAAAD/AAAAAAA="
+    ico_bytes = base64.b64decode(ico_b64)
+    return Response(content=ico_bytes, media_type="image/x-icon")
+
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     html_path = os.path.join(os.path.dirname(__file__), "templates", "index.html")
@@ -137,6 +147,18 @@ async def memo_appearance(request: Request):
         return HTMLResponse(content=open(html_path).read())
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Template not found")
+
+@app.get("/stamp-generator", response_class=HTMLResponse)
+async def stamp_generator(request: Request):
+    html_path = os.path.join(os.path.dirname(__file__), "templates", "stamp-generator.html")
+    with open(html_path, "r") as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/stamp-generator", response_class=HTMLResponse)
+async def stamp_generator(request: Request):
+    html_path = os.path.join(os.path.dirname(__file__), "templates", "stamp-generator.html")
+    with open(html_path, "r") as f:
+        return HTMLResponse(content=f.read())
 
 @app.get("/bail-bond", response_class=HTMLResponse)
 async def bail_bond(request: Request):
@@ -209,6 +231,12 @@ class FeedbackForm(BaseModel):
     message: str
     email: str = ""
     url: str = ""
+
+@app.get("/feedback", response_class=HTMLResponse, include_in_schema=False)
+async def feedback_get(request: Request):
+    """Redirect Googlebot away — this endpoint is POST only"""
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/tools", status_code=301)
 
 @app.post("/feedback")
 async def submit_feedback(data: FeedbackForm):
@@ -299,7 +327,7 @@ async def google_verify():
 @app.get("/robots.txt")
 async def robots():
     return HTMLResponse(
-        content="User-agent: *\nAllow: /\nDisallow: /health\n",
+        content="User-agent: *\nAllow: /\nDisallow: /health\nDisallow: /feedback\nDisallow: /api/\nDisallow: /admin-lhc-qa-panel\n",
         media_type="text/plain",
     )
 
