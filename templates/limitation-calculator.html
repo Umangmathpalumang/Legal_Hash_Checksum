@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
 <script>
@@ -12,10 +13,34 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Limitation Period Calculator — Indian Courts</title>
-<meta name="description" content="Calculate limitation periods under the Limitation Act 1963 for Indian courts. Enter cause of action date and get the exact last date to file.">
+<title>138 Limitation Calculator & Condonation of Delay | Indian Courts</title>
+<meta name="description" content="Free 138 limitation calculator for cheque bounce cases under NI Act. Calculate limitation periods, check condonation of delay (Section 5) days, and find exact filing dates.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- SEO FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "How do you calculate limitation for Section 138 Cheque Bounce?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For a cheque bounce under Section 138 of the NI Act, the limitation period is 1 month from the date of expiry of the 15-day legal notice period. You must file the complaint within this strict 30-day window."
+    }
+  }, {
+    "@type": "Question",
+    "name": "What is a condonation of delay calculator?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "If you miss the statutory limitation period, you must file an application under Section 5 of the Limitation Act for condonation of delay. This calculator shows exactly how many days your filing is delayed so you can state the exact duration in your court affidavit."
+    }
+  }]
+}
+</script>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#0d1117;--surface:#161b22;--card:#1c2128;--border:#30363d;--accent:#2563EB;--accent-light:#60a5fa;--text:#e6edf3;--muted:#8b949e;--green:#22c55e;--red:#f87171;--amber:#f59e0b}
@@ -81,6 +106,9 @@ h1{font-size:26px;font-weight:800;margin-bottom:8px}
       <label class="field-label">Type of Suit / Application</label>
       <select class="field-select" id="suitType" onchange="calculate()">
         <option value="">— Select suit type —</option>
+        <optgroup label="Cheque Bounce (NI Act 138)">
+          <option value="1,cheque">Cheque bounce complaint u/s 138 NI Act (1 month from expiry of notice)</option>
+        </optgroup>
         <optgroup label="Money Recovery">
           <option value="3,money">Money suit on written contract (3 years)</option>
           <option value="3,money">Recovery of money lent (3 years)</option>
@@ -92,9 +120,6 @@ h1{font-size:26px;font-weight:800;margin-bottom:8px}
           <option value="12,property">Recovery of immovable property (12 years)</option>
           <option value="3,property">Specific performance of contract (3 years)</option>
           <option value="1,property">Possession after determination of lease (1 year)</option>
-        </optgroup>
-        <optgroup label="Cheque Bounce (NI Act 138)">
-          <option value="1,cheque">Cheque bounce complaint u/s 138 NI Act (1 month from expiry of notice)</option>
         </optgroup>
         <optgroup label="Tort / Civil Wrong">
           <option value="1,tort">Damages for malicious prosecution (1 year)</option>
@@ -177,6 +202,19 @@ h1{font-size:26px;font-weight:800;margin-bottom:8px}
       </tbody>
     </table>
   </div>
+
+  <!-- SEO Content Section -->
+  <div class="card" style="margin-top:24px; background:var(--surface);">
+    <h2>Section 138 & Condonation of Delay Guide</h2>
+    <div style="font-size:14px; color:var(--muted); line-height:1.6;">
+      <h3 style="color:var(--text); font-size:15px; margin:16px 0 8px;">How the 138 Limitation Calculator Works</h3>
+      <p style="margin-bottom:12px;">Under Section 138 of the Negotiable Instruments (NI) Act, strict timelines apply. Once a cheque bounces, you must send a legal notice within 30 days. The drawer has 15 days to pay. If they fail, the cause of action arises, and you have exactly <strong>1 month (30 days)</strong> to file the complaint.</p>
+      
+      <h3 style="color:var(--text); font-size:15px; margin:16px 0 8px;">Condonation of Delay Calculator (Section 5)</h3>
+      <p>If your limitation period shows as <strong>EXPIRED</strong>, Indian courts may still accept your case if you have a "sufficient cause". You must file an application under Section 5 of the Limitation Act, 1963. Use the negative "Days Remaining" value from this calculator to state the exact number of delayed days in your condonation affidavit.</p>
+    </div>
+  </div>
+
 </div>
 
 <script>

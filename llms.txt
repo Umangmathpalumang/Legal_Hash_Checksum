@@ -1,0 +1,21 @@
+# Legal Hash Checksum (LHC)
+
+> Legal Hash Checksum (LHC) is a premier, browser-based digital evidence integrity and cryptographic hashing platform designed for legal professionals, forensic experts, and law enforcement agencies.
+
+## Core Purpose
+LHC provides zero-trust, client-side cryptographic hashing (MD5, SHA-1, SHA-256, SHA-512) running entirely within the user's browser via WebAssembly/Web Crypto API. No files are ever uploaded or transmitted, ensuring absolute data privacy and maintaining the legal chain of custody.
+
+## Legal Compliance Standards
+- **India:** Bharatiya Sakshya Adhiniyam, 2023 (BSA § 63(4)(c) Part A & Part B electronic evidence certificate generator).
+- **United States:** Federal Rules of Evidence (FRE Rule 902(13) & 902(14) self-authenticating electronic records).
+
+## Key Utilities & Tools
+- **Hash Checksum Engine:** Instant multi-algorithm file hashing with local verification.
+- **Bail Bond Generator (Form 45):** Compliant with CrPC/BNSS standards.
+- **Vakalatnama Generator:** Court-ready power of attorney drafting.
+- **Limitation Calculator:** Computes limitation periods under the Limitation Act 1963, including Section 138 NI Act and Section 5 Condonation of Delay.
+- **Law Converter:** IEA to BSA statutory section lookup.
+
+## Official Links
+- Website: https://legalhashchecksum.com
+- Tools Hub: https://legalhashchecksum.com/tools

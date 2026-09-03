@@ -15,6 +15,7 @@ import logging
 from collections import defaultdict
 from datetime import datetime, timezone
 
+from fastapi.responses import FileResponse
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -112,6 +113,10 @@ async def favicon():
     ico_bytes = base64.b64decode(ico_b64)
     return Response(content=ico_bytes, media_type="image/x-icon")
 
+@app.get("/favicon.svg", include_in_schema=False)
+async def favicon_svg():
+    return FileResponse("favicon.svg", media_type="image/svg+xml")
+
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     html_path = os.path.join(os.path.dirname(__file__), "templates", "index.html")
@@ -120,7 +125,17 @@ async def index(request: Request):
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Template not found")
 
+@app.get("/llms.txt", include_in_schema=False)
+async def llms_text():
+    return FileResponse("llms.txt", media_type="text/plain")
 
+@app.get("/verify", response_class=HTMLResponse)
+async def verify_portal(request: Request):
+    html_path = os.path.join(os.path.dirname(__file__), "templates", "verify.html")
+    try:
+        return HTMLResponse(content=open(html_path).read())
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Template not found")
 
 @app.get("/tools", response_class=HTMLResponse)
 async def tools(request: Request):
