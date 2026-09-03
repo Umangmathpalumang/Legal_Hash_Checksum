@@ -1,10 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bail Bond Generator — Indian Courts</title>
 <meta name="description" content="Free Bail Bond generator for Indian courts. Form No. 45, Section 436/437/438/441 CrPC. Fill and print instantly.">
+<link rel="canonical" href="https://legalhashchecksum.com/bail-bond">
+
+<!-- SEO Upgrade: Open Graph Tags -->
+<meta property="og:title" content="Bail Bond Generator — Indian Courts">
+<meta property="og:description" content="Free Bail Bond generator for Indian courts. Form No. 45, Section 436/437/438/441 CrPC. Fill and print instantly.">
+<meta property="og:url" content="https://legalhashchecksum.com/bail-bond">
+<meta property="og:type" content="website">
+
+<!-- SEO Upgrade: JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Bail Bond Generator (Form 45)",
+  "url": "https://legalhashchecksum.com/bail-bond",
+  "description": "Free Bail Bond generator for Indian courts. Form No. 45, Section 436/437/438/441 CrPC. Fill and print instantly.",
+  "applicationCategory": "LegalApplication",
+  "operatingSystem": "Any"
+}
+</script>
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -160,13 +190,14 @@ textarea.field-input{resize:vertical;min-height:52px}
     <span class="nav-name">Bail Bond Generator</span>
   </a>
   <div class="nav-links">
+    <a href="https://legalhashchecksum.com/" class="nav-link">Hash Tool</a>
+    <a href="https://legalhashchecksum.com/tools" class="nav-link">All Tools</a>
     <button class="btn-print" onclick="window.print()">
       <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Print / Save PDF
     </button>
   </div>
 </nav>
-
 <!-- ── STAMP BAR ── -->
 <div class="stamp-bar" id="stampBar">
   <span class="stamp-bar-label">🖂 Stamp:</span>
@@ -1127,5 +1158,34 @@ function downloadStampPNG(){
   if(el)el.addEventListener('input',smPreview);
 });
 </script>
+
+<!-- ── SEO FAQ Section (Hidden in Print) ── -->
+<style>
+  @media print { #seo-faq { display: none !important; } }
+  #seo-faq { margin: 40px auto; padding: 32px 24px; max-width: 860px; border-top: 1px solid var(--border); }
+  #seo-faq h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+  #seo-faq h3 { font-size: 14px; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+  #seo-faq p { font-size: 13px; color: var(--muted); margin-bottom: 12px; line-height: 1.6; }
+  #seo-faq ul { font-size: 13px; color: var(--muted); margin-bottom: 12px; padding-left: 20px; line-height: 1.6; }
+</style>
+
+<section id="seo-faq">
+  <h2>Bail Bond (Form No. 45) Guide & FAQ</h2>
+  
+  <h3>What is Form No. 45 under CrPC / BNSS?</h3>
+  <p><strong>Form No. 45</strong> is the standard legal format used in Indian courts for a Bail Bond and Surety Bond. It is executed under Sections 436, 437, 438, and 441 of the Code of Criminal Procedure (CrPC) / corresponding sections of the BNSS, ensuring the accused's attendance in court.</p>
+
+  <h3>How to fill a bail bond format for court?</h3>
+  <p>Filling out a <strong>bail bond format</strong> requires precise details to satisfy the court's registry. You must include:</p>
+  <ul>
+    <li><strong>Court & FIR Details:</strong> The presiding court, Police Station, FIR Number, and Under Section (e.g., 302 IPC or BNS equivalent).</li>
+    <li><strong>Accused Details:</strong> Full name, parentage, address, and the bail amount set by the judge.</li>
+    <li><strong>Surety Details:</strong> The guarantor's information, including property, vehicle, or FDR details proving their financial capacity to stand as surety.</li>
+  </ul>
+
+  <h3>Generate a Bail Bond PDF</h3>
+  <p>To generate your document, simply fill out the form above. Select between the combined Form 45, a standalone Bail Bond, or a Surety Bond. Click the "Print / Save PDF" button. Your browser will automatically format the data into a clean, print-ready <strong>Bail Bond PDF</strong> that you can sign and submit directly to the court.</p>
+</section>
+<!-- ── End SEO FAQ ── -->
 </body>
 </html>
