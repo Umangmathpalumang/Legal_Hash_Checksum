@@ -3,13 +3,29 @@
 <head>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ">
+function filterTools() {
+  var input = document.getElementById('mobileSearch').value.toLowerCase();
+  document.querySelectorAll('.tool-card').forEach(function(card) {
+    var title = card.querySelector('.card-title').innerText.toLowerCase();
+    card.style.display = title.includes(input) ? '' : 'none';
+  });
+}
+</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
   window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+
+function filterTools() {
+  var input = document.getElementById('mobileSearch').value.toLowerCase();
+  document.querySelectorAll('.tool-card').forEach(function(card) {
+    var title = card.querySelector('.card-title').innerText.toLowerCase();
+    card.style.display = title.includes(input) ? '' : 'none';
+  });
+}
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +39,8 @@
 <link rel="canonical" href="https://legalhashchecksum.com/tools">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>⚖</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -75,10 +92,10 @@ nav{
 .nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .nav-name{font-size:14px;font-weight:700;letter-spacing:-.01em}
 .nav-right{display:flex;align-items:center;gap:10px}
-.nav-pill{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--green-dim);color:var(--green);border:1px solid var(--green-border);padding:4px 10px;border-radius:20px}
+.nav-pill{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--green-dim);color:#15803d;border:1px solid var(--green-border);padding:4px 10px;border-radius:20px}
 .nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:8px;transition:border-color .2s,color .2s;display:flex;align-items:center;gap:5px}
 .nav-link svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.nav-link:hover{border-color:var(--accent);color:var(--accent-light)}
+.nav-link:hover{border-color:var(--accent);color:var(--accent)}
 
 /* ── HERO ── */
 .hero{
@@ -89,7 +106,7 @@ nav{
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:7px;
   background:var(--accent-glow);border:1px solid rgba(37,99,235,.3);
-  color:var(--accent-light);font-size:11px;font-weight:700;
+  color:var(--accent);font-size:11px;font-weight:700;
   letter-spacing:.07em;text-transform:uppercase;
   padding:5px 14px;border-radius:20px;margin-bottom:24px;
 }
@@ -99,7 +116,7 @@ nav{
   letter-spacing:-.03em;line-height:1.1;
   margin-bottom:18px;
 }
-.hero h1 em{font-style:normal;color:var(--accent-light)}
+.hero h1 em{font-style:normal;color:var(--accent)}
 .hero-desc{
   font-size:16px;color:var(--muted);
   max-width:480px;margin:0 auto 40px;
@@ -118,7 +135,7 @@ nav{
   border-right:1px solid var(--border);
 }
 .stat-item:last-child{border-right:none}
-.stat-n{font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--accent-light)}
+.stat-n{font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--accent)}
 .stat-l{font-size:10px;color:var(--muted);margin-top:2px;font-weight:500;letter-spacing:.02em}
 
 /* ── CATEGORY BAR ── */
@@ -287,7 +304,90 @@ footer a:hover{text-decoration:underline}
 .fb-ok svg{width:36px;height:36px;stroke:var(--green);fill:none;stroke-width:1.5;margin:0 auto 10px;display:block}
 .fb-ok h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px}
 .fb-ok p{font-size:12px;color:var(--muted)}
+
+/* APP-LIKE MOBILE VIEW */
+@media (max-width: 768px) {
+  body { background: #f4f7fb; }
+  nav { display: none; } /* Hide standard top nav */
+  
+  /* Dark Header matching mockup */
+  .hero {
+    background: #0f172a; 
+    color: #fff;
+    padding: 50px 20px 30px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 24px; color: #fff; margin-bottom: 4px; }
+  .hero h1 em { color: #fff; font-style: normal; }
+  .hero-desc { font-size: 13px; color: #cbd5e1; margin-bottom: 0; }
+  .hero-eyebrow, .stat-strip, .cat-bar-wrap { display: none; }
+  
+  /* Real Search Bar */
+  .mobile-search-box {
+    width: 100%;
+    background: #f8fafc;
+    color: #1e293b;
+    padding: 12px 18px;
+    border-radius: 24px;
+    border: none;
+    font-size: 14px;
+    margin-top: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    outline: none;
+  }
+  .mobile-search-box::placeholder { color: #64748b; }
+
+  /* 3-Column Grid for Tools */
+  .tools-wrap { padding: 24px 16px 110px; }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  
+  /* App Icon Cards */
+  .tool-card {
+    background: #fff;
+    border: none;
+    border-radius: 18px;
+    padding: 16px 8px;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  }
+  .card-head { margin: 0 0 10px 0; justify-content: center; width: 100%; }
+  .card-meta, .card-desc, .card-foot { display: none; }
+  .card-icon { width: 44px; height: 44px; background: transparent !important; }
+  .card-icon svg { width: 34px; height: 34px; stroke: #334155; stroke-width: 1.5; }
+  .card-title { font-size: 11px; font-weight: 600; color: #1e293b; line-height: 1.2; }
+
+  /* Bottom App Navigation */
+  .app-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #fff;
+    padding: 12px 24px calc(12px + env(safe-area-inset-bottom));
+    justify-content: space-between;
+    border-top: 1px solid #e2e8f0;
+    z-index: 1000;
+  }
+  .app-nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    text-decoration: none; color: #94a3b8; font-size: 10px; font-weight: 600;
+  }
+  .app-nav-item.active { color: #0f172a; }
+  .app-nav-item svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+  .app-nav-item.active svg { fill: #0f172a; stroke: none; }
+  
+  footer { display: none; }
+  .fb-btn { bottom: 85px; right: 16px; transform: scale(0.85); }
+}
+@media (min-width: 769px) { .app-nav { display: none; } }
 </style>
+
 </head>
 <body>
 
@@ -310,6 +410,7 @@ footer a:hover{text-decoration:underline}
     </a>
   </div>
 </nav>
+<main>
 
 <!-- ── HERO ── -->
 <div class="hero">
@@ -319,6 +420,7 @@ footer a:hover{text-decoration:underline}
   </div>
   <h1>Every tool your<br><em>practice needs</em></h1>
   <p class="hero-desc">Draft documents, lookup sections, calculate fees — professional tools built for Indian courts. No login. No data sent to any server.</p>
+  <input type="text" id="mobileSearch" class="mobile-search-box" placeholder="🔍 Search tools..." onkeyup="filterTools()">
   <div class="stat-strip">
     <div class="stat-item"><div class="stat-n">13</div><div class="stat-l">Live tools</div></div>
     <div class="stat-item"><div class="stat-n">100%</div><div class="stat-l">Free & private</div></div>
@@ -582,6 +684,7 @@ footer a:hover{text-decoration:underline}
   </div><!-- end grid -->
 </div><!-- end tools-wrap -->
 
+</main>
 <footer>
   <p>Built for Indian advocates · All tools are free &amp; private · No data is sent to any server</p>
   <p style="margin-top:6px"><a href="https://legalhashchecksum.com/">legalhashchecksum.com</a></p>
@@ -596,7 +699,7 @@ footer a:hover{text-decoration:underline}
     <div id="fbForm">
       <div class="fb-head">
         <div class="fb-ttl">Send Feedback</div>
-        <button class="fb-x" onclick="fbClose()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <button class="fb-x" aria-label="Close feedback" onclick="fbClose()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
       <div class="fb-types">
         <button class="fb-type active" onclick="fbSetType(this,'Bug / Error')">Bug</button>
@@ -697,6 +800,49 @@ document.querySelectorAll('.tool-card').forEach(function(card){
     }
   });
 })();
+
+function filterTools() {
+  var input = document.getElementById('mobileSearch').value.toLowerCase();
+  document.querySelectorAll('.tool-card').forEach(function(card) {
+    var title = card.querySelector('.card-title').innerText.toLowerCase();
+    card.style.display = title.includes(input) ? '' : 'none';
+  });
+}
 </script>
+
+
+<!-- ToolPilot Directory Backlink -->
+<div style="text-align: center; padding: 30px 20px 60px; clear: both;">
+  <a href="https://www.toolpilot.ai" target="_blank" style="display: inline-block; opacity: 0.85; transition: opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85">
+    <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1692 468" style="height: 32px; width: auto; fill: currentColor; display: block;"><defs><style>.cls-1{fill-rule:evenodd;stroke-width:0px;}</style></defs><g id="Layer_1-2"><path class="cls-1" d="m756,108h-90c-9.94,0-18,8.06-18,18v108c0,9.94,8.06,18,18,18h90c9.94,0,18-8.06,18-18v-108c0-9.94-8.06-18-18-18Zm0,126h-90v-108h90v108Zm144-126h-90c-9.94,0-18,8.06-18,18v108c0,9.94,8.06,18,18,18h90c9.94,0,18-8.06,18-18v-108c0-9.94-8.06-18-18-18Zm0,126h-90v-108h90v108ZM432,72h-216v396h36V108h180v144h-144v36h144c19.88,0,36-16.12,36-36V108c0-19.88-16.12-36-36-36Zm72,54h54v126h18v-126h54v-18h-126v18ZM36,36h252V0H0v108h144v288h36V72H36v-36Zm1260,72h-18v144h126v-18h-108v-126Zm-54,144h18V108h-18v144Zm288-144h-90c-9.94,0-18,8.06-18,18v108c0,9.94,8.06,18,18,18h90c9.94,0,18-8.06,18-18v-108c0-9.94-8.06-18-18-18Zm0,126h-90v-108h90v108Zm36-126v18h54v126h18v-126h54v-18h-126Zm-360,0h-108v144h18v-54h90c9.94,0,18-8.06,18-18v-54c0-9.94-8.06-18-18-18Zm0,72h-90v-54h90v54Zm-252-72h-18v144h126v-18h-108v-126Z"/></g></svg>
+  </a>
+</div>
+  </a>
+</div>
+
+<!-- Mobile App Bottom Nav -->
+<div class="app-nav">
+  <a href="/" class="app-nav-item">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    Home
+  </a>
+  <a href="/cases" class="app-nav-item">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+    Cases
+  </a>
+  <a href="/tools" class="app-nav-item active">
+    <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+    Tools
+  </a>
+  <a href="/alerts" class="app-nav-item">
+    <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+    Alerts
+  </a>
+  <a href="/profile" class="app-nav-item">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    Profile
+  </a>
+</div>
 </body>
+
 </html>

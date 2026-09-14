@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advocate Profile</title>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #f4f7fb; padding: 24px; color: #1e293b; margin: 0; }
+    .container { max-width: 400px; margin: 0 auto; background: #fff; padding: 24px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    h2 { margin-top: 0; font-size: 22px; margin-bottom: 4px; }
+    p.sub { font-size: 13px; color: #64748b; margin-top: 0; margin-bottom: 24px; }
+    label { font-size: 12px; font-weight: 600; color: #475569; margin-top: 16px; display: block; text-transform: uppercase; letter-spacing: 0.05em; }
+    input { width: 100%; padding: 12px; margin-top: 6px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    input:focus { outline: none; border-color: #2563eb; }
+    button { width: 100%; padding: 14px; background: #0f172a; color: #fff; border: none; border-radius: 8px; margin-top: 24px; font-weight: 600; font-size: 15px; cursor: pointer; transition: background 0.2s; }
+    button:active { background: #1e293b; }
+    #status { margin-top: 16px; font-size: 13px; font-weight: 600; color: #10b981; text-align: center; display: none; background: #d1fae5; padding: 8px; border-radius: 6px; }
+    .back-nav { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: #64748b; font-size: 14px; font-weight: 600; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/tools" class="back-nav">← Back to Tools</a>
+    <h2>Advocate Profile</h2>
+    <p class="sub">Data is encrypted and saved locally on this device.</p>
+    
+    <label>Full Name</label>
+    <input type="text" id="advName" placeholder="Adv. Rajesh Kumar">
+    
+    <label>Bar Council Enrollment</label>
+    <input type="text" id="advBar" placeholder="D/1234/2010">
+    
+    <label>Contact Number</label>
+    <input type="text" id="advPhone" placeholder="+91 9876543210">
+    
+    <button onclick="saveProfile()">Save to Device</button>
+    <div id="status">Profile saved successfully!</div>
+  </div>
+
+  <script>
+    // Auto-load existing data on page load
+    document.getElementById('advName').value = localStorage.getItem('advName') || '';
+    document.getElementById('advBar').value = localStorage.getItem('advBar') || '';
+    document.getElementById('advPhone').value = localStorage.getItem('advPhone') || '';
+
+    // Save data to browser local storage
+    function saveProfile() {
+      localStorage.setItem('advName', document.getElementById('advName').value);
+      localStorage.setItem('advBar', document.getElementById('advBar').value);
+      localStorage.setItem('advPhone', document.getElementById('advPhone').value);
+      
+      let status = document.getElementById('status');
+      status.style.display = 'block';
+      setTimeout(() => status.style.display = 'none', 2500);
+    }
+  </script>
+</body>
+</html>

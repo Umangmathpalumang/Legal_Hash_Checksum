@@ -145,6 +145,10 @@ async def tools(request: Request):
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Template not found")
 
+@app.get("/profile", response_class=HTMLResponse)
+async def get_profile():
+    with open("templates/profile.html", "r", encoding="utf-8") as f:
+        return f.read()
 
 @app.get("/vakalatnama", response_class=HTMLResponse)
 async def vakalatnama(request: Request):
@@ -574,3 +578,13 @@ async def admin_edit_answer(aid: int, body: AnswerEdit, request: Request):
         return {"ok": True}
     finally:
         await conn.close()
+
+@app.get("/cases", response_class=HTMLResponse)
+async def get_cases():
+    with open("templates/cases.html", "r", encoding="utf-8") as f:
+        return f.read()
+
+@app.get("/alerts", response_class=HTMLResponse)
+async def get_alerts():
+    with open("templates/alerts.html", "r", encoding="utf-8") as f:
+        return f.read()

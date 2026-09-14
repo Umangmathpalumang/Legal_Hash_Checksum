@@ -1024,5 +1024,23 @@ window.clearStamp = function(){
 })();
 </script>
 
+
+<!-- Auto-fill from Profile LocalStorage -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const savedName = localStorage.getItem('advName');
+  
+  if (savedName) {
+    const advInput = document.getElementById('advocate');
+    if (advInput) {
+      advInput.value = savedName;
+      // Force the form's custom update function to trigger the live preview
+      if (typeof update === 'function') {
+        update(advInput, 'advocate', 80);
+      }
+    }
+  }
+});
+</script>
 </body>
 </html>
