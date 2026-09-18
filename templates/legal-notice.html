@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -167,7 +176,7 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
   <div class="nav-links">
     <a href="https://legalhashchecksum.com/" class="nav-link">Hash Tool</a>
     <a href="https://legalhashchecksum.com/tools" class="nav-link">All Tools</a>
-    <button class="btn-print" onclick="window.print()">
+    <button class="btn-print" onclick="if(typeof gaEvent!=='undefined')gaEvent('print_document',{tool:'legal_notice'});window.print();">
       <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Print / PDF
     </button>
@@ -743,6 +752,7 @@ window.saveStampToStorage = function(){
 
 // ── Download stamp as PNG ─────────────────────────────────────────────────────
 window.downloadStampPNG = function(){
+  if(typeof gaEvent!=='undefined') gaEvent('download_png', {tool:'legal_notice'});
   var lines=['sm1','sm2','sm3','sm4','sm5'].map(function(id){ return document.getElementById(id).value; }).filter(function(l){ return l.trim(); });
   var size=parseInt(document.getElementById('smSize').value);
   var op=parseInt(document.getElementById('smOp').value);

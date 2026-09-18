@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -182,6 +191,7 @@ function sha512(ab){
 
 async function handleFile(file) {
   if (!file) return;
+  if(typeof gaEvent!=='undefined') gaEvent('file_loaded', {tool:'verify', file_size_kb: Math.round(file.size/1024)});
   document.getElementById('fileName').textContent = file.name;
   document.getElementById('fileSize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
   document.getElementById('fileInfo').style.display = 'block';
@@ -215,6 +225,7 @@ function verifyHash() {
   const match = Object.values(computedHashes).some(h => h === expected);
   resEl.style.display = 'block';
   resEl.className = 'vresult ' + (match ? 'ok' : 'er');
+  if(typeof gaEvent!=='undefined') gaEvent('hash_verified', {tool:'verify', result: match ? 'match' : 'mismatch'});
   resEl.innerHTML = match 
     ? '✓ MATCH CONFIRMED — Unaltered Evidence<br><span style="font-size:11px;opacity:0.8">Computed cryptographic hash matches certificate record perfectly.</span>' 
     : '✕ MISMATCH DETECTED — Integrity Compromised<br><span style="font-size:11px;opacity:0.8">The file contents do not match the expected hash.</span>';

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Judgment Digest — Indian Courts | Legal Hash Checksum</title>
+<meta name="description" content="Daily digest of Supreme Court and High Court judgments. Filter by practice area and court. Free for Indian advocates.">
+<link rel="canonical" href="https://legalhashchecksum.com/judgments">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());
+  gtag('config','G-D8RVNQPKBQ',{page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent=function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Daily Judgment Digest — Indian Courts",
+  "url": "https://legalhashchecksum.com/judgments",
+  "description": "Daily digest of Supreme Court and High Court judgments filtered by practice area. Free for Indian advocates.",
+  "applicationCategory": "LegalApplication",
+  "operatingSystem": "Any"
+}
+</script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--s1:#161b22;--s2:#1c2128;--bd:#30363d;--bd2:#3d444d;
+  --tx:#e6edf3;--tx2:#8b949e;--tx3:#656d76;
+  --ac:#2563EB;--acl:#60a5fa;--ac2:#1d4ed8;
+  --ok:#10B981;--er:#f87171;--am:#fbbf24;--pu:#a78bfa;
+  --r:10px;--sans:'Inter',system-ui,sans-serif;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;
+    border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--bg);z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.nav-logo{width:32px;height:32px;background:var(--ac);border-radius:8px;display:flex;
+          align-items:center;justify-content:center;font-size:18px;font-weight:700;
+          font-family:monospace;color:#fff}
+.nav-name{font-size:15px;font-weight:600}
+.nav-links{display:flex;gap:20px}
+.nav-links a{color:var(--tx2);text-decoration:none;font-size:14px;transition:color .15s}
+.nav-links a:hover{color:var(--tx)}
+.nav-links a.active{color:var(--acl)}
+
+/* HERO */
+.hero{padding:40px 28px 24px;max-width:1100px;margin:0 auto}
+.hero h1{font-size:26px;font-weight:700;margin-bottom:8px}
+.hero p{color:var(--tx2);font-size:15px;line-height:1.6}
+.last-updated{display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+              font-size:12px;color:var(--tx3);background:var(--s1);
+              padding:4px 10px;border-radius:20px;border:1px solid var(--bd)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);
+     animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* STATS BAR */
+.stats-bar{max-width:1100px;margin:0 auto 24px;padding:0 28px;
+           display:flex;gap:12px;flex-wrap:wrap}
+.stat-chip{background:var(--s1);border:1px solid var(--bd);border-radius:8px;
+           padding:10px 16px;display:flex;flex-direction:column;gap:2px;min-width:120px}
+.stat-chip .val{font-size:22px;font-weight:700;color:var(--acl)}
+.stat-chip .lbl{font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px}
+
+/* FILTERS */
+.filters{max-width:1100px;margin:0 auto 20px;padding:0 28px;
+         display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:13px;color:var(--tx2);font-weight:500;margin-right:4px}
+.pill-group{display:flex;gap:6px;flex-wrap:wrap}
+.pill{padding:6px 14px;border-radius:20px;border:1px solid var(--bd);
+      background:var(--s1);color:var(--tx2);font-size:13px;cursor:pointer;
+      transition:all .15s;user-select:none}
+.pill:hover{border-color:var(--acl);color:var(--acl)}
+.pill.active{background:var(--ac);border-color:var(--ac);color:#fff}
+
+.filter-row{max-width:1100px;margin:0 auto 12px;padding:0 28px;
+            display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+select{background:var(--s1);border:1px solid var(--bd);color:var(--tx);
+       padding:7px 12px;border-radius:8px;font-size:13px;font-family:var(--sans);
+       cursor:pointer;outline:none}
+select:focus{border-color:var(--ac)}
+.days-group{display:flex;gap:6px}
+.days-btn{padding:6px 12px;border-radius:8px;border:1px solid var(--bd);
+          background:var(--s1);color:var(--tx2);font-size:13px;cursor:pointer;transition:all .15s}
+.days-btn.active{background:var(--s2);border-color:var(--acl);color:var(--acl)}
+.days-btn:hover{border-color:var(--bd2)}
+
+/* CARDS GRID */
+.cards-wrap{max-width:1100px;margin:0 auto;padding:0 28px 60px}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+
+.j-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);
+        padding:18px;display:flex;flex-direction:column;gap:10px;
+        transition:border-color .15s;cursor:pointer;text-decoration:none;color:inherit}
+.j-card:hover{border-color:var(--acl)}
+
+.j-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.j-area{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;
+        text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.area-criminal{background:#f8717120;color:#f87171;border:1px solid #f8717130}
+.area-civil{background:#60a5fa20;color:#60a5fa;border:1px solid #60a5fa30}
+.area-family{background:#a78bfa20;color:#a78bfa;border:1px solid #a78bfa30}
+.area-tax{background:#fbbf2420;color:#fbbf24;border:1px solid #fbbf2430}
+.area-constitutional{background:#34d39920;color:#34d399;border:1px solid #34d39930}
+.area-labour{background:#fb923c20;color:#fb923c;border:1px solid #fb923c30}
+.area-ipr{background:#e879f920;color:#e879f9;border:1px solid #e879f930}
+.area-general{background:#8b949e20;color:#8b949e;border:1px solid #8b949e30}
+
+.j-date{font-size:12px;color:var(--tx3);white-space:nowrap}
+.j-title{font-size:14px;font-weight:600;line-height:1.5;color:var(--tx);
+         display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.j-court{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tx2)}
+.j-court-icon{font-size:13px}
+.j-headnote{font-size:13px;color:var(--tx2);line-height:1.6;
+            display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.j-footer{display:flex;justify-content:space-between;align-items:center;
+          border-top:1px solid var(--bd);padding-top:10px;margin-top:2px}
+.j-source{font-size:11px;color:var(--tx3);text-transform:capitalize}
+.j-link{font-size:12px;color:var(--acl);font-weight:500}
+
+/* EMPTY / LOADING */
+.empty{text-align:center;padding:80px 20px;color:var(--tx2)}
+.empty-icon{font-size:48px;margin-bottom:16px}
+.empty h3{font-size:18px;color:var(--tx);margin-bottom:8px}
+.spinner{width:36px;height:36px;border:3px solid var(--bd);
+         border-top-color:var(--ac);border-radius:50%;
+         animation:spin .8s linear infinite;margin:60px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PAGINATION */
+.pagination{display:flex;justify-content:center;gap:8px;margin-top:28px;align-items:center}
+.pg-btn{padding:7px 16px;border-radius:8px;border:1px solid var(--bd);
+        background:var(--s1);color:var(--tx2);font-size:13px;cursor:pointer;transition:all .15s}
+.pg-btn:hover:not(:disabled){border-color:var(--acl);color:var(--acl)}
+.pg-btn:disabled{opacity:.35;cursor:not-allowed}
+.pg-info{font-size:13px;color:var(--tx3)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--s2);border:1px solid var(--bd);
+       border-radius:10px;padding:12px 18px;font-size:13px;color:var(--tx);
+       box-shadow:0 8px 32px #0008;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+@media(max-width:640px){
+  nav{padding:12px 16px}
+  .hero,.stats-bar,.filters,.filter-row,.cards-wrap{padding-left:16px;padding-right:16px}
+  .hero h1{font-size:20px}
+  .cards-grid{grid-template-columns:1fr}
+  .stats-bar{gap:8px}
+  .stat-chip{min-width:90px;padding:8px 12px}
+  .stat-chip .val{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">
+    <div class="nav-logo">#</div>
+    <span class="nav-name">Legal Hash Checksum</span>
+  </a>
+  <div class="nav-links">
+    <a href="/tools">Tools</a>
+    <a href="/judgments" class="active">Judgments</a>
+    <a href="/legal-qa">Q&amp;A</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Daily Judgment Digest</h1>
+  <p>Recent Supreme Court and High Court judgments, filtered by practice area. Updated daily.</p>
+  <div class="last-updated"><span class="dot"></span><span id="lastUpdated">Loading...</span></div>
+</div>
+
+<div class="stats-bar" id="statsBar">
+  <div class="stat-chip"><span class="val" id="statTotal">—</span><span class="lbl">This Week</span></div>
+  <div class="stat-chip"><span class="val" id="statCriminal">—</span><span class="lbl">Criminal</span></div>
+  <div class="stat-chip"><span class="val" id="statCivil">—</span><span class="lbl">Civil</span></div>
+  <div class="stat-chip"><span class="val" id="statSC">—</span><span class="lbl">Supreme Court</span></div>
+</div>
+
+<div class="filters">
+  <span class="filter-label">Practice area:</span>
+  <div class="pill-group" id="areaPills">
+    <div class="pill active" data-area="">All</div>
+    <div class="pill" data-area="criminal">Criminal</div>
+    <div class="pill" data-area="civil">Civil</div>
+    <div class="pill" data-area="family">Family</div>
+    <div class="pill" data-area="tax">Tax</div>
+    <div class="pill" data-area="constitutional">Constitutional</div>
+    <div class="pill" data-area="labour">Labour</div>
+    <div class="pill" data-area="ipr">IPR</div>
+  </div>
+</div>
+
+<div class="filter-row">
+  <span class="filter-label">Court:</span>
+  <select id="courtSelect">
+    <option value="">All Courts</option>
+    <option>Supreme Court</option>
+    <option>Delhi HC</option>
+    <option>Bombay HC</option>
+    <option>Calcutta HC</option>
+    <option>Madras HC</option>
+    <option>Allahabad HC</option>
+    <option>Kerala HC</option>
+    <option>Gujarat HC</option>
+    <option>P&H HC</option>
+    <option>Rajasthan HC</option>
+    <option>Karnataka HC</option>
+    <option>Telangana HC</option>
+    <option>Patna HC</option>
+    <option>MP HC</option>
+    <option>Gauhati HC</option>
+  </select>
+
+  <span class="filter-label" style="margin-left:8px">Period:</span>
+  <div class="days-group">
+    <button class="days-btn active" data-days="1">Today</button>
+    <button class="days-btn active" data-days="7">7 days</button>
+    <button class="days-btn" data-days="30">30 days</button>
+  </div>
+</div>
+
+<div class="cards-wrap">
+  <div id="cardsContainer"><div class="spinner"></div></div>
+  <div class="pagination" id="pagination" style="display:none">
+    <button class="pg-btn" id="pgPrev" disabled>← Prev</button>
+    <span class="pg-info" id="pgInfo"></span>
+    <button class="pg-btn" id="pgNext">Next →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── State ────────────────────────────────────────────────────────────────────
+const state = { area: '', court: '', days: 7, page: 0, total: 0, limit: 18 };
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function areaClass(a){ return 'area-'+(a||'general'); }
+function formatDate(d){
+  if(!d) return '';
+  const dt = new Date(d);
+  return dt.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+}
+function sourceLabel(s){
+  const m={livelaw:'LiveLaw',barandbench:'Bar & Bench',verdictum:'Verdictum',indiankanoon:'Indian Kanoon'};
+  return m[s]||s;
+}
+function toast(msg,ms=2500){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),ms);
+}
+
+// ── Render cards ─────────────────────────────────────────────────────────────
+function renderCards(judgments){
+  const c=document.getElementById('cardsContainer');
+  if(!judgments.length){
+    c.innerHTML=`<div class="empty">
+      <div class="empty-icon">⚖️</div>
+      <h3>No judgments found</h3>
+      <p>Try a different filter or check back tomorrow after the daily scrape.</p>
+    </div>`;
+    return;
+  }
+  c.innerHTML=`<div class="cards-grid">${judgments.map(j=>`
+    <a class="j-card" href="${j.source_url}" target="_blank" rel="noopener"
+       onclick="gaEvent('judgment_click',{area:'${j.practice_area}',court:'${j.court}',source:'${j.source_name}'})">
+      <div class="j-card-top">
+        <span class="j-area ${areaClass(j.practice_area)}">${j.practice_area||'general'}</span>
+        <span class="j-date">${formatDate(j.judgment_date)}</span>
+      </div>
+      <div class="j-title">${escHtml(j.title)}</div>
+      <div class="j-court"><span class="j-court-icon">🏛</span>${escHtml(j.court||'Unknown')}</div>
+      ${j.headnote ? `<div class="j-headnote">${escHtml(j.headnote)}</div>` : ''}
+      <div class="j-footer">
+        <span class="j-source">${sourceLabel(j.source_name)}</span>
+        <span class="j-link">Read judgment →</span>
+      </div>
+    </a>
+  `).join('')}</div>`;
+}
+
+function escHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Pagination ────────────────────────────────────────────────────────────────
+function updatePagination(){
+  const totalPages = Math.ceil(state.total / state.limit);
+  const pg = document.getElementById('pagination');
+  const info = document.getElementById('pgInfo');
+  const prev = document.getElementById('pgPrev');
+  const next = document.getElementById('pgNext');
+  if(totalPages <= 1){ pg.style.display='none'; return; }
+  pg.style.display='flex';
+  info.textContent=`Page ${state.page+1} of ${totalPages} (${state.total} judgments)`;
+  prev.disabled = state.page === 0;
+  next.disabled = state.page >= totalPages - 1;
+}
+
+// ── Fetch ─────────────────────────────────────────────────────────────────────
+async function fetchJudgments(){
+  document.getElementById('cardsContainer').innerHTML='<div class="spinner"></div>';
+  const params = new URLSearchParams({
+    days:  state.days,
+    page:  state.page,
+    limit: state.limit,
+  });
+  if(state.area)  params.set('area',  state.area);
+  if(state.court) params.set('court', state.court);
+
+  try{
+    const r = await fetch('/api/judgments?'+params);
+    if(!r.ok) throw new Error('API error '+r.status);
+    const data = await r.json();
+    state.total = data.total;
+    renderCards(data.judgments);
+    updatePagination();
+    gaEvent('judgments_filter',{area:state.area||'all',court:state.court||'all',days:state.days});
+  } catch(e){
+    document.getElementById('cardsContainer').innerHTML=`
+      <div class="empty"><div class="empty-icon">⚠️</div>
+      <h3>Could not load judgments</h3><p>${e.message}</p></div>`;
+  }
+}
+
+async function fetchStats(){
+  try{
+    const r = await fetch('/api/judgments/stats');
+    const d = await r.json();
+    // total
+    const total = d.by_area.reduce((s,a)=>s+Number(a.cnt),0);
+    document.getElementById('statTotal').textContent = total;
+    // by area
+    const crim = d.by_area.find(a=>a.practice_area==='criminal');
+    const civ  = d.by_area.find(a=>a.practice_area==='civil');
+    document.getElementById('statCriminal').textContent = crim ? crim.cnt : '0';
+    document.getElementById('statCivil').textContent    = civ  ? civ.cnt  : '0';
+    // SC
+    const sc = d.by_court.find(c=>c.court==='Supreme Court');
+    document.getElementById('statSC').textContent = sc ? sc.cnt : '0';
+    // last updated
+    if(d.last_updated){
+      const dt = new Date(d.last_updated);
+      document.getElementById('lastUpdated').textContent =
+        'Last updated: '+dt.toLocaleDateString('en-IN',{day:'numeric',month:'short'})+
+        ' '+dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+    } else {
+      document.getElementById('lastUpdated').textContent = 'Not yet scraped';
+    }
+  } catch(e){ console.warn('Stats fetch failed',e); }
+}
+
+// ── Event wiring ──────────────────────────────────────────────────────────────
+document.getElementById('areaPills').addEventListener('click', e=>{
+  const pill = e.target.closest('.pill');
+  if(!pill) return;
+  document.querySelectorAll('#areaPills .pill').forEach(p=>p.classList.remove('active'));
+  pill.classList.add('active');
+  state.area  = pill.dataset.area;
+  state.page  = 0;
+  fetchJudgments();
+});
+
+document.getElementById('courtSelect').addEventListener('change', e=>{
+  state.court = e.target.value;
+  state.page  = 0;
+  fetchJudgments();
+});
+
+document.querySelectorAll('.days-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.days-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    state.days = Number(btn.dataset.days);
+    state.page = 0;
+    fetchJudgments();
+  });
+});
+
+document.getElementById('pgPrev').addEventListener('click',()=>{ state.page--; fetchJudgments(); window.scrollTo(0,0); });
+document.getElementById('pgNext').addEventListener('click',()=>{ state.page++; fetchJudgments(); window.scrollTo(0,0); });
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+// Set 7 days as default active
+document.querySelectorAll('.days-btn').forEach(b=>{
+  b.classList.toggle('active', b.dataset.days==='7');
+});
+
+fetchStats();
+fetchJudgments();
+</script>
+</body>
+</html>

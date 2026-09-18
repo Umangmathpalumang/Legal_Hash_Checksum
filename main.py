@@ -588,3 +588,107 @@ async def get_cases():
 async def get_alerts():
     with open("templates/alerts.html", "r", encoding="utf-8") as f:
         return f.read()
+
+
+# ── Judgments Module ─────────────────────────────────────────────────────────
+JUDGMENT_DB_URL = "postgresql://legalqa_user:legalqa_pass_2026@localhost:5432/legalqa"
+
+VALID_AREAS  = ["criminal","civil","family","tax","constitutional","labour","ipr","general"]
+VALID_COURTS = [
+    "Supreme Court","Delhi HC","Bombay HC","Calcutta HC","Madras HC",
+    "Allahabad HC","Kerala HC","Gujarat HC","P&H HC","Rajasthan HC",
+    "Karnataka HC","Telangana HC","AP HC","Patna HC","MP HC",
+    "Gauhati HC","Orissa HC","CG HC","Jharkhand HC","Uttarakhand HC",
+]
+
+@app.get("/judgments", response_class=HTMLResponse)
+async def get_judgments_page():
+    p = os.path.join(os.path.dirname(__file__), "templates", "judgments.html")
+    return HTMLResponse(content=open(p).read())
+
+@app.get("/api/judgments")
+async def api_judgments(
+    area:   str = None,
+    court:  str = None,
+    days:   int = 7,
+    page:   int = 0,
+    limit:  int = 20,
+):
+    """
+    GET /api/judgments?area=criminal&court=Calcutta HC&days=7&page=0
+    Returns paginated judgment list with total count.
+    """
+    days  = max(1, min(days, 90))
+    limit = max(1, min(limit, 50))
+    page  = max(0, page)
+
+    # Validate inputs
+    if area  and area  not in VALID_AREAS:  area  = None
+    if court and court not in VALID_COURTS: court = None
+
+    conditions = ["judgment_date >= CURRENT_DATE - $1::int * INTERVAL '1 day'"]
+    params     = [days]
+    i          = 2
+
+    if area:
+        conditions.append(f"practice_area = ${i}")
+        params.append(area); i += 1
+
+    if court:
+        conditions.append(f"court = ${i}")
+        params.append(court); i += 1
+
+    where = " AND ".join(conditions)
+
+    conn = await asyncpg.connect(JUDGMENT_DB_URL)
+    try:
+        total = await conn.fetchval(
+            f"SELECT COUNT(*) FROM judgments WHERE {where}", *params
+        )
+        rows = await conn.fetch(
+            f"""
+            SELECT id, title, court, judgment_date::text, source_url,
+                   headnote, practice_area, source_name, scraped_at::text
+            FROM judgments
+            WHERE {where}
+            ORDER BY judgment_date DESC, scraped_at DESC
+            LIMIT {limit} OFFSET {page * limit}
+            """,
+            *params
+        )
+        return {
+            "total": total,
+            "page":  page,
+            "limit": limit,
+            "judgments": [dict(r) for r in rows],
+        }
+    finally:
+        await conn.close()
+
+@app.get("/api/judgments/stats")
+async def api_judgment_stats():
+    """Returns count breakdown by area and court for dashboard."""
+    conn = await asyncpg.connect(JUDGMENT_DB_URL)
+    try:
+        by_area = await conn.fetch("""
+            SELECT practice_area, COUNT(*) as cnt
+            FROM judgments
+            WHERE judgment_date >= CURRENT_DATE - INTERVAL '7 days'
+            GROUP BY practice_area ORDER BY cnt DESC
+        """)
+        by_court = await conn.fetch("""
+            SELECT court, COUNT(*) as cnt
+            FROM judgments
+            WHERE judgment_date >= CURRENT_DATE - INTERVAL '7 days'
+            GROUP BY court ORDER BY cnt DESC LIMIT 10
+        """)
+        latest = await conn.fetchval(
+            "SELECT MAX(scraped_at)::text FROM judgments"
+        )
+        return {
+            "by_area":  [dict(r) for r in by_area],
+            "by_court": [dict(r) for r in by_court],
+            "last_updated": latest,
+        }
+    finally:
+        await conn.close()

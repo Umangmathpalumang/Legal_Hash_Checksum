@@ -104,7 +104,7 @@ h1{font-size:26px;font-weight:800;margin-bottom:8px}
       <label class="field-label">Suit Valuation / Claim Amount (₹)</label>
       <input class="field-input" type="number" id="amount" placeholder="e.g. 500000" min="1" oninput="calculate()">
     </div>
-    <button class="btn" onclick="calculate()">Calculate Court Fee</button>
+    <button class="btn" onclick="if(typeof gaEvent!=='undefined')gaEvent('calculate',{tool:'court_fee'});calculate()">Calculate Court Fee</button>
   </div>
 
   <div class="result-box" id="resultBox">
