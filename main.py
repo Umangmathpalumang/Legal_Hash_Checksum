@@ -618,7 +618,7 @@ async def api_judgments(
     GET /api/judgments?area=criminal&court=Calcutta HC&days=7&page=0
     Returns paginated judgment list with total count.
     """
-    days  = max(1, min(days, 90))
+    days  = max(1, min(days, 1095))  # allow up to 3 years
     limit = max(1, min(limit, 50))
     page  = max(0, page)
 
@@ -647,11 +647,12 @@ async def api_judgments(
         )
         rows = await conn.fetch(
             f"""
-            SELECT id, title, court, judgment_date::text, source_url,
+            SELECT DISTINCT ON (LEFT(LOWER(title), 120), judgment_date)
+                   id, title, court, judgment_date::text, source_url,
                    headnote, practice_area, source_name, scraped_at::text
             FROM judgments
             WHERE {where}
-            ORDER BY judgment_date DESC, scraped_at DESC
+            ORDER BY LEFT(LOWER(title), 120), judgment_date DESC, scraped_at DESC
             LIMIT {limit} OFFSET {page * limit}
             """,
             *params
@@ -666,29 +667,44 @@ async def api_judgments(
         await conn.close()
 
 @app.get("/api/judgments/stats")
-async def api_judgment_stats():
-    """Returns count breakdown by area and court for dashboard."""
+async def api_judgment_stats(days: int = 0):
+    """
+    Returns count breakdown by area and court.
+    days=0 (default) = all time
+    days=7 = last 7 days, etc.
+    """
     conn = await asyncpg.connect(JUDGMENT_DB_URL)
     try:
-        by_area = await conn.fetch("""
+        where = "WHERE judgment_date >= CURRENT_DATE - $1::int * INTERVAL '1 day'" if days > 0 else ""
+        params = [days] if days > 0 else []
+
+        by_area = await conn.fetch(f"""
             SELECT practice_area, COUNT(*) as cnt
             FROM judgments
-            WHERE judgment_date >= CURRENT_DATE - INTERVAL '7 days'
+            {where}
             GROUP BY practice_area ORDER BY cnt DESC
-        """)
-        by_court = await conn.fetch("""
+        """, *params)
+        by_court = await conn.fetch(f"""
             SELECT court, COUNT(*) as cnt
             FROM judgments
-            WHERE judgment_date >= CURRENT_DATE - INTERVAL '7 days'
-            GROUP BY court ORDER BY cnt DESC LIMIT 10
-        """)
+            {where}
+            GROUP BY court ORDER BY cnt DESC LIMIT 15
+        """, *params)
         latest = await conn.fetchval(
             "SELECT MAX(scraped_at)::text FROM judgments"
         )
+        # Use deduplicated count (distinct title+date)
+        total = await conn.fetchval(f"""
+            SELECT COUNT(*) FROM (
+                SELECT DISTINCT LEFT(LOWER(title), 120), judgment_date
+                FROM judgments {where}
+            ) t
+        """, *params)
         return {
-            "by_area":  [dict(r) for r in by_area],
-            "by_court": [dict(r) for r in by_court],
+            "by_area":     [dict(r) for r in by_area],
+            "by_court":    [dict(r) for r in by_court],
             "last_updated": latest,
+            "total":       total,
         }
     finally:
         await conn.close()
