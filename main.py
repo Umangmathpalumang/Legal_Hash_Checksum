@@ -392,7 +392,7 @@ async def get_questions():
         """)
         return [dict(r) for r in rows]
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 @app.post("/api/qa/questions")
 async def post_question(q: QuestionIn):
@@ -406,7 +406,7 @@ async def post_question(q: QuestionIn):
         """, q.question.strip(), q.category, q.asker_name or "Anonymous", q.anonymous)
         return {"ok": True}
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 @app.get("/api/qa/answers/{qid}")
 async def get_answers(qid: int):
@@ -420,7 +420,7 @@ async def get_answers(qid: int):
         """, qid)
         return [dict(r) for r in rows]
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 @app.post("/api/qa/answers")
 async def post_answer(a: AnswerIn):
@@ -438,7 +438,7 @@ async def post_answer(a: AnswerIn):
              a.advocate_enroll or "", a.advocate_court or "")
         return {"ok": True}
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 @app.post("/api/qa/view/{qid}")
 async def increment_view(qid: int):
@@ -448,7 +448,7 @@ async def increment_view(qid: int):
             "UPDATE legal_questions SET views=views+1 WHERE id=$1", qid)
         return {"ok": True}
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 @app.post("/api/qa/upvote/{aid}")
 async def upvote_answer(aid: int):
@@ -460,7 +460,7 @@ async def upvote_answer(aid: int):
         """, aid)
         return {"upvotes": row["upvotes"]}
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 
 # ══════════════════════════════════════════════════════
@@ -504,7 +504,7 @@ async def admin_get_questions(request: Request):
         """)
         return [dict(r) for r in rows]
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 @app.get("/api/admin/qa/answers")
 async def admin_get_answers(request: Request):
@@ -518,7 +518,7 @@ async def admin_get_answers(request: Request):
         """)
         return [dict(r) for r in rows]
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 @app.delete("/api/admin/qa/questions/{qid}")
 async def admin_delete_question(qid: int, request: Request):
@@ -528,7 +528,7 @@ async def admin_delete_question(qid: int, request: Request):
         await conn.execute("DELETE FROM legal_questions WHERE id=$1", qid)
         return {"ok": True}
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 @app.delete("/api/admin/qa/answers/{aid}")
 async def admin_delete_answer(aid: int, request: Request):
@@ -538,7 +538,7 @@ async def admin_delete_answer(aid: int, request: Request):
         await conn.execute("DELETE FROM legal_answers WHERE id=$1", aid)
         return {"ok": True}
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 class QuestionEdit(PydanticBase):
     question: str
@@ -563,7 +563,7 @@ async def admin_edit_question(qid: int, body: QuestionEdit, request: Request):
         """, body.question.strip(), body.category, body.asker_name, qid)
         return {"ok": True}
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 @app.patch("/api/admin/qa/answers/{aid}")
 async def admin_edit_answer(aid: int, body: AnswerEdit, request: Request):
@@ -577,7 +577,7 @@ async def admin_edit_answer(aid: int, body: AnswerEdit, request: Request):
         """, body.answer.strip(), body.advocate_name, body.advocate_enroll or "", body.advocate_court or "", aid)
         return {"ok": True}
     finally:
-        await conn.close()
+        await pool.release(conn)
 
 @app.get("/cases", response_class=HTMLResponse)
 async def get_cases():
@@ -593,12 +593,33 @@ async def get_alerts():
 # ── Judgments Module ─────────────────────────────────────────────────────────
 JUDGMENT_DB_URL = "postgresql://legalqa_user:legalqa_pass_2026@localhost:5432/legalqa"
 
+# Connection pool — reuse connections instead of new conn per request
+_judgment_pool = None
+
+async def get_judgment_pool():
+    global _judgment_pool
+    if _judgment_pool is None:
+        _judgment_pool = await asyncpg.create_pool(
+            JUDGMENT_DB_URL,
+            min_size=2,
+            max_size=8,
+            command_timeout=10,
+        )
+    return _judgment_pool
+
 VALID_AREAS  = ["criminal","civil","family","tax","constitutional","labour","ipr","general"]
 VALID_COURTS = [
+    # Normalised short names (2026 data)
     "Supreme Court","Delhi HC","Bombay HC","Calcutta HC","Madras HC",
     "Allahabad HC","Kerala HC","Gujarat HC","P&H HC","Rajasthan HC",
-    "Karnataka HC","Telangana HC","AP HC","Patna HC","MP HC",
-    "Gauhati HC","Orissa HC","CG HC","Jharkhand HC","Uttarakhand HC",
+    "Karnataka HC","Patna HC","MP HC","Jharkhand HC",
+    # Full names still in DB (2024/2025 data — trigger not yet active)
+    "Supreme Court of India",
+    "Delhi High Court","Bombay High Court","Calcutta High Court",
+    "Madras High Court","Allahabad High Court","Kerala High Court",
+    "Gujarat High Court","Karnataka High Court","Patna High Court",
+    "Rajasthan High Court - Jodhpur","Punjab-Haryana High Court",
+    "Madhya Pradesh High Court","Jharkhand High Court",
 ]
 
 @app.get("/judgments", response_class=HTMLResponse)
@@ -611,14 +632,17 @@ async def api_judgments(
     area:   str = None,
     court:  str = None,
     days:   int = 7,
+    year:   int = 0,
+    q:      str = None,
     page:   int = 0,
-    limit:  int = 20,
+    limit:  int = 18,
 ):
     """
-    GET /api/judgments?area=criminal&court=Calcutta HC&days=7&page=0
-    Returns paginated judgment list with total count.
+    GET /api/judgments
+    Params: area, court, days, year (0=off), q (search), page, limit
+    Returns paginated deduplicated judgment list with total count.
     """
-    days  = max(1, min(days, 1095))  # allow up to 3 years
+    import datetime
     limit = max(1, min(limit, 50))
     page  = max(0, page)
 
@@ -626,9 +650,65 @@ async def api_judgments(
     if area  and area  not in VALID_AREAS:  area  = None
     if court and court not in VALID_COURTS: court = None
 
-    conditions = ["judgment_date >= CURRENT_DATE - $1::int * INTERVAL '1 day'"]
-    params     = [days]
-    i          = 2
+    params = []
+    i = 1
+    conditions = []
+
+    # Smart search: title + clean headnote + area inference
+    if q and len(q.strip()) >= 2:
+        qt = q.strip()
+        # Strip IK citation prefix from headnote before matching
+        # Use regexp_replace to skip [Cites N, Cited by N] prefix
+        title_cond    = f"title ILIKE ${i}"
+        headnote_cond = f"regexp_replace(headnote, '^\\[Cites[^\\]]+\\]\\s*', '', 'i') ILIKE ${i}"
+        params.append(f"%{qt}%")
+        i += 1
+
+        # Keyword → practice area inference
+        AREA_HINTS = {
+            "criminal": ["bail","fir","arrest","murder","rape","robbery","cheque dishonour",
+                         "section 302","section 376","section 420","section 138","ndps",
+                         "pocso","uapa","conviction","acquittal","remand","chargesheet",
+                         "anticipatory","custody","sentence","imprisonment","crpc","bnss"],
+            "tax":      ["income tax","gst","customs","excise","itat","cestat","tds",
+                         "capital gains","assessment","reassessment","tax evasion","dtaa"],
+            "civil":    ["injunction","specific performance","decree","partition",
+                         "eviction","land acquisition","arbitration","ibc","nclt","winding up"],
+            "family":   ["divorce","maintenance","custody","matrimonial","adoption",
+                         "succession","guardianship","dowry","stridhan","alimony"],
+            "constitutional":["article 14","article 19","article 21","article 226","pil",
+                              "fundamental rights","reservation","writ petition","habeas corpus"],
+            "labour":   ["workman","retrenchment","gratuity","epfo","trade union",
+                         "industrial dispute","regularisation","esic"],
+            "ipr":      ["patent","trademark","copyright","passing off","infringement"],
+        }
+        ql = qt.lower()
+        inferred_area = None
+        for area_name, kws in AREA_HINTS.items():
+            if any(kw in ql for kw in kws):
+                inferred_area = area_name
+                break
+
+        if inferred_area and not area:
+            # Search title+headnote OR inferred area
+            area_cond = f"practice_area = ${i}"
+            params.append(inferred_area); i += 1
+            conditions.append(
+                f"({title_cond} OR {headnote_cond} OR {area_cond})"
+            )
+        else:
+            conditions.append(f"({title_cond} OR {headnote_cond})")
+    elif year and 2020 <= year <= 2030:
+        # Year filter: exact calendar year
+        conditions.append(f"judgment_date >= ${i}::date")
+        params.append(datetime.date(year, 1, 1)); i += 1
+        conditions.append(f"judgment_date <= ${i}::date")
+        params.append(datetime.date(year, 12, 31)); i += 1
+    else:
+        # Days filter (default)
+        days = max(1, min(days, 1095))
+        conditions.append(f"judgment_date >= CURRENT_DATE - ${i}::int * INTERVAL '1 day'")
+        params.append(days); i += 1
 
     if area:
         conditions.append(f"practice_area = ${i}")
@@ -638,21 +718,21 @@ async def api_judgments(
         conditions.append(f"court = ${i}")
         params.append(court); i += 1
 
-    where = " AND ".join(conditions)
+    where = "WHERE " + " AND ".join(conditions) if conditions else "WHERE 1=1"
 
-    conn = await asyncpg.connect(JUDGMENT_DB_URL)
+    pool = await get_judgment_pool()
+    conn = await pool.acquire()
     try:
         total = await conn.fetchval(
-            f"SELECT COUNT(*) FROM judgments WHERE {where}", *params
+            f"SELECT COUNT(*) FROM judgments_dedup {where}", *params
         )
         rows = await conn.fetch(
             f"""
-            SELECT DISTINCT ON (LEFT(LOWER(title), 120), judgment_date)
-                   id, title, court, judgment_date::text, source_url,
-                   headnote, practice_area, source_name, scraped_at::text
-            FROM judgments
-            WHERE {where}
-            ORDER BY LEFT(LOWER(title), 120), judgment_date DESC, scraped_at DESC
+            SELECT id, title, court, judgment_date::text, source_url,
+                   headnote, practice_area, source_name
+            FROM judgments_dedup
+            {where}
+            ORDER BY judgment_date DESC
             LIMIT {limit} OFFSET {page * limit}
             """,
             *params
@@ -661,10 +741,15 @@ async def api_judgments(
             "total": total,
             "page":  page,
             "limit": limit,
+            "pages": -(-int(total) // limit),
             "judgments": [dict(r) for r in rows],
         }
     finally:
-        await conn.close()
+        await pool.release(conn)
+
+# Simple stats cache — refresh every 30 minutes
+_stats_cache: dict = {}
+_stats_cache_time: float = 0.0
 
 @app.get("/api/judgments/stats")
 async def api_judgment_stats(days: int = 0):
@@ -673,38 +758,46 @@ async def api_judgment_stats(days: int = 0):
     days=0 (default) = all time
     days=7 = last 7 days, etc.
     """
-    conn = await asyncpg.connect(JUDGMENT_DB_URL)
+    import time
+    global _stats_cache, _stats_cache_time
+    cache_key = str(days)
+    if cache_key in _stats_cache and (time.time() - _stats_cache_time) < 1800:
+        return _stats_cache[cache_key]
+    pool = await get_judgment_pool()
+    conn = await pool.acquire()
     try:
-        where = "WHERE judgment_date >= CURRENT_DATE - $1::int * INTERVAL '1 day'" if days > 0 else ""
+        where = "WHERE judgment_date >= CURRENT_DATE - $1::int * INTERVAL '1 day'" if days > 0 else "WHERE 1=1"
         params = [days] if days > 0 else []
 
+        # where is either empty string or "WHERE ..." — handle both safely
+        area_where  = where if where else "WHERE 1=1"
         by_area = await conn.fetch(f"""
             SELECT practice_area, COUNT(*) as cnt
-            FROM judgments
-            {where}
+            FROM judgments_dedup
+            {area_where}
             GROUP BY practice_area ORDER BY cnt DESC
         """, *params)
         by_court = await conn.fetch(f"""
             SELECT court, COUNT(*) as cnt
-            FROM judgments
-            {where}
+            FROM judgments_dedup
+            {area_where}
             GROUP BY court ORDER BY cnt DESC LIMIT 15
         """, *params)
         latest = await conn.fetchval(
             "SELECT MAX(scraped_at)::text FROM judgments"
         )
-        # Use deduplicated count (distinct title+date)
-        total = await conn.fetchval(f"""
-            SELECT COUNT(*) FROM (
-                SELECT DISTINCT LEFT(LOWER(title), 120), judgment_date
-                FROM judgments {where}
-            ) t
-        """, *params)
-        return {
+        total = await conn.fetchval(
+            f"SELECT COUNT(*) FROM judgments_dedup{(' ' + where) if where else ''}",
+            *params
+        )
+        result = {
             "by_area":     [dict(r) for r in by_area],
             "by_court":    [dict(r) for r in by_court],
             "last_updated": latest,
             "total":       total,
         }
+        _stats_cache[cache_key] = result
+        _stats_cache_time = time.time()
+        return result
     finally:
-        await conn.close()
+        await pool.release(conn)
