@@ -760,7 +760,7 @@ async def api_judgment_stats(days: int = 0):
     """
     import time
     global _stats_cache, _stats_cache_time
-    cache_key = str(days)
+    cache_key = f"v2_{days}"  # v2: bumped to clear old bad cache
     if cache_key in _stats_cache and (time.time() - _stats_cache_time) < 1800:
         return _stats_cache[cache_key]
     pool = await get_judgment_pool()
@@ -787,7 +787,7 @@ async def api_judgment_stats(days: int = 0):
             "SELECT MAX(scraped_at)::text FROM judgments"
         )
         total = await conn.fetchval(
-            f"SELECT COUNT(*) FROM judgments_dedup{(' ' + where) if where else ''}",
+            f"SELECT COUNT(*) FROM judgments_dedup {area_where}",
             *params
         )
         result = {
