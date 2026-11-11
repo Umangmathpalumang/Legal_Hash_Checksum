@@ -45,8 +45,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .sidebar{width:var(--sidebar);background:var(--sur);border-right:1px solid var(--bd);display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:200;overflow:hidden;transition:transform .25s cubic-bezier(.4,0,.2,1)}
 .sidebar-logo{padding:20px 16px 16px;border-bottom:1px solid var(--bd);flex-shrink:0}
 .logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
-.logo-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--ac),var(--acl));border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(29,78,216,.3)}
-.logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.logo-mark{width:34px;height:34px;border-radius:9px;flex-shrink:0}
 .logo-text{font-size:12.5px;font-weight:800;letter-spacing:-.3px;color:var(--tx);line-height:1.2}
 .logo-text span{color:var(--ac)}
 .logo-badge{display:inline-block;font-size:9px;font-weight:700;background:var(--acs);color:var(--ac);border:1px solid rgba(29,78,216,.2);border-radius:4px;padding:1px 5px;margin-top:2px;letter-spacing:.04em;text-transform:uppercase}
@@ -231,6 +230,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 </style>
 <link rel="stylesheet" href="/static/workspace.css">
 <script src="/static/workspace.js" defer></script>
+<link rel="stylesheet" href="/static/ui-icons.css">
 </head>
 <body class="lhc-workspace lhc-billing">
 
@@ -240,8 +240,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <a href="/" class="logo-link" aria-label="Legal Hash Checksum home">
-      <div class="logo-mark"><svg aria-hidden="true" viewBox="0 0 32 32"><use href="/static/site-icons.svg#brand"/></svg>
-      </div>
+      <img class="logo-mark" src="/favicon.svg" alt="" width="34" height="34">
       <div>
         <div class="logo-text">Legal Hash Checksum</div>
         <div class="logo-badge">Practice workspace</div>
@@ -320,8 +319,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
           <option value="">Select case…</option>
         </select>
         <div style="display:flex;gap:8px">
-          <button class="tbtn" id="timerStartBtn" onclick="toggleTimer()">▶ Start</button>
-          <button class="tbtn stop" id="timerStopBtn" onclick="stopTimer()" style="display:none">■ Stop &amp; Save</button>
+          <button class="tbtn" id="timerStartBtn" onclick="toggleTimer()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#play"/></svg> Start</button>
+          <button class="tbtn stop" id="timerStopBtn" onclick="stopTimer()" style="display:none"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#stop"/></svg> Stop &amp; Save</button>
         </div>
       </div>
     </div>
@@ -341,7 +340,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
               <div class="f"><label>Description</label><input id="me_note" placeholder="Court appearance, drafting, research…"></div>
               <div class="f"><label>Rate (₹/hr)</label><input type="number" id="me_rate" placeholder="1500" value="1500"></div>
             </div>
-            <button class="btn btn-p" onclick="logTimeEntry()">+ Log Time Entry</button>
+            <button class="btn btn-p" onclick="logTimeEntry()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#plus"/></svg> Log Time Entry</button>
           </div>
         </div>
 
@@ -395,7 +394,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
               <div class="f"><label>Type</label><select id="ta_type"><option value="credit">Credit (Retainer In)</option><option value="debit">Debit (Applied to Bill)</option></select></div>
             </div>
             <div class="f" style="margin-bottom:8px"><label>Note</label><input id="ta_note" placeholder="Retainer received from client…"></div>
-            <button class="btn btn-p" onclick="addTrustEntry()">+ Add Entry</button>
+            <button class="btn btn-p" onclick="addTrustEntry()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#plus"/></svg> Add Entry</button>
             <div id="trustLedger" style="margin-top:12px"></div>
           </div>
         </div>
@@ -514,7 +513,7 @@ function renderTimeTable(){
   if(!es.length){el.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--tx3);padding:20px">No time entries yet</td></tr>';return;}
   el.innerHTML=es.map(function(e){
     var d=new Date(e.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'2-digit'});
-    return '<tr><td><input type="checkbox" class="entry-cb" value="'+e.id+'"></td><td class="name">'+d+'</td><td>'+(e.caseName||'—')+(e.caseIdStr?' <small style="color:var(--tx3)">#'+e.caseIdStr+'</small>':'')+'</td><td>'+(e.note||'Entry')+'</td><td>'+e.minutes+'m</td><td style="font-weight:700;color:var(--ok)">₹'+(e.amount||0).toLocaleString('en-IN')+'</td><td><button class="btn btn-d" style="padding:3px 8px;font-size:10px" onclick="delEntry('+e.id+')">&times;</button></td></tr>';
+    return '<tr><td><input type="checkbox" class="entry-cb" value="'+e.id+'"></td><td class="name">'+d+'</td><td>'+(e.caseName||'—')+(e.caseIdStr?' <small style="color:var(--tx3)">#'+e.caseIdStr+'</small>':'')+'</td><td>'+(e.note||'Entry')+'</td><td>'+e.minutes+'m</td><td style="font-weight:700;color:var(--ok)">₹'+(e.amount||0).toLocaleString('en-IN')+'</td><td><button class="btn btn-d" style="padding:3px 8px;font-size:10px" aria-label="Delete time entry" onclick="delEntry('+e.id+')"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#close"/></svg></button></td></tr>';
   }).join('');
 }
 function delEntry(id){saveTimes(getTimes().filter(e=>e.id!=id));renderTimeTable();updateStats();showToast('Deleted');}

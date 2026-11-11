@@ -250,7 +250,7 @@ window.LHCLicense = {
     + '</div>'
     + '<p style="font-size:14px;color:var(--tx2,#475569);line-height:1.7;margin:0 0 22px">' + body + '</p>'
     + '<div style="display:flex;gap:10px;align-items:center">'
-    + '<a href="/pricing" style="flex:1;background:' + color + ';color:#fff;padding:13px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;text-align:center;display:block;font-family:inherit">' + (expired ? 'Reactivate Now' : 'Renew Now →') + '</a>'
+    + '<a href="/pricing" style="flex:1;background:' + color + ';color:#fff;padding:13px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;text-align:center;display:block;font-family:inherit">' + (expired ? 'Reactivate Now' : 'Renew Now') + '</a>'
     + later
     + '</div>'
     + '</div>';
@@ -372,7 +372,7 @@ window.LHCGate = {
     + 'You\'ve used <strong>' + label + '</strong> <strong>' + _FREE_LIMIT + '&hairsp;/&hairsp;' + _FREE_LIMIT + ' times</strong> this month.</p>'
     + '<p style="font-size:13px;color:var(--tx3,#94a3b8);margin:0 0 22px">Resets on <strong>' + resets + '</strong>&nbsp; · &nbsp;Upgrade for unlimited access.</p>'
     + '<div style="display:flex;gap:10px;align-items:center">'
-    + '<a href="/pricing" style="flex:1;background:#1D4ED8;color:#fff;padding:13px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;text-align:center;display:block;font-family:inherit">Upgrade to Pro →</a>'
+    + '<a href="/pricing" style="flex:1;background:#1D4ED8;color:#fff;padding:13px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;text-align:center;display:block;font-family:inherit">Upgrade to Pro</a>'
     + '<button onclick="document.getElementById(\'lhc-gate-modal\').remove()" style="background:var(--sur2,#f1f5f9);border:1px solid var(--bd,#e2e8f0);color:var(--tx2,#64748b);padding:13px 16px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">Close</button>'
     + '</div></div>';
     document.body.appendChild(ov);

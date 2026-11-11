@@ -47,8 +47,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);font-size:14px
 .sidebar{width:var(--sidebar);background:var(--sur);border-right:1px solid var(--bd);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;transition:transform .25s cubic-bezier(.4,0,.2,1);z-index:200}
 .sidebar-logo{padding:20px 16px 16px;border-bottom:1px solid var(--bd);flex-shrink:0}
 .logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
-.logo-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--ac),var(--acl));border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(29,78,216,.3)}
-.logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.logo-mark{width:34px;height:34px;border-radius:9px;flex-shrink:0}
 .logo-text{font-size:12.5px;font-weight:800;letter-spacing:-.3px;color:var(--tx);line-height:1.2}
 .logo-text span{color:var(--ac)}
 .logo-badge{display:inline-block;font-size:9px;font-weight:700;background:var(--acs);color:var(--ac);border:1px solid rgba(29,78,216,.2);border-radius:4px;padding:1px 5px;margin-top:2px;letter-spacing:.04em;text-transform:uppercase}
@@ -251,6 +250,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);font-size:14px
 </style>
 <link rel="stylesheet" href="/static/workspace.css">
 <script src="/static/workspace.js" defer></script>
+<link rel="stylesheet" href="/static/ui-icons.css">
 </head>
 <body class="lhc-workspace lhc-cases">
 
@@ -261,8 +261,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);font-size:14px
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <a href="/" class="logo-link" aria-label="Legal Hash Checksum home">
-      <div class="logo-mark"><svg aria-hidden="true" viewBox="0 0 32 32"><use href="/static/site-icons.svg#brand"/></svg>
-      </div>
+      <img class="logo-mark" src="/favicon.svg" alt="" width="34" height="34">
       <div>
         <div class="logo-text">Legal Hash Checksum</div>
         <div class="logo-badge">Practice workspace</div>
@@ -342,7 +341,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);font-size:14px
       <div class="det-empty">
         <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
         <p>Select a case to view details</p>
-        <button class="btn btn-p" onclick="openModal()">+ New Case</button>
+        <button class="btn btn-p" onclick="openModal()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#plus"/></svg> New Case</button>
       </div>
     </div>
   </div>
@@ -478,8 +477,8 @@ function renderDetail(c){
     +'<div id="tp-time" class="tab-panel card"><div class="card-hd"><div class="card-ttl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Time &amp; Expense</div><div style="font-size:11px;color:var(--tx2)">'+totalM+'m · ₹'+totalA.toLocaleString('en-IN')+'</div></div>'
     +'<div class="card-body">'
     +'<div class="timer-bar"><div><div class="timer-sub">Live Timer</div><div class="timer-disp" id="dt">00:00:00</div></div>'
-    +'<button class="tbtn" id="dtS" onclick="startTimer('+c.id+')">▶ Start</button>'
-    +'<button class="tbtn stop" id="dtSt" onclick="stopTimer('+c.id+')" style="display:none">■ Stop &amp; Save</button>'
+    +'<button class="tbtn" id="dtS" onclick="startTimer('+c.id+')"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#play"/></svg> Start</button>'
+    +'<button class="tbtn stop" id="dtSt" onclick="stopTimer('+c.id+')" style="display:none"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#stop"/></svg> Stop &amp; Save</button>'
     +'</div>'
     +'<div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Manual Entry</div>'
     +'<div class="te-form">'
@@ -492,15 +491,15 @@ function renderDetail(c){
     +'</div></div>'
     +'<div id="tp-notes" class="tab-panel card"><div class="card-hd"><div class="card-ttl"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Notes</div></div>'
     +'<div class="card-body"><textarea class="note-ta" id="noteTA" placeholder="Add note… (Ctrl+Enter saves)"></textarea>'
-    +'<button class="btn btn-p" onclick="addNote('+c.id+')" style="margin-bottom:12px">+ Save Note</button>'
+    +'<button class="btn btn-p" onclick="addNote('+c.id+')" style="margin-bottom:12px"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#plus"/></svg> Save Note</button>'
     +'<div id="noteList">'+renderNoteList(c.id)+'</div></div></div>'
-    +'<div id="tp-billing" class="tab-panel card"><div class="card-hd"><div class="card-ttl"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Billing</div><a href="/billing" class="btn btn-p" style="text-decoration:none;padding:5px 12px">Open Billing →</a></div>'
+    +'<div id="tp-billing" class="tab-panel card"><div class="card-hd"><div class="card-ttl"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Billing</div><a href="/billing" class="btn btn-p" style="text-decoration:none;padding:5px 12px">Open Billing <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#arrow"/></svg></a></div>'
     +'<div class="card-body"><div class="info-grid" style="margin-bottom:14px">'
     +'<div class="ii"><label>Fee Agreed</label><span style="color:var(--ok)">'+(c.fee?'₹'+Number(c.fee).toLocaleString('en-IN'):'—')+'</span></div>'
     +'<div class="ii"><label>Retainer</label><span style="color:var(--am)">'+(c.retainer?'₹'+Number(c.retainer).toLocaleString('en-IN'):'—')+'</span></div>'
     +'<div class="ii"><label>Time Billed</label><span style="color:var(--ac)">₹'+totalA.toLocaleString('en-IN')+' ('+totalM+'m)</span></div>'
     +'<div class="ii"><label>Balance Due</label><span style="color:var(--er)">₹'+Math.max(0,(c.fee||0)-totalA-(c.retainer||0)).toLocaleString('en-IN')+'</span></div>'
-    +'</div><a href="/billing" class="btn btn-p" style="text-decoration:none;display:inline-flex">Generate Invoice →</a>'
+    +'</div><a href="/billing" class="btn btn-p" style="text-decoration:none;display:inline-flex">Generate Invoice <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#arrow"/></svg></a>'
     +'</div></div>'
     +'<div id="tp-docs" class="tab-panel card"><div class="card-hd"><div class="card-ttl"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Docs &amp; Tools</div></div>'
     +'<div class="card-body"><div class="doc-grid">'
@@ -629,7 +628,7 @@ function delCase(id){
   saveCases(getCases().filter(c=>c.id!=id));saveTimes(getTimes().filter(e=>e.caseId!=id));
   var ns=getNotes();delete ns[id];saveNotes(ns);
   logAct('Deleted case #'+id,'case');selId=null;renderList();
-  document.getElementById('detCol').innerHTML='<div class="det-empty"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg><p>Case deleted</p><button class="btn btn-p" onclick="openModal()">+ New Case</button></div>';
+  document.getElementById('detCol').innerHTML='<div class="det-empty"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg><p>Case deleted</p><button class="btn btn-p" onclick="openModal()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#plus"/></svg> New Case</button></div>';
   showToast('Deleted');
 }
 function exportCase(id){

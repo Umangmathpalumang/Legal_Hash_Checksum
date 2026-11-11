@@ -120,14 +120,9 @@ async def pwa_manifest():
     return FileResponse(BASE_DIR / "static/manifest.json", media_type="application/manifest+json")
 
 
-@app.get("/favicon.ico")
+@app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
-    from fastapi.responses import Response
-    # Return a minimal 1x1 blue square ICO
-    import base64
-    ico_b64 = "AAABAAEAAQEAAAEAGAAsAAAAFgAAACgAAAABAAAAAgAAAAEAGAAAAAAAAAAAAMQOAADEDgAAAAAAAAAAAAD/AAAAAAA="
-    ico_bytes = base64.b64decode(ico_b64)
-    return Response(content=ico_bytes, media_type="image/x-icon")
+    return RedirectResponse("/favicon.svg", status_code=308)
 
 @app.get("/favicon.svg", include_in_schema=False)
 async def favicon_svg():

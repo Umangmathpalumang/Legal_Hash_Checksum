@@ -172,13 +172,10 @@ body {
   flex-shrink: 0;
 }
 .top-logo-icon {
-  width: 32px; height: 32px;
-  background: linear-gradient(135deg, var(--ac), var(--acl));
+  display: block; flex-shrink: 0;
   border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
   box-shadow: 0 2px 8px rgba(37,99,235,.3);
 }
-.top-logo-icon svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round }
 .top-logo-text { font-size: 14px; font-weight: 800; letter-spacing: -.3px; line-height: 1.1 }
 .top-logo-sub { font-size: 10px; font-weight: 500; color: var(--tx3); letter-spacing: .02em }
 .top-search {
@@ -792,9 +789,7 @@ body {
 
   <!-- Logo -->
   <a href="/" class="top-logo">
-    <div class="top-logo-icon">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-    </div>
+    <img class="top-logo-icon" src="/favicon.svg" alt="" width="32" height="32">
     <div>
       <div class="top-logo-text">LegalHash</div>
       <div class="top-logo-sub">Checksum.com</div>
@@ -927,9 +922,7 @@ body {
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
 <div class="drawer" id="drawer">
   <div class="drawer-header">
-    <div class="top-logo-icon" style="width:28px;height:28px">
-      <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    </div>
+    <img class="top-logo-icon" src="/favicon.svg" alt="" width="28" height="28">
     <span style="font-size:13px;font-weight:800">LegalHashChecksum</span>
     <button class="drawer-close" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>

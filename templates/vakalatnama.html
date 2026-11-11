@@ -294,6 +294,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 @media(min-width:769px) and (max-width:1000px){
   .paper{transform-origin:top center;transform:scale(0.65);margin-bottom:calc((356mm * 0.65) - 356mm);}
 }</style>
+<link rel="stylesheet" href="/static/ui-icons.css">
 </head>
 <body>
 
@@ -305,8 +306,8 @@ textarea.field-input{resize:vertical;min-height:52px}
     <span class="nav-name">Vakalatnama Generator</span>
   </a>
   <div class="nav-links">
-    <a href="https://legalhashchecksum.com/" class="nav-link">Hash Tool</a>
-    <a href="https://legalhashchecksum.com/tools" class="nav-link">All Tools</a>
+    <a href="/hash" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
     <button class="btn-print" onclick="window.print()">
       <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Print / Save PDF
@@ -318,13 +319,13 @@ textarea.field-input{resize:vertical;min-height:52px}
 <div class="stamp-bar" id="stampBar">
   <span class="stamp-bar-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>Stamp:</span>
   <button class="btn-stamp btn-stamp-has" onclick="stampUpload()" title="Upload your existing stamp image">
-    ⬆ I Have a Stamp
+    <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#upload"/></svg> I Have a Stamp
   </button>
   <button class="btn-stamp btn-stamp-create" onclick="openStampMaker()" title="Create a new stamp">
-    ✦ Create Stamp
+    <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#stamp"/></svg> Create Stamp
   </button>
   <button class="btn-stamp btn-stamp-clear" id="btnClearStamp" onclick="clearStamp()" style="display:none">
-    ✕ Remove Stamp
+    <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#close"/></svg> Remove Stamp
   </button>
   <input type="file" id="stampFileInput" accept="image/*" style="display:none" onchange="loadStampFile(this)">
   <span class="stamp-status" id="stampStatus">No stamp — drag one onto your document</span>

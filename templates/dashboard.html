@@ -49,8 +49,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .sidebar{width:var(--sidebar);background:var(--sur);border-right:1px solid var(--bd);position:fixed;top:0;left:0;bottom:0;z-index:200;display:flex;flex-direction:column;overflow:hidden;transition:transform .25s cubic-bezier(.4,0,.2,1)}
 .sidebar-logo{padding:20px 16px 16px;border-bottom:1px solid var(--bd);flex-shrink:0}
 .logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
-.logo-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--ac),var(--acl));border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(29,78,216,.3)}
-.logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.logo-mark{width:34px;height:34px;border-radius:9px;flex-shrink:0}
 .logo-text{font-size:12.5px;font-weight:800;letter-spacing:-.3px;color:var(--tx);line-height:1.2}
 .logo-text span{color:var(--ac)}
 .logo-badge{display:inline-block;font-size:9px;font-weight:700;background:var(--acs);color:var(--ac);border:1px solid rgba(29,78,216,.2);border-radius:4px;padding:1px 5px;margin-top:2px;letter-spacing:.04em;text-transform:uppercase}
@@ -371,6 +370,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 </style>
 <link rel="stylesheet" href="/static/workspace.css">
 <script src="/static/workspace.js" defer></script>
+<link rel="stylesheet" href="/static/ui-icons.css">
 </head>
 <body class="lhc-workspace lhc-dashboard">
 
@@ -380,8 +380,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <a href="/" class="logo-link" aria-label="Legal Hash Checksum home">
-      <div class="logo-mark"><svg aria-hidden="true" viewBox="0 0 32 32"><use href="/static/site-icons.svg#brand"/></svg>
-      </div>
+      <img class="logo-mark" src="/favicon.svg" alt="" width="34" height="34">
       <div>
         <div class="logo-text">Legal Hash Checksum</div>
         <div class="logo-badge">Practice workspace</div>
@@ -520,7 +519,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 
       <!-- JUDGMENT STRIP -->
       <div class="jw-strip" id="jwStrip">
-        <span class="jw-strip-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M6 16c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4"/><path d="m3 6 9 3 9-3"/><path d="M3 6c0-1.7 2-3 4.5-3S12 4.3 12 6"/><path d="M21 6c0-1.7-2-3-4.5-3S12 4.3 12 6"/></svg></span>
+        <span class="jw-strip-ico"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#book"/></svg></span>
         <span class="jw-strip-label">Latest</span>
         <div class="jw-strip-divider"></div>
         <div class="jw-strip-scroll" id="jwStripScroll">
@@ -528,7 +527,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
           <div class="jw-strip-sk" style="width:120px"></div>
           <div class="jw-strip-sk" style="width:180px"></div>
         </div>
-        <a href="/judgments" class="jw-strip-all">All →</a>
+        <a href="/judgments" class="jw-strip-all">All <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#arrow"/></svg></a>
       </div>
 
     <!-- STAT TILES -->
@@ -609,8 +608,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
             <option value="">Select case…</option>
           </select>
           <div class="timer-btns">
-            <button class="timer-btn" id="timerStartBtn" onclick="toggleTimer()">▶ Start</button>
-            <button class="timer-btn stop" id="timerStopBtn" onclick="stopTimer()" style="display:none">■ Stop &amp; Save</button>
+            <button class="timer-btn" id="timerStartBtn" onclick="toggleTimer()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#play"/></svg> Start</button>
+            <button class="timer-btn stop" id="timerStopBtn" onclick="stopTimer()" style="display:none"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#stop"/></svg> Stop &amp; Save</button>
           </div>
         </div>
 
@@ -671,7 +670,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
           <div class="ifield"><label>Court</label><input id="iCourt" type="text" placeholder="e.g. District Court, Lucknow"></div>
           <div class="ifield"><label>First Hearing</label><input id="iHearing" type="date"></div>
           <div style="display:flex;align-items:flex-end">
-            <button class="btn-intake" onclick="quickIntake()">+ Create Case</button>
+            <button class="btn-intake" onclick="quickIntake()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#plus"/></svg> Create Case</button>
           </div>
         </div>
       </div>
@@ -743,7 +742,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
   </div>
 </div>
 
-<div id="toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ok);color:#fff;font-size:13px;font-weight:700;padding:10px 22px;border-radius:12px;z-index:999;opacity:0;transition:transform .3s,opacity .3s;pointer-events:none;white-space:nowrap">✓ <span id="toastMsg"></span></div>
+<div id="toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ok);color:#fff;font-size:13px;font-weight:700;padding:10px 22px;border-radius:12px;z-index:999;opacity:0;transition:transform .3s,opacity .3s;pointer-events:none;white-space:nowrap"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#check"/></svg> <span id="toastMsg"></span></div>
 
 <script>
 const CASES_KEY='lhc_cases',TIME_KEY='lhc_time',ACT_KEY='lhc_activity';
@@ -1007,7 +1006,7 @@ refreshAll();
     <button class="tour-btn tour-back" id="tourBack" onclick="tourNav(-1)">Back</button>
     <button class="tour-btn tour-next" id="tourNext" onclick="tourNav(1)">Next</button>
   </div>
-  <button class="tour-btn tour-skip" id="tourSkip" onclick="endTour()" style="position:absolute;top:14px;right:14px;padding:4px 6px;font-size:11px">✕ Skip</button>
+  <button class="tour-btn tour-skip" id="tourSkip" onclick="endTour()" style="position:absolute;top:14px;right:14px;padding:4px 6px;font-size:11px"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#close"/></svg> Skip</button>
 </div>
 
 <script>
@@ -1018,7 +1017,7 @@ var STEPS=[
    desc:"Take a quick look around your browser-based workspace. This tour covers everything you need to hit the ground running."},
   {sel:'#sidebar',pos:'right',
    title:"Your navigation sidebar",
-   desc:"Everything lives here — Cases, Billing, Legal Documents, and all Tools. On mobile, tap the ☰ icon at the top to open it."},
+   desc:"Everything lives here — Cases, Billing, Legal Documents, and all Tools. On mobile, open the navigation menu at the top to open it."},
   {sel:'.stats-grid',pos:'bottom',
    title:"Your practice at a glance",
    desc:"These four tiles update the moment you add data — active cases, hours tracked this month, fees billed, and your very next hearing date. Watch them grow."},
@@ -1069,7 +1068,7 @@ function showStep(n){
   // Buttons
   document.getElementById('tourBack').style.display=n===0?'none':'';
   var nxt=document.getElementById('tourNext');
-  nxt.textContent=s.final?'Done':'Next →';
+  nxt.textContent=s.final?'Done':'Next';
   document.getElementById('tourSkip').style.display=s.final?'none':'';
 
   // Overlay darkness

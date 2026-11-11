@@ -16,7 +16,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stamp Generator — Indian Courts</title>
 <meta name="description" content="Free advocate stamp generator for Indian courts. Create, customise and download your advocate stamp instantly.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -130,6 +129,7 @@ canvas{display:block;max-width:100%;height:auto}
 .guide-step-num{width:20px;height:20px;border-radius:50%;background:var(--accent-glow);border:1px solid var(--accent);color:var(--accent-light);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 @media print{footer,.page-footer{display:none!important}}
 </style>
+<link rel="stylesheet" href="/static/ui-icons.css">
 </head>
 <body>
 
@@ -141,8 +141,8 @@ canvas{display:block;max-width:100%;height:auto}
     <span class="nav-name">Stamp Generator</span>
   </a>
   <div class="nav-links">
-    <a href="https://legalhashchecksum.com/" class="nav-link">Hash Tool</a>
-    <a href="https://legalhashchecksum.com/tools" class="nav-link">All Tools</a>
+    <a href="/hash" class="nav-link">Hash Tool</a>
+    <a href="/tools" class="nav-link">All Tools</a>
   </div>
 </nav>
 
@@ -201,7 +201,7 @@ canvas{display:block;max-width:100%;height:auto}
       <div class="color-sw" style="background:#4B0082" data-c="#4B0082" onclick="setColor('#4B0082',this)" title="Indigo"></div>
       <div class="color-sw" style="background:#7B3F00" data-c="#7B3F00" onclick="setColor('#7B3F00',this)" title="Brown"></div>
       <div class="color-picker-wrap" title="Custom colour">
-        <div class="color-picker-icon">+</div>
+        <div class="color-picker-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#plus"/></svg></div>
         <input type="color" id="customColor" value="#1A3A6B" onchange="setColor(this.value, null)">
       </div>
     </div>
@@ -267,7 +267,7 @@ canvas{display:block;max-width:100%;height:auto}
       <div class="guide-steps">
         <div class="guide-step"><span class="guide-step-num">1</span><span>Fill in your advocate details on the left panel and pick a shape and colour.</span></div>
         <div class="guide-step"><span class="guide-step-num">2</span><span>Click <strong>Download PNG</strong> to save the stamp as a transparent PNG image.</span></div>
-        <div class="guide-step"><span class="guide-step-num">3</span><span>In the Bail Bond or Memo of Appearance tool, click <strong>⬆ I Have a Stamp</strong> and upload the PNG.</span></div>
+        <div class="guide-step"><span class="guide-step-num">3</span><span>In the Bail Bond or Memo of Appearance tool, click <strong>I Have a Stamp</strong> and upload the PNG.</span></div>
         <div class="guide-step"><span class="guide-step-num">4</span><span>Drag the stamp on the document to position it, then Print / Save PDF.</span></div>
         <div class="guide-step"><span class="guide-step-num">5</span><span>Click <strong>Save to Browser</strong> so your stamp is remembered the next time you visit.</span></div>
       </div>

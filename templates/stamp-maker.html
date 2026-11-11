@@ -97,6 +97,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
   .paper{box-shadow:none;margin:0;width:100%;border:none;padding:15mm 20mm}
 }
 </style>
+<link rel="stylesheet" href="/static/ui-icons.css">
 </head>
 <body>
 
@@ -108,7 +109,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
     <span class="nav-name">Advocate Stamp Maker</span>
   </a>
   <div class="nav-links">
-    <a href="/" class="nav-link">Hash Tool</a>
+    <a href="/hash" class="nav-link">Hash Tool</a>
     <a href="/tools" class="nav-link">All Tools</a>
   </div>
 </nav>
@@ -207,12 +208,12 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
     </div>
 
     <div class="btn-row">
-      <button class="btn-primary" onclick="updateStamp()">↺ Refresh Stamp</button>
+      <button class="btn-primary" onclick="updateStamp()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#refresh"/></svg> Refresh Stamp</button>
       <button class="btn-secondary" onclick="resetPos()">⊕ Reset Position</button>
     </div>
 
     <div class="stamp-actions" style="margin-top:12px">
-      <button class="btn-dl btn-dl-png" onclick="downloadPNG()">⬇ Download Stamp PNG</button>
+      <button class="btn-dl btn-dl-png" onclick="downloadPNG()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#download"/></svg> Download Stamp PNG</button>
       <button class="btn-dl" onclick="window.print()" style="background:var(--tx2)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print with Stamp</button>
     </div>
 
@@ -220,7 +221,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 
   <!-- PREVIEW PANEL -->
   <div class="preview-panel" id="previewPanel">
-    <div class="preview-label">← Design your stamp · Drag it anywhere on the document</div>
+    <div class="preview-label"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#arrow-left"/></svg> Design your stamp · Drag it anywhere on the document</div>
 
     <div class="paper" id="paper">
       <!-- Sample legal document content -->

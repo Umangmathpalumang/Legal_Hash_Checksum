@@ -17,7 +17,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -50,6 +49,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .back-link:hover{text-decoration:underline}
 @media print{footer,.page-footer{display:none!important}}
 </style>
+<link rel="stylesheet" href="/static/ui-icons.css">
 </head>
 <body>
 <div class="wrap">
@@ -82,7 +82,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
     <div class="vresult" id="vResult"></div>
   </div>
 
-  <a href="/" class="back-link">&larr; Back to Legal Hash Checksum Generator</a>
+  <a href="/hash" class="back-link"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#arrow-left"/></svg> Back to Legal Hash Checksum Generator</a>
 </div>
 
 <script>
@@ -229,7 +229,7 @@ function verifyHash() {
   if(typeof gaEvent!=='undefined') gaEvent('hash_verified', {tool:'verify', result: match ? 'match' : 'mismatch'});
   resEl.innerHTML = match 
     ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px;color:var(--ok)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>MATCH CONFIRMED — Unaltered Evidence<br><span style="font-size:11px;opacity:0.8">Computed cryptographic hash matches certificate record perfectly.</span>'
-    : '✕ MISMATCH DETECTED — Integrity Compromised<br><span style="font-size:11px;opacity:0.8">The file contents do not match the expected hash.</span>';
+    : '<svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#close"/></svg> MISMATCH DETECTED — Integrity Compromised<br><span style="font-size:11px;opacity:0.8">The file contents do not match the expected hash.</span>';
 }
 </script>
 

@@ -17,7 +17,7 @@
 body{font-family:var(--sans);background:var(--bg);color:var(--tx);line-height:1.7;font-size:15px}
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:56px;background:var(--sur);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100}
 .nav-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--tx);font-size:14px;font-weight:700}
-.nav-logo{width:30px;height:30px;background:var(--ac);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:monospace;font-weight:800;font-size:14px}
+.nav-logo{display:block;flex-shrink:0;width:30px;height:30px;}
 .nav-links{display:flex;gap:16px}
 .nav-links a{color:var(--tx2);text-decoration:none;font-size:13px;font-weight:600}
 .nav-links a:hover{color:var(--ac)}
@@ -40,7 +40,7 @@ footer a:hover{color:var(--ac)}
 </head>
 <body>
 <nav>
-  <a href="/" class="nav-brand"><div class="nav-logo">#</div>legalhashchecksum.com</a>
+  <a href="/" class="nav-brand"><img class="nav-logo" src="/favicon.svg" alt="">legalhashchecksum.com</a>
   <div class="nav-links"><a href="/tools">Tools</a><a href="/pricing">Pricing</a><a href="/contact">Contact</a></div>
 </nav>
 
