@@ -256,76 +256,73 @@ async def legal_notice_custom(request: Request):
     return HTMLResponse(content=open(p).read())
 
 
-import smtplib, os
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from pydantic import BaseModel
+import smtplib
+import ssl
+from email.errors import MessageError
+from email.headerregistry import Address
+from email.message import EmailMessage
+from pydantic import BaseModel, Field
+
 
 class FeedbackForm(BaseModel):
-    type: str
-    page: str
-    message: str
-    email: str = ""
-    url: str = ""
+    type: str = Field(max_length=80)
+    page: str = Field(max_length=200)
+    message: str = Field(min_length=1, max_length=1000)
+    email: str = Field(default="", max_length=254)
+    url: str = Field(default="", max_length=2048)
+
 
 @app.get("/feedback", response_class=HTMLResponse, include_in_schema=False)
-async def feedback_get(request: Request):
-    """Redirect Googlebot away — this endpoint is POST only"""
-    from fastapi.responses import RedirectResponse
+async def feedback_get():
     return RedirectResponse(url="/tools", status_code=301)
 
+
 @app.post("/feedback")
-async def submit_feedback(data: FeedbackForm):
+def submit_feedback(data: FeedbackForm):
+    message = data.message.strip()
+    if not message:
+        return JSONResponse({"ok": False, "error": "Please enter a message."}, status_code=422)
+
+    reply = None
+    if data.email.strip():
+        try:
+            reply = Address(addr_spec=data.email.strip())
+        except (ValueError, MessageError):
+            return JSONResponse({"ok": False, "error": "Enter a valid reply email."}, status_code=422)
+        if not reply.domain:
+            return JSONResponse({"ok": False, "error": "Enter a valid reply email."}, status_code=422)
+
+    sender = os.getenv("GMAIL_USER", "").strip()
+    password = os.getenv("GMAIL_PASS", "")
+    recipient = os.getenv("FEEDBACK_TO", "").strip() or sender
+
+    unavailable = {"ok": False, "error": "Feedback email is unavailable. Please use the contact page or try again later."}
+    if not sender or not password:
+        logger.error("Feedback mail is not configured")
+        return JSONResponse(unavailable, status_code=503)
+
     try:
-        gmail_user = os.getenv("GMAIL_USER", "umangmathpal@gmail.com")
-        gmail_pass = os.getenv("GMAIL_PASS", "")
-        to_email   = os.getenv("FEEDBACK_TO", "umangmathpal@gmail.com")
+        msg = EmailMessage()
+        label = " ".join(f"{data.type} — {data.page}".split())
+        msg["Subject"] = f"[LegalHashChecksum] {label}"
+        msg["From"] = Address(display_name="Legal Hash Checksum", addr_spec=sender)
+        msg["To"] = Address(addr_spec=recipient)
+        if reply:
+            msg["Reply-To"] = reply
+        msg.set_content(
+            f"Type: {data.type}\nPage: {data.page}\nURL: {data.url}\n\n{message}\n"
+        )
+        with smtplib.SMTP_SSL(
+            "smtp.gmail.com", 465, timeout=10, context=ssl.create_default_context()
+        ) as server:
+            server.login(sender, password)
+            server.send_message(msg)
+    except (OSError, smtplib.SMTPException, ValueError, MessageError) as exc:
+        logger.warning("Feedback delivery failed (%s, SMTP code %s)",
+                       type(exc).__name__, getattr(exc, "smtp_code", "unknown"))
+        return JSONResponse(unavailable, status_code=503)
 
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = f"[LegalHashChecksum] {data.type} — {data.page}"
-        msg["From"]    = f"LegalHashChecksum <{gmail_user}>"
-        msg["To"]      = to_email
-
-        html = f"""
-        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
-          <div style="background:#2563EB;padding:16px 24px;border-radius:12px 12px 0 0">
-            <h2 style="color:#fff;margin:0;font-size:18px">[LegalHashChecksum] Feedback</h2>
-          </div>
-          <div style="background:#f9fafb;padding:24px;border:1px solid #e5e7eb;border-top:none">
-            <table style="width:100%;border-collapse:collapse">
-              <tr><td style="padding:8px 0;font-size:13px;color:#6b7280;width:120px"><strong>Type</strong></td><td style="padding:8px 0;font-size:14px;color:#111">{data.type}</td></tr>
-              <tr><td style="padding:8px 0;font-size:13px;color:#6b7280"><strong>Page</strong></td><td style="padding:8px 0;font-size:14px;color:#111">{data.page}</td></tr>
-              <tr><td style="padding:8px 0;font-size:13px;color:#6b7280"><strong>URL</strong></td><td style="padding:8px 0;font-size:14px;color:#2563EB"><a href="{data.url}">{data.url}</a></td></tr>
-              <tr><td style="padding:8px 0;font-size:13px;color:#6b7280"><strong>Reply to</strong></td><td style="padding:8px 0;font-size:14px;color:#111">{data.email or "Not provided"}</td></tr>
-            </table>
-            <div style="margin-top:16px;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:16px">
-              <p style="font-size:13px;color:#6b7280;margin:0 0 8px"><strong>Message</strong></p>
-              <p style="font-size:15px;color:#111;margin:0;line-height:1.6;white-space:pre-wrap">{data.message}</p>
-            </div>
-          </div>
-          <div style="background:#f3f4f6;padding:12px 24px;border-radius:0 0 12px 12px;border:1px solid #e5e7eb;border-top:none">
-            <p style="font-size:12px;color:#9ca3af;margin:0">Sent from legalhashchecksum.com feedback widget</p>
-          </div>
-        </div>"""
-
-        msg.attach(MIMEText(html, "html"))
-
-        # If reply email provided, set Reply-To
-        if data.email:
-            msg["Reply-To"] = data.email
-
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(gmail_user, gmail_pass)
-            server.sendmail(gmail_user, to_email, msg.as_string())
-
-        return {"ok": True}
-    except Exception as e:
-        print(f"Feedback email error: {e}")
-        return {"ok": False, "error": str(e)}
-
-
-
-
+    return {"ok": True}
 
 
 @app.get("/health")

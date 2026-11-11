@@ -23,6 +23,9 @@ The dashboard and browser tools work without database credentials. Set these var
 
 Set the database and moderation variables on the VPS before deploying this version. Rotate any credentials previously stored in source control.
 
+Feedback is sent to `FEEDBACK_TO` (or to `GMAIL_USER` when no destination is set). The API returns HTTP 503 if it cannot deliver. For the `cedrf` deployment, run `python3 scripts/update-feedback-gmail.py` from an interactive Terminal to replace a rejected Google app password. The helper tests Gmail authentication before updating the private service configuration and does not send a message.
+
+
 Paid plans are shown as a preview. The checkout and billing policy mockups in [docs/payment-drafts](docs/payment-drafts) are not served by the app. Payment verification, subscriptions, and native releases are separate work.
 
 GitHub Actions deploys pushes to `main` to the VPS.

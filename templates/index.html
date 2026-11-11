@@ -1963,12 +1963,11 @@ textarea.fb-field {
     if(!msg){errEl.style.display='block';return;}
     errEl.style.display='none';
     btn.disabled=true;btn.innerHTML=SVG_SEND+' Sending...';
-    if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:label,has_email:!!email});
     fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:fbType,page:label,message:msg,email:email||'',url:window.location.href})})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.ok){document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
-      else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Failed to send. Try again.';errEl.style.display='block';}
+      if(d.ok){if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
+      else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Could not send feedback. Try again later or use Contact & support.';errEl.style.display='block';}
     }).catch(function(){btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Network error. Check connection.';errEl.style.display='block';});
   };
   document.getElementById('fbOverlay').addEventListener('transitionend',function(){
