@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/lhc-core.js"></script>
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
 <script>
@@ -84,7 +85,7 @@ textarea.field-input{resize:vertical;min-height:120px;font-family:'EB Garamond',
 .notice-enc{margin-top:6mm;font-size:9.5pt}
 .notice-through{font-size:9.5pt;margin-top:2mm;font-style:italic}
 
-@media print{
+@media print{html,body{height:auto!important;min-height:0!important;overflow:visible!important}.app{display:block!important;height:auto!important;min-height:0!important}.form-panel{display:none!important}.preview-panel{display:block!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:0!important;background:none!important}.paper,.paper-p1,.paper-p2{min-height:0!important;height:auto!important;box-shadow:none!important;border:none!important;background:#fff!important}nav,.stamp-bar,.format-bar,.toolbar,.stamp-modal-overlay{display:none!important}footer,.page-footer{display:none!important}
   nav,.form-panel,.preview-label{display:none!important}
   .app{display:block}
   .preview-panel{background:#fff!important;padding:0;max-height:none;display:block}
@@ -198,14 +199,14 @@ textarea.field-input{resize:vertical;min-height:120px;font-family:'EB Garamond',
     </div>
 
     <div class="two-col">
-      <button class="btn-clear" onclick="saveSettings()">💾 Save as default</button>
-      <button class="btn-clear" onclick="clearAll()">🗑️ Clear all</button>
+      <button class="btn-clear" onclick="saveSettings()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save as default</button>
+      <button class="btn-clear" onclick="clearAll()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>Clear all</button>
     </div>
   </div>
 
   <!-- PREVIEW -->
   <div class="preview-panel">
-    <p class="preview-label">📄 Legal size (216 × 356 mm) · Live preview</p>
+    <p class="preview-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>Legal size (216 × 356 mm) · Live preview</p>
     <div class="paper" id="paper"></div>
   </div>
 </div>
@@ -337,5 +338,20 @@ function clearAll(){
   render();
 })();
 </script>
+
+<footer style="margin-top:40px;padding:18px 24px 24px;border-top:1px solid #E4E9F0;font-size:11px;color:#94A3B8;text-align:center">
+  <div style="display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;justify-content:center;margin-bottom:6px">
+    <a href="/dashboard" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Dashboard</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/tools" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">All Tools</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/pricing" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Pricing</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/contact" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Contact</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/privacy-policy" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Privacy Policy</a>
+      </div>
+  <div>© 2024–2026 legalhashchecksum.com</div>
+</footer>
 </body>
 </html>

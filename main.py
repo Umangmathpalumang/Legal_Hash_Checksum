@@ -1,8 +1,10 @@
 import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
 
 # Load .env file
-import pathlib as _pl
-_env_file = _pl.Path(__file__).parent / '.env'
+_env_file = BASE_DIR / ".env"
 if _env_file.exists():
     for _line in _env_file.read_text().splitlines():
         _line = _line.strip()
@@ -17,7 +19,7 @@ from datetime import datetime, timezone
 
 from fastapi.responses import FileResponse
 from fastapi import FastAPI, Request, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -41,6 +43,9 @@ app.add_middleware(
     allow_methods=["GET"],
     allow_headers=["*"],
 )
+
+# ── Static files (shared JS, PWA assets) ──────────────────────────
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 # ── Rate limiting ─────────────────────────────────────────────────
 # Simple in-memory sliding window: max 60 requests per IP per minute.
@@ -96,13 +101,24 @@ async def security_headers(request: Request, call_next):
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
         "font-src https://fonts.gstatic.com; "
         "img-src 'self' data:; "
-        "connect-src 'self' https://www.google-analytics.com https://static.cloudflareinsights.com; worker-src blob:; "
+        "connect-src 'self' https://www.google-analytics.com https://static.cloudflareinsights.com; worker-src 'self' blob:; "
         "frame-ancestors 'none'"
     )
     return response
 
 
 # ── Routes ────────────────────────────────────────────────────────
+
+# ── PWA — service worker and manifest must be served from root ────
+@app.get("/sw.js", include_in_schema=False)
+async def service_worker():
+    return FileResponse(BASE_DIR / "static/sw.js", media_type="application/javascript",
+                        headers={"Service-Worker-Allowed": "/"})
+
+@app.get("/manifest.json", include_in_schema=False)
+async def pwa_manifest():
+    return FileResponse(BASE_DIR / "static/manifest.json", media_type="application/manifest+json")
+
 
 @app.get("/favicon.ico")
 async def favicon():
@@ -115,10 +131,18 @@ async def favicon():
 
 @app.get("/favicon.svg", include_in_schema=False)
 async def favicon_svg():
-    return FileResponse("favicon.svg", media_type="image/svg+xml")
+    return FileResponse(BASE_DIR / "favicon.svg", media_type="image/svg+xml")
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
+    html_path = os.path.join(os.path.dirname(__file__), "templates", "tools.html")
+    try:
+        return HTMLResponse(content=open(html_path).read())
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Template not found")
+
+@app.get("/hash", response_class=HTMLResponse)
+async def hash_tool(request: Request):
     html_path = os.path.join(os.path.dirname(__file__), "templates", "index.html")
     try:
         return HTMLResponse(content=open(html_path).read())
@@ -127,7 +151,7 @@ async def index(request: Request):
 
 @app.get("/llms.txt", include_in_schema=False)
 async def llms_text():
-    return FileResponse("llms.txt", media_type="text/plain")
+    return FileResponse(BASE_DIR / "llms.txt", media_type="text/plain")
 
 @app.get("/verify", response_class=HTMLResponse)
 async def verify_portal(request: Request):
@@ -147,7 +171,7 @@ async def tools(request: Request):
 
 @app.get("/profile", response_class=HTMLResponse)
 async def get_profile():
-    with open("templates/profile.html", "r", encoding="utf-8") as f:
+    with open(BASE_DIR / "templates/profile.html", "r", encoding="utf-8") as f:
         return f.read()
 
 @app.get("/vakalatnama", response_class=HTMLResponse)
@@ -166,12 +190,6 @@ async def memo_appearance(request: Request):
         return HTMLResponse(content=open(html_path).read())
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Template not found")
-
-@app.get("/stamp-generator", response_class=HTMLResponse)
-async def stamp_generator(request: Request):
-    html_path = os.path.join(os.path.dirname(__file__), "templates", "stamp-generator.html")
-    with open(html_path, "r") as f:
-        return HTMLResponse(content=f.read())
 
 @app.get("/stamp-generator", response_class=HTMLResponse)
 async def stamp_generator(request: Request):
@@ -332,6 +350,7 @@ async def sitemap():
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url><loc>https://legalhashchecksum.com/hash</loc></url>
 </urlset>''',
         media_type="application/xml",
     )
@@ -358,8 +377,12 @@ import asyncpg
 from typing import Optional
 from pydantic import BaseModel as PydanticBase
 
-QA_DB_URL = os.environ.get("QA_DATABASE_URL",
-    "postgresql://legalqa_user:legalqa_pass_2026@localhost:5432/legalqa")
+async def get_qa_connection():
+    url = os.environ.get("QA_DATABASE_URL")
+    if not url:
+        raise HTTPException(503, "Legal Q&A database is not configured")
+    return await asyncpg.connect(url)
+
 
 class QuestionIn(PydanticBase):
     question: str
@@ -381,7 +404,7 @@ async def qa_page():
 
 @app.get("/api/qa/questions")
 async def get_questions():
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         rows = await conn.fetch("""
             SELECT q.id, q.question, q.category, q.asker_name, q.anonymous,
@@ -392,13 +415,13 @@ async def get_questions():
         """)
         return [dict(r) for r in rows]
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 @app.post("/api/qa/questions")
 async def post_question(q: QuestionIn):
     if len(q.question.strip()) < 10:
         raise HTTPException(400, "Question too short")
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         await conn.execute("""
             INSERT INTO legal_questions (question, category, asker_name, anonymous)
@@ -406,11 +429,11 @@ async def post_question(q: QuestionIn):
         """, q.question.strip(), q.category, q.asker_name or "Anonymous", q.anonymous)
         return {"ok": True}
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 @app.get("/api/qa/answers/{qid}")
 async def get_answers(qid: int):
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         rows = await conn.fetch("""
             SELECT id, question_id, answer, advocate_name, advocate_enroll,
@@ -420,7 +443,7 @@ async def get_answers(qid: int):
         """, qid)
         return [dict(r) for r in rows]
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 @app.post("/api/qa/answers")
 async def post_answer(a: AnswerIn):
@@ -428,7 +451,7 @@ async def post_answer(a: AnswerIn):
         raise HTTPException(400, "Answer too short")
     if not a.advocate_name.strip():
         raise HTTPException(400, "Advocate name required")
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         await conn.execute("""
             INSERT INTO legal_answers
@@ -438,21 +461,21 @@ async def post_answer(a: AnswerIn):
              a.advocate_enroll or "", a.advocate_court or "")
         return {"ok": True}
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 @app.post("/api/qa/view/{qid}")
 async def increment_view(qid: int):
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         await conn.execute(
             "UPDATE legal_questions SET views=views+1 WHERE id=$1", qid)
         return {"ok": True}
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 @app.post("/api/qa/upvote/{aid}")
 async def upvote_answer(aid: int):
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         row = await conn.fetchrow("""
             UPDATE legal_answers SET upvotes=upvotes+1
@@ -460,7 +483,7 @@ async def upvote_answer(aid: int):
         """, aid)
         return {"upvotes": row["upvotes"]}
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 
 # ══════════════════════════════════════════════════════
@@ -468,15 +491,18 @@ async def upvote_answer(aid: int):
 # ══════════════════════════════════════════════════════
 import hmac, hashlib
 
-ADMIN_PASSWORD = os.environ.get("QA_ADMIN_PASSWORD", "legaladmin2026")
-ADMIN_TOKEN    = hashlib.sha256(ADMIN_PASSWORD.encode()).hexdigest()
+ADMIN_PASSWORD = os.environ.get("QA_ADMIN_PASSWORD", "")
+ADMIN_TOKEN = (
+    hmac.new(ADMIN_PASSWORD.encode(), b"lhc-qa-admin", hashlib.sha256).hexdigest()
+    if ADMIN_PASSWORD else ""
+)
 
 class AdminLogin(PydanticBase):
     password: str
 
 def verify_admin(request: Request):
     token = request.headers.get("X-Admin-Token","")
-    if token != ADMIN_TOKEN:
+    if not ADMIN_TOKEN or not hmac.compare_digest(token.encode(), ADMIN_TOKEN.encode()):
         raise HTTPException(403, "Unauthorized")
 
 @app.get("/admin-lhc-qa-panel")
@@ -486,14 +512,14 @@ async def admin_page():
 
 @app.post("/api/admin/qa/login")
 async def admin_login(body: AdminLogin):
-    if body.password == ADMIN_PASSWORD:
+    if ADMIN_PASSWORD and hmac.compare_digest(body.password.encode(), ADMIN_PASSWORD.encode()):
         return {"token": ADMIN_TOKEN}
     return {"error": "wrong password"}
 
 @app.get("/api/admin/qa/questions")
 async def admin_get_questions(request: Request):
     verify_admin(request)
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         rows = await conn.fetch("""
             SELECT q.id, q.question, q.category, q.asker_name, q.anonymous,
@@ -504,12 +530,12 @@ async def admin_get_questions(request: Request):
         """)
         return [dict(r) for r in rows]
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 @app.get("/api/admin/qa/answers")
 async def admin_get_answers(request: Request):
     verify_admin(request)
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         rows = await conn.fetch("""
             SELECT id, question_id, answer, advocate_name, advocate_enroll,
@@ -518,27 +544,27 @@ async def admin_get_answers(request: Request):
         """)
         return [dict(r) for r in rows]
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 @app.delete("/api/admin/qa/questions/{qid}")
 async def admin_delete_question(qid: int, request: Request):
     verify_admin(request)
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         await conn.execute("DELETE FROM legal_questions WHERE id=$1", qid)
         return {"ok": True}
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 @app.delete("/api/admin/qa/answers/{aid}")
 async def admin_delete_answer(aid: int, request: Request):
     verify_admin(request)
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         await conn.execute("DELETE FROM legal_answers WHERE id=$1", aid)
         return {"ok": True}
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 class QuestionEdit(PydanticBase):
     question: str
@@ -554,7 +580,7 @@ class AnswerEdit(PydanticBase):
 @app.patch("/api/admin/qa/questions/{qid}")
 async def admin_edit_question(qid: int, body: QuestionEdit, request: Request):
     verify_admin(request)
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         await conn.execute("""
             UPDATE legal_questions
@@ -563,12 +589,12 @@ async def admin_edit_question(qid: int, body: QuestionEdit, request: Request):
         """, body.question.strip(), body.category, body.asker_name, qid)
         return {"ok": True}
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 @app.patch("/api/admin/qa/answers/{aid}")
 async def admin_edit_answer(aid: int, body: AnswerEdit, request: Request):
     verify_admin(request)
-    conn = await asyncpg.connect(QA_DB_URL)
+    conn = await get_qa_connection()
     try:
         await conn.execute("""
             UPDATE legal_answers
@@ -577,21 +603,52 @@ async def admin_edit_answer(aid: int, body: AnswerEdit, request: Request):
         """, body.answer.strip(), body.advocate_name, body.advocate_enroll or "", body.advocate_court or "", aid)
         return {"ok": True}
     finally:
-        await pool.release(conn)
+        await conn.close()
 
 @app.get("/cases", response_class=HTMLResponse)
 async def get_cases():
-    with open("templates/cases.html", "r", encoding="utf-8") as f:
+    with open(BASE_DIR / "templates/cases.html", "r", encoding="utf-8") as f:
+        return f.read()
+
+@app.get("/dashboard", response_class=HTMLResponse)
+async def get_dashboard():
+    with open(BASE_DIR / "templates/dashboard.html", "r", encoding="utf-8") as f:
+        return f.read()
+
+@app.get("/billing", response_class=HTMLResponse)
+async def get_billing():
+    with open(BASE_DIR / "templates/billing.html", "r", encoding="utf-8") as f:
         return f.read()
 
 @app.get("/alerts", response_class=HTMLResponse)
 async def get_alerts():
-    with open("templates/alerts.html", "r", encoding="utf-8") as f:
+    with open(BASE_DIR / "templates/alerts.html", "r", encoding="utf-8") as f:
         return f.read()
+
+@app.get("/pricing", response_class=HTMLResponse)
+async def get_pricing():
+    with open(BASE_DIR / "templates/pricing.html", "r", encoding="utf-8") as f:
+        return f.read()
+
+@app.get("/download", response_class=HTMLResponse)
+async def get_download():
+    with open(BASE_DIR / "templates/download.html", "r", encoding="utf-8") as f:
+        return f.read()
+
+@app.get("/privacy-policy", response_class=HTMLResponse)
+async def get_privacy_policy():
+    return (BASE_DIR / "templates/privacy-policy.html").read_text(encoding="utf-8")
+
+@app.get("/contact", response_class=HTMLResponse)
+async def get_contact():
+    return (BASE_DIR / "templates/contact.html").read_text(encoding="utf-8")
+
+@app.get("/checkout", include_in_schema=False)
+async def get_checkout():
+    return RedirectResponse("/pricing", status_code=303)
 
 
 # ── Judgments Module ─────────────────────────────────────────────────────────
-JUDGMENT_DB_URL = "postgresql://legalqa_user:legalqa_pass_2026@localhost:5432/legalqa"
 
 # Connection pool — reuse connections instead of new conn per request
 _judgment_pool = None
@@ -599,8 +656,11 @@ _judgment_pool = None
 async def get_judgment_pool():
     global _judgment_pool
     if _judgment_pool is None:
+        url = os.environ.get("JUDGMENT_DATABASE_URL")
+        if not url:
+            raise HTTPException(503, "Judgment database is not configured")
         _judgment_pool = await asyncpg.create_pool(
-            JUDGMENT_DB_URL,
+            url,
             min_size=2,
             max_size=8,
             command_timeout=10,

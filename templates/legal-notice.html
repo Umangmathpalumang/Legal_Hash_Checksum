@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/lhc-core.js"></script>
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
 <script>
@@ -106,7 +107,7 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
 .paper .encl{margin-top:6mm;font-size:9.5pt}
 
 /* Page numbers - only on print */
-@media print{
+@media print{html,body{height:auto!important;min-height:0!important;overflow:visible!important}.app{display:block!important;height:auto!important;min-height:0!important}.form-panel{display:none!important}.preview-panel{display:block!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:0!important;background:none!important}.paper,.paper-p1,.paper-p2{min-height:0!important;height:auto!important;box-shadow:none!important;border:none!important;background:#fff!important}nav,.stamp-bar,.format-bar,.toolbar,.stamp-modal-overlay{display:none!important}footer,.page-footer{display:none!important}
   .paper .page-num{position:fixed;bottom:10mm;left:0;right:0;text-align:center;font-size:9pt;font-family:'EB Garamond',serif;color:#111}
   nav,.type-bar,.form-panel,.preview-label{display:none!important}
   .app{display:block}
@@ -185,7 +186,7 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
 
 <!-- STAMP BAR -->
 <div class="stamp-bar" id="stampBar">
-  <span class="stamp-bar-label">🖂 Stamp:</span>
+  <span class="stamp-bar-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>Stamp:</span>
   <button class="btn-stamp btn-stamp-has" onclick="stampUpload()" title="Upload your existing stamp image">
     ⬆ I Have a Stamp
   </button>
@@ -202,7 +203,7 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
 <!-- STAMP MAKER MODAL -->
 <div class="stamp-modal-overlay" id="stampModal">
   <div class="stamp-modal">
-    <h3>✦ Create Your Advocate Stamp</h3>
+    <h3>Create Your Advocate Stamp</h3>
     <p>Fill in your details, choose a shape and colour, then click Apply to place it on the document.</p>
 
     <div class="stamp-field"><label>Line 1 — Name</label><input id="sm1" placeholder="ADV. YOUR NAME" value="ADV. YOUR NAME"></div>
@@ -382,7 +383,7 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
 
   <!-- PREVIEW -->
   <div class="preview-panel">
-    <p class="preview-label">📄 Legal size (216 × 356 mm) · Live preview · Page numbers appear on print</p>
+    <p class="preview-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>Legal size (216 × 356 mm) · Live preview · Page numbers appear on print</p>
     <div class="paper" id="paper"></div>
   </div>
 </div>
@@ -955,5 +956,19 @@ window.clearStamp = function(){
 })();
 </script>
 
+<footer style="margin-top:40px;padding:18px 24px 24px;border-top:1px solid #E4E9F0;font-size:11px;color:#94A3B8;text-align:center">
+  <div style="display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;justify-content:center;margin-bottom:6px">
+    <a href="/dashboard" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Dashboard</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/tools" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">All Tools</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/pricing" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Pricing</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/contact" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Contact</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/privacy-policy" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Privacy Policy</a>
+      </div>
+  <div>© 2024–2026 legalhashchecksum.com</div>
+</footer>
 </body>
 </html>

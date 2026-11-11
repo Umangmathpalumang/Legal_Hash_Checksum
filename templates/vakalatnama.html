@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script src="/static/lhc-core.js"></script>
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
 <script>
@@ -18,12 +19,12 @@
 <meta name="keywords" content="vakalatnama generator, vakalatnama format, vakalatnama pdf, vakalatnama online, how to fill vakalatnama, power of attorney advocate, vakalatnama high court, vakalatnama district court, vakalatnama India free">
 <link rel="canonical" href="https://legalhashchecksum.com/vakalatnama">
 <meta property="og:title" content="Vakalatnama Generator — Fill & Download PDF Free | Indian Courts">
-<meta property="og:description" content="Free Vakalatnama generator. Fill advocate and client details, download print-ready PDF. Official format for all Indian courts. No login required.">
+<meta property="og:description" content="Vakalatnama generator. Fill advocate and client details, download print-ready PDF. Official format for all Indian courts. No login required.">
 <meta property="og:url" content="https://legalhashchecksum.com/vakalatnama">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vakalatnama Generator — Indian Courts Free">
-<meta name="twitter:description" content="Generate Vakalatnama PDF online free. All court formats. No login required.">
+<meta name="twitter:description" content="Generate Vakalatnama PDF online. All court formats. No login required.">
 <meta name="robots" content="index, follow">
 <script type="application/ld+json">
 {
@@ -146,8 +147,87 @@ textarea.field-input{resize:vertical;min-height:52px}
 .sign-name{font-size:7.5pt;margin-top:1px;word-break:break-word}
 .sign-col-center{text-align:center;font-size:7pt;flex:1.4;line-height:1.4}
 
+/* ── FORMAT TOGGLE ── */
+.fmt-toggle{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px;flex-shrink:0}
+.fmt-btn{flex:1;padding:8px 4px;border:none;background:transparent;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s;font-family:inherit}
+.fmt-btn.active{background:var(--accent);color:#fff}
 
+/* ── AHC PAPER ── */
+/* AHC paper: Legal size 216×356mm, measured from PDF content stream */
+.ahc-paper{
+  position:relative;
+  width:216mm;
+  min-height:356mm;
+  background:#fff;
+  box-shadow:0 4px 24px rgba(0,0,0,.15);
+  font-family:'EB Garamond',serif;
+  font-size:10.5pt;
+  color:#111;
+  line-height:1.5;
+  display:flex;
+}
+/* 35.2mm left column: 18.2mm outer gap + 17mm strip */
+.ahc-left-col{
+  width:35.2mm;
+  flex-shrink:0;
+  position:relative;
+}
+.ahc-margin{
+  position:absolute;
+  left:18.2mm;
+  top:18.5mm;
+  bottom:37.7mm;
+  width:17mm;
+  border:0.8px solid #888;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-evenly;
+}
+.ahc-margin-label{
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  font-size:6.5pt;
+  color:#555;
+  letter-spacing:.04em;
+  font-family:'EB Garamond',serif;
+}
+/* Body: starts at 35.2mm from left. Top 31.5mm, right 20mm, bottom 37.7mm from PDF measurements */
+.ahc-body-wrap{
+  flex:1;
+  padding:31.5mm 20mm 37.7mm 0;
+}
+.ahc-title{text-align:center;font-size:15pt;font-weight:700;letter-spacing:.05em;margin-bottom:2mm}
+.ahc-subtitle{text-align:center;font-size:11pt;font-weight:700;margin-bottom:5mm}
+.ahc-pet-line{font-size:9.5pt;margin-bottom:1mm;display:flex;gap:3px;align-items:baseline;flex-wrap:wrap}
+.ahc-pet-fill{border-bottom:1px solid #444;display:inline-block;min-width:30mm;vertical-align:bottom}
+.ahc-pet-type{flex:1;min-width:0}
+.ahc-district{text-align:right;font-size:10pt;margin-bottom:3mm}
+.ahc-versus{text-align:center;font-style:italic;font-size:10.5pt;margin:2mm 0}
+.ahc-iwe-row{display:flex;align-items:flex-end;margin-bottom:1mm}
+.ahc-iwe{font-size:10.5pt;flex-shrink:0;padding-right:3mm;line-height:1;padding-bottom:2px}
+.ahc-dot-line{border-bottom:1px dotted #555;height:6mm;margin-bottom:1mm;flex:1}
+.ahc-appoint{font-size:10pt;margin:3mm 0 4mm;word-break:break-word}
+.ahc-adv-name{text-align:center;font-size:22pt;font-weight:700;letter-spacing:.03em;margin:3mm 0 1mm;line-height:1.2}
+.ahc-adv-hindi{text-align:center;font-size:16pt;margin-bottom:3mm;line-height:1.3}
+.ahc-adv-details{text-align:center;font-size:9.5pt;line-height:1.6}
+.ahc-auth{font-size:9pt;line-height:1.55;text-align:justify;margin:4mm 0 2mm;word-break:break-word}
+.ahc-auth p{margin-bottom:2mm}
+.ahc-quote{font-size:9pt;font-style:italic;margin:3mm 0;text-align:center}
+.ahc-bottom-row{display:flex;justify-content:space-between;align-items:flex-start;margin-top:5mm;font-size:9.5pt}
+.ahc-date-col{font-size:9.5pt}
+.ahc-date-fill{border-bottom:1px solid #444;display:inline-block;min-width:18mm;vertical-align:bottom}
+.ahc-accepted-col{text-align:right;font-size:9.5pt}
+.ahc-adv-sign{font-size:11pt;font-weight:700;margin:2mm 0 0}
+.ahc-sig-row{margin-top:6mm;font-size:8.5pt;border-top:1px solid #888;padding-top:2mm;display:flex;gap:8mm;flex-wrap:wrap}
 @media print{
+  .ahc-paper{box-shadow:none!important;min-height:356mm!important}
+  .ahc-paper .paper-stamp{cursor:default!important}
+  .ahc-left-col{position:relative!important}
+}
+
+
+@media print{html,body{height:auto!important;min-height:0!important;overflow:visible!important}.app{display:block!important;height:auto!important;min-height:0!important}.form-panel{display:none!important}.preview-panel{display:block!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:0!important;background:none!important}.paper,.paper-p1,.paper-p2{min-height:0!important;height:auto!important;box-shadow:none!important;border:none!important;background:#fff!important}nav,.stamp-bar,.format-bar,.toolbar,.stamp-modal-overlay{display:none!important}footer,.page-footer{display:none!important}
   .fb-btn,.fb-overlay,.stamp-bar,.stamp-modal-overlay,.paper-stamp-hint{display:none!important}
 
   nav,.form-panel,.preview-label{display:none!important}
@@ -236,7 +316,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 
 <!-- STAMP BAR -->
 <div class="stamp-bar" id="stampBar">
-  <span class="stamp-bar-label">🖂 Stamp:</span>
+  <span class="stamp-bar-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>Stamp:</span>
   <button class="btn-stamp btn-stamp-has" onclick="stampUpload()" title="Upload your existing stamp image">
     ⬆ I Have a Stamp
   </button>
@@ -253,7 +333,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 <!-- STAMP MAKER MODAL -->
 <div class="stamp-modal-overlay" id="stampModal">
   <div class="stamp-modal">
-    <h3>✦ Create Your Advocate Stamp</h3>
+    <h3>Create Your Advocate Stamp</h3>
     <p>Fill in your details, choose a shape and colour, then click Apply to place it on the document.</p>
 
     <div class="stamp-field"><label>Line 1 — Name</label><input id="sm1" placeholder="ADV. YOUR NAME" value="ADV. YOUR NAME"></div>
@@ -321,91 +401,186 @@ textarea.field-input{resize:vertical;min-height:52px}
     <h2>Fill Vakalatnama Details</h2>
     <p>Form updates live as you type. Click Print to save as PDF.</p>
 
-    <div class="section-divider">Case Details</div>
+    <!-- Format toggle -->
+    <div class="fmt-toggle">
+      <button class="fmt-btn active" id="fmtGeneral" onclick="setFormat('general')">General Courts</button>
+      <button class="fmt-btn" id="fmtAHC" onclick="setFormat('ahc')">Allahabad High Court</button>
+    </div>
 
-    <div class="two-col">
-      <div class="field-group">
-        <label class="field-label">FIR No. <span class="field-limit">max 10 chars</span></label>
-        <input class="field-input" id="firNo" placeholder="e.g. 123/2024" maxlength="15" oninput="update(this,'firNo',15)">
+    <!-- ── GENERAL FIELDS ── -->
+    <div id="generalFields">
+      <div class="section-divider">Case Details</div>
+      <div class="two-col">
+        <div class="field-group">
+          <label class="field-label">FIR No. <span class="field-limit">max 10</span></label>
+          <input class="field-input" id="firNo" placeholder="e.g. 123/2024" maxlength="15" oninput="update(this,'firNo',15)">
+        </div>
+        <div class="field-group">
+          <label class="field-label">C.No. <span class="field-limit">max 10</span></label>
+          <input class="field-input" id="cNo" placeholder="e.g. 456" maxlength="15" oninput="update(this,'cNo',15)">
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="field-group">
+          <label class="field-label">U/S (Sections) <span class="field-limit">max 30</span></label>
+          <input class="field-input" id="us" placeholder="e.g. 302 IPC" maxlength="60" oninput="update(this,'us',60)">
+        </div>
+        <div class="field-group">
+          <label class="field-label">P.S. <span class="field-limit">max 20</span></label>
+          <input class="field-input" id="ps" placeholder="e.g. Kotwali" maxlength="40" oninput="update(this,'ps',40)">
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="field-group">
+          <label class="field-label">District <span class="field-limit">max 25</span></label>
+          <input class="field-input" id="distt" placeholder="e.g. Lucknow" maxlength="40" oninput="update(this,'distt',40)">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Year <span class="field-limit">4 digits</span></label>
+          <input class="field-input" id="year" placeholder="2024" maxlength="4" oninput="update(this,'year',4)">
+        </div>
       </div>
       <div class="field-group">
-        <label class="field-label">C.No. <span class="field-limit">max 10 chars</span></label>
-        <input class="field-input" id="cNo" placeholder="e.g. 456" maxlength="15" oninput="update(this,'cNo',15)">
+        <label class="field-label">In the Court of <span class="field-limit">max 60</span></label>
+        <input class="field-input" id="court" placeholder="e.g. Sessions Judge, Lucknow" maxlength="120" oninput="update(this,'court',120)">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Suit/Appeal No. <span class="field-limit">max 20</span></label>
+        <input class="field-input" id="suitNo" placeholder="e.g. 45/2024" maxlength="30" oninput="update(this,'suitNo',30)">
+      </div>
+      <div class="section-divider">Parties</div>
+      <div class="field-group">
+        <label class="field-label">Plaintiff / Petitioner / Complainant <span class="field-limit">max 120</span></label>
+        <textarea class="field-input" id="plaintiff" placeholder="Full name and address" maxlength="250" oninput="update(this,'plaintiff',250)"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Defendant / Respondent / Accused <span class="field-limit">max 120</span></label>
+        <textarea class="field-input" id="defendant" placeholder="Full name and address" maxlength="250" oninput="update(this,'defendant',250)"></textarea>
+      </div>
+      <div class="section-divider">Client Details</div>
+      <div class="field-group">
+        <label class="field-label">I/We — Client name & address <span class="field-limit">max 200</span></label>
+        <textarea class="field-input" id="client" placeholder="Full name, S/O D/O, R/O address..." maxlength="400" oninput="update(this,'client',400)"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">The above named (short name) <span class="field-limit">max 60</span></label>
+        <input class="field-input" id="clientShort" placeholder="Short name of client" maxlength="100" oninput="update(this,'clientShort',100)">
+      </div>
+      <div class="section-divider">Advocate</div>
+      <div class="field-group">
+        <label class="field-label">Advocate Name <span class="field-limit">max 50</span></label>
+        <input class="field-input" id="advocate" placeholder="e.g. Adv. Ramesh Kumar" maxlength="80" oninput="update(this,'advocate',80)">
+      </div>
+      <div class="section-divider">Date</div>
+      <div class="two-col">
+        <div class="field-group">
+          <label class="field-label">Day <span class="field-limit">max 6</span></label>
+          <input class="field-input" id="day" placeholder="e.g. 16th" maxlength="6" oninput="update(this,'day',6)">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Month & Year <span class="field-limit">max 20</span></label>
+          <input class="field-input" id="monthYear" placeholder="August 2024" maxlength="20" oninput="update(this,'monthYear',20)">
+        </div>
       </div>
     </div>
 
-    <div class="two-col">
+    <!-- ── ALLAHABAD HC FIELDS ── -->
+    <div id="ahcFields" style="display:none">
+      <div class="section-divider">Case Details</div>
       <div class="field-group">
-        <label class="field-label">U/S (Sections) <span class="field-limit">max 30</span></label>
-        <input class="field-input" id="us" placeholder="e.g. 302 IPC" maxlength="60" oninput="update(this,'us',60)">
+        <label class="field-label">Petition / Application Type</label>
+        <select class="field-input" id="ahcPetType" onchange="renderAHC()">
+          <option value="Application U/s 482 Cr.P.C.">Application U/s 482 Cr.P.C.</option>
+          <option value="Crl. Revision">Crl. Revision</option>
+          <option value="F.A.F.O">F.A.F.O</option>
+          <option value="First Appeal (F.A.)">First Appeal (F.A.)</option>
+          <option value="Second Appeal (S.A.)">Second Appeal (S.A.)</option>
+          <option value="Civil Misc. Writ Petition">Civil Misc. Writ Petition</option>
+          <option value="Criminal Misc. Writ Petition">Criminal Misc. Writ Petition</option>
+          <option value="Civil Misc. Application">Civil Misc. Application</option>
+          <option value="Criminal Misc. Application">Criminal Misc. Application</option>
+        </select>
+      </div>
+      <div class="two-col">
+        <div class="field-group">
+          <label class="field-label">Petition No.</label>
+          <input class="field-input" id="ahcPetNo" placeholder="e.g. 12345" maxlength="20" oninput="renderAHC()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">of Year</label>
+          <input class="field-input" id="ahcPetYear" placeholder="2024" maxlength="4" oninput="renderAHC()">
+        </div>
       </div>
       <div class="field-group">
-        <label class="field-label">P.S. <span class="field-limit">max 20</span></label>
-        <input class="field-input" id="ps" placeholder="e.g. Kotwali" maxlength="40" oninput="update(this,'ps',40)">
+        <label class="field-label">District</label>
+        <input class="field-input" id="ahcDistt" placeholder="e.g. Prayagraj" maxlength="40" oninput="renderAHC()">
       </div>
-    </div>
-
-    <div class="two-col">
+      <div class="section-divider">I, We (Client Details)</div>
       <div class="field-group">
-        <label class="field-label">District <span class="field-limit">max 25</span></label>
-        <input class="field-input" id="distt" placeholder="e.g. Lucknow" maxlength="40" oninput="update(this,'distt',40)">
+        <label class="field-label">Client name & details (I, we…)</label>
+        <textarea class="field-input" id="ahcClient" placeholder="Full name, S/O D/O, R/O address, Petitioner/Respondent" maxlength="400" rows="3" oninput="renderAHC()"></textarea>
       </div>
       <div class="field-group">
-        <label class="field-label">Year <span class="field-limit">4 digits</span></label>
-        <input class="field-input" id="year" placeholder="2024" maxlength="4" oninput="update(this,'year',4)">
+        <label class="field-label">Role</label>
+        <select class="field-input" id="ahcRole" onchange="renderAHC()">
+          <option value="Petitioner(s)">Petitioner(s)</option>
+          <option value="Respondent(s)">Respondent(s)</option>
+          <option value="Petitioner(s)/Respondent(s)">Petitioner(s)/Respondent(s)</option>
+        </select>
       </div>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">In the Court of <span class="field-limit">max 60</span></label>
-      <input class="field-input" id="court" placeholder="e.g. Sessions Judge, Lucknow" maxlength="120" oninput="update(this,'court',120)">
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">Suit/Appeal No. <span class="field-limit">max 20</span></label>
-      <input class="field-input" id="suitNo" placeholder="e.g. 45/2024" maxlength="30" oninput="update(this,'suitNo',30)">
-    </div>
-
-    <div class="section-divider">Parties</div>
-
-    <div class="field-group">
-      <label class="field-label">Plaintiff / Petitioner / Complainant <span class="field-limit">max 120</span></label>
-      <textarea class="field-input" id="plaintiff" placeholder="Full name and address" maxlength="250" oninput="update(this,'plaintiff',250)"></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">Defendant / Respondent / Accused <span class="field-limit">max 120</span></label>
-      <textarea class="field-input" id="defendant" placeholder="Full name and address" maxlength="250" oninput="update(this,'defendant',250)"></textarea>
-    </div>
-
-    <div class="section-divider">Client Details</div>
-
-    <div class="field-group">
-      <label class="field-label">I/We — Client name & address <span class="field-limit">max 200</span></label>
-      <textarea class="field-input" id="client" placeholder="Full name, S/O D/O, R/O address..." maxlength="400" oninput="update(this,'client',400)"></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">The above named (short name) <span class="field-limit">max 60</span></label>
-      <input class="field-input" id="clientShort" placeholder="Short name of client" maxlength="100" oninput="update(this,'clientShort',100)">
-    </div>
-
-    <div class="section-divider">Advocate</div>
-
-    <div class="field-group">
-      <label class="field-label">Advocate Name <span class="field-limit">max 50</span></label>
-      <input class="field-input" id="advocate" placeholder="e.g. Adv. Ramesh Kumar" maxlength="80" oninput="update(this,'advocate',80)">
-    </div>
-
-    <div class="section-divider">Date</div>
-    <div class="two-col">
+      <div class="section-divider">Advocate Details</div>
       <div class="field-group">
-        <label class="field-label">Day <span class="field-limit">max 6</span></label>
-        <input class="field-input" id="day" placeholder="e.g. 16th" maxlength="6" oninput="update(this,'day',6)">
+        <label class="field-label">Advocate Name (as printed, capitals)</label>
+        <input class="field-input" id="ahcAdvName" placeholder="e.g. RAMESH KUMAR SINGH" maxlength="80" oninput="renderAHC()">
       </div>
       <div class="field-group">
-        <label class="field-label">Month & Year <span class="field-limit">max 20</span></label>
-        <input class="field-input" id="monthYear" placeholder="August 2024" maxlength="20" oninput="update(this,'monthYear',20)">
+        <label class="field-label">Advocate Name in Hindi (optional)</label>
+        <input class="field-input" id="ahcAdvHindi" placeholder="e.g. (रमेश कुमार सिंह)" maxlength="80" oninput="renderAHC()">
+      </div>
+      <div class="two-col">
+        <div class="field-group">
+          <label class="field-label">Enrollment No.</label>
+          <input class="field-input" id="ahcEnroll" placeholder="U.P. 332/2004" maxlength="40" oninput="renderAHC()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Chamber No.</label>
+          <input class="field-input" id="ahcChamber" placeholder="Ch. No. 47 A" maxlength="30" oninput="renderAHC()">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Advocate Roll No.</label>
+        <input class="field-input" id="ahcRoll" placeholder="A/S0893/2012" maxlength="30" oninput="renderAHC()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Address</label>
+        <textarea class="field-input" id="ahcAddress" placeholder="R/o 289 K/5 Tilak Nagar, Allahpur, Allahabad" maxlength="200" rows="2" oninput="renderAHC()"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Phone</label>
+        <input class="field-input" id="ahcPhone" placeholder="+919005627119" maxlength="20" oninput="renderAHC()">
+      </div>
+      <div class="section-divider">Date & Signing</div>
+      <div class="two-col">
+        <div class="field-group">
+          <label class="field-label">Day</label>
+          <input class="field-input" id="ahcDay" placeholder="27" maxlength="2" oninput="renderAHC()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Month</label>
+          <input class="field-input" id="ahcMonth" placeholder="September" maxlength="15" oninput="renderAHC()">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Year (last 2 digits, e.g. 25)</label>
+        <input class="field-input" id="ahcYear2" placeholder="25" maxlength="2" oninput="renderAHC()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Counsel for</label>
+        <select class="field-input" id="ahcCounsel" onchange="renderAHC()">
+          <option value="Petitioner">Petitioner</option>
+          <option value="Respondent">Respondent</option>
+          <option value="Petitioner / Respondent">Petitioner / Respondent</option>
+        </select>
       </div>
     </div>
 
@@ -488,12 +663,140 @@ textarea.field-input{resize:vertical;min-height:52px}
       </div>
 
     </div>
+
+    <!-- ── ALLAHABAD HC PAPER ── -->
+    <div class="ahc-paper" id="ahcPaper" style="display:none">
+      <div class="ahc-left-col">
+        <div class="ahc-margin">
+          <div class="ahc-margin-label">Witness…………………</div>
+          <div class="ahc-margin-label">Signature…………………</div>
+          <div class="ahc-margin-label">Signature…………………</div>
+          <div class="ahc-margin-label">Signature…………………</div>
+          <div class="ahc-margin-label">Signature…………………</div>
+          <div class="ahc-margin-label">Signature…………………</div>
+          <div class="ahc-margin-label">Signature…………………</div>
+        </div>
+      </div>
+      <div class="ahc-body-wrap">
+        <div class="ahc-title">VAKALATNAMA</div>
+        <div class="ahc-subtitle">IN THE HIGH COURT OF JUDICATURE AT ALLAHABAD</div>
+
+        <div class="ahc-pet-line">
+          <span class="ahc-pet-type">Application U/s 482 Cr.P.C./Crl. Revision/F.A.F.O/F.A./S.A./Civil/Criminal Misc. Writ Petition No.</span>&nbsp;<span class="ahc-pet-fill" id="p-ahcPetNo" style="min-width:24mm"></span>&nbsp;of&nbsp;<span class="ahc-pet-fill" id="p-ahcPetYear" style="min-width:14mm"></span>
+        </div>
+        <div class="ahc-district">District-&nbsp;<span id="p-ahcDistt"></span></div>
+
+        <div class="ahc-versus">Versus</div>
+
+        <div class="ahc-iwe-row">
+          <span class="ahc-iwe">I, we</span>
+          <div class="ahc-dot-line" id="p-ahcClient-1"></div>
+        </div>
+        <div class="ahc-dot-line" id="p-ahcClient-2"></div>
+        <div class="ahc-dot-line" id="p-ahcClient-3"></div>
+        <div class="ahc-dot-line" id="p-ahcClient-4"></div>
+        <div class="ahc-dot-line" id="p-ahcClient-5"></div>
+        <div class="ahc-dot-line" id="p-ahcClient-6"></div>
+
+        <div class="ahc-appoint"><span id="p-ahcRole">Petitioner(s)/Respondent(s)</span> in the above petition, Reference, Appeal do hereby appointed and retain;</div>
+
+        <div class="ahc-adv-name" id="p-ahcAdvName">ADVOCATE NAME</div>
+        <div class="ahc-adv-hindi" id="p-ahcAdvHindi"></div>
+
+        <div class="ahc-adv-details">
+          <div>Advocate</div>
+          <div>Allahabad High Court</div>
+          <div id="p-ahcEnroll"></div>
+          <div id="p-ahcChamber"></div>
+          <div id="p-ahcRoll"></div>
+          <div id="p-ahcAddress"></div>
+          <div id="p-ahcPhone"></div>
+        </div>
+
+        <div class="ahc-auth">
+          <p>To act &amp; appear for me/us in the above petition/appeal/reference/revision and on my/our behalf to conduct and prosecute/defend the same and all proceedings that may be taken in respect of any application connected with the same or any decree or order passed therein, including proceedings in taxation and application for review, to file and obtain/accept documents and to deposit/receive money on my/our behalf in the above matter. I/we agree to ratify acts done by the aforesaid advocate in pursuance of this authority.</p>
+          <p>I/we appoint the said Lawyer(s) with this authority after settling the fee and agree that whatever done by the said Lawyer(s) in connection with the said proceeding shall binding on me/us</p>
+        </div>
+
+        <div class="ahc-quote">"Accepted on the strength of the signatures of the attesting witness"</div>
+
+        <div class="ahc-bottom-row">
+          <div class="ahc-date-col">
+            Day&nbsp;<span class="ahc-date-fill" id="p-ahcDay">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+            Month&nbsp;<span class="ahc-date-fill" id="p-ahcMonth">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+            year&nbsp;20<span class="ahc-date-fill" id="p-ahcYear2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          </div>
+          <div class="ahc-accepted-col">
+            <div>Accepted</div>
+            <div class="ahc-adv-sign" id="p-ahcAdvSign">ADVOCATE NAME</div>
+            <div>Advocate</div>
+            <div>Counsel for <span id="p-ahcCounsel" style="border-bottom:1px solid #444;display:inline-block;min-width:28mm;vertical-align:bottom"></span></div>
+          </div>
+        </div>
+
+        <div class="ahc-sig-row">
+          Signature………………&nbsp;&nbsp;&nbsp;Signature………………&nbsp;&nbsp;&nbsp;Signature………………&nbsp;&nbsp;&nbsp;Witness………………
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <script>
 function v(id){return document.getElementById(id)}
 function gv(id){return v(id)?v(id).value.trim():''}
+
+var currentFmt = 'general';
+
+function setFormat(fmt){
+  currentFmt = fmt;
+  v('fmtGeneral').classList.toggle('active', fmt==='general');
+  v('fmtAHC').classList.toggle('active', fmt==='ahc');
+  v('generalFields').style.display = fmt==='general' ? '' : 'none';
+  v('ahcFields').style.display = fmt==='ahc' ? '' : 'none';
+  v('paper').style.display = fmt==='general' ? '' : 'none';
+  v('ahcPaper').style.display = fmt==='ahc' ? '' : 'none';
+  if(fmt==='ahc') renderAHC();
+}
+
+function renderAHC(){
+  var gvA = function(id){ var el=v(id); return el?el.value.trim():''; };
+  var setA = function(id, val){ var el=v(id); if(el) el.textContent = val||''; };
+
+  setA('p-ahcPetNo',   gvA('ahcPetNo'));
+  setA('p-ahcPetYear', gvA('ahcPetYear'));
+  setA('p-ahcDistt',   gvA('ahcDistt'));
+  setA('p-ahcRole',    gvA('ahcRole'));
+  setA('p-ahcAdvName', gvA('ahcAdvName')||'ADVOCATE NAME');
+  setA('p-ahcAdvSign', gvA('ahcAdvName')||'ADVOCATE NAME');
+
+  var hindi = gvA('ahcAdvHindi');
+  var hindiEl = v('p-ahcAdvHindi');
+  if(hindiEl){ hindiEl.textContent = hindi; hindiEl.style.display = hindi ? '' : 'none'; }
+
+  setA('p-ahcEnroll',  gvA('ahcEnroll')  ? 'Enrollment No. '+gvA('ahcEnroll')  : '');
+  setA('p-ahcChamber', gvA('ahcChamber') ? gvA('ahcChamber') : '');
+  setA('p-ahcRoll',    gvA('ahcRoll')    ? 'Advocate Roll No. '+gvA('ahcRoll')   : '');
+  setA('p-ahcAddress', gvA('ahcAddress'));
+  setA('p-ahcPhone',   gvA('ahcPhone')   ? 'Ph. '+gvA('ahcPhone')               : '');
+  setA('p-ahcDay',     gvA('ahcDay'));
+  setA('p-ahcMonth',   gvA('ahcMonth'));
+  setA('p-ahcYear2',   gvA('ahcYear2'));
+  setA('p-ahcCounsel', gvA('ahcCounsel'));
+
+  // Fill client text into dot lines
+  var clientText = gvA('ahcClient');
+  var lines = clientText ? clientText.split('\n') : [];
+  for(var i=1; i<=6; i++){
+    var lineEl = v('p-ahcClient-'+i);
+    if(lineEl){
+      var txt = lines[i-1] || '';
+      lineEl.textContent = txt;
+      lineEl.style.color = txt ? '#111' : 'transparent';
+    }
+  }
+}
 
 function update(el,id,max){
   if(el && max) el.classList.toggle('warn', el.value.length >= max*0.9);
@@ -526,22 +829,25 @@ function set(id, val){
 
 function clearAll(){
   ['firNo','cNo','us','ps','distt','court','suitNo','year',
-   'plaintiff','defendant','client','clientShort','advocate','day','monthYear']
+   'plaintiff','defendant','client','clientShort','advocate','day','monthYear',
+   'ahcPetNo','ahcPetYear','ahcDistt','ahcClient','ahcAdvName','ahcAdvHindi',
+   'ahcEnroll','ahcChamber','ahcRoll','ahcAddress','ahcPhone','ahcDay','ahcMonth','ahcYear2']
   .forEach(id=>{
     const el=v(id);
     if(el){el.value='';el.classList.remove('warn');}
   });
-  render();
+  if(currentFmt==='general') render(); else renderAHC();
 }
 
 function saveDraft(){
-  const data = {};
-  const fields = ['firNo','cNo','us','ps','distt','court','suitNo','year','plaintiff','defendant','client','clientShort','advocate','day','monthYear'];
-  fields.forEach(id => { const el = v(id); if(el) data[id] = el.value; });
+  const data = { _fmt: currentFmt };
+  const genFields = ['firNo','cNo','us','ps','distt','court','suitNo','year','plaintiff','defendant','client','clientShort','advocate','day','monthYear'];
+  const ahcFields = ['ahcPetType','ahcPetNo','ahcPetYear','ahcDistt','ahcClient','ahcRole','ahcAdvName','ahcAdvHindi','ahcEnroll','ahcChamber','ahcRoll','ahcAddress','ahcPhone','ahcDay','ahcMonth','ahcYear2','ahcCounsel'];
+  genFields.concat(ahcFields).forEach(id => { const el = v(id); if(el) data[id] = el.value; });
   try {
     localStorage.setItem('lhc_vak_draft', JSON.stringify(data));
     const msg = v('draftMsg');
-    msg.innerHTML = '✓ Draft saved securely to your browser';
+    msg.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg> Draft saved securely to your browser';
     setTimeout(() => { msg.innerHTML = ''; }, 3000);
   } catch(e) {}
 }
@@ -556,32 +862,25 @@ function saveDraft(){
   v('day').value=days[now.getDate()];
   v('monthYear').value=months[now.getMonth()]+' '+now.getFullYear();
   v('year').value=now.getFullYear();
+  var yr2 = String(now.getFullYear()).slice(-2);
+  if(v('ahcDay'))   v('ahcDay').value   = now.getDate();
+  if(v('ahcMonth')) v('ahcMonth').value = months[now.getMonth()];
+  if(v('ahcYear2')) v('ahcYear2').value = yr2;
   
   try {
     const draft = localStorage.getItem('lhc_vak_draft');
     if (draft) {
       const data = JSON.parse(draft);
       Object.keys(data).forEach(id => {
+        if(id === '_fmt') return;
         const el = v(id);
         if(el && data[id]) el.value = data[id];
       });
+      if(data._fmt && data._fmt !== 'general') setFormat(data._fmt);
     }
   } catch(e) {}
-  
-  render();
-})();
 
-(function(){
-  const now=new Date();
-  const days=['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th',
-    '11th','12th','13th','14th','15th','16th','17th','18th','19th','20th',
-    '21st','22nd','23rd','24th','25th','26th','27th','28th','29th','30th','31st'];
-  const months=['January','February','March','April','May','June',
-    'July','August','September','October','November','December'];
-  v('day').value=days[now.getDate()];
-  v('monthYear').value=months[now.getMonth()]+' '+now.getFullYear();
-  v('year').value=now.getFullYear();
-  render();
+  if(currentFmt==='general') render(); else renderAHC();
 })();
 </script>
 <script>
@@ -708,7 +1007,11 @@ var stampImg = null; // current stamp Image object
 var stampDragging = false, sdx=0, sdy=0;
 
 // ── Find paper element ───────────────────────────────────────────────────────
-function getPaper(){ return document.querySelector('.paper'); }
+function getPaper(){
+  return currentFmt === 'ahc'
+    ? document.getElementById('ahcPaper')
+    : document.querySelector('.paper');
+}
 
 // ── Upload existing stamp ─────────────────────────────────────────────────────
 window.stampUpload = function(){
@@ -1065,5 +1368,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
+<footer style="margin-top:40px;padding:18px 24px 24px;border-top:1px solid #E4E9F0;font-size:11px;color:#94A3B8;text-align:center">
+  <div style="display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;justify-content:center;margin-bottom:6px">
+    <a href="/dashboard" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Dashboard</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/tools" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">All Tools</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/pricing" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Pricing</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/contact" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Contact</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/privacy-policy" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Privacy Policy</a>
+      </div>
+  <div>© 2024–2026 legalhashchecksum.com</div>
+</footer>
 </body>
 </html>

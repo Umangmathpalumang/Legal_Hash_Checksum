@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — legalhashchecksum.com</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1D4ED8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="LHC Pro">
+<script src="/static/lhc-core.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root{
+  --bg:#F4F6FA;--sur:#FFFFFF;--sur2:#F8FAFC;--bd:#E4E9F0;--bd2:#CDD5E0;
+  --tx:#0F1C2E;--tx2:#4A5568;--tx3:#94A3B8;
+  --ac:#1D4ED8;--ac2:#1E40AF;--acl:#3B82F6;--acs:#EFF6FF;
+  --ok:#059669;--oks:#ECFDF5;--er:#DC2626;--ers:#FEF2F2;
+  --am:#D97706;--ams:#FFFBEB;--pu:#6D28D9;--pus:#F5F3FF;
+  --teal:#0891B2;--teals:#ECFEFF;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;--r:10px;
+  --sh:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);
+  --shm:0 4px 20px rgba(0,0,0,.10);
+  --sidebar:240px;
+}
+[data-theme="dark"]{
+  --bg:#0D1117;--sur:#161B22;--sur2:#1C2128;--bd:#30363D;--bd2:#3D444D;
+  --tx:#E6EDF3;--tx2:#8B949E;--tx3:#656D76;
+  --ac:#3B82F6;--ac2:#2563EB;--acl:#60A5FA;--acs:rgba(59,130,246,.12);
+  --ok:#10B981;--oks:rgba(16,185,129,.1);--er:#F87171;--ers:rgba(248,113,113,.1);
+  --am:#FBBF24;--ams:rgba(251,191,36,.1);--pu:#A78BFA;--pus:rgba(167,139,250,.1);
+  --teal:#22D3EE;--teals:rgba(34,211,238,.1);
+  --sh:0 1px 3px rgba(0,0,0,.3);--shm:0 4px 20px rgba(0,0,0,.45);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px;line-height:1.6;overflow-x:hidden}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:100vh}
+.main-content{flex:1;min-width:0;display:flex;flex-direction:column;margin-left:var(--sidebar);transition:margin .25s}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);background:var(--sur);border-right:1px solid var(--bd);position:fixed;top:0;left:0;bottom:0;z-index:200;display:flex;flex-direction:column;overflow:hidden;transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.sidebar-logo{padding:20px 16px 16px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.logo-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--ac),var(--acl));border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(29,78,216,.3)}
+.logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.logo-text{font-size:12.5px;font-weight:800;letter-spacing:-.3px;color:var(--tx);line-height:1.2}
+.logo-text span{color:var(--ac)}
+.logo-badge{display:inline-block;font-size:9px;font-weight:700;background:var(--acs);color:var(--ac);border:1px solid rgba(29,78,216,.2);border-radius:4px;padding:1px 5px;margin-top:2px;letter-spacing:.04em;text-transform:uppercase}
+
+.sidebar-nav{flex:1;overflow-y:auto;padding:10px 8px;scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
+.sidebar-nav::-webkit-scrollbar{width:3px}
+.sidebar-nav::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.nav-section{font-size:9px;font-weight:800;color:var(--tx3);letter-spacing:.12em;text-transform:uppercase;padding:14px 10px 6px;display:flex;align-items:center;gap:8px}
+.nav-section::after{content:'';flex:1;height:1px;background:var(--bd)}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--tx2);font-size:13px;font-weight:600;transition:.15s;cursor:pointer;border:none;background:transparent;width:100%;font-family:var(--sans)}
+.nav-item:hover{background:var(--sur2);color:var(--tx)}
+.nav-item:hover svg{stroke:var(--tx)}
+.nav-item.active{background:linear-gradient(90deg,var(--acs),rgba(59,130,246,.03) 100%);color:var(--ac);box-shadow:inset 3px 0 0 var(--ac);}
+.nav-item.active svg{stroke:var(--ac)}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.nav-divider{height:1px;background:var(--bd);margin:8px 10px}
+
+.sidebar-footer{padding:12px 8px;border-top:1px solid var(--bd);flex-shrink:0}
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:.15s}
+.sidebar-user:hover{background:var(--sur2)}
+.s-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--acl));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+.s-user-info{flex:1;min-width:0}
+.s-user-name{font-size:12px;font-weight:700;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.s-user-plan{font-size:10px;color:var(--ac);font-weight:600}
+.s-theme-btn{width:28px;height:28px;border:1px solid var(--bd);border-radius:7px;background:var(--sur2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2);flex-shrink:0}
+.s-theme-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── TOPBAR (inside main) ── */
+.topbar{height:60px;background:var(--sur);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 20px;gap:12px;position:sticky;top:0;z-index:100;box-shadow:var(--sh);flex-shrink:0}
+.hamburger{display:none;width:36px;height:36px;border-radius:8px;border:1px solid var(--bd);background:var(--sur2);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.hamburger svg{width:18px;height:18px;stroke:var(--tx2);fill:none;stroke-width:2;stroke-linecap:round}
+.page-breadcrumb{font-size:15px;font-weight:700;color:var(--tx);flex:1}
+.top-search{max-width:280px;position:relative;flex:1}
+.top-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--tx3);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none}
+.top-search input{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:7px 12px 7px 32px;font-size:13px;color:var(--tx);font-family:var(--sans);outline:none;transition:.2s}
+.top-search input:focus{border-color:var(--ac);background:var(--sur)}
+.top-search input::placeholder{color:var(--tx3)}
+.top-right{display:flex;align-items:center;gap:6px;margin-left:auto}
+.icobtn{width:36px;height:36px;border-radius:8px;border:1px solid var(--bd);background:var(--sur2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2);transition:.15s;position:relative;font-family:var(--sans)}
+.icobtn:hover{border-color:var(--ac);color:var(--ac)}
+.icobtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.notif-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--er);border:2px solid var(--sur)}
+.btn-new-case{display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--ac);color:#fff;border:none;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:.15s;white-space:nowrap;text-decoration:none}
+.btn-new-case:hover{background:var(--ac2)}
+.btn-new-case svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── MOBILE OVERLAY ── */
+.sidebar-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:199;backdrop-filter:blur(3px)}
+.sidebar-ov.open{display:block}
+
+/* ── PAGE CONTENT ── */
+.page{flex:1;padding:24px 24px 100px;max-width:1200px}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;gap:12px;flex-wrap:nowrap}
+.page-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+
+/* ── JUDGMENT STRIP (header) ── */
+.jw-strip{flex:1;min-width:0;margin:0 20px;background:var(--sur);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;display:flex;align-items:center;gap:10px;overflow:hidden}
+.jw-strip-ico{font-size:14px;flex-shrink:0}
+.jw-strip-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);flex-shrink:0;white-space:nowrap}
+.jw-strip-divider{width:1px;height:16px;background:var(--bd);flex-shrink:0}
+.jw-strip-scroll{display:flex;gap:6px;overflow:hidden;flex:1;min-width:0}
+.jw-strip-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;background:var(--bg);border:1px solid var(--bd);text-decoration:none;color:var(--tx2);font-size:11px;font-weight:600;white-space:nowrap;transition:.15s;flex-shrink:0;max-width:220px}
+.jw-strip-pill:hover{border-color:var(--ac);color:var(--ac);background:var(--acs)}
+.jw-strip-pill .sp-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.jw-strip-pill .sp-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jw-strip-all{font-size:11px;font-weight:700;color:var(--ac);text-decoration:none;flex-shrink:0;white-space:nowrap;padding:4px 6px;border-radius:6px;transition:.15s}
+.jw-strip-all:hover{background:var(--acs)}
+.jw-strip-sk{height:22px;width:160px;border-radius:20px;background:linear-gradient(90deg,var(--bd) 25%,var(--bd2) 50%,var(--bd) 75%);background-size:400px 100%;animation:jw-shimmer 1.2s infinite;flex-shrink:0}
+@media(max-width:900px){.jw-strip{display:none}}
+.page-greeting{font-size:13px;color:var(--tx2);font-weight:500;margin-top:1px}
+
+/* ── STAT TILES ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat-tile{background:var(--sur);border:1px solid var(--bd);border-radius:14px;padding:18px;box-shadow:var(--sh);position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.stat-tile:hover{transform:translateY(-1px);box-shadow:var(--shm)}
+.stat-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
+.stat-tile.blue::before{background:linear-gradient(90deg,var(--ac),var(--acl))}
+.stat-tile.green::before{background:linear-gradient(90deg,var(--ok),#34D399)}
+.stat-tile.amber::before{background:linear-gradient(90deg,var(--am),#FCD34D)}
+.stat-tile.purple::before{background:linear-gradient(90deg,var(--pu),#A78BFA)}
+.stat-tile.teal::before{background:linear-gradient(90deg,var(--teal),#22D3EE)}
+.stat-lbl{font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.stat-val{font-size:30px;font-weight:800;line-height:1;margin-bottom:8px;letter-spacing:-.5px}
+.stat-val.blue{color:var(--ac)}.stat-val.green{color:var(--ok)}.stat-val.amber{color:var(--am)}.stat-val.purple{color:var(--pu)}.stat-val.teal{color:var(--teal)}
+.stat-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+.stat-badge.up{background:var(--oks);color:var(--ok)}.stat-badge.new{background:var(--acs);color:var(--ac)}.stat-badge.warn{background:var(--ams);color:var(--am)}
+.stat-icon{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.stat-icon.blue{background:var(--acs)}.stat-icon.green{background:var(--oks)}.stat-icon.amber{background:var(--ams)}.stat-icon.purple{background:var(--pus)}.stat-icon.teal{background:var(--teals)}
+.stat-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stat-icon.blue svg{stroke:var(--ac)}.stat-icon.green svg{stroke:var(--ok)}.stat-icon.amber svg{stroke:var(--am)}.stat-icon.purple svg{stroke:var(--pu)}.stat-icon.teal svg{stroke:var(--teal)}
+
+/* ── GRID LAYOUTS ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.three-col{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+
+/* ── CARDS ── */
+.card{background:var(--sur);border:1px solid var(--bd);border-radius:14px;box-shadow:var(--sh);overflow:hidden}
+.card-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--bd)}
+.card-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px;color:var(--tx)}
+.card-title svg{width:15px;height:15px;stroke:var(--ac);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.card-link{font-size:11px;font-weight:700;color:var(--ac);text-decoration:none;display:flex;align-items:center;gap:3px;opacity:.8;transition:.15s}
+.card-link:hover{opacity:1}
+.card-link svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
+.card-body{padding:16px 18px}
+
+/* ── BAR CHART ── */
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:100px;padding:0 2px}
+.bar-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;min-width:0}
+.bar{border-radius:4px 4px 0 0;width:100%;transition:height .5s ease;cursor:pointer}
+.bar-open{background:var(--ac)}.bar-closed{background:var(--ok)}
+.bar-lbl{font-size:9px;color:var(--tx3);font-weight:600;white-space:nowrap}
+.chart-legend{display:flex;gap:14px;margin-top:12px;justify-content:center}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--tx2);font-weight:600}
+.legend-dot{width:10px;height:10px;border-radius:3px}
+
+/* ── DONUT CHART ── */
+.donut-wrap{display:flex;align-items:center;gap:16px;padding:4px 0}
+.donut-svg{flex-shrink:0}
+.donut-legend{display:flex;flex-direction:column;gap:8px;flex:1}
+.donut-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.donut-color{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.donut-name{color:var(--tx2);font-weight:500;flex:1}
+.donut-pct{font-weight:700;color:var(--tx);font-size:12px}
+
+/* ── HEARING LIST ── */
+.hearing-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.hearing-row:last-child{border-bottom:none}
+.hearing-date{width:44px;height:44px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;background:var(--acs)}
+.hearing-date .day{font-size:16px;font-weight:800;color:var(--ac);line-height:1}
+.hearing-date .mon{font-size:9px;font-weight:700;color:var(--ac);text-transform:uppercase}
+.hearing-info{flex:1;min-width:0}
+.hearing-case{font-size:13px;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hearing-court{font-size:11px;color:var(--tx3)}
+.hearing-time{font-size:11px;font-weight:700;color:var(--am);background:var(--ams);padding:3px 8px;border-radius:6px;white-space:nowrap}
+.hearing-item{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--bd);cursor:pointer;transition:.15s;border-radius:8px;padding:10px 8px}
+.hearing-item:last-child{border-bottom:none}
+.hearing-item:hover{background:var(--sur2);margin:0 -8px;padding:10px 16px}
+.hi-date{min-width:38px;text-align:center;background:var(--acs);border-radius:8px;padding:6px 4px;flex-shrink:0}
+.hi-day{font-size:16px;font-weight:800;color:var(--ac);line-height:1}
+.hi-mon{font-size:9px;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.05em}
+.hi-info{flex:1;min-width:0}
+.hi-title{font-size:13px;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hi-court{font-size:11px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.hi-dow{font-size:10px;font-weight:700;padding:2px 7px;border-radius:12px;flex-shrink:0}
+.hi-dow.Mon,.hi-dow.Tue,.hi-dow.Wed,.hi-dow.Thu,.hi-dow.Fri{background:var(--oks);color:var(--ok)}
+.hi-dow.Sat{background:var(--ams);color:var(--am)}
+.hi-dow.Sun{background:var(--ers);color:var(--er)}
+
+/* ── TIMER WIDGET ── */
+.timer-card{background:linear-gradient(135deg,#1D4ED8 0%,#1E40AF 50%,#1a3eb8 100%);border-radius:14px;padding:20px;color:#fff;box-shadow:0 8px 32px rgba(29,78,216,.3),0 2px 8px rgba(0,0,0,.15);position:relative;overflow:hidden}
+.timer-card::before{content:'';position:absolute;top:-40%;right:-10%;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.timer-card::after{content:'';position:absolute;bottom:-30%;left:-5%;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+.timer-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;opacity:.7;margin-bottom:8px}
+.timer-display{font-size:36px;font-weight:800;letter-spacing:.02em;font-variant-numeric:tabular-nums;margin-bottom:8px;text-shadow:0 2px 8px rgba(0,0,0,.2);position:relative;z-index:1}
+.timer-case{font-size:12px;opacity:.75;margin-bottom:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1}
+.timer-btns{display:flex;gap:8px;position:relative;z-index:1}
+.timer-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid rgba(255,255,255,.35);background:rgba(255,255,255,.15);color:#fff;transition:.15s;font-family:var(--sans)}
+.timer-btn:hover{background:rgba(255,255,255,.28)}
+.timer-btn.stop{background:rgba(255,255,255,.95);color:var(--ac);border-color:transparent}
+.timer-select{width:100%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:7px 10px;font-size:12px;color:#fff;font-family:var(--sans);outline:none;margin-bottom:12px;position:relative;z-index:1}
+.timer-select option{background:var(--sur);color:var(--tx)}
+
+/* ── EMPTY STATE ── */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px;text-align:center;gap:8px}
+.empty-state .es-icon{font-size:32px;opacity:.4;margin-bottom:4px}
+.empty-state .es-title{font-size:13px;font-weight:700;color:var(--tx2)}
+.empty-state .es-sub{font-size:12px;color:var(--tx3);max-width:200px;line-height:1.5}
+.empty-state .es-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:7px 14px;background:var(--ac);color:#fff;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;border:none;font-family:var(--sans);transition:.15s}
+.empty-state .es-btn:hover{background:var(--acl)}
+
+/* ── ACTIVITY FEED ── */
+.activity-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}
+.activity-item:last-child{border-bottom:none}
+.activity-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.activity-icon svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.activity-icon.blue{background:var(--acs);color:var(--ac)}.activity-icon.green{background:var(--oks);color:var(--ok)}
+.activity-icon.amber{background:var(--ams);color:var(--am)}.activity-icon.purple{background:var(--pus);color:var(--pu)}
+.activity-text{font-size:12px;color:var(--tx2);line-height:1.5;flex:1}
+.activity-text strong{color:var(--tx);font-weight:700}
+.activity-time{font-size:10px;color:var(--tx3);white-space:nowrap;padding-top:2px}
+
+/* ── QUICK ACTIONS ── */
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qa-btn{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:10px;border:1px solid var(--bd);background:var(--sur2);text-decoration:none;color:var(--tx);transition:.15s;cursor:pointer;font-family:var(--sans)}
+.qa-btn:hover{border-color:var(--ac);background:var(--acs);color:var(--ac)}
+.qa-btn-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qa-btn-icon svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qa-btn-icon.blue{background:var(--acs);color:var(--ac)}.qa-btn-icon.green{background:var(--oks);color:var(--ok)}
+.qa-btn-icon.amber{background:var(--ams);color:var(--am)}.qa-btn-icon.purple{background:var(--pus);color:var(--pu)}.qa-btn-icon.teal{background:var(--teals);color:var(--teal)}
+.qa-btn-text{font-size:12px;font-weight:700}
+.qa-btn-sub{font-size:10px;color:var(--tx3);margin-top:1px}
+
+/* ── RECENT CASES TABLE ── */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);padding:8px 14px;text-align:left;border-bottom:2px solid var(--bd);white-space:nowrap}
+.tbl td{padding:11px 14px;border-bottom:1px solid var(--bd);font-size:13px;color:var(--tx2)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--sur2)}
+.tbl .case-name{font-weight:700;color:var(--tx)}
+.status-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.status-badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.sb-active{background:var(--oks);color:var(--ok)}.sb-active::before{background:var(--ok)}
+.sb-pending{background:var(--ams);color:var(--am)}.sb-pending::before{background:var(--am)}
+.sb-closed{background:var(--sur2);color:var(--tx3)}.sb-closed::before{background:var(--tx3)}
+.sb-urgent{background:var(--ers);color:var(--er)}.sb-urgent::before{background:var(--er)}
+
+/* ── JUDGMENT WIDGET ── */
+.jw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:4px}
+.jw-card{padding:13px;border:1px solid var(--bd);border-radius:10px;background:var(--sur2);text-decoration:none;color:var(--tx);display:flex;flex-direction:column;gap:6px;transition:.15s;position:relative;overflow:hidden}
+.jw-card:hover{border-color:var(--ac);background:var(--acs);transform:translateY(-1px);box-shadow:var(--sh)}
+.jw-pill{display:inline-flex;align-items:center;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:12px;width:fit-content}
+.jw-pill.criminal{background:var(--ers);color:var(--er)}
+.jw-pill.civil{background:var(--acs);color:var(--ac)}
+.jw-pill.family{background:var(--pus);color:var(--pu)}
+.jw-pill.tax{background:var(--ams);color:var(--am)}
+.jw-pill.constitutional{background:var(--teals);color:var(--teal)}
+.jw-pill.general{background:var(--sur);color:var(--tx3)}
+.jw-title{font-size:12.5px;font-weight:700;line-height:1.45;color:var(--tx);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.jw-court{font-size:11px;color:var(--tx3);display:flex;align-items:center;gap:4px}
+.jw-court svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.jw-read{font-size:11px;font-weight:700;color:var(--ac);margin-top:auto;display:flex;align-items:center;gap:3px}
+.jw-read svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
+@keyframes jw-shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+.card{animation:fadeUp .3s ease both}
+.stats-grid .stat-tile:nth-child(1){animation-delay:.04s}
+.stats-grid .stat-tile:nth-child(2){animation-delay:.08s}
+.stats-grid .stat-tile:nth-child(3){animation-delay:.12s}
+.stats-grid .stat-tile:nth-child(4){animation-delay:.16s}
+.jw-sk{height:12px;border-radius:4px;background:linear-gradient(90deg,var(--bd) 25%,var(--bd2) 50%,var(--bd) 75%);background-size:400px 100%;animation:jw-shimmer 1.2s infinite}
+
+/* ── INTAKE FORM ── */
+.ifield label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);display:block;margin-bottom:4px}
+.ifield input,.ifield select{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--tx);font-family:var(--sans);outline:none;transition:.2s}
+.ifield input:focus,.ifield select:focus{border-color:var(--ac);background:var(--sur);box-shadow:0 0 0 3px rgba(29,78,216,.08)}
+.ifield input::placeholder{color:var(--tx3)}
+.ifield select option{background:var(--sur)}
+.btn-intake{width:100%;padding:10px;background:var(--ac);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:.15s;margin-top:4px}
+.btn-intake:hover{background:var(--ac2)}
+
+/* ── PAGE FOOTER ── */
+.page-footer{margin-top:32px;padding:20px 0 8px;border-top:1px solid var(--bd)}
+.page-footer-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.page-footer-links{display:flex;flex-wrap:wrap;gap:6px 2px;align-items:center}
+.page-footer-links a{font-size:11px;color:var(--tx3);text-decoration:none;padding:3px 8px;border-radius:6px;transition:.15s;white-space:nowrap}
+.page-footer-links a:hover{color:var(--ac);background:var(--acs)}
+.page-footer-links .sep{color:var(--bd2);font-size:11px;user-select:none}
+.page-footer-copy{font-size:11px;color:var(--tx3)}
+
+/* ── BOTTOM NAV (mobile only) ── */
+.bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--sur);border-top:1px solid var(--bd);padding:8px 12px calc(8px + env(safe-area-inset-bottom));justify-content:space-around;z-index:200;box-shadow:0 -2px 12px rgba(0,0,0,.06)}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--tx3);font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:8px;min-width:48px}
+.bnav-item.active{color:var(--ac)}
+.bnav-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  .two-col,.three-col{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  :root{--sidebar:0px}
+  .sidebar{transform:translateX(-240px)}
+  .sidebar.open{transform:translateX(0)}
+  .main-content{margin-left:0}
+  .hamburger{display:flex}
+  .top-search{display:none}
+  .bnav{display:flex}
+  .page{padding:16px 14px 90px}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .page-header{flex-direction:column;align-items:flex-start;gap:8px}
+  .btn-new-case span{display:none}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-val{font-size:24px}
+  .qa-grid{grid-template-columns:1fr}
+}
+@media print{footer,.page-footer{display:none!important}}
+
+/* ── TOUR ── */
+#tour-ov{position:fixed;inset:0;z-index:9999;pointer-events:none;background:transparent;transition:background .4s}
+#tour-ov.on{pointer-events:all}
+#tour-spot{position:fixed;z-index:10000;border-radius:10px;pointer-events:none;
+  transition:top .35s cubic-bezier(.4,0,.2,1),left .35s cubic-bezier(.4,0,.2,1),
+             width .35s cubic-bezier(.4,0,.2,1),height .35s cubic-bezier(.4,0,.2,1),
+             box-shadow .35s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 0 4px var(--ac),0 0 0 9999px rgba(0,0,0,.62)}
+#tour-card{position:fixed;z-index:10001;background:var(--sur);border:1px solid var(--bd);
+  border-radius:16px;padding:22px 22px 18px;max-width:300px;width:calc(100vw - 40px);
+  box-shadow:0 12px 40px rgba(0,0,0,.22);
+  transition:top .32s cubic-bezier(.4,0,.2,1),left .32s cubic-bezier(.4,0,.2,1),opacity .2s}
+#tour-card.hidden{opacity:0;pointer-events:none}
+.tour-chip{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;
+  color:var(--ac);letter-spacing:.1em;text-transform:uppercase;background:var(--acs);
+  border-radius:6px;padding:3px 8px;margin-bottom:10px}
+.tour-title{font-size:15px;font-weight:800;color:var(--tx);margin-bottom:6px;letter-spacing:-.01em}
+.tour-desc{font-size:13px;color:var(--tx2);line-height:1.65;margin-bottom:18px}
+.tour-foot{display:flex;align-items:center;gap:8px}
+.tour-dots{display:flex;gap:4px;flex:1;align-items:center}
+.tour-dot{width:6px;height:6px;border-radius:50%;background:var(--bd2);transition:all .2s}
+.tour-dot.cur{background:var(--ac);width:14px;border-radius:3px}
+.tour-btn{padding:7px 16px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;
+  border:none;font-family:var(--sans);transition:.15s;line-height:1}
+.tour-next{background:var(--ac);color:#fff}
+.tour-next:hover{background:var(--acl)}
+.tour-skip{background:transparent;color:var(--tx3);padding:7px 8px}
+.tour-skip:hover{color:var(--tx)}
+.tour-back{background:var(--sur2);color:var(--tx2)}
+/* Tour trigger in sidebar */
+.tour-trigger{display:flex;align-items:center;gap:7px;padding:6px 12px;font-size:11px;
+  font-weight:600;color:var(--tx3);cursor:pointer;border:none;background:none;font-family:var(--sans);
+  width:100%;text-align:left;border-radius:8px;margin:2px 0;transition:.15s}
+.tour-trigger:hover{color:var(--ac);background:var(--acs)}
+.tour-trigger svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<div class="sidebar-ov" id="sidebarOv" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <a href="/dashboard" class="logo-link">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="logo-text">legalhash<span>checksum</span>.com</div>
+        <div class="logo-badge">Pro</div>
+      </div>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section">Practice</div>
+    <a href="/dashboard" class="nav-item active">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a href="/cases" class="nav-item">
+      <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+      Cases
+    </a>
+    <a href="/billing" class="nav-item">
+      <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Billing &amp; Invoices
+    </a>
+    <a href="/legal-qa" class="nav-item">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Legal Q&amp;A
+    </a>
+    <a href="/profile" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      My Profile
+    </a>
+
+    <div class="nav-divider"></div>
+    <div class="nav-section">Documents</div>
+    <a href="/bail-bond" class="nav-item">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Bail Bond
+    </a>
+    <a href="/vakalatnama" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Vakalatnama
+    </a>
+    <a href="/legal-notice" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Legal Notice
+    </a>
+    <a href="/memo-appearance" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Memo of Appearance
+    </a>
+
+    <div class="nav-divider"></div>
+    <div class="nav-section">Tools</div>
+    <a href="/tools" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      All Tools
+    </a>
+    <a href="/hash" class="nav-item">
+      <svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+      Hash Evidence
+    </a>
+    <a href="/court-fee" class="nav-item">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Court Fee Calc
+    </a>
+    <a href="/law-converter" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      IPC → BNS
+    </a>
+    <a href="/limitation-calculator" class="nav-item">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Limitation Calc
+    </a>
+    <a href="/tools" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      All Tools
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="/pricing" id="upgradeChip" style="display:flex;align-items:center;gap:8px;margin:0 0 10px;padding:9px 12px;background:var(--acs);border-radius:10px;text-decoration:none;border:1px solid var(--acl)20">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <span style="font-size:12px;font-weight:700;color:var(--ac)" id="sidebarPlanLabel">Upgrade to Pro</span>
+    </a>
+    <div class="sidebar-user">
+      <div class="s-avatar">UA</div>
+      <div class="s-user-info">
+        <div class="s-user-name">Advocate</div>
+        <div class="s-user-plan" id="sidebarPlan">Free Plan</div>
+      </div>
+      <button class="s-theme-btn" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="themeIco" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+    <button class="tour-trigger" onclick="startTour(true)" title="Restart the product tour">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Take a tour
+    </button>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <button class="hamburger" onclick="openSidebar()">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="page-breadcrumb">Dashboard</div>
+    <div class="top-search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search cases, clients…">
+    </div>
+    <div class="top-right">
+      <div class="icobtn">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </div>
+      <a href="/cases" class="btn-new-case">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span>New Case</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- PAGE -->
+  <main class="page">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Practice Dashboard</div>
+        <div class="page-greeting" id="greetUser"></div>
+      </div>
+
+      <!-- JUDGMENT STRIP -->
+      <div class="jw-strip" id="jwStrip">
+        <span class="jw-strip-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M6 16c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4"/><path d="m3 6 9 3 9-3"/><path d="M3 6c0-1.7 2-3 4.5-3S12 4.3 12 6"/><path d="M21 6c0-1.7-2-3-4.5-3S12 4.3 12 6"/></svg></span>
+        <span class="jw-strip-label">Latest</span>
+        <div class="jw-strip-divider"></div>
+        <div class="jw-strip-scroll" id="jwStripScroll">
+          <div class="jw-strip-sk"></div>
+          <div class="jw-strip-sk" style="width:120px"></div>
+          <div class="jw-strip-sk" style="width:180px"></div>
+        </div>
+        <a href="/judgments" class="jw-strip-all">All →</a>
+      </div>
+
+      <button class="btn-new-case" onclick="document.getElementById('intakeModal').style.display='flex'">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        <span>New Client Intake</span>
+      </button>
+    </div>
+
+    <!-- STAT TILES -->
+    <div class="stats-grid">
+      <div class="stat-tile blue">
+        <div class="stat-icon blue"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+        <div class="stat-lbl">Active Cases</div>
+        <div class="stat-val blue" id="tileActiveCases">0</div>
+        <div class="stat-badge new" id="tileTotalCases"></div>
+      </div>
+      <div class="stat-tile green">
+        <div class="stat-icon green"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="stat-lbl">Hours This Month</div>
+        <div class="stat-val green" id="tileHours">0.0</div>
+        <div class="stat-badge up" id="tileHoursSub"></div>
+      </div>
+      <div class="stat-tile amber">
+        <div class="stat-icon amber"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+        <div class="stat-lbl">Billed This Month</div>
+        <div class="stat-val amber" id="tileBilled">₹0</div>
+        <div class="stat-badge warn" id="tileBilledSub"></div>
+      </div>
+      <div class="stat-tile purple">
+        <div class="stat-icon purple"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="stat-lbl">Next Hearing</div>
+        <div class="stat-val purple" id="tileNextHearing" style="font-size:18px;margin-top:4px">—</div>
+        <div class="stat-badge new" id="tileNextHearingCase" style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Charts -->
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Cases Over Time</div>
+          <a href="/cases" class="card-link">View all <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+        <div class="card-body">
+          <div class="bar-chart" id="barChart"></div>
+          <div class="chart-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--ac)"></div>Opened</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--ok)"></div>Closed</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>Case Categories</div>
+        </div>
+        <div class="card-body">
+          <div class="donut-wrap">
+            <svg class="donut-svg" width="90" height="90" viewBox="0 0 90 90" id="donutSvg">
+              <circle cx="45" cy="45" r="35" fill="none" stroke="var(--bd)" stroke-width="14"/>
+              <text x="45" y="49" text-anchor="middle" font-size="13" font-weight="800" fill="var(--tx)" font-family="Plus Jakarta Sans,sans-serif" id="donutTotal">0</text>
+            </svg>
+            <div class="donut-legend" id="donutLegend"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 3: Hearings + Timer + Quick Actions -->
+    <div class="three-col">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Upcoming Hearings</div>
+          <a href="/cases" class="card-link">All <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+        <div class="card-body" id="hearingsList" style="padding:8px 18px"></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="timer-card">
+          <div class="timer-label">Time Tracker</div>
+          <div class="timer-display" id="timerDisplay">00:00:00</div>
+          <div class="timer-case" id="timerCaseName">No case selected</div>
+          <select class="timer-select" id="timerCaseSelect" onchange="updateTimerCase()">
+            <option value="">Select case…</option>
+          </select>
+          <div class="timer-btns">
+            <button class="timer-btn" id="timerStartBtn" onclick="toggleTimer()">▶ Start</button>
+            <button class="timer-btn stop" id="timerStopBtn" onclick="stopTimer()" style="display:none">■ Stop &amp; Save</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Quick Actions</div></div>
+          <div class="card-body">
+            <div class="qa-grid">
+              <a href="/cases" class="qa-btn"><div class="qa-btn-icon blue"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="qa-btn-text">New Case</div><div class="qa-btn-sub">Add to docket</div></div></a>
+              <a href="/billing" class="qa-btn"><div class="qa-btn-icon amber"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div><div class="qa-btn-text">Invoice</div><div class="qa-btn-sub">Generate bill</div></div></a>
+              <a href="/bail-bond" class="qa-btn"><div class="qa-btn-icon purple"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="qa-btn-text">Bail Bond</div><div class="qa-btn-sub">Form 45</div></div></a>
+              <a href="/legal-notice" class="qa-btn"><div class="qa-btn-icon green"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="qa-btn-text">Legal Notice</div><div class="qa-btn-sub">Draft &amp; send</div></div></a>
+              <a href="/hash" class="qa-btn"><div class="qa-btn-icon teal"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg></div><div><div class="qa-btn-text">Hash Evidence</div><div class="qa-btn-sub">BSA §63</div></div></a>
+              <a href="/legal-qa" class="qa-btn"><div class="qa-btn-icon blue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div><div class="qa-btn-text">Ask Legal Q</div><div class="qa-btn-sub">Community</div></div></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 4: Recent Cases + Activity -->
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Recent Cases</div>
+          <a href="/cases" class="card-link">All cases <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead><tr><th>Case</th><th>Client</th><th>Type</th><th>Hearing</th><th>Status</th></tr></thead>
+            <tbody id="recentCasesTbl"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Recent Activity</div></div>
+        <div class="card-body" id="activityFeed" style="padding:8px 18px"></div>
+      </div>
+    </div>
+
+    <!-- ROW 5: Quick Intake -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-head">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>Quick Client Intake</div>
+        <span style="font-size:11px;color:var(--tx3)">Creates a case instantly</span>
+      </div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;align-items:end">
+          <div class="ifield"><label>Client Name</label><input id="iName" type="text" placeholder="e.g. Ramesh Kumar"></div>
+          <div class="ifield"><label>Phone</label><input id="iPhone" type="tel" placeholder="98XXXXXXXX"></div>
+          <div class="ifield"><label>Case Type</label>
+            <select id="iType">
+              <option>Criminal / FIR / Bail</option><option>Civil / Suit</option><option>Family / Matrimonial</option>
+              <option>Property / Real Estate</option><option>Cheque Bounce / NI Act</option><option>Labour / Employment</option>
+              <option>Consumer / NCDRC</option><option>Cyber / IT Law</option><option>Motor Accident / MACT</option>
+              <option>Constitutional</option><option>Company / Business</option><option>Tax / GST</option><option>General</option>
+            </select>
+          </div>
+          <div class="ifield"><label>Court</label><input id="iCourt" type="text" placeholder="e.g. District Court, Lucknow"></div>
+          <div class="ifield"><label>First Hearing</label><input id="iHearing" type="date"></div>
+          <div style="display:flex;align-items:flex-end">
+            <button class="btn-intake" onclick="quickIntake()">+ Create Case</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE FOOTER -->
+    <footer class="page-footer">
+      <div class="page-footer-inner">
+        <div class="page-footer-links">
+          <a href="/dashboard">Dashboard</a>
+          <span class="sep">·</span>
+          <a href="/cases">Cases</a>
+          <span class="sep">·</span>
+          <a href="/billing">Billing</a>
+          <span class="sep">·</span>
+          <a href="/tools">All Tools</a>
+          <span class="sep">·</span>
+          <a href="/judgments">Judgments</a>
+          <span class="sep">·</span>
+          <a href="/pricing">Pricing</a>
+          <span class="sep">·</span>
+          <a href="/pricing">View plans</a>
+          <span class="sep">·</span>
+          <a href="/contact">Contact &amp; Support</a>
+          <span class="sep">·</span>
+          <a href="/privacy-policy">Privacy Policy</a>
+      </div>
+        <div class="page-footer-copy">© 2024–2026 legalhashchecksum.com</div>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bnav">
+  <a href="/dashboard" class="bnav-item active"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dash</a>
+  <a href="/cases" class="bnav-item"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Cases</a>
+  <a href="/billing" class="bnav-item"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Billing</a>
+  <a href="/tools" class="bnav-item"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Tools</a>
+  <a href="/profile" class="bnav-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+</nav>
+
+<!-- INTAKE MODAL -->
+<div id="intakeModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:16px" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--sur);border-radius:16px;padding:24px;max-width:500px;width:100%;box-shadow:var(--shm)">
+    <div style="font-size:16px;font-weight:800;margin-bottom:16px">New Client Intake</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="ifield"><label>Full Name *</label><input id="mi_name" placeholder="Client's full name"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="ifield"><label>Phone</label><input id="mi_phone" type="tel" placeholder="Mobile number"></div>
+        <div class="ifield"><label>Email</label><input id="mi_email" type="email" placeholder="Email address"></div>
+      </div>
+      <div class="ifield"><label>Address</label><input id="mi_addr" placeholder="City, State"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="ifield"><label>Case Type</label>
+          <select id="mi_type">
+            <option>Criminal / FIR / Bail</option><option>Civil / Suit</option><option>Family / Matrimonial</option>
+            <option>Property / Real Estate</option><option>Cheque Bounce / NI Act</option><option>General</option>
+          </select>
+        </div>
+        <div class="ifield"><label>Court</label><input id="mi_court" placeholder="Court name"></div>
+      </div>
+      <div class="ifield"><label>Notes</label><input id="mi_notes" placeholder="Initial consultation notes"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button onclick="document.getElementById('intakeModal').style.display='none'" style="flex:1;padding:10px;border:1px solid var(--bd);border-radius:9px;background:var(--sur2);color:var(--tx2);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans)">Cancel</button>
+      <button onclick="modalIntake()" style="flex:2;padding:10px;background:var(--ac);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans)">Create Client &amp; Case</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ok);color:#fff;font-size:13px;font-weight:700;padding:10px 22px;border-radius:12px;z-index:999;opacity:0;transition:transform .3s,opacity .3s;pointer-events:none;white-space:nowrap">✓ <span id="toastMsg"></span></div>
+
+<script>
+const CASES_KEY='lhc_cases',TIME_KEY='lhc_time',ACT_KEY='lhc_activity';
+let timerInterval=null,timerSecs=0,timerRunning=false;
+
+/* THEME */
+function toggleTheme(){LHCTheme.toggle();updateThemeIco();}
+function updateThemeIco(){var d=document.documentElement.getAttribute('data-theme')==='dark';var i=document.getElementById('themeIco');if(i)i.innerHTML=d?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>':'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';}
+// lhc-core.js fires 'lhctheme' on OS-level theme changes — keep icon in sync
+document.addEventListener('lhctheme', updateThemeIco);
+updateThemeIco();
+// Update sidebar plan chip based on license state
+(function(){
+  var lic=window.LHCLicense&&window.LHCLicense.get();
+  var chip=document.getElementById('upgradeChip');
+  var planEl=document.getElementById('sidebarPlan');
+  var chipLabel=document.getElementById('sidebarPlanLabel');
+  if(lic&&lic.plan&&lic.expiry&&new Date(lic.expiry)>new Date()){
+    var label=(lic.plan.charAt(0).toUpperCase()+lic.plan.slice(1))+' Active';
+    if(planEl)planEl.textContent=label;
+    if(chip){chip.href='/download';chip.style.background='var(--oks)';chip.style.borderColor='var(--ok)20';}
+    if(chipLabel){chipLabel.textContent=label;chipLabel.style.color='var(--ok)';}
+    chip.querySelector('svg').style.stroke='var(--ok)';
+  }
+})();
+
+/* SIDEBAR */
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('sidebarOv').classList.add('open');document.body.style.overflow='hidden';}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOv').classList.remove('open');document.body.style.overflow='';}
+
+/* STORAGE */
+function getCases(){try{return JSON.parse(localStorage.getItem(CASES_KEY)||'[]');}catch{return[];}}
+function getTimeEntries(){try{return JSON.parse(localStorage.getItem(TIME_KEY)||'[]');}catch{return[];}}
+function getActivity(){try{return JSON.parse(localStorage.getItem(ACT_KEY)||'[]');}catch{return[];}}
+function saveCases(d){localStorage.setItem(CASES_KEY,JSON.stringify(d));}
+function saveTime(d){localStorage.setItem(TIME_KEY,JSON.stringify(d));}
+function addActivity(text,type){var a=getActivity();a.unshift({text,type,ts:new Date().toISOString()});localStorage.setItem(ACT_KEY,JSON.stringify(a.slice(0,50)));}
+
+/* GREETING */
+(function(){var h=new Date().getHours(),g=h<12?'Good morning, Advocate':h<17?'Good afternoon, Advocate':'Good evening, Advocate';var el=document.getElementById('greetUser');if(el)el.textContent=g;})();
+
+/* STAT TILES */
+function updateTiles(){
+  var cases=getCases();
+  var active=cases.filter(c=>c.status==='Active').length;
+  document.getElementById('tileActiveCases').textContent=active;
+  document.getElementById('tileTotalCases').textContent=cases.length+' total';
+  var now=new Date(),m=now.getMonth(),y=now.getFullYear();
+  var entries=getTimeEntries().filter(e=>{var d=new Date(e.date);return d.getMonth()===m&&d.getFullYear()===y;});
+  var hrs=entries.reduce((s,e)=>s+(e.minutes||0),0)/60;
+  document.getElementById('tileHours').textContent=hrs.toFixed(1)+'h';
+  document.getElementById('tileHoursSub').textContent=entries.length+' entries';
+  var billed=entries.reduce((s,e)=>s+(e.amount||0),0);
+  document.getElementById('tileBilled').textContent='₹'+billed.toLocaleString('en-IN');
+  document.getElementById('tileBilledSub').textContent=billed>0?'this month':'No entries yet';
+  var upcoming=cases.filter(c=>c.hearingDate&&new Date(c.hearingDate)>=now).sort((a,b)=>new Date(a.hearingDate)-new Date(b.hearingDate));
+  if(upcoming.length){
+    var next=upcoming[0],d=new Date(next.hearingDate);
+    document.getElementById('tileNextHearing').textContent=d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+    document.getElementById('tileNextHearingCase').textContent=next.title||next.clientName;
+  }
+}
+
+/* BAR CHART */
+function renderBarChart(){
+  var cases=getCases();
+  var months=[];
+  for(var i=5;i>=0;i--){var d=new Date();d.setMonth(d.getMonth()-i);months.push({label:d.toLocaleString('en-IN',{month:'short'}),m:d.getMonth(),y:d.getFullYear()});}
+  var html=months.map(function(mo){
+    var open=cases.filter(c=>{var d=new Date(c.createdAt||0);return d.getMonth()===mo.m&&d.getFullYear()===mo.y;}).length;
+    var closed=cases.filter(c=>{var d=new Date(c.closedAt||0);return c.status==='Closed'&&d.getMonth()===mo.m&&d.getFullYear()===mo.y;}).length;
+    var maxH=70,scale=Math.max(open,closed,1);
+    return '<div class="bar-wrap"><div style="display:flex;gap:2px;align-items:flex-end;height:'+maxH+'px">'
+      +'<div class="bar bar-open" title="'+open+' opened" style="height:'+Math.round(open/scale*maxH)+'px;width:12px"></div>'
+      +'<div class="bar bar-closed" title="'+closed+' closed" style="height:'+Math.round(closed/scale*maxH)+'px;width:12px"></div>'
+      +'</div><div class="bar-lbl">'+mo.label+'</div></div>';
+  }).join('');
+  var el=document.getElementById('barChart');if(el)el.innerHTML=html;
+}
+
+/* DONUT CHART */
+function renderDonut(){
+  var cases=getCases();
+  var cats={};
+  cases.forEach(c=>{var t=c.caseType||c.type||'General';cats[t]=(cats[t]||0)+1;});
+  var entries=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  var total=cases.length;
+  document.getElementById('donutTotal').textContent=total;
+  var colors=['#1D4ED8','#059669','#D97706','#6D28D9','#0891B2'];
+  var svg=document.getElementById('donutSvg');
+  var R=35,C=2*Math.PI*R,offset=0;
+  var paths='<circle cx="45" cy="45" r="35" fill="none" stroke="var(--bd)" stroke-width="14"/>';
+  if(total>0){
+    entries.forEach(function([name,count],i){
+      var pct=count/total,len=pct*C;
+      paths+='<circle cx="45" cy="45" r="35" fill="none" stroke="'+colors[i%colors.length]+'" stroke-width="14" stroke-dasharray="'+len+' '+(C-len)+'" stroke-dashoffset="'+(-(offset*C-C/4))+'" transform="rotate(-90 45 45)"/>';
+      offset+=pct;
+    });
+  }
+  paths+='<text x="45" y="49" text-anchor="middle" font-size="13" font-weight="800" fill="var(--tx)" font-family="Plus Jakarta Sans,sans-serif">'+total+'</text>';
+  svg.innerHTML=paths;
+  var leg=entries.map(([name,count],i)=>'<div class="donut-item"><div class="donut-color" style="background:'+colors[i%colors.length]+'"></div><div class="donut-name">'+name.split('/')[0].trim()+'</div><div class="donut-pct">'+count+'</div></div>').join('');
+  if(!entries.length)leg='<div style="font-size:12px;color:var(--tx3)">No cases yet</div>';
+  document.getElementById('donutLegend').innerHTML=leg;
+}
+
+/* HEARINGS */
+function renderHearings(){
+  var cases=getCases();
+  var now=new Date();
+  var upcoming=cases.filter(c=>c.hearingDate&&new Date(c.hearingDate)>=now).sort((a,b)=>new Date(a.hearingDate)-new Date(b.hearingDate)).slice(0,5);
+  var el=document.getElementById('hearingsList');
+  if(!upcoming.length){el.innerHTML='<div class="empty-state"><div class="es-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="es-title">No upcoming hearings</div><div class="es-sub">Add a case with a hearing date to see it here</div><a href="/cases" class="es-btn">+ Add Case</a></div>';return;}
+  el.innerHTML=upcoming.map(function(c){
+    var d=new Date(c.hearingDate);
+    var dow=d.toLocaleString('en-IN',{weekday:'short'});
+    return '<div class="hearing-item"><div class="hi-date"><div class="hi-day">'+d.getDate()+'</div><div class="hi-mon">'+d.toLocaleString('en-IN',{month:'short'})+'</div></div><div class="hi-info"><div class="hi-title">'+(c.title||c.clientName||'Case')+'</div><div class="hi-court">'+(c.court||'Court not set')+'</div></div><div class="hi-dow '+dow+'">'+dow+'</div></div>';
+  }).join('');
+}
+
+/* RECENT CASES */
+function renderRecentCases(){
+  var cases=getCases().slice(-5).reverse();
+  var el=document.getElementById('recentCasesTbl');
+  if(!cases.length){el.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--tx3);padding:24px">No cases yet</td></tr>';return;}
+  var statusMap={Active:'sb-active',Pending:'sb-pending',Closed:'sb-closed',Urgent:'sb-urgent'};
+  el.innerHTML=cases.map(function(c){
+    var d=c.hearingDate?new Date(c.hearingDate).toLocaleDateString('en-IN',{day:'numeric',month:'short'}):'—';
+    var sb=statusMap[c.status]||'sb-pending';
+    return '<tr><td class="case-name">'+(c.caseId||'—')+'<br><span style="font-size:11px;color:var(--tx3);font-weight:400">'+(c.title||'')+'</span></td><td>'+(c.clientName||'—')+'</td><td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(c.caseType||c.type||'—')+'</td><td>'+d+'</td><td><span class="status-badge '+sb+'">'+(c.status||'Active')+'</span></td></tr>';
+  }).join('');
+}
+
+/* ACTIVITY */
+function renderActivity(){
+  var acts=getActivity().slice(0,8);
+  var el=document.getElementById('activityFeed');
+  if(!acts.length){el.innerHTML='<div class="empty-state"><div class="es-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="es-title">No recent activity</div><div class="es-sub">Actions like adding cases and billing will appear here</div></div>';return;}
+  var icons={case:'<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>',time:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',invoice:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>',client:'<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'};
+  var typeColor={case:'blue',time:'green',invoice:'amber',client:'purple'};
+  el.innerHTML=acts.map(function(a){
+    var ic=icons[a.type]||icons.case,cl=typeColor[a.type]||'blue';
+    var t=new Date(a.ts),diff=Math.floor((Date.now()-t)/1000);
+    var ago=diff<60?'just now':diff<3600?Math.floor(diff/60)+'m ago':diff<86400?Math.floor(diff/3600)+'h ago':t.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+    return '<div class="activity-item"><div class="activity-icon '+cl+'">'+ic+'</div><div class="activity-text">'+a.text+'</div><div class="activity-time">'+ago+'</div></div>';
+  }).join('');
+}
+
+/* TIMER */
+function updateTimerCase(){var s=document.getElementById('timerCaseSelect');document.getElementById('timerCaseName').textContent=s.options[s.selectedIndex]?.text||'No case selected';}
+function populateCaseSelect(){
+  var cases=getCases();var sel=document.getElementById('timerCaseSelect');
+  sel.innerHTML='<option value="">Select case…</option>'+cases.map(c=>'<option value="'+c.id+'">'+(c.clientName||'Case')+' — '+(c.caseId||'')+'</option>').join('');
+}
+function toggleTimer(){
+  if(timerRunning){stopTimer();return;}
+  timerRunning=true;timerSecs=0;
+  document.getElementById('timerStartBtn').style.display='none';
+  document.getElementById('timerStopBtn').style.display='';
+  timerInterval=setInterval(function(){
+    timerSecs++;
+    var h=Math.floor(timerSecs/3600),m=Math.floor((timerSecs%3600)/60),s=timerSecs%60;
+    document.getElementById('timerDisplay').textContent=[h,m,s].map(x=>String(x).padStart(2,'0')).join(':');
+  },1000);
+}
+function stopTimer(){
+  if(!timerRunning)return;
+  clearInterval(timerInterval);timerRunning=false;
+  document.getElementById('timerStartBtn').style.display='';
+  document.getElementById('timerStopBtn').style.display='none';
+  document.getElementById('timerDisplay').textContent='00:00:00';
+  var mins=Math.round(timerSecs/60);if(mins<1){showToast('Timer stopped (under 1 min)');return;}
+  var caseId=document.getElementById('timerCaseSelect').value;
+  var caseName=document.getElementById('timerCaseName').textContent;
+  var entries=getTimeEntries();
+  entries.push({id:Date.now(),caseId,caseName,minutes:mins,amount:Math.round(mins/60*1500),date:new Date().toISOString(),note:'Timer entry'});
+  saveTime(entries);
+  addActivity('Logged <strong>'+mins+' min</strong> for '+caseName,'time');
+  showToast('Saved '+mins+' minutes');
+  updateTiles();renderActivity();timerSecs=0;
+}
+
+/* QUICK INTAKE */
+function quickIntake(){
+  var name=document.getElementById('iName').value.trim();
+  if(!name){showToast('Enter client name');return;}
+  var cases=getCases();
+  var c={id:Date.now(),clientName:name,phone:document.getElementById('iPhone').value.trim(),caseType:document.getElementById('iType').value,court:document.getElementById('iCourt').value.trim(),hearingDate:document.getElementById('iHearing').value,status:'Active',createdAt:new Date().toISOString(),caseId:'C'+(cases.length+1).toString().padStart(3,'0'),title:name+' v. —'};
+  cases.push(c);saveCases(cases);
+  addActivity('New client intake: <strong>'+name+'</strong> ('+c.caseType+')','client');
+  document.getElementById('iName').value='';document.getElementById('iPhone').value='';document.getElementById('iCourt').value='';document.getElementById('iHearing').value='';
+  showToast('Case created for '+name);refreshAll();
+}
+function modalIntake(){
+  var name=document.getElementById('mi_name').value.trim();if(!name){showToast('Enter name');return;}
+  var cases=getCases();
+  var c={id:Date.now(),clientName:name,phone:document.getElementById('mi_phone').value.trim(),email:document.getElementById('mi_email').value.trim(),address:document.getElementById('mi_addr').value.trim(),caseType:document.getElementById('mi_type').value,court:document.getElementById('mi_court').value.trim(),status:'Active',createdAt:new Date().toISOString(),caseId:'C'+(cases.length+1).toString().padStart(3,'0'),title:name+' v. —',notes:document.getElementById('mi_notes').value.trim()};
+  cases.push(c);saveCases(cases);
+  addActivity('New client: <strong>'+name+'</strong>','client');
+  document.getElementById('intakeModal').style.display='none';
+  showToast('Case created!');refreshAll();
+}
+
+/* TOAST */
+function showToast(msg){var t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.style.transform='translateX(-50%) translateY(0)';t.style.opacity='1';setTimeout(()=>{t.style.transform='translateX(-50%) translateY(80px)';t.style.opacity='0';},3000);}
+
+function refreshAll(){updateTiles();renderBarChart();renderDonut();renderHearings();renderRecentCases();renderActivity();populateCaseSelect();}
+refreshAll();
+
+/* ── JUDGMENT DIGEST WIDGET ── */
+(function(){
+  var AREA_CLASS={criminal:'criminal',civil:'civil','family / matrimonial':'family',family:'family',tax:'tax',constitutional:'constitutional'};
+  function areaClass(a){return AREA_CLASS[(a||'general').toLowerCase()]||'general';}
+  function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function shortDate(d){try{return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short'});}catch{return '';}}
+
+  var AREA_COLORS={criminal:'var(--er)',civil:'var(--ac)',family:'var(--pu)',tax:'var(--am)',constitutional:'var(--teal)',general:'var(--tx3)'};
+
+  fetch('/api/judgments?days=7&limit=3')
+    .then(function(r){return r.ok?r.json():Promise.reject(r.status);})
+    .then(function(data){
+      var strip=document.getElementById('jwStripScroll');
+      if(!strip)return;
+      var js=data.judgments||[];
+      if(!js.length){strip.innerHTML='<span style="font-size:11px;color:var(--tx3)">No recent judgments</span>';return;}
+      strip.innerHTML=js.map(function(j){
+        var col=AREA_COLORS[areaClass(j.practice_area)]||'var(--tx3)';
+        var title=escHtml((j.title||'Untitled').replace(/^\d+\.\s*/,''));
+        return '<a class="jw-strip-pill" href="'+escHtml(j.source_url||'/judgments')+'" target="_blank" rel="noopener">'
+          +'<span class="sp-dot" style="background:'+col+'"></span>'
+          +'<span class="sp-txt">'+title+'</span>'
+          +'</a>';
+      }).join('');
+    })
+    .catch(function(){
+      var strip=document.getElementById('jwStripScroll');
+      if(strip) strip.innerHTML='<a href="/judgments" class="jw-strip-pill" style="color:var(--ac);border-color:var(--ac)"><span class="sp-txt">Open Judgment Digest</span></a>';
+    });
+})();
+
+/* Seed sample data if empty */
+(function seedIfEmpty(){
+  var cases=getCases();
+  if(cases.length>0)return;
+  var sample=[
+    {id:1,clientName:'Ramesh Kumar',caseId:'C001',title:'Ramesh Kumar v. State',caseType:'Criminal / FIR / Bail',court:'Sessions Court, Lucknow',hearingDate:new Date(Date.now()+3*86400000).toISOString().split('T')[0],status:'Active',createdAt:new Date(Date.now()-10*86400000).toISOString()},
+    {id:2,clientName:'Priya Sharma',caseId:'C002',title:'Priya Sharma v. Mohan Lal',caseType:'Family / Matrimonial',court:'Family Court, Delhi',hearingDate:new Date(Date.now()+7*86400000).toISOString().split('T')[0],status:'Active',createdAt:new Date(Date.now()-5*86400000).toISOString()},
+    {id:3,clientName:'TechCorp Ltd.',caseId:'C003',title:'TechCorp Ltd. v. Vendor',caseType:'Civil / Suit',court:'Delhi High Court',hearingDate:new Date(Date.now()+14*86400000).toISOString().split('T')[0],status:'Active',createdAt:new Date(Date.now()-2*86400000).toISOString()},
+    {id:4,clientName:'Anil Verma',caseId:'C004',title:'Anil Verma Cheque Bounce',caseType:'Cheque Bounce / NI Act',court:'MM Court, Noida',hearingDate:new Date(Date.now()-3*86400000).toISOString().split('T')[0],status:'Closed',closedAt:new Date().toISOString(),createdAt:new Date(Date.now()-30*86400000).toISOString()},
+  ];
+  saveCases(sample);
+  addActivity('Welcome to legalhashchecksum.com — sample cases loaded.','case');
+  refreshAll();
+})();
+</script>
+
+<!-- ── TOUR OVERLAY ── -->
+<div id="tour-ov"></div>
+<div id="tour-spot" style="display:none"></div>
+<div id="tour-card" class="hidden">
+  <div class="tour-chip" id="tourChip">Step 1 of 8</div>
+  <div class="tour-title" id="tourTitle"></div>
+  <div class="tour-desc" id="tourDesc"></div>
+  <div class="tour-foot">
+    <div class="tour-dots" id="tourDots"></div>
+    <button class="tour-btn tour-back" id="tourBack" onclick="tourNav(-1)">Back</button>
+    <button class="tour-btn tour-next" id="tourNext" onclick="tourNav(1)">Next</button>
+  </div>
+  <button class="tour-btn tour-skip" id="tourSkip" onclick="endTour()" style="position:absolute;top:14px;right:14px;padding:4px 6px;font-size:11px">✕ Skip</button>
+</div>
+
+<script>
+(function(){
+var STEPS=[
+  {sel:null,pos:'center',
+   title:"Welcome to your Practice Dashboard!",
+   desc:"You've set up your account — let me show you around in about a minute. This tour covers everything you need to hit the ground running."},
+  {sel:'#sidebar',pos:'right',
+   title:"Your navigation sidebar",
+   desc:"Everything lives here — Cases, Billing, Legal Documents, and all Tools. On mobile, tap the ☰ icon at the top to open it."},
+  {sel:'.stats-grid',pos:'bottom',
+   title:"Your practice at a glance",
+   desc:"These four tiles update the moment you add data — active cases, hours tracked this month, fees billed, and your very next hearing date. Watch them grow."},
+  {sel:'#hearingsList',pos:'top',
+   title:"Upcoming hearings",
+   desc:"Every hearing date you add to a case shows up here with the court name and day of the week. You'll never walk into court without being prepared."},
+  {sel:'.timer-card',pos:'left',
+   title:"Billable time tracker",
+   desc:"Select a case from the dropdown and press Start. It runs quietly in the background even if you switch pages — stops only when you tell it to, then logs hours to billing automatically."},
+  {sel:'#jwStrip',pos:'bottom',
+   title:"Latest judgments, right here",
+   desc:"Fresh Supreme Court and High Court rulings appear in this strip every week, filtered by practice area. Click any pill to read the full order — no legal database login needed."},
+  {sel:'#upgradeChip',pos:'right',
+   title:"Go unlimited anytime",
+   desc:"The free plan gives you 3 uses per tool per month. Upgrade to Pro for unlimited documents, all judgment digests, a desktop app, and priority support — starting at ₹399/month."},
+  {sel:null,pos:'center',
+   title:"You're all set!",
+   desc:"Start by clicking '+ New Case' in the top-right corner. Every hearing reminder, invoice, and document flows naturally from there. Good luck in court!",
+   final:true}
+];
+
+var cur=0;
+var DONE_KEY='lhc_tour_done';
+
+function qs(s){return document.querySelector(s);}
+var ov=document.getElementById('tour-ov');
+var spot=document.getElementById('tour-spot');
+var card=document.getElementById('tour-card');
+
+function showStep(n){
+  var s=STEPS[n];
+  cur=n;
+
+  // Update text
+  document.getElementById('tourChip').textContent='Step '+(n+1)+' of '+STEPS.length;
+  document.getElementById('tourTitle').textContent=s.title;
+  document.getElementById('tourDesc').textContent=s.desc;
+
+  // Dots
+  var dotsEl=document.getElementById('tourDots');
+  dotsEl.innerHTML='';
+  STEPS.forEach(function(_,i){
+    var d=document.createElement('div');
+    d.className='tour-dot'+(i===n?' cur':'');
+    dotsEl.appendChild(d);
+  });
+
+  // Buttons
+  document.getElementById('tourBack').style.display=n===0?'none':'';
+  var nxt=document.getElementById('tourNext');
+  nxt.textContent=s.final?'Done':'Next →';
+  document.getElementById('tourSkip').style.display=s.final?'none':'';
+
+  // Overlay darkness
+  ov.style.background=s.sel?'rgba(0,0,0,0)':'rgba(0,0,0,0.55)';
+
+  if(s.sel){
+    var el=qs(s.sel);
+    if(!el){showStep(n+1<STEPS.length?n+1:n);return;}
+
+    // Scroll element into view if needed
+    el.scrollIntoView({block:'nearest',behavior:'smooth'});
+
+    setTimeout(function(){
+      var r=el.getBoundingClientRect();
+      var pad=6;
+      spot.style.display='block';
+      spot.style.top=(r.top-pad)+'px';
+      spot.style.left=(r.left-pad)+'px';
+      spot.style.width=(r.width+pad*2)+'px';
+      spot.style.height=(r.height+pad*2)+'px';
+      positionCard(r,s.pos);
+      card.classList.remove('hidden');
+    },50);
+  } else {
+    // Centre the card, no spotlight
+    spot.style.display='none';
+    spot.style.boxShadow='none';
+    card.style.top='50%';
+    card.style.left='50%';
+    card.style.transform='translate(-50%,-50%)';
+    card.classList.remove('hidden');
+  }
+}
+
+function positionCard(r,pos){
+  var cw=300,ch=200,gap=18,vw=window.innerWidth,vh=window.innerHeight;
+  var t,l;
+  card.style.transform='none';
+
+  if(pos==='right'){
+    l=r.right+gap;
+    t=r.top+r.height/2-ch/2;
+    if(l+cw>vw-8){l=r.left-cw-gap;}  // flip to left if no room
+  } else if(pos==='left'){
+    l=r.left-cw-gap;
+    t=r.top+r.height/2-ch/2;
+    if(l<8){l=r.right+gap;}
+  } else if(pos==='bottom'){
+    t=r.bottom+gap;
+    l=r.left+r.width/2-cw/2;
+  } else { // top
+    t=r.top-ch-gap;
+    l=r.left+r.width/2-cw/2;
+  }
+
+  // Clamp to viewport
+  t=Math.max(8,Math.min(t,vh-ch-8));
+  l=Math.max(8,Math.min(l,vw-cw-8));
+  card.style.top=t+'px';
+  card.style.left=l+'px';
+}
+
+function tourNav(dir){
+  var next=cur+dir;
+  if(next>=STEPS.length){endTour();return;}
+  if(next<0)return;
+  // Briefly hide card during transition
+  card.classList.add('hidden');
+  setTimeout(function(){showStep(next);},150);
+}
+
+window.tourNav=tourNav;
+
+window.endTour=function(){
+  ov.classList.remove('on');
+  ov.style.background='transparent';
+  spot.style.display='none';
+  spot.style.boxShadow='none';
+  card.classList.add('hidden');
+  try{localStorage.setItem(DONE_KEY,'1');}catch(e){}
+};
+
+window.startTour=function(force){
+  if(!force){
+    try{if(localStorage.getItem(DONE_KEY))return;}catch(e){}
+  }
+  cur=0;
+  ov.classList.add('on');
+  // Click on overlay background ends tour
+  ov.onclick=function(e){if(e.target===ov)window.endTour();};
+  showStep(0);
+};
+
+// Auto-start for first-time users after a short delay
+setTimeout(function(){startTour(false);},900);
+
+})();
+</script>
+</body>
+</html>

@@ -6,6 +6,7 @@
 <title>Daily Judgment Digest — Supreme Court & High Courts | Legal Hash Checksum</title>
 <meta name="description" content="Daily digest of Supreme Court and High Court judgments 2024–2026. Filter by practice area, court and year. Free for Indian advocates.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<link rel="canonical" href="https://legalhashchecksum.com/judgments">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -375,7 +376,7 @@ function updateRBar(){
   if(S.court) parts.push(S.court);
   if(S.year)  parts.push(String(S.year));
   document.getElementById('rLbl').innerHTML =
-    `Showing <strong>${fmt(S.total)}</strong> judgment${S.total!==1?'s':''}${parts.length?' · '+parts.join(' · '):''}`;
+    `Showing <strong>${fmt(S.total)}</strong> judgment${S.total!==1?'s':''}${parts.length?' · '+parts.map(esc).join(' · '):''}`;
   document.getElementById('rPage').textContent =
     S.pages>1 ? `Page ${S.page+1} of ${S.pages}` : '';
 }

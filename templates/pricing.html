@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — LegalHashChecksum Pro</title>
+<meta name="description" content="LHC Pro — private practice management for lawyers, advocates & barristers. Free web tools and a preview of planned paid offerings.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1D4ED8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="LHC Pro">
+<script src="/static/lhc-core.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F6FA;--sur:#FFFFFF;--sur2:#F8FAFC;--bd:#E4E9F0;--bd2:#CDD5E0;
+  --tx:#0F1C2E;--tx2:#4A5568;--tx3:#94A3B8;
+  --ac:#1D4ED8;--ac2:#1E40AF;--acl:#3B82F6;--acs:#EFF6FF;
+  --ok:#10B981;--oks:#ECFDF5;--er:#EF4444;
+  --sh:0 1px 3px rgba(0,0,0,.06);
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#0D1117;--sur:#161B22;--sur2:#1C2128;--bd:#30363D;--bd2:#3D444D;
+  --tx:#E6EDF3;--tx2:#8B949E;--tx3:#656D76;
+  --ac:#3B82F6;--ac2:#2563EB;--acl:#60A5FA;--acs:#1E3A5F;
+  --ok:#34D399;--oks:#052E16;--er:#F87171;
+  --sh:0 1px 3px rgba(0,0,0,.3);
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh}
+
+/* ── Nav ── */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:60px;background:var(--sur);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.nav-logo{width:32px;height:32px;background:var(--ac);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;font-family:monospace}
+.nav-name{font-size:15px;font-weight:700;color:var(--tx)}
+.nav-name span{color:var(--ac)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-btn{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);text-decoration:none;border:none}
+.nav-btn-ghost{background:transparent;border:1px solid var(--bd);color:var(--tx2)}
+.nav-btn-ghost:hover{background:var(--sur2)}
+.nav-btn-solid{background:var(--ac);color:#fff}
+.nav-btn-solid:hover{background:var(--ac2)}
+.theme-btn{width:34px;height:34px;border:1px solid var(--bd);border-radius:8px;background:var(--sur2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2)}
+.theme-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Hero ── */
+.hero{text-align:center;padding:64px 24px 48px;max-width:640px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--acs);color:var(--ac);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;margin-bottom:18px;letter-spacing:.03em}
+.hero h1{font-size:clamp(28px,5vw,44px);font-weight:900;line-height:1.15;margin-bottom:14px;color:var(--tx)}
+.hero p{font-size:16px;color:var(--tx2);line-height:1.65;max-width:480px;margin:0 auto}
+
+/* ── Toggle ── */
+.billing-toggle{display:flex;align-items:center;justify-content:center;gap:10px;margin:28px 0;font-size:14px;font-weight:600}
+.toggle-track{width:44px;height:24px;background:var(--bd);border-radius:12px;position:relative;cursor:pointer;transition:background .2s}
+.toggle-track.on{background:var(--ac)}
+.toggle-thumb{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle-track.on .toggle-thumb{left:23px}
+.save-chip{background:#D1FAE5;color:#065F46;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px}
+[data-theme="dark"] .save-chip{background:#052E16;color:#34D399}
+
+/* ── Plans ── */
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:960px;margin:0 auto;padding:0 24px 80px}
+.plan{background:var(--sur);border:1.5px solid var(--bd);border-radius:20px;padding:28px 24px;position:relative;transition:box-shadow .2s,border-color .2s}
+.plan:hover{box-shadow:0 8px 32px rgba(0,0,0,.08)}
+.plan.popular{border-color:var(--ac);box-shadow:0 0 0 4px rgba(29,78,216,.08)}
+.popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--ac);color:#fff;font-size:11px;font-weight:800;padding:4px 14px;border-radius:20px;white-space:nowrap;letter-spacing:.05em}
+.plan-name{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);margin-bottom:10px}
+.plan-price{font-size:38px;font-weight:900;color:var(--tx);line-height:1;margin-bottom:4px}
+.plan-price sup{font-size:20px;vertical-align:super;font-weight:700}
+.plan-period{font-size:13px;color:var(--tx2);font-weight:500}
+.plan-period.hidden{opacity:0}
+.plan-desc{font-size:13px;color:var(--tx2);margin:14px 0 20px;line-height:1.5}
+.plan-btn{display:block;width:100%;padding:13px;border-radius:12px;font-size:14px;font-weight:700;text-align:center;cursor:pointer;font-family:var(--sans);text-decoration:none;border:none;transition:opacity .15s,transform .1s}
+.plan-btn:active{transform:scale(.98)}
+.plan-btn-outline{background:transparent;border:1.5px solid var(--bd2);color:var(--tx2)}
+.plan-btn-outline:hover{border-color:var(--ac);color:var(--ac)}
+.plan-btn-fill{background:var(--ac);color:#fff}
+.plan-btn-fill:hover{background:var(--ac2)}
+.plan-btn-dark{background:var(--tx);color:var(--bg)}
+.plan-btn-dark:hover{opacity:.85}
+.divider{height:1px;background:var(--bd);margin:20px 0}
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.feature-list li{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--tx2)}
+.feature-list li svg{width:16px;height:16px;flex-shrink:0;margin-top:1px;stroke:var(--ok);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.feature-list li.dim{opacity:.45}
+.feature-list li.dim svg{stroke:var(--tx3)}
+
+/* ── Footer note ── */
+.footer-note{text-align:center;font-size:13px;color:var(--tx3);padding:0 24px 40px}
+.footer-note a{color:var(--ac);text-decoration:none}
+
+@media(max-width:640px){
+  .hero{padding:40px 20px 32px}
+  .plans{padding:0 16px 60px;gap:16px}
+}
+
+/* ── PAGE FOOTER ── */
+.page-footer{margin-top:32px;padding:20px 0 8px;border-top:1px solid var(--bd)}
+.page-footer-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.page-footer-links{display:flex;flex-wrap:wrap;gap:6px 2px;align-items:center}
+.page-footer-links a{font-size:11px;color:var(--tx3);text-decoration:none;padding:3px 8px;border-radius:6px;transition:.15s;white-space:nowrap}
+.page-footer-links a:hover{color:var(--ac);background:var(--acs)}
+.page-footer-links .sep{color:var(--bd2);font-size:11px;user-select:none}
+.page-footer-copy{font-size:11px;color:var(--tx3)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="/">
+    <div class="nav-logo">#</div>
+    <div class="nav-name">legalhash<span>checksum</span>.com</div>
+  </a>
+  <div class="nav-actions">
+    <a href="/dashboard" class="nav-btn nav-btn-ghost">Dashboard</a>
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+      <svg id="themeIco" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+    Private · Secure · Zero-Upload
+  </div>
+  <h1>The practice management tool built for Indian lawyers</h1>
+  <p>Hash evidence under BSA §63, manage cases, track time, and generate invoices — with evidence files and practice records kept on your device.</p>
+  <p><strong>Plan preview:</strong> Paid plans are not available yet. The web tools are free to use.</p>
+  <div class="billing-toggle" id="billingToggle" onclick="toggleBilling()">
+    <span id="lblMonthly" style="color:var(--tx)">Monthly</span>
+    <div class="toggle-track" id="ttrack"><div class="toggle-thumb"></div></div>
+    <span id="lblAnnual" style="color:var(--tx3)">Annual</span>
+    <span class="save-chip">Save 20%</span>
+  </div>
+</div>
+
+<div class="plans">
+
+  <!-- Free -->
+  <div class="plan">
+    <div class="plan-name">Free</div>
+    <div class="plan-price">₹<span>0</span></div>
+    <div class="plan-period">forever</div>
+    <div class="plan-desc">Get started — no credit card required.</div>
+    <a href="/tools" class="plan-btn plan-btn-outline">Use for Free</a>
+    <div class="divider"></div>
+    <ul class="feature-list">
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Document hashing</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Case management</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Vakalatnama generator</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Limitation calculator</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>BNS / IPC lookup</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Billing & invoicing</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Judgment digest</li>
+      <li class="dim"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Installable web app</li>
+    </ul>
+  </div>
+
+  <!-- Pro -->
+  <div class="plan popular">
+    <div class="popular-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Planned</div>
+    <div class="plan-name">LHC Pro</div>
+    <div class="plan-price">₹<span id="proPrice">499</span></div>
+    <div class="plan-period" id="proPeriod">/ month</div>
+    <div class="plan-desc">Everything a solo advocate or barrister needs.</div>
+    <span class="plan-btn plan-btn-fill" aria-disabled="true">Coming soon</span>
+    <div class="divider"></div>
+    <ul class="feature-list">
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><strong>Unlimited</strong> document hashes</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><strong>Unlimited</strong> cases & notes</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Time tracking & billing</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PDF invoices</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Daily judgment digest</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Mac + Windows desktop app</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>iOS + Android PWA</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priority email support</li>
+    </ul>
+  </div>
+
+  <!-- Firm -->
+  <div class="plan">
+    <div class="plan-name">LHC Firm</div>
+    <div class="plan-price">₹<span id="firmPrice">1,999</span></div>
+    <div class="plan-period" id="firmPeriod">/ month</div>
+    <div class="plan-desc">For law firms, chambers & litigation teams.</div>
+    <span class="plan-btn plan-btn-dark" aria-disabled="true">Coming soon</span>
+    <div class="divider"></div>
+    <ul class="feature-list">
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Pro</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Up to 10 team members</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Shared case docket</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Custom firm branding</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dedicated onboarding call</li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>SLA — 4 hr response</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  Evidence files are processed in your browser.<br>
+  Questions? <a href="mailto:umang@legalhashchecksum.com">umang@legalhashchecksum.com</a>
+</div>
+
+<script>
+var annual = false;
+var PRICES = { pro: { monthly: 499, annual: 399 }, firm: { monthly: 1999, annual: 1599 } };
+
+function toggleBilling() {
+  annual = !annual;
+  var t = document.getElementById('ttrack');
+  t.classList.toggle('on', annual);
+  document.getElementById('lblMonthly').style.color = annual ? 'var(--tx3)' : 'var(--tx)';
+  document.getElementById('lblAnnual').style.color  = annual ? 'var(--tx)' : 'var(--tx3)';
+
+  document.getElementById('proPrice').textContent  = annual ? PRICES.pro.annual.toLocaleString('en-IN')  : PRICES.pro.monthly.toLocaleString('en-IN');
+  document.getElementById('firmPrice').textContent = annual ? PRICES.firm.annual.toLocaleString('en-IN') : PRICES.firm.monthly.toLocaleString('en-IN');
+  var period = annual ? '/ month, billed annually' : '/ month';
+  document.getElementById('proPeriod').textContent  = period;
+  document.getElementById('firmPeriod').textContent = period;
+}
+
+// Theme
+function updateThemeIco() {
+  var d = document.documentElement.getAttribute('data-theme') === 'dark';
+  var i = document.getElementById('themeIco');
+  if (i) i.innerHTML = d
+    ? '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
+    : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+}
+function toggleTheme() { LHCTheme.toggle(); updateThemeIco(); }
+document.addEventListener('lhctheme', updateThemeIco);
+updateThemeIco();
+</script>
+</body>
+</html>

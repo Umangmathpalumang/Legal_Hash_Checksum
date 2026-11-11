@@ -14,7 +14,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Court Fee Calculator — Indian Courts</title>
-<meta name="description" content="Calculate court fees for civil suits in Indian courts. Ad valorem fees based on suit valuation. Free tool for Indian advocates.">
+<meta name="description" content="Calculate court fees for civil suits in Indian courts. Ad valorem fees based on suit valuation. For advocates, barristers and lawyers.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -53,6 +53,7 @@ h1{font-size:26px;font-weight:800;margin-bottom:8px}
 .slab-table th{text-align:left;padding:8px 12px;border-bottom:2px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
 .slab-table td{padding:8px 12px;border-bottom:1px solid var(--border)}
 .slab-table tr:last-child td{border-bottom:none}
+@media print{footer,.page-footer{display:none!important}}
 </style>
 </head>
 <body>
@@ -111,7 +112,7 @@ h1{font-size:26px;font-weight:800;margin-bottom:8px}
     <div class="result-fee" id="resultFee"></div>
     <div class="result-label">Court Fee Payable</div>
     <div class="breakdown" id="breakdown"></div>
-    <p style="font-size:11px;color:var(--muted);margin-top:16px">⚠️ Court fees vary by state and may be updated. Always verify with the applicable state Court Fees Act. Process fee, misc. charges not included.</p>
+    <p style="font-size:11px;color:var(--muted);margin-top:16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Court fees vary by state and may be updated. Always verify with the applicable state Court Fees Act. Process fee, misc. charges not included.</p>
   </div>
 
   <div class="card">
@@ -303,5 +304,20 @@ document.addEventListener('DOMContentLoaded',function(){
 })();
 </script>
 <!-- ── End Feedback Widget ── -->
+
+<footer style="margin-top:40px;padding:18px 24px 24px;border-top:1px solid #E4E9F0;font-size:11px;color:#94A3B8;text-align:center">
+  <div style="display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;justify-content:center;margin-bottom:6px">
+    <a href="/dashboard" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Dashboard</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/tools" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">All Tools</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/pricing" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Pricing</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/contact" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Contact</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/privacy-policy" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Privacy Policy</a>
+      </div>
+  <div>© 2024–2026 legalhashchecksum.com</div>
+</footer>
 </body>
 </html>

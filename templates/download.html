@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Install — Legal Hash Checksum</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1D4ED8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="LHC Pro">
+<script src="/static/lhc-core.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F6FA;--sur:#FFFFFF;--sur2:#F8FAFC;--bd:#E4E9F0;--bd2:#CDD5E0;
+  --tx:#0F1C2E;--tx2:#4A5568;--tx3:#94A3B8;
+  --ac:#1D4ED8;--ac2:#1E40AF;--acl:#3B82F6;--acs:#EFF6FF;
+  --ok:#10B981;--oks:#ECFDF5;--er:#EF4444;
+  --sh:0 1px 3px rgba(0,0,0,.06);
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#0D1117;--sur:#161B22;--sur2:#1C2128;--bd:#30363D;--bd2:#3D444D;
+  --tx:#E6EDF3;--tx2:#8B949E;--tx3:#656D76;
+  --ac:#3B82F6;--ac2:#2563EB;--acl:#60A5FA;--acs:#1E3A5F;
+  --ok:#34D399;--oks:#052E16;--er:#F87171;
+  --sh:0 1px 3px rgba(0,0,0,.3);
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0}
+
+/* ── Nav ── */
+.nav{width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:60px;background:var(--sur);border-bottom:1px solid var(--bd)}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.nav-logo{width:32px;height:32px;background:var(--ac);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;font-family:monospace}
+.nav-name{font-size:15px;font-weight:700}
+.nav-name span{color:var(--ac)}
+.theme-btn{width:34px;height:34px;border:1px solid var(--bd);border-radius:8px;background:var(--sur2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2)}
+.theme-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Main ── */
+.main{width:100%;max-width:640px;padding:48px 24px 80px;flex:1}
+
+/* ── Welcome card ── */
+.welcome{background:linear-gradient(135deg,var(--ac) 0%,var(--ac2) 100%);border-radius:20px;padding:28px 28px 24px;color:#fff;margin-bottom:28px;position:relative;overflow:hidden}
+.welcome::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.1)}
+.welcome::after{content:'';position:absolute;bottom:-20px;right:40px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.07)}
+.welcome-icon{width:48px;height:48px;background:rgba(255,255,255,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.welcome-icon svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.welcome h2{font-size:22px;font-weight:800;margin-bottom:6px;position:relative}
+.welcome p{font-size:14px;opacity:.85;line-height:1.5;position:relative}
+.plan-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.2);border-radius:20px;font-size:12px;font-weight:700;padding:3px 10px;margin-top:10px;position:relative;letter-spacing:.04em}
+
+/* ── Primary download card ── */
+.dl-primary{background:var(--sur);border:2px solid var(--ac);border-radius:20px;padding:24px;margin-bottom:16px;cursor:pointer;transition:box-shadow .2s;position:relative;overflow:hidden}
+.dl-primary::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ac),var(--acl))}
+.dl-primary:hover{box-shadow:0 8px 32px rgba(29,78,216,.18)}
+.dl-top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.dl-os-icon{width:52px;height:52px;border-radius:14px;background:var(--acs);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dl-os-icon svg{width:28px;height:28px;fill:var(--ac)}
+.dl-os-name{font-size:18px;font-weight:800;color:var(--tx)}
+.dl-os-sub{font-size:13px;color:var(--tx2);margin-top:2px}
+.dl-detected{font-size:11px;color:var(--ok);font-weight:700;background:var(--oks);padding:2px 8px;border-radius:10px;display:inline-block;margin-top:4px}
+.dl-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--ac);color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:background .15s,transform .1s}
+.dl-btn:hover{background:var(--ac2)}
+.dl-btn:active{transform:scale(.98)}
+.dl-btn svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.dl-meta{font-size:12px;color:var(--tx3);text-align:center;margin-top:10px}
+
+/* ── PWA card (for mobile) ── */
+.pwa-card{background:var(--sur);border:1.5px solid var(--bd);border-radius:16px;padding:20px;margin-bottom:16px}
+.pwa-card h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.pwa-card p{font-size:13px;color:var(--tx2);line-height:1.55;margin-bottom:14px}
+.pwa-steps{list-style:none;display:flex;flex-direction:column;gap:8px}
+.pwa-steps li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--tx2)}
+.step-num{width:22px;height:22px;min-width:22px;background:var(--acs);color:var(--ac);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+
+/* ── Other platforms ── */
+.other-section{margin-top:24px}
+.other-section h3{font-size:13px;font-weight:700;color:var(--tx3);letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px}
+.other-platforms{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.other-btn{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--sur);border:1.5px solid var(--bd);border-radius:12px;cursor:pointer;font-size:13px;font-weight:600;color:var(--tx);text-decoration:none;transition:border-color .15s}
+.other-btn:hover{border-color:var(--ac);color:var(--ac)}
+.other-btn svg{width:18px;height:18px;fill:currentColor;flex-shrink:0}
+
+/* ── Steps ── */
+.steps-card{background:var(--oks);border:1.5px solid var(--ok);border-radius:16px;padding:20px;margin-top:20px}
+.steps-card h3{font-size:14px;font-weight:700;color:var(--ok);margin-bottom:12px}
+.step-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;font-size:13px;color:var(--tx2)}
+.step-row:last-child{margin:0}
+.step-dot{width:20px;height:20px;min-width:20px;background:var(--ok);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;margin-top:1px}
+
+@media(max-width:500px){
+  .main{padding:32px 16px 60px}
+  .welcome{padding:22px 20px 20px}
+  .other-platforms{grid-template-columns:1fr}
+}
+
+/* ── PAGE FOOTER ── */
+.page-footer{margin-top:32px;padding:20px 0 8px;border-top:1px solid var(--bd)}
+.page-footer-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.page-footer-links{display:flex;flex-wrap:wrap;gap:6px 2px;align-items:center}
+.page-footer-links a{font-size:11px;color:var(--tx3);text-decoration:none;padding:3px 8px;border-radius:6px;transition:.15s;white-space:nowrap}
+.page-footer-links a:hover{color:var(--ac);background:var(--acs)}
+.page-footer-links .sep{color:var(--bd2);font-size:11px;user-select:none}
+.page-footer-copy{font-size:11px;color:var(--tx3)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="/">
+    <div class="nav-logo">#</div>
+    <div class="nav-name">legalhash<span>checksum</span>.com</div>
+  </a>
+  <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+    <svg id="themeIco" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</nav>
+
+<div class="main">
+
+  <div class="welcome">
+    <h2>Install Legal Hash Checksum</h2>
+    <p>Use the web app in your browser or install it on your device. Native desktop installers are not available yet.</p>
+    <a class="dl-btn" href="/dashboard" style="margin-top:16px">Open Dashboard</a>
+  </div>
+  <div class="pwa-card">
+    <h3 id="pwaTitle">Install from your browser</h3>
+    <ul class="pwa-steps" id="pwaSteps"></ul>
+  </div>
+</div>
+
+<script>
+/* ─── OS Detection ─────────────────────────────────────────────────── */
+function detectOS() {
+  var ua = navigator.userAgent.toLowerCase();
+  var pl = (navigator.platform || '').toLowerCase();
+  if (/iphone|ipad|ipod/.test(ua))              return 'ios';
+  if (/android/.test(ua))                        return 'android';
+  if (/win/.test(pl) || /windows/.test(ua))      return 'windows';
+  if (/mac/.test(pl) || /macintosh/.test(ua))    return 'mac';
+  if (/linux/.test(ua))                          return 'linux';
+  return 'other';
+}
+
+var PWA_STEPS = {
+  ios: [
+    'Open this page in <strong>Safari</strong> (not Chrome)',
+    'Tap the <strong>Share</strong> button (box with arrow up)',
+    'Scroll down and tap <strong>"Add to Home Screen"</strong>',
+    'Tap <strong>Add</strong> — LHC Pro appears on your home screen'
+  ],
+  android: [
+    'Open this page in <strong>Chrome</strong>',
+    'Tap the <strong>⋮ menu</strong> (three dots, top right)',
+    'Tap <strong>"Add to Home Screen"</strong> or <strong>"Install App"</strong>',
+    'Tap <strong>Install</strong> — LHC Pro installs instantly'
+  ],
+  other: [
+    'Open this page in <strong>Chrome or Edge</strong>',
+    'Look for the <strong>install icon ⊕</strong> in the address bar',
+    'Click it and select <strong>Install</strong>'
+  ]
+};
+
+function renderInstallSteps() {
+  var os = detectOS();
+  var steps = PWA_STEPS[os] || PWA_STEPS.other;
+  document.getElementById('pwaTitle').textContent =
+    os === 'ios' ? 'Install on iPhone or iPad' :
+    os === 'android' ? 'Install on Android' : 'Install from your browser';
+  document.getElementById('pwaSteps').innerHTML = steps.map(function(step, index) {
+    return '<li><span class="step-num">' + (index + 1) + '</span><span>' + step + '</span></li>';
+  }).join('');
+}
+
+/* ─── Theme ─────────────────────────────────────────────────────────── */
+function updateThemeIco() {
+  var d = document.documentElement.getAttribute('data-theme') === 'dark';
+  var i = document.getElementById('themeIco');
+  if (i) i.innerHTML = d
+    ? '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
+    : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+}
+function toggleTheme() { LHCTheme.toggle(); updateThemeIco(); }
+document.addEventListener('lhctheme', updateThemeIco);
+
+/* ─── Init ───────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  renderInstallSteps();
+  updateThemeIco();
+});
+</script>
+</body>
+</html>

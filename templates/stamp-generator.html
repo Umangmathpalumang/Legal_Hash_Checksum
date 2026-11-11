@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/lhc-core.js"></script>
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
 <script>
@@ -99,6 +100,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .btn-danger:hover{background:rgba(239,68,68,.2)}
 
 /* Toast */
+@keyframes spin360{to{transform:rotate(360deg)}}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#1c2333;border:1px solid var(--green);color:var(--green);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:999}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -126,6 +128,7 @@ canvas{display:block;max-width:100%;height:auto}
 .guide-steps{display:flex;flex-direction:column;gap:8px}
 .guide-step{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);line-height:1.5}
 .guide-step-num{width:20px;height:20px;border-radius:50%;background:var(--accent-glow);border:1px solid var(--accent);color:var(--accent-light);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+@media print{footer,.page-footer{display:none!important}}
 </style>
 </head>
 <body>
@@ -413,11 +416,30 @@ function drawStamp(){
 
 /* ── Download PNG ── */
 function downloadPNG(){
-  var a = document.createElement('a');
-  a.href     = document.getElementById('mainCanvas').toDataURL('image/png');
-  a.download = 'advocate-stamp.png';
+  var btn=document.querySelector('[onclick*="downloadPNG"]');
+  if(btn){
+    var orig=btn.innerHTML;
+    btn.disabled=true;
+    btn.innerHTML='<span style="display:inline-flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin360 .7s linear infinite"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Rendering stamp…</span>';
+    setTimeout(function(){
+      btn.innerHTML='<span style="display:inline-flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/><line x1="12" y1="3" x2="12" y2="15"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg>Saving PNG…</span>';
+      setTimeout(function(){
+        var a=document.createElement('a');
+        a.href=document.getElementById('mainCanvas').toDataURL('image/png');
+        a.download='advocate-stamp.png';
+        a.click();
+        btn.innerHTML='<span style="color:#22c55e;display:inline-flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px"><polyline points="20 6 9 17 4 12"/></svg> Downloaded!</span>';
+        setTimeout(function(){btn.innerHTML=orig;btn.disabled=false;},1800);
+        showToast('<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg> Stamp downloaded as PNG');
+      },500);
+    },600);
+    return;
+  }
+  var a=document.createElement('a');
+  a.href=document.getElementById('mainCanvas').toDataURL('image/png');
+  a.download='advocate-stamp.png';
   a.click();
-  showToast('✓ Stamp downloaded as PNG');
+  showToast('<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg> Stamp downloaded as PNG');
 }
 
 /* ── Copy to clipboard ── */
@@ -425,7 +447,7 @@ function copyToClipboard(){
   document.getElementById('mainCanvas').toBlob(function(blob){
     try{
       navigator.clipboard.write([new ClipboardItem({'image/png':blob})]).then(function(){
-        showToast('✓ Stamp copied to clipboard');
+        showToast('<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg> Stamp copied to clipboard');
       }).catch(function(){ showToast('Copy not supported — use Download instead'); });
     } catch(e){ showToast('Copy not supported — use Download instead'); }
   });
@@ -442,7 +464,7 @@ function saveToStorage(){
       lines   : ['ln1','ln2','ln3','ln4','ln5'].map(function(id){ return document.getElementById(id).value; })
     };
     localStorage.setItem('advocateStamp', JSON.stringify(data));
-    showToast('✓ Stamp saved to browser storage');
+    showToast('<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg> Stamp saved to browser storage');
   } catch(e){ showToast('Storage unavailable in this browser'); }
 }
 
@@ -457,7 +479,7 @@ function loadFromStorage(){
     if(data.shape){ currentShape=data.shape; document.querySelectorAll('.shape-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.shape===data.shape); }); }
     if(data.size) document.getElementById('slSize').value=data.size;
     drawStamp();
-    showToast('✓ Saved stamp loaded');
+    showToast('<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg> Saved stamp loaded');
   } catch(e){}
 }
 
@@ -521,5 +543,20 @@ try{
   }
 }catch(e){}
 </script>
+
+<footer style="margin-top:40px;padding:18px 24px 24px;border-top:1px solid #E4E9F0;font-size:11px;color:#94A3B8;text-align:center">
+  <div style="display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;justify-content:center;margin-bottom:6px">
+    <a href="/dashboard" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Dashboard</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/tools" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">All Tools</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/pricing" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Pricing</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/contact" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Contact</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/privacy-policy" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Privacy Policy</a>
+      </div>
+  <div>© 2024–2026 legalhashchecksum.com</div>
+</footer>
 </body>
 </html>

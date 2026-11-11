@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/lhc-core.js"></script>
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
 <script>
@@ -13,7 +14,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How to Fill Bail Bond Form No. 45 — Free Generator for Indian Courts</title>
-<meta name="description" content="Fill bail bond Form No. 45 online — free for Indian advocates and accused. Covers Section 436, 437, 438, 441 CrPC / BNSS. Surety bond + affidavit. Print instantly, no login.">
+<meta name="description" content="Fill bail bond Form No. 45 online — for advocates, barristers, lawyers and accused. Covers Section 436, 437, 438, 441 CrPC / BNSS. Surety bond + affidavit. Print instantly, no login.">
 <link rel="canonical" href="https://legalhashchecksum.com/bail-bond">
 
 <!-- SEO Upgrade: Open Graph Tags -->
@@ -97,7 +98,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 .page-label{text-align:right;font-size:8pt;color:#888;margin-top:3mm}
 
 /* ── Print — Legal size 216mm × 356mm ── */
-@media print{
+@media print{html,body{height:auto!important;min-height:0!important;overflow:visible!important}.app{display:block!important;height:auto!important;min-height:0!important}.form-panel{display:none!important}.preview-panel{display:block!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:0!important;background:none!important}.paper,.paper-p1,.paper-p2{min-height:0!important;height:auto!important;box-shadow:none!important;border:none!important;background:#fff!important}nav,.stamp-bar,.format-bar,.toolbar,.stamp-modal-overlay{display:none!important}footer,.page-footer{display:none!important}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   @page{size:216mm 356mm;margin:0}
   html,body{background:#fff!important;height:auto!important;overflow:visible!important}
@@ -200,9 +201,9 @@ textarea.field-input{resize:vertical;min-height:52px}
 </nav>
 <!-- ── STAMP BAR ── -->
 <div class="stamp-bar" id="stampBar">
-  <span class="stamp-bar-label">🖂 Stamp:</span>
+  <span class="stamp-bar-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>Stamp:</span>
   <button class="btn-stamp btn-stamp-has" onclick="stampUpload()" title="Upload your existing stamp image">⬆ I Have a Stamp</button>
-  <button class="btn-stamp btn-stamp-create" onclick="openStampMaker()" title="Create a new stamp">✦ Create Stamp</button>
+  <button class="btn-stamp btn-stamp-create" onclick="openStampMaker()" title="Create a new stamp">Create Stamp</button>
   <button class="btn-stamp btn-stamp-clear" id="btnClearStamp" onclick="clearStamp()" style="display:none">✕ Remove Stamp</button>
   <input type="file" id="stampFileInput" accept="image/*" style="display:none" onchange="loadStampFile(this)">
   <span class="stamp-status" id="stampStatus">No stamp — drag one onto your document</span>
@@ -211,7 +212,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 <!-- ── STAMP MAKER MODAL ── -->
 <div class="stamp-modal-overlay" id="stampModal">
   <div class="stamp-modal">
-    <h3>✦ Create Your Advocate Stamp</h3>
+    <h3>Create Your Advocate Stamp</h3>
     <p>Fill in your details, choose a shape and colour, then click Apply to place it on the document.</p>
     <div class="stamp-field"><label>Line 1 — Name</label><input id="sm1" placeholder="ADV. YOUR NAME" value="ADV. YOUR NAME"></div>
     <div class="stamp-field"><label>Line 2 — Designation</label><input id="sm2" placeholder="Advocate, High Court" value="Advocate, High Court"></div>
@@ -1188,5 +1189,20 @@ function downloadStampPNG(){
   <p>To generate your document, simply fill out the form above. Select between the combined Form 45, a standalone Bail Bond, or a Surety Bond. Click the "Print / Save PDF" button. Your browser will automatically format the data into a clean, print-ready <strong>Bail Bond PDF</strong> that you can sign and submit directly to the court.</p>
 </section>
 <!-- ── End SEO FAQ ── -->
+
+<footer style="margin-top:40px;padding:18px 24px 24px;border-top:1px solid #E4E9F0;font-size:11px;color:#94A3B8;text-align:center">
+  <div style="display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;justify-content:center;margin-bottom:6px">
+    <a href="/dashboard" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Dashboard</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/tools" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">All Tools</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/pricing" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Pricing</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/contact" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Contact</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/privacy-policy" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Privacy Policy</a>
+      </div>
+  <div>© 2024–2026 legalhashchecksum.com</div>
+</footer>
 </body>
 </html>

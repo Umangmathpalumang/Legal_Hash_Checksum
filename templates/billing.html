@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Billing — legalhashchecksum.com</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1D4ED8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="LHC Pro">
+<script src="/static/lhc-core.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root{
+  --bg:#F4F6FA;--sur:#FFFFFF;--sur2:#F8FAFC;--bd:#E4E9F0;--bd2:#CDD5E0;
+  --tx:#0F1C2E;--tx2:#4A5568;--tx3:#94A3B8;
+  --ac:#1D4ED8;--ac2:#1E40AF;--acl:#3B82F6;--acs:#EFF6FF;
+  --ok:#059669;--oks:#ECFDF5;--er:#DC2626;--ers:#FEF2F2;
+  --am:#D97706;--ams:#FFFBEB;--pu:#6D28D9;--pus:#F5F3FF;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+  --sh:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);
+  --shm:0 4px 20px rgba(0,0,0,.10);
+  --sidebar:240px;
+}
+[data-theme="dark"]{
+  --bg:#0D1117;--sur:#161B22;--sur2:#1C2128;--bd:#30363D;--bd2:#3D444D;
+  --tx:#E6EDF3;--tx2:#8B949E;--tx3:#656D76;
+  --ac:#3B82F6;--ac2:#2563EB;--acl:#60A5FA;--acs:rgba(59,130,246,.12);
+  --ok:#10B981;--oks:rgba(16,185,129,.1);--er:#F87171;--ers:rgba(248,113,113,.1);
+  --am:#FBBF24;--ams:rgba(251,191,36,.1);--pu:#A78BFA;--pus:rgba(167,139,250,.1);
+  --sh:0 1px 3px rgba(0,0,0,.3);--shm:0 4px 20px rgba(0,0,0,.45);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);background:var(--sur);border-right:1px solid var(--bd);display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:200;overflow:hidden;transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.sidebar-logo{padding:20px 16px 16px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.logo-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--ac),var(--acl));border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(29,78,216,.3)}
+.logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.logo-text{font-size:12.5px;font-weight:800;letter-spacing:-.3px;color:var(--tx);line-height:1.2}
+.logo-text span{color:var(--ac)}
+.logo-badge{display:inline-block;font-size:9px;font-weight:700;background:var(--acs);color:var(--ac);border:1px solid rgba(29,78,216,.2);border-radius:4px;padding:1px 5px;margin-top:2px;letter-spacing:.04em;text-transform:uppercase}
+.sidebar-nav{flex:1;overflow-y:auto;padding:10px 8px;scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
+.sidebar-nav::-webkit-scrollbar{width:3px}
+.sidebar-nav::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.nav-section{font-size:9px;font-weight:800;color:var(--tx3);letter-spacing:.12em;text-transform:uppercase;padding:14px 10px 6px;display:flex;align-items:center;gap:8px}
+.nav-section::after{content:'';flex:1;height:1px;background:var(--bd)}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--tx2);font-size:13px;font-weight:600;transition:.15s;cursor:pointer;border:none;background:transparent;width:100%;font-family:var(--sans)}
+.nav-item:hover{background:var(--sur2);color:var(--tx)}
+.nav-item:hover svg{stroke:var(--tx)}
+.nav-item.active{background:linear-gradient(90deg,var(--acs),rgba(59,130,246,.03) 100%);color:var(--ac);box-shadow:inset 3px 0 0 var(--ac);}
+.nav-item.active svg{stroke:var(--ac)}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.nav-divider{height:1px;background:var(--bd);margin:8px 10px}
+.sidebar-footer{padding:12px 8px;border-top:1px solid var(--bd);flex-shrink:0}
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:.15s}
+.sidebar-user:hover{background:var(--sur2)}
+.s-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--acl));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+.s-user-info{flex:1;min-width:0}
+.s-user-name{font-size:12px;font-weight:700;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.s-user-plan{font-size:10px;color:var(--ac);font-weight:600}
+.s-theme-btn{width:28px;height:28px;border:1px solid var(--bd);border-radius:7px;background:var(--sur2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2);flex-shrink:0}
+.s-theme-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── MAIN ── */
+.main-content{flex:1;min-width:0;margin-left:var(--sidebar);display:flex;flex-direction:column;transition:margin .25s}
+
+/* ── TOPBAR ── */
+.topbar{height:60px;background:var(--sur);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 18px;gap:10px;position:sticky;top:0;z-index:100;box-shadow:var(--sh)}
+.hamburger{display:none;width:36px;height:36px;border-radius:8px;border:1px solid var(--bd);background:var(--sur2);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.hamburger svg{width:18px;height:18px;stroke:var(--tx2);fill:none;stroke-width:2;stroke-linecap:round}
+.page-breadcrumb{font-size:15px;font-weight:700;color:var(--tx)}
+.top-right{display:flex;align-items:center;gap:6px;margin-left:auto}
+.btn{padding:7px 13px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--bd);background:var(--sur2);color:var(--tx2);transition:.15s;font-family:var(--sans);display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+.btn:hover{border-color:var(--ac);color:var(--ac)}
+.btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.btn-p{background:var(--ac);color:#fff;border-color:var(--ac)}.btn-p:hover{background:var(--ac2);color:#fff;border-color:var(--ac2)}
+.btn-ok{background:var(--ok);color:#fff;border-color:var(--ok)}.btn-ok:hover{background:#047857;color:#fff}
+.btn-d{background:var(--ers);color:var(--er);border-color:transparent}.btn-d:hover{background:var(--er);color:#fff}
+
+/* ── SIDEBAR OVERLAY ── */
+.sidebar-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:199;backdrop-filter:blur(3px)}
+.sidebar-ov.open{display:block}
+
+/* ── PAGE ── */
+.page{max-width:1140px;margin:0 auto;padding:20px 18px 100px}
+.page-title{font-size:17px;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:9px;letter-spacing:-.2px}
+.page-title svg{width:20px;height:20px;stroke:var(--ac);fill:none;stroke-width:2.5;stroke-linecap:round}
+
+/* ── STATS ── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stat{background:var(--sur);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;box-shadow:var(--sh);position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0}
+.stat.am::before{background:var(--am)}.stat.ok::before{background:var(--ok)}.stat.ac::before{background:var(--ac)}.stat.er::before{background:var(--er)}
+.stat-lbl{font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.stat-val{font-size:22px;font-weight:800;line-height:1;margin-bottom:4px;letter-spacing:-.5px}
+.stat-val.am{color:var(--am)}.stat-val.ok{color:var(--ok)}.stat-val.ac{color:var(--ac)}.stat-val.er{color:var(--er)}
+.stat-sub{font-size:11px;color:var(--tx3)}
+
+/* ── TIMER BAR ── */
+.timer-bar{background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.timer-disp{font-size:30px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:.04em;flex:1}
+.timer-sub{font-size:10px;color:rgba(255,255,255,.7);font-weight:700;text-transform:uppercase;margin-bottom:2px}
+.timer-case{font-size:13px;opacity:.85;color:#fff;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}
+.tbtn{padding:9px 18px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);color:#fff;transition:.15s;font-family:var(--sans)}
+.tbtn:hover{background:rgba(255,255,255,.25)}
+.tbtn.stop{background:rgba(255,255,255,.92);color:var(--ac)}
+
+/* ── TWO COL ── */
+.two-col{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+
+/* ── CARD ── */
+.card{background:var(--sur);border:1px solid var(--bd);border-radius:12px;box-shadow:var(--sh);overflow:hidden;margin-bottom:16px}
+.card-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--bd);background:var(--sur2)}
+.card-ttl{font-size:11px;font-weight:700;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.05em;color:var(--tx3)}
+.card-ttl svg{width:14px;height:14px;stroke:var(--ac);fill:none;stroke-width:2.5;stroke-linecap:round}
+.card-body{padding:14px 16px}
+
+/* ── FORM ── */
+.f label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);display:block;margin-bottom:4px}
+.f input,.f select,.f textarea{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--tx);font-family:var(--sans);outline:none;transition:.2s;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(29,78,216,.08)}
+.f input::placeholder,.f textarea::placeholder{color:var(--tx3)}
+.f select option{background:var(--sur)}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);padding:8px 12px;text-align:left;border-bottom:2px solid var(--bd);white-space:nowrap;background:var(--sur2)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--bd);font-size:13px;color:var(--tx2)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--sur2)}
+.tbl .name{font-weight:700;color:var(--tx)}
+.tbl input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--ac)}
+
+/* ── BADGES ── */
+.sb{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.sb::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.sb-paid{background:var(--oks);color:var(--ok)}.sb-paid::before{background:var(--ok)}
+.sb-unpaid{background:var(--ers);color:var(--er)}.sb-unpaid::before{background:var(--er)}
+.sb-partial{background:var(--ams);color:var(--am)}.sb-partial::before{background:var(--am)}
+
+/* ── INVOICE PRINT ── */
+@media print{
+  .sidebar,.topbar,.bnav,.sidebar-ov,.no-print{display:none!important}
+  .main-content{margin-left:0!important}
+  .invoice-section{display:block!important}
+  body{background:#fff!important;color:#000!important}
+  .inv-paper{box-shadow:none!important;border:1px solid #ccc!important;max-width:100%!important}
+}
+.invoice-section{display:none}
+.inv-paper{background:#fff;border:1px solid var(--bd);border-radius:12px;max-width:700px;margin:0 auto;padding:32px;box-shadow:var(--shm)}
+.inv-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #1a1a2e}
+.inv-firm{font-size:20px;font-weight:800;color:#1a1a2e;margin-bottom:4px}
+.inv-sub{font-size:12px;color:#666}
+.inv-meta{text-align:right}
+.inv-no{font-size:18px;font-weight:800;color:var(--ac);margin-bottom:3px}
+.inv-date{font-size:12px;color:#666}
+.inv-parties{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.inv-party-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#888;margin-bottom:5px}
+.inv-party-name{font-size:14px;font-weight:700;color:#1a1a2e}
+.inv-party-detail{font-size:12px;color:#555;margin-top:2px}
+.inv-tbl{width:100%;border-collapse:collapse;margin-bottom:20px}
+.inv-tbl th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:10px 12px;background:#1a1a2e;color:#fff;text-align:left}
+.inv-tbl th:last-child{text-align:right}
+.inv-tbl td{padding:10px 12px;border-bottom:1px solid #e5e7eb;font-size:13px;color:#333}
+.inv-tbl td:last-child{text-align:right;font-weight:700}
+.inv-tbl tr:last-child td{border-bottom:none}
+.inv-total-section{display:flex;justify-content:flex-end}
+.inv-totals{width:260px}
+.inv-total-row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:#555}
+.inv-total-row.grand{font-size:15px;font-weight:800;color:#1a1a2e;padding-top:8px;margin-top:4px;border-top:2px solid #1a1a2e}
+.inv-footer{margin-top:24px;padding-top:16px;border-top:1px solid #e5e7eb;font-size:11px;color:#888;text-align:center}
+.inv-seal{display:flex;align-items:flex-end;justify-content:flex-end;gap:20px;margin-top:20px}
+.inv-sign{text-align:center;min-width:140px}
+.inv-sign-line{width:100%;border-bottom:1px solid #333;margin-bottom:5px;height:40px}
+.inv-sign-lbl{font-size:11px;color:#555;font-weight:700}
+
+/* ── MODAL ── */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:16px}
+.modal-ov.open{display:flex}
+.modal{background:var(--sur);border-radius:16px;padding:22px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:var(--shm)}
+.modal-ttl{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.modal-close{width:27px;height:27px;border:1px solid var(--bd);border-radius:6px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx2)}
+.modal-close svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.modal-btns{display:flex;gap:9px;margin-top:16px}
+.m-save{flex:2;padding:10px;background:var(--ac);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans)}
+.m-save:hover{background:var(--ac2)}
+.m-cancel{flex:1;padding:10px;border:1px solid var(--bd);border-radius:9px;background:var(--sur2);color:var(--tx2);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans)}
+
+/* ── BOTTOM NAV ── */
+.bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--sur);border-top:1px solid var(--bd);padding:8px 12px calc(8px + env(safe-area-inset-bottom));justify-content:space-around;z-index:200;box-shadow:0 -2px 12px rgba(0,0,0,.06)}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--tx3);font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:8px;min-width:48px}
+.bnav-item.active{color:var(--ac)}
+.bnav-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ok);color:#fff;font-size:13px;font-weight:700;padding:9px 22px;border-radius:12px;z-index:999;opacity:0;transition:transform .3s,opacity .3s;pointer-events:none;white-space:nowrap}
+
+@media(max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-240px)}
+  .sidebar.open{transform:translateX(0)}
+  .main-content{margin-left:0}
+  .hamburger{display:flex}
+  .bnav{display:flex}
+  .fr,.fr3{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .card-hd{flex-wrap:wrap;gap:8px}
+  .card-hd>div[style]{flex-shrink:0}
+}
+
+/* ── PAGE FOOTER ── */
+.page-footer{margin-top:32px;padding:20px 0 8px;border-top:1px solid var(--bd)}
+.page-footer-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.page-footer-links{display:flex;flex-wrap:wrap;gap:6px 2px;align-items:center}
+.page-footer-links a{font-size:11px;color:var(--tx3);text-decoration:none;padding:3px 8px;border-radius:6px;transition:.15s;white-space:nowrap}
+.page-footer-links a:hover{color:var(--ac);background:var(--acs)}
+.page-footer-links .sep{color:var(--bd2);font-size:11px;user-select:none}
+.page-footer-copy{font-size:11px;color:var(--tx3)}
+</style>
+</head>
+<body>
+
+<div class="sidebar-ov" id="sidebarOv" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <a href="/dashboard" class="logo-link">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="logo-text">legalhash<span>checksum</span>.com</div>
+        <div class="logo-badge">Pro</div>
+      </div>
+    </a>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Practice</div>
+    <a href="/dashboard" class="nav-item"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+    <a href="/cases" class="nav-item"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Cases</a>
+    <a href="/billing" class="nav-item active"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Billing &amp; Invoices</a>
+    <a href="/legal-qa" class="nav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Legal Q&amp;A</a>
+    <a href="/profile" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>My Profile</a>
+    <div class="nav-divider"></div>
+    <div class="nav-section">Documents</div>
+    <a href="/bail-bond" class="nav-item"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Bail Bond</a>
+    <a href="/vakalatnama" class="nav-item"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Vakalatnama</a>
+    <a href="/legal-notice" class="nav-item"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Legal Notice</a>
+    <div class="nav-divider"></div>
+    <div class="nav-section">Tools</div>
+    <a href="/tools" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      All Tools
+    </a>
+    <a href="/hash" class="nav-item"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>Hash Evidence</a>
+    <a href="/court-fee" class="nav-item"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Court Fee Calc</a>
+    <a href="/law-converter" class="nav-item"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>IPC → BNS</a>
+    <a href="/tools" class="nav-item"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>All Tools</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="s-avatar">UA</div>
+      <div class="s-user-info">
+        <div class="s-user-name">Advocate</div>
+        <div class="s-user-plan">Free Plan</div>
+      </div>
+      <button class="s-theme-btn" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="themeIco" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<div class="layout">
+<div class="main-content">
+  <header class="topbar">
+    <button class="hamburger" onclick="openSidebar()"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="page-breadcrumb">Billing &amp; Invoices</div>
+    <div class="top-right">
+      <button class="btn" onclick="exportInvoices()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
+      <button class="btn btn-p" onclick="openInvoiceModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Invoice</button>
+    </div>
+  </header>
+
+  <!-- PAGE -->
+  <div class="page no-print">
+    <div class="stats">
+      <div class="stat am"><div class="stat-lbl">Billed This Month</div><div class="stat-val am" id="sBilled">₹0</div><div class="stat-sub" id="sEntries">0 entries</div></div>
+      <div class="stat ok"><div class="stat-lbl">Collected</div><div class="stat-val ok" id="sCollected">₹0</div><div class="stat-sub" id="sInvoicesPaid">0 paid invoices</div></div>
+      <div class="stat ac"><div class="stat-lbl">Hours Billed</div><div class="stat-val ac" id="sHours">0.0h</div><div class="stat-sub" id="sAvgRate">₹0/hr avg</div></div>
+      <div class="stat er"><div class="stat-lbl">Outstanding</div><div class="stat-val er" id="sOutstanding">₹0</div><div class="stat-sub" id="sUnpaidInv">0 unpaid</div></div>
+    </div>
+
+    <!-- TIMER BAR -->
+    <div class="timer-bar">
+      <div style="flex:1;min-width:0">
+        <div class="timer-sub">Live Timer</div>
+        <div class="timer-disp" id="timerDisp">00:00:00</div>
+        <div class="timer-case" id="timerCaseName">No case selected</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;min-width:160px">
+        <select id="timerSel" onchange="updateTimerCase()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:6px 10px;font-size:12px;color:#fff;font-family:var(--sans);outline:none">
+          <option value="">Select case…</option>
+        </select>
+        <div style="display:flex;gap:8px">
+          <button class="tbtn" id="timerStartBtn" onclick="toggleTimer()">▶ Start</button>
+          <button class="tbtn stop" id="timerStopBtn" onclick="stopTimer()" style="display:none">■ Stop &amp; Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <!-- LEFT -->
+      <div>
+        <div class="card">
+          <div class="card-hd"><div class="card-ttl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Log Time Entry</div></div>
+          <div class="card-body">
+            <div class="fr3">
+              <div class="f"><label>Case</label><select id="me_case"><option value="">All cases</option></select></div>
+              <div class="f"><label>Date</label><input type="date" id="me_date"></div>
+              <div class="f"><label>Duration (min)</label><input type="number" id="me_mins" placeholder="60" min="1"></div>
+            </div>
+            <div class="fr">
+              <div class="f"><label>Description</label><input id="me_note" placeholder="Court appearance, drafting, research…"></div>
+              <div class="f"><label>Rate (₹/hr)</label><input type="number" id="me_rate" placeholder="1500" value="1500"></div>
+            </div>
+            <button class="btn btn-p" onclick="logTimeEntry()">+ Log Time Entry</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-ttl"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>All Time Entries</div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <select id="teFilterCase" onchange="renderTimeTable()" style="padding:5px 8px;border:1px solid var(--bd);border-radius:6px;font-size:11px;background:var(--sur2);color:var(--tx);font-family:var(--sans);outline:none">
+                <option value="">All Cases</option>
+              </select>
+              <button class="btn btn-d" onclick="deleteSelectedEntries()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Delete</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="tbl">
+              <thead><tr><th><input type="checkbox" id="selAll" onchange="toggleSelAll(this.checked)"></th><th>Date</th><th>Case</th><th>Description</th><th>Duration</th><th>Amount</th><th></th></tr></thead>
+              <tbody id="timeTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div>
+        <div class="card">
+          <div class="card-hd"><div class="card-ttl"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Quick Invoice</div></div>
+          <div class="card-body">
+            <div class="f" style="margin-bottom:8px"><label>Case</label><select id="qi_case" onchange="prefillInvoice()"><option value="">All cases (all entries)</option></select></div>
+            <div class="f" style="margin-bottom:8px"><label>From Date</label><input type="date" id="qi_from"></div>
+            <div class="f" style="margin-bottom:8px"><label>To Date</label><input type="date" id="qi_to"></div>
+            <div class="f" style="margin-bottom:8px"><label>Firm Name</label><input id="qi_firm" value="Advocate's Chamber" placeholder="Your firm name"></div>
+            <div class="f" style="margin-bottom:8px"><label>Advocate Name</label><input id="qi_adv" placeholder="Adv. Full Name"></div>
+            <div class="f" style="margin-bottom:12px"><label>Bar Council No.</label><input id="qi_bar" placeholder="BAR/2020/1234"></div>
+            <button class="btn btn-p" style="width:100%;justify-content:center" onclick="generateInvoice()"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Generate Invoice</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd"><div class="card-ttl"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Past Invoices</div></div>
+          <div id="pastInvoicesList" style="padding:0 4px;overflow-x:auto"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-ttl"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Trust Account</div>
+            <div style="font-size:12px;font-weight:700;color:var(--ok)" id="trustBalance">₹0</div>
+          </div>
+          <div class="card-body">
+            <div class="fr" style="margin-bottom:10px">
+              <div class="f"><label>Amount (₹)</label><input type="number" id="ta_amt" placeholder="10000"></div>
+              <div class="f"><label>Type</label><select id="ta_type"><option value="credit">Credit (Retainer In)</option><option value="debit">Debit (Applied to Bill)</option></select></div>
+            </div>
+            <div class="f" style="margin-bottom:8px"><label>Note</label><input id="ta_note" placeholder="Retainer received from client…"></div>
+            <button class="btn btn-p" onclick="addTrustEntry()">+ Add Entry</button>
+            <div id="trustLedger" style="margin-top:12px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- INVOICE OUTPUT -->
+<div class="invoice-section" id="invoiceSection">
+  <div style="padding:20px;text-align:center;display:flex;gap:10px;justify-content:center;margin-bottom:16px;margin-left:var(--sidebar)" class="no-print">
+    <button class="btn btn-p" onclick="window.print()"><svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print / Save PDF</button>
+    <button class="btn" onclick="hideInvoice()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Close</button>
+    <button class="btn btn-ok" onclick="saveInvoiceToPast()"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Save Invoice</button>
+  </div>
+  <div class="inv-paper" id="invPaper" style="margin:0 auto 40px"></div>
+</div>
+
+<!-- TIME LOG MODAL -->
+<div class="modal-ov" id="teModal" onclick="if(event.target===this)closeTeModal()">
+  <div class="modal">
+    <div class="modal-ttl">Log Time Entry <button class="modal-close" onclick="closeTeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="fr"><div class="f"><label>Case</label><select id="mtm_case"><option value="">Select…</option></select></div><div class="f"><label>Date</label><input type="date" id="mtm_date"></div></div>
+    <div class="fr"><div class="f"><label>Duration (min)</label><input type="number" id="mtm_mins" placeholder="60"></div><div class="f"><label>Rate (₹/hr)</label><input type="number" id="mtm_rate" value="1500" placeholder="1500"></div></div>
+    <div class="f" style="margin-bottom:0"><label>Description</label><input id="mtm_note" placeholder="Work description…"></div>
+    <div class="modal-btns"><button class="m-cancel" onclick="closeTeModal()">Cancel</button><button class="m-save" onclick="saveTeModal()">Save Entry</button></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bnav">
+  <a href="/dashboard" class="bnav-item"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dash</a>
+  <a href="/cases" class="bnav-item"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Cases</a>
+  <a href="/billing" class="bnav-item active"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Billing</a>
+  <a href="/tools" class="bnav-item"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Tools</a>
+  <a href="/legal-qa" class="bnav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Q&amp;A</a>
+</nav>
+
+<div id="toast"><span id="toastMsg"></span></div>
+
+<script>
+var CKEY='lhc_cases',TKEY='lhc_time',IKEY='lhc_invoices',TRKEY='lhc_trust',AKEY='lhc_activity';
+var timerSec=0,timerRunning=false,timerIv=null,timerCid=null;
+var currentInvoice=null;
+
+function toggleTheme(){LHCTheme.toggle();updateTIco();}
+function updateTIco(){var d=document.documentElement.getAttribute('data-theme')==='dark';var i=document.getElementById('themeIco');if(i)i.innerHTML=d?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>':'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';}
+document.addEventListener('lhctheme', updateTIco);
+updateTIco();
+document.getElementById('me_date').value=new Date().toISOString().split('T')[0];
+
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('sidebarOv').classList.add('open');document.body.style.overflow='hidden';}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOv').classList.remove('open');document.body.style.overflow='';}
+
+function getCases(){try{return JSON.parse(localStorage.getItem(CKEY)||'[]');}catch{return[];}}
+function getTimes(){try{return JSON.parse(localStorage.getItem(TKEY)||'[]');}catch{return[];}}
+function saveTimes(d){localStorage.setItem(TKEY,JSON.stringify(d));}
+function getInvoices(){try{return JSON.parse(localStorage.getItem(IKEY)||'[]');}catch{return[];}}
+function saveInvoices(d){localStorage.setItem(IKEY,JSON.stringify(d));}
+function getTrust(){try{return JSON.parse(localStorage.getItem(TRKEY)||'[]');}catch{return[];}}
+function saveTrust(d){localStorage.setItem(TRKEY,JSON.stringify(d));}
+function logAct(t,tp){var a=[];try{a=JSON.parse(localStorage.getItem(AKEY)||'[]');}catch{}a.unshift({text:t,type:tp,ts:new Date().toISOString()});localStorage.setItem(AKEY,JSON.stringify(a.slice(0,50)));}
+
+function populateCaseSels(){
+  var cases=getCases();
+  var opts='<option value="">All cases</option>'+cases.map(c=>'<option value="'+c.id+'">'+(c.clientName||'Case')+' ('+c.caseId+')</option>').join('');
+  ['me_case','qi_case','teFilterCase','mtm_case'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=opts;});
+  var ts=document.getElementById('timerSel');if(ts)ts.innerHTML='<option value="">Select case…</option>'+cases.map(c=>'<option value="'+c.id+'">'+(c.clientName||'Case')+' ('+c.caseId+')</option>').join('');
+}
+
+function updateTimerCase(){var s=document.getElementById('timerSel');timerCid=s.value||null;document.getElementById('timerCaseName').textContent=s.options[s.selectedIndex]?.text||'No case selected';}
+
+function toggleTimer(){
+  if(timerRunning){stopTimer();return;}
+  if(!timerCid){showToast('Select a case first');return;}
+  timerRunning=true;timerSec=0;
+  document.getElementById('timerStartBtn').style.display='none';
+  document.getElementById('timerStopBtn').style.display='';
+  timerIv=setInterval(function(){timerSec++;var h=Math.floor(timerSec/3600),m=Math.floor((timerSec%3600)/60),s=timerSec%60;document.getElementById('timerDisp').textContent=[h,m,s].map(x=>String(x).padStart(2,'0')).join(':');},1000);
+}
+function stopTimer(){
+  if(!timerRunning)return;
+  clearInterval(timerIv);timerRunning=false;
+  document.getElementById('timerStartBtn').style.display='';
+  document.getElementById('timerStopBtn').style.display='none';
+  document.getElementById('timerDisp').textContent='00:00:00';
+  var mins=Math.round(timerSec/60);timerSec=0;
+  if(mins<1){showToast('Under 1 min');return;}
+  var rate=1500;
+  var es=getTimes();var c=getCases().find(x=>x.id==timerCid);
+  es.push({id:Date.now(),caseId:timerCid,caseName:c?c.clientName:'',caseIdStr:c?c.caseId:'',minutes:mins,note:'Timer',date:new Date().toISOString(),amount:Math.round(mins/60*rate),rate});
+  saveTimes(es);logAct('Timer: '+mins+'min','time');showToast('Saved '+mins+' min');updateStats();renderTimeTable();
+}
+
+function logTimeEntry(){
+  var cid=document.getElementById('me_case').value;
+  var mins=parseInt(document.getElementById('me_mins').value);
+  var note=document.getElementById('me_note').value.trim()||'Time entry';
+  var d=document.getElementById('me_date').value;
+  var rate=parseInt(document.getElementById('me_rate').value)||1500;
+  if(!mins||mins<1){showToast('Enter duration');return;}
+  var es=getTimes();var c=getCases().find(x=>x.id==cid);
+  es.push({id:Date.now(),caseId:cid,caseName:c?c.clientName:'General',caseIdStr:c?c.caseId:'',minutes:mins,note,date:d?new Date(d).toISOString():new Date().toISOString(),amount:Math.round(mins/60*rate),rate});
+  saveTimes(es);
+  document.getElementById('me_mins').value='';document.getElementById('me_note').value='';
+  logAct('Logged '+mins+'min','time');showToast('Time logged');updateStats();renderTimeTable();
+}
+
+function renderTimeTable(){
+  var es=getTimes();
+  var filtCid=document.getElementById('teFilterCase').value;
+  if(filtCid)es=es.filter(e=>e.caseId==filtCid);
+  es=es.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  var el=document.getElementById('timeTable');
+  if(!es.length){el.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--tx3);padding:20px">No time entries yet</td></tr>';return;}
+  el.innerHTML=es.map(function(e){
+    var d=new Date(e.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'2-digit'});
+    return '<tr><td><input type="checkbox" class="entry-cb" value="'+e.id+'"></td><td class="name">'+d+'</td><td>'+(e.caseName||'—')+(e.caseIdStr?' <small style="color:var(--tx3)">#'+e.caseIdStr+'</small>':'')+'</td><td>'+(e.note||'Entry')+'</td><td>'+e.minutes+'m</td><td style="font-weight:700;color:var(--ok)">₹'+(e.amount||0).toLocaleString('en-IN')+'</td><td><button class="btn btn-d" style="padding:3px 8px;font-size:10px" onclick="delEntry('+e.id+')">&times;</button></td></tr>';
+  }).join('');
+}
+function delEntry(id){saveTimes(getTimes().filter(e=>e.id!=id));renderTimeTable();updateStats();showToast('Deleted');}
+function toggleSelAll(checked){document.querySelectorAll('.entry-cb').forEach(cb=>cb.checked=checked);}
+function deleteSelectedEntries(){
+  var ids=Array.from(document.querySelectorAll('.entry-cb:checked')).map(cb=>cb.value);
+  if(!ids.length){showToast('Select entries');return;}
+  if(!confirm('Delete '+ids.length+' entries?'))return;
+  saveTimes(getTimes().filter(e=>!ids.includes(String(e.id))));renderTimeTable();updateStats();showToast(ids.length+' deleted');
+}
+
+function updateStats(){
+  var now=new Date(),m=now.getMonth(),y=now.getFullYear();
+  var es=getTimes();
+  var monthEs=es.filter(e=>{var d=new Date(e.date);return d.getMonth()===m&&d.getFullYear()===y;});
+  var billed=monthEs.reduce((s,e)=>s+(e.amount||0),0);
+  var hrs=es.reduce((s,e)=>s+(e.minutes||0),0)/60;
+  document.getElementById('sBilled').textContent='₹'+billed.toLocaleString('en-IN');
+  document.getElementById('sEntries').textContent=monthEs.length+' entries';
+  document.getElementById('sHours').textContent=hrs.toFixed(1)+'h';
+  var totalAmt=es.reduce((s,e)=>s+(e.amount||0),0);
+  document.getElementById('sAvgRate').textContent=hrs>0?'₹'+Math.round(totalAmt/hrs)+'/hr avg':'';
+  var invs=getInvoices();
+  var paid=invs.filter(i=>i.status==='paid'),unpaid=invs.filter(i=>i.status!=='paid');
+  document.getElementById('sCollected').textContent='₹'+paid.reduce((s,i)=>s+(i.total||0),0).toLocaleString('en-IN');
+  document.getElementById('sInvoicesPaid').textContent=paid.length+' paid invoices';
+  document.getElementById('sOutstanding').textContent='₹'+unpaid.reduce((s,i)=>s+(i.total||0),0).toLocaleString('en-IN');
+  document.getElementById('sUnpaidInv').textContent=unpaid.length+' unpaid';
+  var trust=getTrust();
+  var bal=trust.reduce((s,e)=>s+(e.type==='credit'?e.amount:-(e.amount||0)),0);
+  document.getElementById('trustBalance').textContent='₹'+Math.max(0,bal).toLocaleString('en-IN');
+}
+
+function prefillInvoice(){
+  var today=new Date().toISOString().split('T')[0];
+  var from=new Date(Date.now()-30*86400000).toISOString().split('T')[0];
+  document.getElementById('qi_to').value=today;
+  if(!document.getElementById('qi_from').value)document.getElementById('qi_from').value=from;
+}
+function openInvoiceModal(){document.getElementById('qi_to').value=new Date().toISOString().split('T')[0];document.getElementById('qi_from').value=new Date(Date.now()-30*86400000).toISOString().split('T')[0];}
+function generateInvoice(){
+  var cid=document.getElementById('qi_case').value;
+  var fromD=document.getElementById('qi_from').value;
+  var toD=document.getElementById('qi_to').value;
+  var firm=document.getElementById('qi_firm').value.trim()||"Advocate's Chamber";
+  var adv=document.getElementById('qi_adv').value.trim()||'Advocate';
+  var bar=document.getElementById('qi_bar').value.trim();
+  var es=getTimes();
+  if(cid)es=es.filter(e=>e.caseId==cid);
+  if(fromD)es=es.filter(e=>new Date(e.date)>=new Date(fromD));
+  if(toD)es=es.filter(e=>new Date(e.date)<=new Date(toD+'T23:59:59'));
+  es=es.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if(!es.length){showToast('No time entries in this range');return;}
+  var subtotal=es.reduce((s,e)=>s+(e.amount||0),0);
+  var gst=Math.round(subtotal*0.18);
+  var total=subtotal+gst;
+  var c=cid?getCases().find(x=>x.id==cid):null;
+  var invNo='INV-'+(getInvoices().length+1).toString().padStart(4,'0');
+  var today=new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+  var rows=es.map(function(e){
+    var d=new Date(e.date).toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+    var hrs=(e.minutes/60).toFixed(2);
+    return '<tr><td>'+d+'</td><td>'+(e.note||'Legal services')+'</td><td>'+hrs+'h</td><td>₹'+(e.rate||1500).toLocaleString('en-IN')+'/hr</td><td>₹'+(e.amount||0).toLocaleString('en-IN')+'</td></tr>';
+  }).join('');
+  var html='<div class="inv-hd">'
+    +'<div><div class="inv-firm">'+firm+'</div>'
+    +'<div class="inv-sub">'+adv+(bar?' · Bar No. '+bar:'')+'</div>'
+    +'<div class="inv-sub" style="margin-top:4px">legalhashchecksum.com</div></div>'
+    +'<div class="inv-meta"><div class="inv-no">'+invNo+'</div><div class="inv-date">Date: '+today+'</div>'
+    +(fromD&&toD?'<div class="inv-date">Period: '+new Date(fromD).toLocaleDateString('en-IN',{day:'numeric',month:'short'})+' – '+new Date(toD).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})+'</div>':'')
+    +'</div></div>'
+    +'<div class="inv-parties"><div><div class="inv-party-lbl">Bill To</div><div class="inv-party-name">'+(c?c.clientName:'Client')+'</div>'+(c&&c.phone?'<div class="inv-party-detail">'+c.phone+'</div>':'')+(c&&c.address?'<div class="inv-party-detail">'+c.address+'</div>':'')+'</div>'
+    +'<div><div class="inv-party-lbl">Matter</div><div class="inv-party-name">'+(c?c.title||c.caseId:'General Legal Services')+'</div>'+(c&&c.court?'<div class="inv-party-detail">'+c.court+'</div>':'')+'</div></div>'
+    +'<table class="inv-tbl"><thead><tr><th>Date</th><th>Description</th><th>Hours</th><th>Rate</th><th>Amount</th></tr></thead><tbody>'+rows+'</tbody></table>'
+    +'<div class="inv-total-section"><div class="inv-totals">'
+    +'<div class="inv-total-row"><span>Sub-total</span><span>₹'+subtotal.toLocaleString('en-IN')+'</span></div>'
+    +'<div class="inv-total-row"><span>GST @ 18%</span><span>₹'+gst.toLocaleString('en-IN')+'</span></div>'
+    +'<div class="inv-total-row grand"><span>TOTAL DUE</span><span>₹'+total.toLocaleString('en-IN')+'</span></div>'
+    +'</div></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px;padding-top:16px;border-top:1px solid #e5e7eb">'
+    +'<div><div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;margin-bottom:5px">Payment Details</div>'
+    +'<div style="font-size:12px;color:#555">Bank transfer / UPI accepted</div>'
+    +'<div style="font-size:11px;color:#888;margin-top:3px">Please pay within 30 days</div></div>'
+    +'<div class="inv-seal"><div class="inv-sign"><div class="inv-sign-line"></div><div class="inv-sign-lbl">'+adv+'</div><div class="inv-sign-lbl" style="font-weight:400;color:#888">Authorised Signatory</div></div></div></div>'
+    +'<div class="inv-footer">This is a computer-generated invoice. | legalhashchecksum.com</div>';
+  document.getElementById('invPaper').innerHTML=html;
+  document.getElementById('invoiceSection').style.display='block';
+  document.querySelector('.page').style.display='none';
+  currentInvoice={invNo,firm,adv,total,subtotal,gst,clientName:c?c.clientName:'Client',caseId:c?c.caseId:'',date:new Date().toISOString(),status:'unpaid',entryCount:es.length};
+  document.getElementById('invPaper').scrollIntoView({behavior:'smooth'});
+}
+function hideInvoice(){document.getElementById('invoiceSection').style.display='none';document.querySelector('.page').style.display='block';currentInvoice=null;}
+function saveInvoiceToPast(){
+  if(!currentInvoice){showToast('Generate invoice first');return;}
+  var invs=getInvoices();invs.unshift(currentInvoice);saveInvoices(invs);
+  logAct('Invoice '+currentInvoice.invNo+' saved','invoice');
+  renderPastInvoices();updateStats();hideInvoice();showToast('Invoice saved: '+currentInvoice.invNo);currentInvoice=null;
+}
+function printInvoice(){window.print();}
+function renderPastInvoices(){
+  var invs=getInvoices().slice(0,10);var el=document.getElementById('pastInvoicesList');
+  if(!invs.length){el.innerHTML='<div style="padding:16px;text-align:center;color:var(--tx3);font-size:13px">No invoices saved yet</div>';return;}
+  el.innerHTML='<table class="tbl" style="font-size:12px"><thead><tr><th>Invoice</th><th>Client</th><th>Amount</th><th>Status</th><th></th></tr></thead><tbody>'
+    +invs.map(function(inv,idx){
+      var sb=inv.status==='paid'?'sb-paid':inv.status==='partial'?'sb-partial':'sb-unpaid';
+      return '<tr><td class="name">'+inv.invNo+'</td><td>'+inv.clientName+'</td><td style="font-weight:700">₹'+(inv.total||0).toLocaleString('en-IN')+'</td><td><span class="sb '+sb+'">'+inv.status+'</span></td><td><button class="btn" style="padding:3px 8px;font-size:10px" onclick="markPaid('+idx+')">Paid</button></td></tr>';
+    }).join('')+'</tbody></table>';
+}
+function markPaid(idx){var invs=getInvoices();invs[idx].status='paid';saveInvoices(invs);renderPastInvoices();updateStats();showToast('Marked as paid');}
+function exportInvoices(){
+  var invs=getInvoices();
+  var csv='Invoice,Client,Case,Date,Total,Status\n'+invs.map(i=>[i.invNo,i.clientName,i.caseId,new Date(i.date).toLocaleDateString('en-IN'),i.total,i.status].map(v=>(v||'').toString().replace(/,/g,' ')).join(',')).join('\n');
+  var a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='Invoices.csv';a.click();showToast('Exported');
+}
+
+function addTrustEntry(){
+  var amt=parseFloat(document.getElementById('ta_amt').value);var type=document.getElementById('ta_type').value;var note=document.getElementById('ta_note').value.trim();
+  if(!amt||amt<=0){showToast('Enter valid amount');return;}
+  var tr=getTrust();tr.push({id:Date.now(),amount:amt,type,note,date:new Date().toISOString()});saveTrust(tr);
+  document.getElementById('ta_amt').value='';document.getElementById('ta_note').value='';
+  updateStats();renderTrustLedger();showToast('Trust entry added');
+}
+function renderTrustLedger(){
+  var tr=getTrust().slice().reverse().slice(0,8);var el=document.getElementById('trustLedger');
+  if(!tr.length){el.innerHTML='<div style="text-align:center;padding:12px;color:var(--tx3);font-size:12px">No entries</div>';return;}
+  el.innerHTML='<div style="border-top:1px solid var(--bd);padding-top:10px">'+tr.map(function(e){
+    var d=new Date(e.date).toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+    return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd);font-size:12px">'
+      +'<span style="flex:1;color:var(--tx2)">'+(e.note||'Entry')+'</span>'
+      +'<span style="color:var(--tx3)">'+d+'</span>'
+      +'<span style="font-weight:700;color:'+(e.type==='credit'?'var(--ok)':'var(--er)')+';">'+(e.type==='credit'?'+':'-')+'₹'+e.amount.toLocaleString('en-IN')+'</span>'
+      +'</div>';
+  }).join('')+'</div>';
+}
+
+function closeTeModal(){document.getElementById('teModal').classList.remove('open');}
+function saveTeModal(){
+  var cid=document.getElementById('mtm_case').value;
+  var mins=parseInt(document.getElementById('mtm_mins').value);
+  var rate=parseInt(document.getElementById('mtm_rate').value)||1500;
+  var note=document.getElementById('mtm_note').value.trim()||'Time entry';
+  var d=document.getElementById('mtm_date').value;
+  if(!mins||mins<1){showToast('Enter duration');return;}
+  var es=getTimes();var c=getCases().find(x=>x.id==cid);
+  es.push({id:Date.now(),caseId:cid,caseName:c?c.clientName:'',caseIdStr:c?c.caseId:'',minutes:mins,note,date:d?new Date(d).toISOString():new Date().toISOString(),amount:Math.round(mins/60*rate),rate});
+  saveTimes(es);closeTeModal();showToast('Entry logged');updateStats();renderTimeTable();
+}
+
+function showToast(msg){var t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.style.transform='translateX(-50%) translateY(0)';t.style.opacity='1';setTimeout(()=>{t.style.transform='translateX(-50%) translateY(80px)';t.style.opacity='0';},3000);}
+
+prefillInvoice();populateCaseSels();updateStats();renderTimeTable();renderPastInvoices();renderTrustLedger();
+</script>
+</body>
+</html>

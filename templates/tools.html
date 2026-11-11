@@ -14,13 +14,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Legal Tools India — Free Tools for Advocates & Law Firms</title>
-<meta name="description" content="14 free legal tools for Indian advocates — bail bond generator, legal notice, vakalatnama, BNS/IPC lookup, court fee calculator, limitation calculator and more. No login required.">
+<meta name="description" content="14 professional legal tools for advocates, barristers and lawyers — bail bond generator, legal notice, vakalatnama, BNS/IPC lookup, court fee calculator, limitation calculator and more. No login required.">
 <meta name="keywords" content="legal tools India, advocate tools, law firm tools, legal notice generator, bail application, BNS section lookup, IPC sections, court fee calculator, limitation calculator, free legal tools India, vakalatnama generator, bail bond form 45">
 <meta property="og:title" content="Legal Tools India — Free Tools for Advocates & Law Firms">
-<meta property="og:description" content="13 free professional legal tools for Indian advocates. Draft documents, lookup sections, calculate fees — all private, no login.">
+<meta property="og:description" content="Professional legal tools for advocates, barristers and lawyers. Draft documents, lookup sections, calculate fees — all private, no login.">
 <meta property="og:type" content="website">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://legalhashchecksum.com/tools">
+<link rel="manifest" href="/manifest.json">
+<script src="/static/lhc-core.js" defer></script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>⚖</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap">
@@ -62,6 +64,18 @@
 
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ── NAVIGATION PROGRESS BAR (perceived performance) ── */
+#navProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:9999;
+  background:linear-gradient(90deg,var(--accent),var(--accent-light));
+  transition:width .25s ease,opacity .4s ease;opacity:0;border-radius:0 3px 3px 0;
+  box-shadow:0 0 8px rgba(37,99,235,.6)}
+#navProgress.loading{opacity:1}
+/* Tool card click ripple */
+.tool-card .nav-ripple{position:absolute;top:50%;left:50%;width:0;height:0;
+  background:rgba(37,99,235,.08);border-radius:50%;transform:translate(-50%,-50%);
+  animation:rippleOut .5s ease-out forwards}
+@keyframes rippleOut{to{width:200%;padding-bottom:200%;opacity:0}}
 
 /* ── NAV ── */
 nav{
@@ -375,12 +389,19 @@ nav{
 
 /* ── FOOTER ── */
 footer{
-  text-align:center;padding:32px 24px;
   border-top:1px solid var(--border);
+  background:var(--surface);
+  padding:40px 24px 28px;
   color:var(--muted);font-size:13px;
 }
-footer a{color:var(--accent-light);text-decoration:none}
-footer a:hover{text-decoration:underline}
+.ft-inner{max-width:900px;margin:0 auto}
+.ft-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px 32px;margin-bottom:32px}
+.ft-col-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.ft-links{display:flex;flex-direction:column;gap:7px}
+.ft-links a{color:var(--text-secondary);text-decoration:none;font-size:13px;font-weight:500;transition:color .15s}
+.ft-links a:hover{color:var(--accent-light)}
+.ft-bottom{border-top:1px solid var(--border);padding-top:20px;text-align:center;font-size:12px;color:var(--muted)}
+@media(max-width:600px){.ft-grid{grid-template-columns:1fr 1fr}}
 
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
@@ -503,48 +524,175 @@ footer a:hover{text-decoration:underline}
   .app-nav-item svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; }
   .app-nav-item.active svg { fill: #0f172a; stroke: none; }
   
-  footer { display: none; }
+  footer {
+    display: block;
+    padding: 28px 20px calc(90px + env(safe-area-inset-bottom));
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+  }
+  .ft-grid { grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-bottom: 20px; }
+  .ft-col-title { font-size: 9px; color: #94a3b8; margin-bottom: 8px; }
+  .ft-links a { font-size: 12px; color: #475569; }
+  .ft-bottom { font-size: 11px; padding-top: 16px; }
   .fb-btn { bottom: 85px; right: 16px; transform: scale(0.85); }
 }
 @media (min-width: 769px) { .app-nav { display: none; } }
+@media print{footer,.page-footer{display:none!important}}
 </style>
-
+<style>
+/* ── RIBBON (tools page) ── */
+.r-topbar{height:52px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;position:sticky;top:0;z-index:200;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.r-logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--text);flex-shrink:0}
+.r-logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(37,99,235,.3)}
+.r-logo-icon svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.r-logo-name{font-size:14px;font-weight:800;letter-spacing:-.3px;line-height:1.1}
+.r-logo-sub{font-size:10px;color:var(--muted);font-weight:500}
+.r-search-wrap{flex:1;max-width:340px;position:relative}
+.r-search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.r-search-wrap input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 12px 7px 32px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:.2s}
+.r-search-wrap input:focus{border-color:var(--accent)}
+.r-search-wrap input::placeholder{color:var(--muted)}
+.r-actions{display:flex;align-items:center;gap:6px;margin-left:auto}
+.r-icobtn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:.15s}
+.r-icobtn:hover{border-color:var(--accent);color:var(--accent)}
+.r-avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer;border:2px solid var(--border);flex-shrink:0}
+.r-tabs{height:36px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:flex-end;padding:0 16px;overflow-x:auto;scrollbar-width:none;position:sticky;top:52px;z-index:190}
+.r-tabs::-webkit-scrollbar{display:none}
+.r-tab{font-size:12px;font-weight:600;padding:0 14px;height:35px;border:none;background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;gap:5px;text-decoration:none;font-family:'Inter',sans-serif}
+.r-tab:hover{color:var(--accent)}
+.r-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.r-tab svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.r-strip{height:46px;background:var(--surface);border-bottom:2px solid var(--border);display:flex;align-items:center;padding:0 16px;overflow-x:auto;scrollbar-width:none;position:sticky;top:88px;z-index:180;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.r-strip::-webkit-scrollbar{display:none}
+.r-grp{display:flex;align-items:center;gap:1px;padding:0 8px;position:relative}
+.r-grp:not(:last-child)::after{content:'';position:absolute;right:0;top:4px;bottom:4px;width:1px;background:var(--border)}
+.r-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:3px 7px;border-radius:6px;border:none;background:transparent;cursor:pointer;color:var(--muted);transition:.15s;font-size:10px;font-weight:600;line-height:1;white-space:nowrap;min-width:42px;text-decoration:none;font-family:'Inter',sans-serif}
+.r-btn:hover{background:rgba(37,99,235,.07);color:var(--accent)}
+.r-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.r-btn-hl{background:var(--accent);color:#fff}
+.r-btn-hl:hover{background:#1D4ED8;color:#fff}
+.r-hamburger{display:none;width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--card);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.r-hamburger svg{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round}
+.r-bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:8px 12px calc(8px + env(safe-area-inset-bottom));justify-content:space-around;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.06)}
+.r-bnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--muted);font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 6px;border-radius:8px;min-width:50px}
+.r-bnav-item.active{color:var(--accent)}
+.r-bnav-item svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.r-drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;backdrop-filter:blur(4px)}
+.r-drawer-overlay.open{display:block}
+.r-drawer{position:fixed;top:0;left:0;bottom:0;width:280px;background:var(--surface);z-index:301;transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 24px rgba(0,0,0,.2);display:flex;flex-direction:column}
+.r-drawer.open{transform:translateX(0)}
+.r-drawer-hd{padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.r-drawer-close{margin-left:auto;width:28px;height:28px;border:1px solid var(--border);border-radius:6px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted)}
+.r-drawer-close svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.r-drawer-nav{flex:1;overflow-y:auto;padding:10px 8px}
+.r-drawer-sec{font-size:9px;font-weight:700;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;padding:12px 10px 6px}
+.r-drawer-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;transition:.15s}
+.r-drawer-link:hover,.r-drawer-link.active{background:rgba(37,99,235,.07);color:var(--accent)}
+.r-drawer-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+@media(max-width:768px){.r-strip,.r-tabs{display:none}.r-hamburger{display:flex}.r-search-wrap{max-width:none;flex:1}.r-bnav{display:flex}}
+</style>
 </head>
 <body>
 
-<!-- ── NAV ── -->
-<nav>
-  <a href="https://legalhashchecksum.com/" class="nav-brand">
-    <div class="nav-logo">
-      <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg>
-    </div>
-    <span class="nav-name">Legal Tools India</span>
+<!-- ═══ RIBBON TOP BAR ═══ -->
+<header class="r-topbar">
+  <button class="r-hamburger" onclick="rOpenDrawer()" aria-label="Menu"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  <a href="/" class="r-logo">
+    <div class="r-logo-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <div><div class="r-logo-name">LegalHash</div><div class="r-logo-sub">Checksum.com</div></div>
   </a>
-  <div class="nav-right">
-    <span class="nav-pill">14 Live</span>
-    <a href="https://legalhashchecksum.com/" class="nav-link">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      Hash Tool
-    </a>
-    <a href="https://legalhashchecksum.com/judgments" class="nav-link">
-      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-      Judgments
-    </a>
-    <a href="https://legalhashchecksum.com/tools" class="nav-link" style="background:var(--accent);color:#fff;border-color:var(--accent)">
-      All Tools
-    </a>
+  <div class="r-search-wrap">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" placeholder="Search tools, acts, sections…" id="toolSearchInput" oninput="filterTools(this.value)">
   </div>
+  <div class="r-actions">
+    <div class="r-avatar">UA</div>
+  </div>
+</header>
+
+<!-- ═══ RIBBON TABS ═══ -->
+<nav class="r-tabs">
+  <a href="/hash" class="r-tab"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>Hash Tool</a>
+  <a href="/cases" class="r-tab"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Cases</a>
+  <a href="/legal-qa" class="r-tab"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Q&amp;A</a>
+  <a href="/tools" class="r-tab active"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>All Tools</a>
+  <a href="/judgments" class="r-tab"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Documents</a>
+  <a href="/profile" class="r-tab"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
 </nav>
+
+<!-- ═══ RIBBON STRIP ═══ -->
+<div class="r-strip">
+  <div class="r-grp">
+    <a href="/bail-bond" class="r-btn r-btn-hl"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Bail Bond</a>
+    <a href="/legal-notice" class="r-btn r-btn-hl"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Legal Notice</a>
+  </div>
+  <div class="r-grp">
+    <a href="/law-converter" class="r-btn"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>IPC→BNS</a>
+    <a href="/bns-lookup" class="r-btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>BNS Lookup</a>
+    <a href="/court-fee" class="r-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Court Fee</a>
+    <a href="/limitation-calculator" class="r-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Limitation</a>
+    <a href="/vakalatnama" class="r-btn"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Vakalatnama</a>
+  </div>
+  <div class="r-grp">
+    <a href="/hash" class="r-btn"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>Hash Tool</a>
+    <a href="/legal-qa" class="r-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Q&amp;A</a>
+  </div>
+</div>
+
+<!-- ═══ DRAWER ═══ -->
+<div class="r-drawer-overlay" id="rDrawerOverlay" onclick="rCloseDrawer()"></div>
+<div class="r-drawer" id="rDrawer">
+  <div class="r-drawer-hd">
+    <div class="r-logo-icon" style="width:28px;height:28px"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <span style="font-size:13px;font-weight:800">Legal Tools India</span>
+    <button class="r-drawer-close" onclick="rCloseDrawer()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <nav class="r-drawer-nav">
+    <div class="r-drawer-sec">Main</div>
+    <a href="/hash" class="r-drawer-link"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>Hash Tool</a>
+    <a href="/cases" class="r-drawer-link"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Cases Docket</a>
+    <a href="/legal-qa" class="r-drawer-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Legal Q&amp;A</a>
+    <a href="/tools" class="r-drawer-link active"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>All Tools</a>
+    <div class="r-drawer-sec">Legal Tools</div>
+    <a href="/bail-bond" class="r-drawer-link"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Bail Bond Generator</a>
+    <a href="/legal-notice" class="r-drawer-link"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Legal Notice</a>
+    <a href="/vakalatnama" class="r-drawer-link"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Vakalatnama</a>
+    <a href="/court-fee" class="r-drawer-link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Court Fee Calculator</a>
+    <a href="/law-converter" class="r-drawer-link"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>IPC → BNS Converter</a>
+    <a href="/limitation-calculator" class="r-drawer-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Limitation Calculator</a>
+    <a href="/bns-lookup" class="r-drawer-link"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>BNS Section Lookup</a>
+  </nav>
+</div>
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav class="r-bnav">
+  <a href="/" class="r-bnav-item"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>Hash</a>
+  <a href="/cases" class="r-bnav-item"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Cases</a>
+  <a href="/legal-qa" class="r-bnav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Q&amp;A</a>
+  <a href="/tools" class="r-bnav-item active"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Tools</a>
+  <a href="/profile" class="r-bnav-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+</nav>
+<script>
+function rOpenDrawer(){document.getElementById('rDrawer').classList.add('open');document.getElementById('rDrawerOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function rCloseDrawer(){document.getElementById('rDrawer').classList.remove('open');document.getElementById('rDrawerOverlay').classList.remove('open');document.body.style.overflow='';}
+function filterTools(val){
+  var q=val.toLowerCase().trim();
+  document.querySelectorAll('.tool-card,[data-tool]').forEach(function(card){
+    var txt=(card.textContent||'').toLowerCase();
+    card.style.display=(!q||txt.includes(q))?'':'none';
+  });
+}
+</script>
 <main>
 
 <!-- ── HERO ── -->
 <div class="hero">
   <div class="hero-eyebrow">
     <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    Free for Indian Advocates
+    For Advocates, Barristers and Lawyers
   </div>
   <h1>Every tool your<br><em>practice needs</em></h1>
-  <p class="hero-desc">Draft documents, lookup sections, calculate fees — professional tools built for Indian courts. No login. No data sent to any server.</p>
+  <p class="hero-desc">Draft documents, lookup sections, calculate fees — professional tools built for Indian courts. No data sent to any server.</p>
   <div class="search-wrap">
     <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     <input type="text" id="desktopSearch" placeholder="Search tools — bail bond, BNS, limitation..." autocomplete="off" oninput="filterTools(this.value)">
@@ -555,7 +703,7 @@ footer a:hover{text-decoration:underline}
   </div>
   <div class="stat-strip">
     <div class="stat-item"><div class="stat-n">14</div><div class="stat-l">Live tools</div></div>
-    <div class="stat-item"><div class="stat-n">100%</div><div class="stat-l">Free & private</div></div>
+    <div class="stat-item"><div class="stat-n">100%</div><div class="stat-l">Private & secure</div></div>
     <div class="stat-item"><div class="stat-n">BNS</div><div class="stat-l">2023 updated</div></div>
     <div class="stat-item"><div class="stat-n">0</div><div class="stat-l">Data collected</div></div>
   </div>
@@ -756,7 +904,7 @@ footer a:hover{text-decoration:underline}
 </div>
 </div>
 
-    <a aria-label="Legal Hash Checksum" class="tool-card" data-cat="evidence" href="/">
+    <a aria-label="Legal Hash Checksum" class="tool-card" data-cat="evidence" href="/hash">
 <div class="card-head">
 <div class="card-icon" style="background:rgba(96,165,250,.1)">
 <svg style="stroke:#60a5fa" viewbox="0 0 24 24"><rect height="12" rx="2" width="20" x="2" y="6"></rect><path d="M6 10h.01M6 14h.01M10 10h4M10 14h4"></path></svg>
@@ -825,8 +973,36 @@ footer a:hover{text-decoration:underline}
 
 </main>
 <footer>
-  <p>Built for Indian advocates · All tools are free &amp; private · No data is sent to any server</p>
-  <p style="margin-top:6px"><a href="https://legalhashchecksum.com/">legalhashchecksum.com</a></p>
+  <div class="ft-inner">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-col-title">App</div>
+        <div class="ft-links">
+          <a href="/dashboard">Dashboard</a>
+          <a href="/download">Install app</a>
+          <a href="/cases">Cases</a>
+          <a href="/billing">Billing</a>
+          <a href="/tools">All Tools</a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-title">Explore</div>
+        <div class="ft-links">
+          <a href="/judgments">Judgments</a>
+          <a href="/pricing">Pricing</a>
+          <a href="/pricing">View plans</a>
+          <a href="/contact">Contact &amp; Support</a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-title">Legal</div>
+        <div class="ft-links">
+          <a href="/privacy-policy">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bottom">© 2024–2026 legalhashchecksum.com · Built for Indian advocates · All tools run locally in your browser</div>
+  </div>
 </footer>
 
 <!-- Feedback button -->
@@ -862,7 +1038,46 @@ footer a:hover{text-decoration:underline}
   </div>
 </div>
 
+<div id="navProgress"></div>
+
 <script>
+/* ── NAV PROGRESS BAR ── */
+(function(){
+  var bar=document.getElementById('navProgress');
+  var _w=0,_iv=null;
+  function startProgress(){
+    if(!bar)return;
+    _w=0;bar.style.width='0%';bar.classList.add('loading');
+    // sprint to 70% quickly, then crawl to 90%
+    _iv=setInterval(function(){
+      _w+=(_w<70?5:_w<90?0.8:0.1);
+      if(_w>94)_w=94;
+      bar.style.width=_w+'%';
+    },80);
+  }
+  function finishProgress(){
+    clearInterval(_iv);
+    bar.style.width='100%';
+    setTimeout(function(){bar.classList.remove('loading');bar.style.width='0%';},350);
+  }
+  // fire on every tool-card click
+  document.addEventListener('click',function(e){
+    var card=e.target.closest('.tool-card');
+    if(!card)return;
+    var href=card.getAttribute('href');
+    if(!href||href.startsWith('#'))return;
+    // ripple effect on card
+    var r=document.createElement('span');
+    r.className='nav-ripple';
+    card.appendChild(r);
+    setTimeout(function(){if(r.parentNode)r.parentNode.removeChild(r);},600);
+    startProgress();
+  });
+  // complete when page starts unloading
+  window.addEventListener('pagehide',finishProgress);
+  window.addEventListener('beforeunload',finishProgress);
+})();
+
 /* ── CATEGORY FILTER ── */
 function filterCat(cat, btn){
   // clear search box

@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Syntax check
+    name: Application startup check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,8 +17,8 @@ jobs:
           python-version: "3.11"
       - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: Syntax check
-        run: python3 -m py_compile main.py && echo "Syntax OK"
+      - name: Application startup check
+        run: python3 -m py_compile main.py && python3 -c 'import main'
 
   deploy:
     name: Deploy to VPS

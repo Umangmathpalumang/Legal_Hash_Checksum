@@ -48,6 +48,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .computed-row span:last-child{word-break:break-all;color:var(--tx)}
 .back-link{display:inline-block;margin-top:1rem;font-size:13px;color:var(--ac);text-decoration:none}
 .back-link:hover{text-decoration:underline}
+@media print{footer,.page-footer{display:none!important}}
 </style>
 </head>
 <body>
@@ -227,9 +228,24 @@ function verifyHash() {
   resEl.className = 'vresult ' + (match ? 'ok' : 'er');
   if(typeof gaEvent!=='undefined') gaEvent('hash_verified', {tool:'verify', result: match ? 'match' : 'mismatch'});
   resEl.innerHTML = match 
-    ? '✓ MATCH CONFIRMED — Unaltered Evidence<br><span style="font-size:11px;opacity:0.8">Computed cryptographic hash matches certificate record perfectly.</span>' 
+    ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px;color:var(--ok)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>MATCH CONFIRMED — Unaltered Evidence<br><span style="font-size:11px;opacity:0.8">Computed cryptographic hash matches certificate record perfectly.</span>'
     : '✕ MISMATCH DETECTED — Integrity Compromised<br><span style="font-size:11px;opacity:0.8">The file contents do not match the expected hash.</span>';
 }
 </script>
+
+<footer style="margin-top:40px;padding:18px 24px 24px;border-top:1px solid #E4E9F0;font-size:11px;color:#94A3B8;text-align:center">
+  <div style="display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;justify-content:center;margin-bottom:6px">
+    <a href="/dashboard" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Dashboard</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/tools" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">All Tools</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/pricing" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Pricing</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/contact" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Contact</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/privacy-policy" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Privacy Policy</a>
+      </div>
+  <div>© 2024–2026 legalhashchecksum.com</div>
+</footer>
 </body>
 </html>

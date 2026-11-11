@@ -17,7 +17,7 @@
 <meta name="description" content="Convert Indian Evidence Act (IEA) sections to Bharatiya Sakshya Adhiniyam (BSA) 2023. Also convert IPC to BNS and CrPC to BNSS. Full section mapping with key changes. Free.">
 <meta name="keywords" content="IEA to BSA converter, Indian Evidence Act to BSA, IPC to BNS converter, CrPC to BNSS, Bharatiya Sakshya Adhiniyam sections, BSA 2023 sections, law converter India, old law to new law India, criminal law reform India 2023">
 <meta property="og:title" content="IEA to BSA Law Converter — IPC to BNS & CrPC to BNSS Free">
-<meta property="og:description" content="Convert IEA to BSA, IPC to BNS, CrPC to BNSS instantly. Full section mapping. Free for Indian advocates.">
+<meta property="og:description" content="Convert IEA to BSA, IPC to BNS, CrPC to BNSS instantly. Full section mapping. For advocates, barristers and lawyers.">
 <meta property="og:url" content="https://legalhashchecksum.com/law-converter">
 <meta property="og:type" content="website">
 <meta name="robots" content="index, follow">
@@ -149,6 +149,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
   .stats-bar{gap:4px}
   .stat-item{border-radius:8px!important}
 }
+@media print{footer,.page-footer{display:none!important}}
 </style>
 </head>
 <body>
@@ -372,14 +373,14 @@ function emptyHTML(){
 
 function changeBox(r){
   if(!r.change)return'';
-  const icons={change:'⚡',new:'✨',removed:'🚫',same:'✅'};
+  const icons={change:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>',new:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',removed:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>',same:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'};
   const cls={change:'type-change',new:'type-new',removed:'type-removed',same:'type-same'};
-  return`<div class="change-box ${cls[r.type]||'type-change'}"><span class="change-icon">${icons[r.type]||'⚡'}</span>${r.change}</div>`;
+  return`<div class="change-box ${cls[r.type]||'type-change'}"><span class="change-icon">${icons[r.type]||'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>'}</span>${r.change}</div>`;
 }
 
 function practicalBox(r){
   if(!r.practical)return'';
-  return`<div class="practical"><strong>💼 Practical note:</strong> ${r.practical}</div>`;
+  return`<div class="practical"><strong><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Practical note:</strong> ${r.practical}</div>`;
 }
 
 function tagHTML(tags){
@@ -567,5 +568,20 @@ document.addEventListener('DOMContentLoaded',function(){
 })();
 </script>
 <!-- ── End Feedback Widget ── -->
+
+<footer style="margin-top:40px;padding:18px 24px 24px;border-top:1px solid #E4E9F0;font-size:11px;color:#94A3B8;text-align:center">
+  <div style="display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;justify-content:center;margin-bottom:6px">
+    <a href="/dashboard" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Dashboard</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/tools" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">All Tools</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/pricing" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Pricing</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/contact" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Contact</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/privacy-policy" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Privacy Policy</a>
+      </div>
+  <div>© 2024–2026 legalhashchecksum.com</div>
+</footer>
 </body>
 </html>

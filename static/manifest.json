@@ -1,0 +1,62 @@
+{
+  "name": "LegalHashChecksum Pro",
+  "short_name": "LHC Pro",
+  "description": "Private practice management for lawyers, advocates & barristers — BSA §63 hash verification, case docket, time & billing.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "theme_color": "#1D4ED8",
+  "background_color": "#F4F6FA",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": ["productivity", "business"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dash",
+      "url": "/dashboard",
+      "description": "Practice hub — cases, timer, hearings"
+    },
+    {
+      "name": "Cases",
+      "short_name": "Cases",
+      "url": "/cases",
+      "description": "Case docket & notes"
+    },
+    {
+      "name": "Billing",
+      "short_name": "Billing",
+      "url": "/billing",
+      "description": "Time tracking & invoices"
+    },
+    {
+      "name": "Hash Evidence",
+      "short_name": "Hash",
+      "url": "/hash",
+      "description": "BSA §63 compliant file hashing"
+    }
+  ],
+  "screenshots": []
+}

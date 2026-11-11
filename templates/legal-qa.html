@@ -1,370 +1,1274 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Legal Q&A — Ask Indian Law Questions</title>
-<meta name="description" content="Ask any legal question. Get answers from verified Indian advocates. Free community Q&A platform.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>%23</text></svg>">
+<title>Legal Q&amp;A — Ask Indian Law Questions | LegalHashChecksum</title>
+<meta name="description" content="Ask any legal question and get answers from verified Indian advocates. Free community Q&amp;A platform covering BSA 2023, BNS, BNSS and Indian law.">
+<link rel="canonical" href="https://legalhashchecksum.com/legal-qa">
+<meta property="og:title" content="Legal Q&amp;A — Ask Indian Law Questions">
+<meta property="og:description" content="Free community Q&amp;A platform. Ask legal questions, get answers from verified advocates.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://legalhashchecksum.com/legal-qa">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0d1117;--s1:#161b22;--s2:#1c2128;--bd:#30363d;--bd2:#3d444d;
-  --tx:#e6edf3;--tx2:#8b949e;--tx3:#656d76;
-  --ac:#2563EB;--acl:#60a5fa;--ac2:#1d4ed8;
-  --ok:#10B981;--er:#f87171;--am:#fbbf24;
-  --r:12px;--sans:'Inter',system-ui,sans-serif;--serif:'EB Garamond',Georgia,serif;
-}
-body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh;line-height:1.6}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
-/* ── NAV ── */
-nav{display:flex;align-items:center;justify-content:space-between;padding:13px 24px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:rgba(13,17,23,.95);backdrop-filter:blur(12px);z-index:100}
-.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
-.nav-logo{width:34px;height:34px;background:linear-gradient(135deg,var(--ac),var(--acl));border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(37,99,235,.4)}
-.nav-logo svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.nav-title{font-size:14px;font-weight:700;letter-spacing:-.2px}
-.nav-links{display:flex;gap:6px}
-.nav-link{font-size:12px;color:var(--tx2);text-decoration:none;padding:6px 12px;border:1px solid var(--bd);border-radius:8px;transition:.2s;font-weight:500}
-.nav-link:hover{border-color:var(--ac);color:var(--acl)}
-
-/* ── HERO ── */
-.hero{background:linear-gradient(180deg,rgba(37,99,235,.06) 0%,transparent 100%);border-bottom:1px solid var(--bd);padding:48px 24px 36px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(37,99,235,.08),transparent);pointer-events:none}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acl);background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.25);border-radius:20px;padding:4px 12px;margin-bottom:16px}
-.hero-eyebrow svg{width:10px;height:10px;fill:var(--acl)}
-.hero h1{font-size:clamp(22px,4vw,34px);font-weight:800;margin-bottom:10px;letter-spacing:-.5px;line-height:1.2}
-.hero h1 span{background:linear-gradient(90deg,var(--acl),var(--ok));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{color:var(--tx2);font-size:15px;max-width:460px;margin:0 auto 24px;line-height:1.7}
-.badge-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.badge{font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid;display:inline-flex;align-items:center;gap:5px}
-.badge svg{width:10px;height:10px}
-.badge-blue{border-color:rgba(96,165,250,.3);background:rgba(96,165,250,.08);color:var(--acl)}
-.badge-green{border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08);color:var(--ok)}
-.badge-amber{border-color:rgba(251,191,36,.3);background:rgba(251,191,36,.08);color:var(--am)}
-
-/* ── LAYOUT ── */
-.main{max-width:780px;margin:0 auto;padding:28px 16px 60px}
-
-/* ── ASK CARD ── */
-.ask-card{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:24px;margin-bottom:28px;position:relative;overflow:hidden}
-.ask-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ac),var(--acl),var(--ok))}
-.ask-title{font-size:15px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:8px;color:var(--tx)}
-.ask-title svg{width:18px;height:18px;stroke:var(--acl);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.field{margin-bottom:14px}
-.field label{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);margin-bottom:5px}
-.field input,.field textarea,.field select{
-  width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:10px;
-  padding:10px 13px;font-size:13px;color:var(--tx);font-family:var(--sans);
-  outline:none;transition:border-color .2s,box-shadow .2s;
-}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
-.field textarea{resize:vertical;min-height:96px;line-height:1.65}
-.field select option{background:var(--s2)}
-.field input::placeholder,.field textarea::placeholder{color:var(--tx3)}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:520px){.two-col{grid-template-columns:1fr}}
-.anon-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:11px 13px;background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.15);border-radius:10px}
-.anon-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--ac);cursor:pointer;flex-shrink:0}
-.anon-row label{font-size:13px;color:var(--tx2);cursor:pointer;line-height:1.4}
-.btn-submit{width:100%;padding:12px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s;letter-spacing:.01em;box-shadow:0 2px 12px rgba(37,99,235,.3)}
-.btn-submit:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,.4)}
-.btn-submit:active{transform:translateY(0)}
-.btn-submit svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-
-/* ── SEARCH + FILTERS ── */
-.search-filter-wrap{margin-bottom:20px}
-.search-wrap{margin-bottom:12px}
-.search-inner{position:relative}
-.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--tx3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-.search-box{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:10px 13px 10px 40px;font-size:13px;color:var(--tx);font-family:var(--sans);outline:none;transition:border-color .2s,box-shadow .2s}
-.search-box:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.search-box::placeholder{color:var(--tx3)}
-.filter-bar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.filter-btn{font-size:12px;padding:5px 13px;border-radius:20px;border:1px solid var(--bd);background:transparent;color:var(--tx2);cursor:pointer;transition:.2s;white-space:nowrap;font-weight:500}
-.filter-btn.active{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
-.filter-btn:hover:not(.active){border-color:var(--acl);color:var(--acl)}
-.q-count{font-size:11px;color:var(--tx3);margin-left:auto;font-weight:500}
-
-/* ── QUESTION CARDS ── */
-.q-card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:18px 20px;margin-bottom:10px;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .15s}
-.q-card:hover{border-color:var(--bd2);box-shadow:0 2px 12px rgba(0,0,0,.2);transform:translateY(-1px)}
-.q-card.open{border-color:var(--acl);box-shadow:0 0 0 1px rgba(96,165,250,.2)}
-.q-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-.q-cat{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:12px;background:rgba(37,99,235,.1);color:var(--acl);border:1px solid rgba(37,99,235,.2)}
-.q-asker{font-size:11px;color:var(--tx3);display:flex;align-items:center;gap:4px}
-.q-asker svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.q-time{font-size:11px;color:var(--tx3);margin-left:auto}
-.q-text{font-family:var(--serif);font-size:15pt;line-height:1.5;margin-bottom:12px;color:var(--tx);font-weight:400}
-.q-footer{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.ans-count{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;display:inline-flex;align-items:center;gap:4px}
-.ans-count svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.ans-count.has-ans{background:rgba(16,185,129,.1);color:var(--ok);border:1px solid rgba(16,185,129,.2)}
-.ans-count.no-ans{background:rgba(251,191,36,.08);color:var(--am);border:1px solid rgba(251,191,36,.2)}
-.q-stat{font-size:11px;color:var(--tx3);display:flex;align-items:center;gap:4px}
-.q-stat svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.wa-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid rgba(37,211,102,.25);background:rgba(37,211,102,.06);color:#25D366;cursor:pointer;text-decoration:none;transition:.2s;margin-left:auto;font-weight:600}
-.wa-btn:hover{background:rgba(37,211,102,.15)}
-.wa-btn svg{width:12px;height:12px;fill:none;stroke:#25D366;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* ── ANSWERS ── */
-.answers-wrap{display:none;margin-top:18px;border-top:1px solid var(--bd);padding-top:18px}
-.q-card.open .answers-wrap{display:block}
-.answer-card{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:10px;position:relative}
-.answer-card::before{content:'';position:absolute;left:0;top:12px;bottom:12px;width:3px;background:linear-gradient(180deg,var(--ok),rgba(16,185,129,.2));border-radius:0 2px 2px 0}
-.ans-adv{font-size:12px;font-weight:700;color:var(--acl);display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
-.ans-adv svg{width:13px;height:13px;stroke:var(--ok);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.ans-adv .enroll{font-size:10px;font-weight:400;color:var(--tx3)}
-.ans-text{font-family:var(--serif);font-size:13pt;line-height:1.7;color:var(--tx)}
-.ans-time{font-size:10px;color:var(--tx3);margin-top:8px}
-.upvote-btn{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:5px 12px;border-radius:8px;border:1px solid var(--bd);background:transparent;color:var(--tx2);cursor:pointer;margin-top:10px;transition:.2s;font-weight:500}
-.upvote-btn:hover{border-color:var(--ok);color:var(--ok);background:rgba(16,185,129,.05)}
-.upvote-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* ── ANSWER FORM ── */
-.ans-form{margin-top:16px;background:rgba(37,99,235,.04);border:1px solid rgba(37,99,235,.15);border-radius:12px;padding:16px}
-.ans-form-title{font-size:12px;font-weight:700;color:var(--acl);margin-bottom:14px;display:flex;align-items:center;gap:6px}
-.ans-form-title svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ans-form input,.ans-form textarea{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:9px 12px;font-size:13px;color:var(--tx);font-family:var(--sans);outline:none;margin-bottom:8px;transition:border-color .2s}
-.ans-form input:focus,.ans-form textarea:focus{border-color:var(--ac)}
-.ans-form input::placeholder{color:var(--tx3)}
-.ans-form textarea{font-family:var(--serif);font-size:12pt;resize:vertical;min-height:90px;line-height:1.65}
-.ans-form textarea::placeholder{font-family:var(--sans);font-size:13px}
-.ans-form .two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-@media(max-width:520px){.ans-form .two-col{grid-template-columns:1fr}}
-.btn-ans{padding:9px 20px;background:var(--ac);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.2s}
-.btn-ans:hover{background:var(--ac2);transform:translateY(-1px)}
-.btn-ans svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-
-/* ── EMPTY STATE ── */
-.empty{text-align:center;padding:48px 16px;color:var(--tx2)}
-.empty-icon{width:56px;height:56px;background:var(--s1);border:1px solid var(--bd);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
-.empty-icon svg{width:28px;height:28px;stroke:var(--tx3);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.empty h3{font-size:15px;font-weight:700;margin-bottom:6px}
-.empty p{font-size:13px;color:var(--tx3)}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ok);color:#fff;font-size:13px;font-weight:600;padding:11px 22px;border-radius:12px;z-index:999;display:flex;align-items:center;gap:8px;box-shadow:0 4px 24px rgba(0,0,0,.4);transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .3s;opacity:0;pointer-events:none}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-.toast.err{background:var(--er)}
-.toast svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-
-/* ── MOBILE ── */
-@media(max-width:600px){
-  .hero{padding:32px 16px 24px}
-  .ask-card{padding:16px}
-  .q-card{padding:14px 16px}
-  .q-text{font-size:13pt}
-}
-</style>
+<!-- Google Search Console fix: answerCount added to every Question entity -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "QAPage",
-  "name": "Legal Q\u0026A — Ask Indian Law Questions",
+  "name": "Legal Q&A — Ask Indian Law Questions",
   "url": "https://legalhashchecksum.com/legal-qa",
-  "description": "Ask any legal question and get answers from verified Indian advocates. Free community Q\u0026A platform.",
+  "description": "Ask any legal question and get answers from verified Indian advocates. Free community Q&A platform.",
   "mainEntity": [
     {
       "@type": "Question",
       "name": "Is electronic evidence valid under BSA 2023 in Indian courts?",
+      "answerCount": 1,
+      "upvoteCount": 12,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Under Section 63 of the Bharatiya Sakshya Adhiniyam 2023 (BSA), electronic records are admissible if accompanied by a certificate meeting the prescribed requirements. Hash verification using SHA-256 is the accepted method to prove integrity of digital files."
+        "text": "Yes. Under Section 63 of the Bharatiya Sakshya Adhiniyam 2023 (BSA), electronic records are admissible if accompanied by a certificate meeting the prescribed requirements. Hash verification using SHA-256 is the accepted method to prove integrity of digital files.",
+        "upvoteCount": 12,
+        "author": {"@type": "Person", "name": "Verified Advocate"}
       }
     },
     {
       "@type": "Question",
       "name": "What is the limitation period for a cheque bounce case under Section 138 NI Act?",
+      "answerCount": 1,
+      "upvoteCount": 8,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Under Section 138 of the Negotiable Instruments Act 1881, a complaint must be filed within one month of the cause of action arising — which is the date of expiry of the 15-day notice period given to the drawer after dishonour."
+        "text": "Under Section 138 of the Negotiable Instruments Act 1881, a complaint must be filed within one month of the cause of action arising — which is the date of expiry of the 15-day notice period given to the drawer after dishonour.",
+        "upvoteCount": 8,
+        "author": {"@type": "Person", "name": "Verified Advocate"}
       }
     },
     {
       "@type": "Question",
       "name": "How do I convert IPC sections to BNS sections?",
+      "answerCount": 1,
+      "upvoteCount": 15,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The Bharatiya Nyaya Sanhita 2023 (BNS) replaced the Indian Penal Code 1860 (IPC) from July 1 2024. Most IPC sections have corresponding BNS sections with renumbered provisions. Use the IPC to BNS converter tool at legalhashchecksum.com/law-converter to find the equivalent section instantly."
+        "text": "The Bharatiya Nyaya Sanhita 2023 (BNS) replaced the Indian Penal Code 1860 (IPC) from July 1 2024. Most IPC sections have corresponding BNS sections with renumbered provisions. Use the IPC to BNS converter tool at legalhashchecksum.com/law-converter to find the equivalent section instantly.",
+        "upvoteCount": 15,
+        "author": {"@type": "Person", "name": "Verified Advocate"}
       }
     },
     {
       "@type": "Question",
       "name": "What court fee is payable on a plaint for recovery of money in civil court?",
+      "answerCount": 1,
+      "upvoteCount": 6,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Court fee on money recovery suits varies by state and suit value. It is calculated under the Court Fees Act 1870 or the relevant state Court Fees Act. Use the Court Fee Calculator at legalhashchecksum.com/court-fee to calculate the exact fee for your state and suit type."
+        "text": "Court fee on money recovery suits varies by state and suit value. It is calculated under the Court Fees Act 1870 or the relevant state Court Fees Act. Use the Court Fee Calculator at legalhashchecksum.com/court-fee to calculate the exact fee for your state and suit type.",
+        "upvoteCount": 6,
+        "author": {"@type": "Person", "name": "Verified Advocate"}
       }
     }
   ]
 }
 </script>
+
+<style>
+/* ══════════════════════════════════════════════
+   DESIGN TOKENS — light default, dark override
+══════════════════════════════════════════════ */
+:root {
+  --bg:       #F0F4F8;
+  --surface:  #FFFFFF;
+  --surface2: #F8FAFC;
+  --bd:       #E2E8F0;
+  --bd2:      #CBD5E1;
+  --tx:       #0F172A;
+  --tx2:      #475569;
+  --tx3:      #94A3B8;
+  --ac:       #2563EB;
+  --ac2:      #1D4ED8;
+  --acl:      #3B82F6;
+  --acs:      #EFF6FF;
+  --ok:       #059669;
+  --oks:      #ECFDF5;
+  --er:       #DC2626;
+  --ers:      #FEF2F2;
+  --am:       #D97706;
+  --ams:      #FFFBEB;
+  --pu:       #7C3AED;
+  --pu-s:     #F5F3FF;
+
+  --ribbon-h: 48px;
+  --top-h:    56px;
+  --tab-h:    38px;
+  --sans: 'Inter', system-ui, sans-serif;
+  --serif: 'EB Garamond', Georgia, serif;
+  --r: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.10);
+}
+[data-theme="dark"] {
+  --bg:       #0D1117;
+  --surface:  #161B22;
+  --surface2: #1C2128;
+  --bd:       #30363D;
+  --bd2:      #3D444D;
+  --tx:       #E6EDF3;
+  --tx2:      #8B949E;
+  --tx3:      #656D76;
+  --ac:       #3B82F6;
+  --ac2:      #2563EB;
+  --acl:      #60A5FA;
+  --acs:      rgba(59,130,246,.1);
+  --ok:       #10B981;
+  --oks:      rgba(16,185,129,.1);
+  --er:       #F87171;
+  --ers:      rgba(248,113,113,.1);
+  --am:       #FBBF24;
+  --ams:      rgba(251,191,36,.1);
+  --pu:       #A78BFA;
+  --pu-s:     rgba(167,139,250,.1);
+  --shadow: 0 1px 3px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.4);
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0 }
+html { scroll-behavior: smooth }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--tx);
+  min-height: 100vh;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* ══════════════════════════════════
+   TOP HEADER BAR (like CaseFox)
+══════════════════════════════════ */
+.top-bar {
+  height: var(--top-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--bd);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: var(--shadow);
+}
+.top-logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  color: var(--tx);
+  flex-shrink: 0;
+}
+.top-logo-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--ac), var(--acl));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(37,99,235,.3);
+}
+.top-logo-icon svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round }
+.top-logo-text { font-size: 14px; font-weight: 800; letter-spacing: -.3px; line-height: 1.1 }
+.top-logo-sub { font-size: 10px; font-weight: 500; color: var(--tx3); letter-spacing: .02em }
+.top-search {
+  flex: 1;
+  max-width: 360px;
+  position: relative;
+}
+.top-search-icon {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  width: 14px; height: 14px;
+  stroke: var(--tx3); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  pointer-events: none;
+}
+.top-search input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  padding: 7px 12px 7px 32px;
+  font-size: 13px;
+  color: var(--tx);
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color .2s;
+}
+.top-search input:focus { border-color: var(--ac) }
+.top-search input::placeholder { color: var(--tx3) }
+.top-actions { display: flex; align-items: center; gap: 6px; margin-left: auto }
+.icon-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--bd);
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--tx2);
+  transition: .15s;
+  position: relative;
+}
+.icon-btn:hover { background: var(--acs); border-color: var(--acl); color: var(--ac) }
+.icon-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round }
+.badge-dot {
+  position: absolute; top: 4px; right: 4px;
+  width: 7px; height: 7px;
+  border-radius: 50%; background: var(--er);
+  border: 1.5px solid var(--surface);
+}
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--ac), var(--acl));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #fff;
+  cursor: pointer; flex-shrink: 0;
+  border: 2px solid var(--bd);
+}
+.top-hamburger {
+  display: none;
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid var(--bd); background: var(--surface2);
+  align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.top-hamburger svg { width: 18px; height: 18px; stroke: var(--tx2); fill: none; stroke-width: 2; stroke-linecap: round }
+
+/* ══════════════════════════════════
+   RIBBON TABS (Word-style)
+══════════════════════════════════ */
+.ribbon-tabs {
+  height: var(--tab-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--bd);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 16px;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: sticky;
+  top: var(--top-h);
+  z-index: 190;
+}
+.ribbon-tabs::-webkit-scrollbar { display: none }
+.rtab {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 14px;
+  height: calc(var(--tab-h) - 1px);
+  border: none;
+  background: transparent;
+  color: var(--tx2);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: .15s;
+  display: flex; align-items: center; gap: 5px;
+  text-decoration: none;
+}
+.rtab:hover { color: var(--ac) }
+.rtab.active { color: var(--ac); border-bottom-color: var(--ac); font-weight: 700 }
+.rtab svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round }
+
+/* ══════════════════════════════════
+   RIBBON STRIP (Word-style groups)
+══════════════════════════════════ */
+.ribbon-strip {
+  height: var(--ribbon-h);
+  background: var(--surface);
+  border-bottom: 2px solid var(--bd);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: sticky;
+  top: calc(var(--top-h) + var(--tab-h));
+  z-index: 180;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+.ribbon-strip::-webkit-scrollbar { display: none }
+.rgroup {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  padding: 0 10px;
+  position: relative;
+}
+.rgroup:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 4px; bottom: 4px;
+  width: 1px;
+  background: var(--bd);
+}
+.rgroup-label {
+  position: absolute;
+  bottom: -10px; left: 50%; transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--tx3);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rbtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--tx2);
+  transition: .15s;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  min-width: 44px;
+  text-decoration: none;
+}
+.rbtn:hover { background: var(--acs); color: var(--ac) }
+.rbtn.active { background: var(--acs); color: var(--ac) }
+.rbtn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0 }
+.rbtn-lg { min-width: 52px }
+.rbtn-split { display: flex; flex-direction: row; gap: 2px }
+.rbtn-highlight {
+  background: var(--ac);
+  color: #fff;
+}
+.rbtn-highlight:hover { background: var(--ac2); color: #fff }
+
+/* ══════════════════════════════════
+   PAGE LAYOUT
+══════════════════════════════════ */
+.page-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+
+/* ══════════════════════════════════
+   STATS ROW
+══════════════════════════════════ */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+.stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tx3);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 6px;
+}
+.stat-val {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--tx);
+}
+.stat-sub {
+  font-size: 11px;
+  color: var(--tx3);
+  margin-top: 4px;
+}
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  margin-top: 4px;
+}
+.stat-badge.up { background: var(--oks); color: var(--ok) }
+.stat-badge.new { background: var(--acs); color: var(--ac) }
+
+/* ══════════════════════════════════
+   ASK FORM CARD
+══════════════════════════════════ */
+.ask-card {
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.ask-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--bd);
+  background: var(--surface2);
+  cursor: pointer;
+}
+.ask-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ask-card-title svg { width: 16px; height: 16px; stroke: var(--ac); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round }
+.ask-collapse-btn {
+  width: 26px; height: 26px;
+  border: 1px solid var(--bd);
+  border-radius: 6px;
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--tx2); transition: .15s;
+}
+.ask-collapse-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s }
+.ask-collapse-btn.open svg { transform: rotate(180deg) }
+.ask-body { padding: 18px; display: block }
+.ask-body.collapsed { display: none }
+.field { margin-bottom: 12px }
+.field label {
+  display: block; font-size: 10px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--tx3); margin-bottom: 5px;
+}
+.field input, .field textarea, .field select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: var(--tx);
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  border-color: var(--ac);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.08);
+}
+.field textarea { resize: vertical; min-height: 90px; line-height: 1.65 }
+.field select option { background: var(--surface) }
+.field input::placeholder, .field textarea::placeholder { color: var(--tx3) }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px }
+.anon-row {
+  display: flex; align-items: center; gap: 9px;
+  margin-bottom: 14px; padding: 10px 12px;
+  background: var(--acs); border: 1px solid rgba(37,99,235,.2);
+  border-radius: 8px;
+}
+.anon-row input[type=checkbox] { width: 15px; height: 15px; accent-color: var(--ac); cursor: pointer; flex-shrink: 0 }
+.anon-row label { font-size: 12px; color: var(--tx2); cursor: pointer }
+.btn-submit {
+  width: 100%; padding: 11px;
+  background: linear-gradient(135deg, var(--ac), var(--ac2));
+  color: #fff; border: none; border-radius: 9px;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  transition: .2s; box-shadow: 0 2px 10px rgba(37,99,235,.25);
+  font-family: var(--sans);
+}
+.btn-submit:hover { opacity: .92; transform: translateY(-1px) }
+.btn-submit svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round }
+
+/* ══════════════════════════════════
+   FILTER BAR
+══════════════════════════════════ */
+.filter-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  font-size: 12px; font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--bd);
+  background: var(--surface);
+  color: var(--tx2);
+  cursor: pointer; transition: .15s; white-space: nowrap;
+  font-family: var(--sans);
+}
+.filter-btn:hover { border-color: var(--acl); color: var(--ac) }
+.filter-btn.active { background: var(--ac); border-color: var(--ac); color: #fff }
+.q-count { font-size: 11px; color: var(--tx3); margin-left: auto; font-weight: 600 }
+.search-wrap { margin-bottom: 12px; position: relative }
+.search-ico {
+  position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+  width: 14px; height: 14px;
+  stroke: var(--tx3); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  pointer-events: none;
+}
+.search-box {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  border-radius: 9px;
+  padding: 9px 12px 9px 34px;
+  font-size: 13px; color: var(--tx); font-family: var(--sans);
+  outline: none; transition: .2s;
+}
+.search-box:focus { border-color: var(--ac); box-shadow: 0 0 0 3px rgba(37,99,235,.08) }
+.search-box::placeholder { color: var(--tx3) }
+
+/* ══════════════════════════════════
+   QUESTION CARDS
+══════════════════════════════════ */
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, transform .1s;
+  box-shadow: var(--shadow);
+}
+.q-card:hover { border-color: var(--bd2); box-shadow: var(--shadow-md); transform: translateY(-1px) }
+.q-card.open { border-color: var(--ac); box-shadow: 0 0 0 2px rgba(37,99,235,.12), var(--shadow-md) }
+.q-meta { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; margin-bottom: 9px }
+.q-cat {
+  font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 12px;
+  background: var(--acs); color: var(--ac); border: 1px solid rgba(37,99,235,.2);
+}
+.q-asker { font-size: 11px; color: var(--tx3); display: flex; align-items: center; gap: 4px }
+.q-asker svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round }
+.q-time { font-size: 11px; color: var(--tx3); margin-left: auto }
+.q-text { font-family: var(--serif); font-size: 15pt; line-height: 1.5; margin-bottom: 12px; color: var(--tx) }
+.q-footer { display: flex; gap: 10px; align-items: center; flex-wrap: wrap }
+.ans-count {
+  font-size: 11px; font-weight: 700; padding: 3px 10px;
+  border-radius: 12px; display: inline-flex; align-items: center; gap: 4px;
+}
+.ans-count svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round }
+.ans-count.has-ans { background: var(--oks); color: var(--ok); border: 1px solid rgba(5,150,105,.25) }
+.ans-count.no-ans { background: var(--ams); color: var(--am); border: 1px solid rgba(217,119,6,.25) }
+.q-stat { font-size: 11px; color: var(--tx3); display: flex; align-items: center; gap: 4px }
+.q-stat svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round }
+.wa-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; padding: 4px 10px; border-radius: 8px;
+  border: 1px solid rgba(37,211,102,.3); background: rgba(37,211,102,.07);
+  color: #16a34a; cursor: pointer; text-decoration: none;
+  transition: .15s; margin-left: auto; font-weight: 600;
+}
+.wa-btn:hover { background: rgba(37,211,102,.15) }
+.wa-btn svg { width: 12px; height: 12px; fill: none; stroke: #16a34a; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round }
+
+/* ══════════════════════════════════
+   ANSWER SECTION
+══════════════════════════════════ */
+.answers-wrap { display: none; margin-top: 16px; border-top: 1px solid var(--bd); padding-top: 16px }
+.q-card.open .answers-wrap { display: block }
+.answer-card {
+  background: var(--surface2);
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  position: relative;
+}
+.answer-card::before {
+  content: ''; position: absolute; left: 0; top: 10px; bottom: 10px;
+  width: 3px; background: linear-gradient(180deg, var(--ok), rgba(5,150,105,.2));
+  border-radius: 0 2px 2px 0;
+}
+.ans-adv {
+  font-size: 12px; font-weight: 700; color: var(--ac);
+  display: flex; align-items: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap;
+}
+.ans-adv svg { width: 13px; height: 13px; stroke: var(--ok); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round }
+.ans-adv .enroll { font-size: 10px; font-weight: 400; color: var(--tx3) }
+.ans-text { font-family: var(--serif); font-size: 13pt; line-height: 1.7; color: var(--tx) }
+.ans-time { font-size: 10px; color: var(--tx3); margin-top: 8px }
+.upvote-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; padding: 5px 12px; border-radius: 8px;
+  border: 1px solid var(--bd); background: transparent;
+  color: var(--tx2); cursor: pointer; margin-top: 10px; transition: .15s; font-weight: 600;
+  font-family: var(--sans);
+}
+.upvote-btn:hover { border-color: var(--ok); color: var(--ok); background: var(--oks) }
+.upvote-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round }
+.ans-form {
+  margin-top: 14px; background: var(--acs);
+  border: 1px solid rgba(37,99,235,.15); border-radius: 10px; padding: 14px;
+}
+.ans-form-title {
+  font-size: 12px; font-weight: 700; color: var(--ac); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.ans-form-title svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round }
+.ans-form input, .ans-form textarea {
+  width: 100%; background: var(--surface); border: 1px solid var(--bd);
+  border-radius: 8px; padding: 8px 11px; font-size: 13px; color: var(--tx);
+  font-family: var(--sans); outline: none; margin-bottom: 7px; transition: border-color .2s;
+}
+.ans-form input:focus, .ans-form textarea:focus { border-color: var(--ac) }
+.ans-form textarea { font-family: var(--serif); font-size: 12pt; resize: vertical; min-height: 84px; line-height: 1.65 }
+.ans-form .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 7px }
+.btn-ans {
+  padding: 8px 18px; background: var(--ac); color: #fff;
+  border: none; border-radius: 8px; font-size: 13px; font-weight: 700;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+  transition: .15s; font-family: var(--sans);
+}
+.btn-ans:hover { background: var(--ac2); transform: translateY(-1px) }
+.btn-ans svg { width: 13px; height: 13px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round }
+
+/* ══════════════════════════════════
+   EMPTY STATE
+══════════════════════════════════ */
+.empty { text-align: center; padding: 48px 16px; color: var(--tx2) }
+.empty-icon {
+  width: 56px; height: 56px; background: var(--surface); border: 1px solid var(--bd);
+  border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
+}
+.empty-icon svg { width: 28px; height: 28px; stroke: var(--tx3); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round }
+.empty h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px }
+.empty p { font-size: 13px; color: var(--tx3) }
+
+/* ══════════════════════════════════
+   TOAST
+══════════════════════════════════ */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--ok); color: #fff; font-size: 13px; font-weight: 600;
+  padding: 10px 20px; border-radius: 12px; z-index: 999;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: var(--shadow-md); transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s;
+  opacity: 0; pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1 }
+.toast.err { background: var(--er) }
+.toast svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round }
+
+/* ══════════════════════════════════
+   MOBILE DRAWER NAV
+══════════════════════════════════ */
+.drawer-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.4); z-index: 300; backdrop-filter: blur(4px);
+}
+.drawer-overlay.open { display: block }
+.drawer {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: 280px; background: var(--surface);
+  z-index: 301; transform: translateX(-100%);
+  transition: transform .25s cubic-bezier(.4,0,.2,1);
+  box-shadow: var(--shadow-md);
+  display: flex; flex-direction: column;
+}
+.drawer.open { transform: translateX(0) }
+.drawer-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--bd);
+  display: flex; align-items: center; gap: 10px;
+}
+.drawer-close {
+  margin-left: auto; width: 28px; height: 28px;
+  border: 1px solid var(--bd); border-radius: 6px;
+  background: transparent; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--tx2);
+}
+.drawer-close svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round }
+.drawer-nav { flex: 1; overflow-y: auto; padding: 10px 8px }
+.drawer-section { font-size: 9px; font-weight: 700; color: var(--tx3); letter-spacing: .1em; text-transform: uppercase; padding: 12px 10px 6px }
+.drawer-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px; text-decoration: none;
+  color: var(--tx2); font-size: 13px; font-weight: 600; transition: .15s;
+}
+.drawer-link:hover, .drawer-link.active { background: var(--acs); color: var(--ac) }
+.drawer-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0 }
+
+/* ══════════════════════════════════
+   BOTTOM MOBILE NAV
+══════════════════════════════════ */
+.bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--bd);
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  justify-content: space-around;
+  z-index: 200;
+  box-shadow: 0 -2px 12px rgba(0,0,0,.06);
+}
+.bnav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  text-decoration: none; color: var(--tx3); font-size: 9px; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase; transition: .15s;
+  padding: 2px 6px; border-radius: 8px; min-width: 50px;
+}
+.bnav-item.active { color: var(--ac) }
+.bnav-item svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round }
+
+/* ══════════════════════════════════
+   MOBILE RESPONSIVE
+══════════════════════════════════ */
+@media (max-width: 768px) {
+  .ribbon-strip, .ribbon-tabs { display: none }
+  .top-hamburger { display: flex }
+  .top-search { max-width: none; flex: 1 }
+  .bottom-nav { display: flex }
+  .stats-row { grid-template-columns: 1fr 1fr }
+  .page-wrap { padding-bottom: 90px }
+  .two-col { grid-template-columns: 1fr }
+  .ans-form .two-col { grid-template-columns: 1fr }
+}
+@media (max-width: 480px) {
+  .stats-row { grid-template-columns: 1fr 1fr }
+  .stat-val { font-size: 20px }
+  .q-text { font-size: 13pt }
+  .top-actions .icon-btn:not(.keep) { display: none }
+}
+
+/* ══════════════════════════════════
+   SECTION HEADER
+══════════════════════════════════ */
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.section-title {
+  font-size: 15px; font-weight: 800;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title svg { width: 16px; height: 16px; stroke: var(--ac); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round }
+
+/* ══════════════════════════════════
+   THEME TOGGLE
+══════════════════════════════════ */
+#themeToggle { cursor: pointer }
+
+/* ── PAGE FOOTER ── */
+.page-footer{margin-top:32px;padding:20px 0 8px;border-top:1px solid var(--bd)}
+.page-footer-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.page-footer-links{display:flex;flex-wrap:wrap;gap:6px 2px;align-items:center}
+.page-footer-links a{font-size:11px;color:var(--tx3);text-decoration:none;padding:3px 8px;border-radius:6px;transition:.15s;white-space:nowrap}
+.page-footer-links a:hover{color:var(--ac);background:var(--acs)}
+.page-footer-links .sep{color:var(--bd2);font-size:11px;user-select:none}
+.page-footer-copy{font-size:11px;color:var(--tx3)}
+@media print{footer,.page-footer{display:none!important}}
+</style>
 </head>
 <body>
 
-<nav>
-  <a href="/tools" class="nav-brand">
-    <div class="nav-logo">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+<!-- ════════════ TOP BAR ════════════ -->
+<header class="top-bar">
+  <!-- Hamburger (mobile only) -->
+  <button class="top-hamburger" onclick="openDrawer()" aria-label="Menu">
+    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+
+  <!-- Logo -->
+  <a href="/" class="top-logo">
+    <div class="top-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
     </div>
-    <span class="nav-title">Legal Q&amp;A</span>
+    <div>
+      <div class="top-logo-text">LegalHash</div>
+      <div class="top-logo-sub">Checksum.com</div>
+    </div>
   </a>
-  <div class="nav-links">
-    <a href="/" class="nav-link">Hash Tool</a>
-    <a href="/tools" class="nav-link">All Tools</a>
+
+  <!-- Global Search -->
+  <div class="top-search">
+    <svg class="top-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="topSearch" placeholder="Search questions, acts, sections…" oninput="onSearch(this.value)">
   </div>
+
+  <!-- Action Icons -->
+  <div class="top-actions">
+    <button class="icon-btn keep" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg id="themeIcon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="icon-btn" aria-label="Notifications">
+      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="badge-dot"></span>
+    </button>
+    <div class="avatar" title="Profile">UA</div>
+  </div>
+</header>
+
+<!-- ════════════ RIBBON TABS ════════════ -->
+<nav class="ribbon-tabs" role="navigation">
+  <a href="/" class="rtab">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </a>
+  <a href="/cases" class="rtab">
+    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+    Cases
+  </a>
+  <a href="/legal-qa" class="rtab active">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Q&amp;A
+  </a>
+  <a href="/tools" class="rtab">
+    <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+    Tools
+  </a>
+  <a href="/judgments" class="rtab">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    Documents
+  </a>
+  <a href="/profile" class="rtab">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Profile
+  </a>
 </nav>
 
-<div class="hero">
-  <div class="hero-eyebrow">
-    <svg viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
-    Free Community Platform
-  </div>
-  <h1>Ask. Answer. <span>Understand Indian Law.</span></h1>
-  <p class="hero-sub">Anyone can ask a legal question. Only verified advocates answer. 100% free, no registration needed.</p>
-  <div class="badge-row">
-    <span class="badge badge-blue">
-      <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Ask Anonymously
-    </span>
-    <span class="badge badge-green">
-      <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      Verified Advocates Only
-    </span>
-    <span class="badge badge-amber">
-      <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg>
-      BSA 2023 &amp; BNS Aware
-    </span>
-  </div>
-</div>
-
-<div class="main">
-
-  <!-- ASK FORM -->
-  <div class="ask-card">
-    <div class="ask-title">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      Ask a Legal Question
-    </div>
-    <div class="field">
-      <label>Your Question *</label>
-      <textarea id="qText" placeholder="e.g. My landlord is not returning my security deposit after 3 months. What legal options do I have under Indian law?"></textarea>
-    </div>
-    <div class="two-col">
-      <div class="field">
-        <label>Category</label>
-        <select id="qCat">
-          <option>General</option>
-          <option>Property / Real Estate</option>
-          <option>Criminal / FIR / Bail</option>
-          <option>Family / Matrimonial</option>
-          <option>Consumer / NCDRC</option>
-          <option>Labour / Employment</option>
-          <option>Cheque Bounce / NI Act</option>
-          <option>Cyber / IT Law</option>
-          <option>Civil / Suit</option>
-          <option>Contract / Agreement</option>
-          <option>Constitutional</option>
-          <option>Women &amp; Children</option>
-          <option>Motor Accident / MACT</option>
-          <option>Tax / GST</option>
-          <option>Company / Business</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Your Name (optional)</label>
-        <input id="qName" type="text" placeholder="Leave blank to stay anonymous">
-      </div>
-    </div>
-    <div class="anon-row">
-      <input type="checkbox" id="qAnon" checked>
-      <label for="qAnon">Post anonymously — your name will show as <strong>Anonymous</strong> publicly</label>
-    </div>
-    <button class="btn-submit" onclick="submitQuestion()">
-      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      Post Question
+<!-- ════════════ RIBBON STRIP (Word-style) ════════════ -->
+<div class="ribbon-strip" role="toolbar">
+  <!-- Group: New -->
+  <div class="rgroup">
+    <button class="rbtn rbtn-lg rbtn-highlight" onclick="openAsk()" title="Post new question">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Ask
     </button>
   </div>
 
-  <!-- SEARCH + FILTERS -->
-  <div class="search-filter-wrap">
-    <div class="search-wrap">
-      <div class="search-inner">
-        <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input class="search-box" id="searchBox" type="text" placeholder="Search questions — e.g. landlord, cheque bounce, FIR, bail..." oninput="onSearch(this.value)">
-      </div>
+  <!-- Group: View -->
+  <div class="rgroup">
+    <button class="rbtn active" onclick="setFilter('All',this)" title="All questions">
+      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      All
+    </button>
+    <button class="rbtn" onclick="setFilter('Answered',this)" title="Answered questions">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      Answered
+    </button>
+    <button class="rbtn" onclick="setFilter('Unanswered',this)" title="Unanswered questions">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Pending
+    </button>
+  </div>
+
+  <!-- Group: Category -->
+  <div class="rgroup">
+    <button class="rbtn" onclick="setFilter('Criminal / FIR / Bail',this)" title="Criminal law">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Criminal
+    </button>
+    <button class="rbtn" onclick="setFilter('Family / Matrimonial',this)" title="Family law">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Family
+    </button>
+    <button class="rbtn" onclick="setFilter('Property / Real Estate',this)" title="Property law">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Property
+    </button>
+    <button class="rbtn" onclick="setFilter('Cheque Bounce / NI Act',this)" title="Cheque bounce">
+      <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Cheque
+    </button>
+  </div>
+
+  <!-- Group: Share -->
+  <div class="rgroup">
+    <a href="https://wa.me/?text=Check+out+Legal+Q%26A+platform+at+https%3A%2F%2Flegalhashchecksum.com%2Flegal-qa" target="_blank" class="rbtn" title="Share on WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      WhatsApp
+    </a>
+    <button class="rbtn" onclick="copyPageLink()" title="Copy link">
+      <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      Copy Link
+    </button>
+  </div>
+
+  <!-- Group: Tools -->
+  <div class="rgroup">
+    <a href="/law-converter" class="rbtn" title="IPC to BNS Converter">
+      <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      BNS/IPC
+    </a>
+    <a href="/court-fee" class="rbtn" title="Court Fee Calculator">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Court Fee
+    </a>
+    <a href="/" class="rbtn" title="Hash Tool">
+      <svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+      Hash
+    </a>
+  </div>
+</div>
+
+<!-- ════════════ MOBILE DRAWER ════════════ -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="top-logo-icon" style="width:28px;height:28px">
+      <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
     </div>
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="setFilter('All',this)">All</button>
-      <button class="filter-btn" onclick="setFilter('Unanswered',this)">Unanswered</button>
-      <button class="filter-btn" onclick="setFilter('Answered',this)">Answered</button>
-      <button class="filter-btn" onclick="setFilter('Criminal / FIR / Bail',this)">Criminal</button>
-      <button class="filter-btn" onclick="setFilter('Property / Real Estate',this)">Property</button>
-      <button class="filter-btn" onclick="setFilter('Family / Matrimonial',this)">Family</button>
-      <button class="filter-btn" onclick="setFilter('Cheque Bounce / NI Act',this)">Cheque Bounce</button>
-      <span class="q-count" id="qCount"></span>
+    <span style="font-size:13px;font-weight:800">LegalHashChecksum</span>
+    <button class="drawer-close" onclick="closeDrawer()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav class="drawer-nav">
+    <div class="drawer-section">Main</div>
+    <a href="/" class="drawer-link">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home — Hash Tool
+    </a>
+    <a href="/cases" class="drawer-link">
+      <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+      Cases Docket
+    </a>
+    <a href="/legal-qa" class="drawer-link active">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Legal Q&amp;A
+    </a>
+    <a href="/tools" class="drawer-link">
+      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      All Tools
+    </a>
+    <div class="drawer-section">Legal Tools</div>
+    <a href="/bail-bond" class="drawer-link">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Bail Bond Generator
+    </a>
+    <a href="/legal-notice" class="drawer-link">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Legal Notice
+    </a>
+    <a href="/court-fee" class="drawer-link">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Court Fee Calculator
+    </a>
+    <a href="/law-converter" class="drawer-link">
+      <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      IPC → BNS Converter
+    </a>
+    <a href="/limitation-calculator" class="drawer-link">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Limitation Calculator
+    </a>
+    <a href="/bns-lookup" class="drawer-link">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      BNS Section Lookup
+    </a>
+    <a href="/vakalatnama" class="drawer-link">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      Vakalatnama
+    </a>
+    <div class="drawer-section">Account</div>
+    <a href="/profile" class="drawer-link">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </a>
+    <div style="padding:10px 12px">
+      <button onclick="toggleTheme()" style="width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--surface2);color:var(--tx2);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans)">
+        Toggle Dark / Light Mode
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- ════════════ MAIN CONTENT ════════════ -->
+<main class="page-wrap">
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Total Questions</div>
+      <div class="stat-val" id="statTotal">—</div>
+      <div class="stat-badge new" id="statNew"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Answered</div>
+      <div class="stat-val" id="statAnswered">—</div>
+      <div class="stat-badge up" id="statRate"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Unanswered</div>
+      <div class="stat-val" id="statPending">—</div>
+      <div class="stat-sub">Need an advocate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Views</div>
+      <div class="stat-val" id="statViews">—</div>
+      <div class="stat-sub">Community reach</div>
     </div>
   </div>
 
+  <!-- ASK QUESTION CARD -->
+  <div class="ask-card">
+    <div class="ask-card-header" onclick="toggleAsk()">
+      <div class="ask-card-title">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Ask a Legal Question
+      </div>
+      <button class="ask-collapse-btn open" id="askCollapseBtn">
+        <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+      </button>
+    </div>
+    <div class="ask-body" id="askBody">
+      <div class="field" style="margin-top:4px">
+        <label>Your Question *</label>
+        <textarea id="qText" placeholder="e.g. My landlord is not returning my security deposit after 3 months. What legal options do I have under Indian law?"></textarea>
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label>Category</label>
+          <select id="qCat">
+            <option>General</option>
+            <option>Property / Real Estate</option>
+            <option>Criminal / FIR / Bail</option>
+            <option>Family / Matrimonial</option>
+            <option>Consumer / NCDRC</option>
+            <option>Labour / Employment</option>
+            <option>Cheque Bounce / NI Act</option>
+            <option>Cyber / IT Law</option>
+            <option>Civil / Suit</option>
+            <option>Contract / Agreement</option>
+            <option>Constitutional</option>
+            <option>Women &amp; Children</option>
+            <option>Motor Accident / MACT</option>
+            <option>Tax / GST</option>
+            <option>Company / Business</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Your Name (optional)</label>
+          <input id="qName" type="text" placeholder="Leave blank to post anonymously">
+        </div>
+      </div>
+      <div class="anon-row">
+        <input type="checkbox" id="qAnon" checked>
+        <label for="qAnon">Post anonymously — shown as <strong>Anonymous</strong> publicly</label>
+      </div>
+      <button class="btn-submit" onclick="submitQuestion()">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Post Question
+      </button>
+    </div>
+  </div>
+
+  <!-- SEARCH + FILTER -->
+  <div class="search-wrap">
+    <svg class="search-ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input class="search-box" id="searchBox" type="text" placeholder="Search questions — landlord, cheque bounce, FIR, bail, BNS…" oninput="onSearch(this.value)">
+  </div>
+  <div class="filter-wrap">
+    <button class="filter-btn active" onclick="setFilter('All',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('Unanswered',this)">Unanswered</button>
+    <button class="filter-btn" onclick="setFilter('Answered',this)">Answered</button>
+    <button class="filter-btn" onclick="setFilter('Criminal / FIR / Bail',this)">Criminal</button>
+    <button class="filter-btn" onclick="setFilter('Property / Real Estate',this)">Property</button>
+    <button class="filter-btn" onclick="setFilter('Family / Matrimonial',this)">Family</button>
+    <button class="filter-btn" onclick="setFilter('Cheque Bounce / NI Act',this)">Cheque</button>
+    <span class="q-count" id="qCount"></span>
+  </div>
+
   <!-- QUESTIONS LIST -->
+  <div class="section-header">
+    <div class="section-title">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Community Questions
+    </div>
+  </div>
   <div id="questionsList"></div>
 
-</div>
 
+    <!-- PAGE FOOTER -->
+    <footer class="page-footer">
+      <div class="page-footer-inner">
+        <div class="page-footer-links">
+          <a href="/dashboard">Dashboard</a><span class="sep">·</span>
+          <a href="/cases">Cases</a><span class="sep">·</span>
+          <a href="/billing">Billing</a><span class="sep">·</span>
+          <a href="/tools">All Tools</a><span class="sep">·</span>
+          <a href="/judgments">Judgments</a><span class="sep">·</span>
+          <a href="/pricing">Pricing</a><span class="sep">·</span>
+          <a href="/pricing">View plans</a><span class="sep">·</span>
+          <a href="/contact">Contact &amp; Support</a><span class="sep">·</span>
+          <a href="/privacy-policy">Privacy Policy</a>
+      </div>
+        <div class="page-footer-copy">© 2024–2026 legalhashchecksum.com</div>
+      </div>
+    </footer>
+  </main>
+
+<!-- ════════════ BOTTOM NAV (mobile) ════════════ -->
+<nav class="bottom-nav">
+  <a href="/" class="bnav-item">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </a>
+  <a href="/cases" class="bnav-item">
+    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+    Cases
+  </a>
+  <a href="/legal-qa" class="bnav-item active">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Q&amp;A
+  </a>
+  <a href="/tools" class="bnav-item">
+    <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+    Tools
+  </a>
+  <a href="/profile" class="bnav-item">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Profile
+  </a>
+</nav>
+
+<!-- TOAST -->
 <div class="toast" id="toast">
   <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
   <span id="toastMsg"></span>
 </div>
 
 <script>
-var allQuestions=[];
-var currentFilter='All';
-var searchTerm='';
+/* ── STATE ── */
+var allQuestions = [];
+var currentFilter = 'All';
+var searchTerm = '';
+var askOpen = true;
 
-function onSearch(val){
-  searchTerm=val.toLowerCase().trim();
+/* ── THEME ── */
+function toggleTheme() {
+  var html = document.documentElement;
+  var isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  localStorage.setItem('lhc-theme', isDark ? 'light' : 'dark');
+  updateThemeIcon();
+}
+function updateThemeIcon() {
+  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.getElementById('themeIcon').innerHTML = isDark
+    ? '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
+    : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+}
+(function initTheme() {
+  var saved = localStorage.getItem('lhc-theme');
+  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var theme = saved || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  updateThemeIcon();
+})();
+
+/* ── DRAWER ── */
+function openDrawer() {
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── ASK FORM ── */
+function toggleAsk() {
+  askOpen = !askOpen;
+  var body = document.getElementById('askBody');
+  var btn = document.getElementById('askCollapseBtn');
+  body.classList.toggle('collapsed', !askOpen);
+  btn.classList.toggle('open', askOpen);
+}
+function openAsk() {
+  if (!askOpen) { askOpen = true; document.getElementById('askBody').classList.remove('collapsed'); document.getElementById('askCollapseBtn').classList.add('open'); }
+  document.getElementById('qText').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => document.getElementById('qText').focus(), 300);
+}
+
+/* ── SEARCH (synced from top bar + inline) ── */
+function onSearch(val) {
+  searchTerm = val.toLowerCase().trim();
+  document.getElementById('searchBox').value = val;
+  document.getElementById('topSearch').value = val;
   renderQuestions();
 }
+document.getElementById('topSearch').addEventListener('input', function() { onSearch(this.value); });
 
-function waLink(q){
-  var text='*Legal Question — LegalHashChecksum.com*\n\n'+q.question+'\n\nCategory: '+q.category+'\n\nAnswer here: https://legalhashchecksum.com/legal-qa';
-  return 'https://wa.me/?text='+encodeURIComponent(text);
+/* ── COPY LINK ── */
+function copyPageLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => showToast('Link copied!'));
 }
 
-async function loadQuestions(){
-  try{
-    var r=await fetch('/api/qa/questions');
-    allQuestions=await r.json();
+/* ── DATA LOADING ── */
+async function loadQuestions() {
+  try {
+    var r = await fetch('/api/qa/questions');
+    allQuestions = await r.json();
     renderQuestions();
-  }catch(e){console.error(e);}
+    updateStats();
+  } catch(e) { console.error(e); }
 }
 
-function renderQuestions(){
-  var list=allQuestions;
-  if(currentFilter==='Unanswered') list=list.filter(q=>q.answer_count===0);
-  else if(currentFilter==='Answered') list=list.filter(q=>q.answer_count>0);
-  else if(currentFilter!=='All') list=list.filter(q=>q.category===currentFilter);
-  if(searchTerm) list=list.filter(q=>q.question.toLowerCase().includes(searchTerm)||q.category.toLowerCase().includes(searchTerm)||(q.asker_name||'').toLowerCase().includes(searchTerm));
-  document.getElementById('qCount').textContent=list.length+' question'+(list.length!==1?'s':'');
-  var el=document.getElementById('questionsList');
-  if(!list.length){
-    el.innerHTML='<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><h3>No questions found</h3><p>No questions in this category yet.<br>Be the first to ask!</p></div>';
+function updateStats() {
+  var total = allQuestions.length;
+  var answered = allQuestions.filter(q => q.answer_count > 0).length;
+  var pending = total - answered;
+  var views = allQuestions.reduce((s, q) => s + (q.views || 0), 0);
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statAnswered').textContent = answered;
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statViews').textContent = views > 999 ? (views/1000).toFixed(1)+'k' : views;
+  var rate = total > 0 ? Math.round(answered/total*100) : 0;
+  document.getElementById('statRate').textContent = rate + '% answered';
+  document.getElementById('statNew').textContent = total > 0 ? '+' + total + ' total' : '';
+}
+
+function renderQuestions() {
+  var list = allQuestions.slice();
+  if (currentFilter === 'Unanswered') list = list.filter(q => q.answer_count === 0);
+  else if (currentFilter === 'Answered') list = list.filter(q => q.answer_count > 0);
+  else if (currentFilter !== 'All') list = list.filter(q => q.category === currentFilter);
+  if (searchTerm) list = list.filter(q =>
+    q.question.toLowerCase().includes(searchTerm) ||
+    q.category.toLowerCase().includes(searchTerm) ||
+    (q.asker_name || '').toLowerCase().includes(searchTerm)
+  );
+  document.getElementById('qCount').textContent = list.length + ' question' + (list.length !== 1 ? 's' : '');
+  var el = document.getElementById('questionsList');
+  if (!list.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><h3>No questions found</h3><p>No questions match your filter.<br>Try a different category or be the first to ask!</p></div>';
     return;
   }
-  el.innerHTML=list.map(function(q){
-    var ansClass=q.answer_count>0?'has-ans':'no-ans';
-    var ansLabel=q.answer_count>0?q.answer_count+' answer'+(q.answer_count>1?'s':''):'Unanswered';
-    var asker=q.anonymous?'Anonymous':(q.asker_name||'Anonymous');
+  el.innerHTML = list.map(function(q) {
+    var ansClass = q.answer_count > 0 ? 'has-ans' : 'no-ans';
+    var ansLabel = q.answer_count > 0 ? q.answer_count + ' answer' + (q.answer_count > 1 ? 's' : '') : 'Unanswered';
+    var asker = q.anonymous ? 'Anonymous' : (q.asker_name || 'Anonymous');
     return `<div class="q-card" id="qcard-${q.id}" onclick="toggleQuestion(${q.id},this)">
       <div class="q-meta">
-        <span class="q-cat">${q.category}</span>
+        <span class="q-cat">${escHtml(q.category)}</span>
         <span class="q-asker">
           <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          ${asker}
+          ${escHtml(asker)}
         </span>
         <span class="q-time">${getTimeAgo(q.created_at)}</span>
       </div>
@@ -376,7 +1280,7 @@ function renderQuestions(){
         </span>
         <span class="q-stat">
           <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          ${q.views||0} views
+          ${q.views || 0} views
         </span>
         <a class="wa-btn" href="${waLink(q)}" target="_blank" onclick="event.stopPropagation()">
           <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
@@ -384,18 +1288,18 @@ function renderQuestions(){
         </a>
       </div>
       <div class="answers-wrap" id="ans-${q.id}">
-        <div id="ans-list-${q.id}"><p style="font-size:12px;color:var(--tx3);padding:8px 0">Loading answers...</p></div>
+        <div id="ans-list-${q.id}"><p style="font-size:12px;color:var(--tx3);padding:8px 0">Loading answers…</p></div>
         <div class="ans-form" onclick="event.stopPropagation()">
           <div class="ans-form-title">
             <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             Answer as Advocate
           </div>
-          <div class="two-col">
+          <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
             <input id="advName-${q.id}" placeholder="Your full name *" onclick="event.stopPropagation()">
             <input id="advEnroll-${q.id}" placeholder="Enrolment No." onclick="event.stopPropagation()">
           </div>
           <input id="advCourt-${q.id}" placeholder="Court / Bar — e.g. Advocate, Allahabad High Court" onclick="event.stopPropagation()">
-          <textarea id="advAns-${q.id}" placeholder="Write your legal answer here — cite relevant sections of BNS, BNSS, BSA, CPC etc." onclick="event.stopPropagation()"></textarea>
+          <textarea id="advAns-${q.id}" placeholder="Write your legal answer — cite BNS, BNSS, BSA, CPC sections where relevant." onclick="event.stopPropagation()"></textarea>
           <button class="btn-ans" onclick="event.stopPropagation();submitAnswer(${q.id})">
             <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
             Post Answer
@@ -406,119 +1310,124 @@ function renderQuestions(){
   }).join('');
 }
 
-async function toggleQuestion(id,card){
-  var isOpen=card.classList.contains('open');
-  document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('open'));
-  if(isOpen) return;
-  card.classList.add('open');
-  loadAnswers(id);
-  fetch('/api/qa/view/'+id,{method:'POST'}).catch(()=>{});
+function waLink(q) {
+  var text = '*Legal Question — LegalHashChecksum.com*\n\n' + q.question + '\n\nCategory: ' + q.category + '\n\nAnswer here: https://legalhashchecksum.com/legal-qa';
+  return 'https://wa.me/?text=' + encodeURIComponent(text);
 }
 
-async function loadAnswers(qid){
-  var el=document.getElementById('ans-list-'+qid);
-  try{
-    var r=await fetch('/api/qa/answers/'+qid);
-    var ans=await r.json();
-    if(!ans.length){
-      el.innerHTML='<p style="font-size:12px;color:var(--tx3);margin-bottom:14px;padding:4px 0">No answers yet. Be the first advocate to answer.</p>';
+async function toggleQuestion(id, card) {
+  var isOpen = card.classList.contains('open');
+  document.querySelectorAll('.q-card').forEach(c => c.classList.remove('open'));
+  if (isOpen) return;
+  card.classList.add('open');
+  loadAnswers(id);
+  fetch('/api/qa/view/' + id, {method: 'POST'}).catch(() => {});
+}
+
+async function loadAnswers(qid) {
+  var el = document.getElementById('ans-list-' + qid);
+  try {
+    var r = await fetch('/api/qa/answers/' + qid);
+    var ans = await r.json();
+    if (!ans.length) {
+      el.innerHTML = '<p style="font-size:12px;color:var(--tx3);margin-bottom:14px;padding:4px 0">No answers yet. Be the first advocate to answer.</p>';
       return;
     }
-    el.innerHTML=ans.map(function(a){
+    el.innerHTML = ans.map(function(a) {
       return `<div class="answer-card">
         <div class="ans-adv">
           <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
           ${escHtml(a.advocate_name)}
-          ${a.advocate_enroll?'<span class="enroll">· '+escHtml(a.advocate_enroll)+'</span>':''}
-          ${a.advocate_court?'<span class="enroll">· '+escHtml(a.advocate_court)+'</span>':''}
+          ${a.advocate_enroll ? '<span class="enroll">· ' + escHtml(a.advocate_enroll) + '</span>' : ''}
+          ${a.advocate_court ? '<span class="enroll">· ' + escHtml(a.advocate_court) + '</span>' : ''}
         </div>
         <div class="ans-text">${escHtml(a.answer)}</div>
         <div class="ans-time">${getTimeAgo(a.created_at)}</div>
         <button class="upvote-btn" onclick="upvote(${a.id},this)">
           <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
-          Helpful (${a.upvotes||0})
+          Helpful (${a.upvotes || 0})
         </button>
       </div>`;
     }).join('');
-  }catch(e){
-    el.innerHTML='<p style="color:var(--er);font-size:12px">Error loading answers.</p>';
+  } catch(e) {
+    el.innerHTML = '<p style="color:var(--er);font-size:12px">Error loading answers.</p>';
   }
 }
 
-async function submitQuestion(){
-  var q=document.getElementById('qText').value.trim();
-  if(!q||q.length<10){showToast('Please write a proper question (min 10 chars)',true);return;}
-  var anon=document.getElementById('qAnon').checked;
-  var name=document.getElementById('qName').value.trim()||'Anonymous';
-  var cat=document.getElementById('qCat').value;
-  try{
-    var r=await fetch('/api/qa/questions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,category:cat,asker_name:name,anonymous:anon})});
-    if(r.ok){
-      document.getElementById('qText').value='';
-      document.getElementById('qName').value='';
+async function submitQuestion() {
+  var q = document.getElementById('qText').value.trim();
+  if (!q || q.length < 10) { showToast('Please write a proper question (min 10 chars)', true); return; }
+  var anon = document.getElementById('qAnon').checked;
+  var name = document.getElementById('qName').value.trim() || 'Anonymous';
+  var cat = document.getElementById('qCat').value;
+  try {
+    var r = await fetch('/api/qa/questions', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({question:q, category:cat, asker_name:name, anonymous:anon})});
+    if (r.ok) {
+      document.getElementById('qText').value = '';
+      document.getElementById('qName').value = '';
       showToast('Question posted! Advocates will answer soon.');
       loadQuestions();
-    }else{showToast('Error posting question',true);}
-  }catch(e){showToast('Network error',true);}
+    } else { showToast('Error posting question', true); }
+  } catch(e) { showToast('Network error', true); }
 }
 
-async function submitAnswer(qid){
-  var name=document.getElementById('advName-'+qid).value.trim();
-  var ans=document.getElementById('advAns-'+qid).value.trim();
-  if(!name){showToast('Please enter your advocate name',true);return;}
-  if(!ans||ans.length<20){showToast('Please write a proper answer (min 20 chars)',true);return;}
-  var enroll=document.getElementById('advEnroll-'+qid).value.trim();
-  var court=document.getElementById('advCourt-'+qid).value.trim();
-  try{
-    var r=await fetch('/api/qa/answers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question_id:qid,answer:ans,advocate_name:name,advocate_enroll:enroll,advocate_court:court})});
-    if(r.ok){
-      document.getElementById('advAns-'+qid).value='';
+async function submitAnswer(qid) {
+  var name = document.getElementById('advName-' + qid).value.trim();
+  var ans = document.getElementById('advAns-' + qid).value.trim();
+  if (!name) { showToast('Please enter your advocate name', true); return; }
+  if (!ans || ans.length < 20) { showToast('Please write a proper answer (min 20 chars)', true); return; }
+  var enroll = document.getElementById('advEnroll-' + qid).value.trim();
+  var court = document.getElementById('advCourt-' + qid).value.trim();
+  try {
+    var r = await fetch('/api/qa/answers', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({question_id:qid, answer:ans, advocate_name:name, advocate_enroll:enroll, advocate_court:court})});
+    if (r.ok) {
+      document.getElementById('advAns-' + qid).value = '';
       showToast('Answer posted!');
       loadAnswers(qid);
       loadQuestions();
-    }else{showToast('Error posting answer',true);}
-  }catch(e){showToast('Network error',true);}
+    } else { showToast('Error posting answer', true); }
+  } catch(e) { showToast('Network error', true); }
 }
 
-async function upvote(aid,btn){
-  try{
-    var r=await fetch('/api/qa/upvote/'+aid,{method:'POST'});
-    if(r.ok){
-      var d=await r.json();
-      btn.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg> Helpful ('+d.upvotes+')';
-      btn.style.color='var(--ok)';btn.style.borderColor='var(--ok)';btn.disabled=true;
+async function upvote(aid, btn) {
+  try {
+    var r = await fetch('/api/qa/upvote/' + aid, {method:'POST'});
+    if (r.ok) {
+      var d = await r.json();
+      btn.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg> Helpful (' + d.upvotes + ')';
+      btn.style.color = 'var(--ok)'; btn.style.borderColor = 'var(--ok)'; btn.disabled = true;
     }
-  }catch(e){}
+  } catch(e) {}
 }
 
-function setFilter(f,btn){
-  currentFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn, .rbtn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderQuestions();
 }
 
-function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function escHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
-function getTimeAgo(ts){
-  var d=new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);
-  if(diff<60) return 'just now';
-  if(diff<3600) return Math.floor(diff/60)+'m ago';
-  if(diff<86400) return Math.floor(diff/3600)+'h ago';
-  if(diff<604800) return Math.floor(diff/86400)+'d ago';
-  return d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+function getTimeAgo(ts) {
+  var d = new Date(ts), now = new Date(), diff = Math.floor((now - d) / 1000);
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+  return d.toLocaleDateString('en-IN', {day:'numeric', month:'short'});
 }
 
-function showToast(msg,err){
-  var t=document.getElementById('toast');
-  t.className='toast'+(err?' err':'');
-  document.getElementById('toastMsg').textContent=msg;
-  setTimeout(()=>t.classList.add('show'),10);
-  setTimeout(()=>t.classList.remove('show'),3500);
+function showToast(msg, err) {
+  var t = document.getElementById('toast');
+  t.className = 'toast' + (err ? ' err' : '');
+  document.getElementById('toastMsg').textContent = msg;
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => t.classList.remove('show'), 3500);
 }
 
 loadQuestions();
-setInterval(loadQuestions,30000);
+setInterval(loadQuestions, 30000);
 </script>
 </body>
 </html>

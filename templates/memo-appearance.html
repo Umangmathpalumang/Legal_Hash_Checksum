@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/lhc-core.js"></script>
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
 <script>
@@ -13,21 +14,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Memo of Appearance — Free Form for Indian Courts | Fill & Print PDF</title>
-<meta name="description" content="Free Memo of Appearance form for Indian courts — District Court, High Court, Supreme Court. Fill online and download ready-to-file PDF. No login, no fees.">
+<meta name="description" content="Memo of Appearance form for Indian courts — District Court, High Court, Supreme Court. Fill online and download ready-to-file PDF. No login required.">
 <meta name="keywords" content="memo of appearance, memorandum of appearance, memo of appearance format, memo of appearance pdf, how to fill memo of appearance, memo of appearance new format, memo of appearance district court, vakil nama appearance, advocate appearance memo">
 <link rel="canonical" href="https://legalhashchecksum.com/memo-appearance">
 <meta property="og:title" content="Memo of Appearance Generator — Fill & Download PDF Free">
-<meta property="og:description" content="Generate a court-ready Memo of Appearance instantly. Fill advocate details, court name, case number — download as PDF. Free tool for Indian advocates.">
+<meta property="og:description" content="Generate a court-ready Memo of Appearance instantly. Fill advocate details, court name, case number — download as PDF. For advocates, barristers and lawyers.">
 <meta property="og:url" content="https://legalhashchecksum.com/memo-appearance">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Memo of Appearance Generator — Indian Courts">
-<meta name="twitter:description" content="Fill and download Memo of Appearance PDF free. Covers all Indian court formats. No login.">
+<meta name="twitter:description" content="Fill and download Memo of Appearance PDF. Covers all Indian court formats. No login.">
 <meta name="robots" content="index, follow">
 
 <!-- SEO Upgrade: Open Graph Tags -->
 <meta property="og:title" content="Memorandum of Appearance — Indian Courts">
-<meta property="og:description" content="Free Memorandum of Appearance generator for Indian courts. Fill details and print court-ready memo instantly.">
+<meta property="og:description" content="Memorandum of Appearance generator for Indian courts. Fill details and print court-ready memo instantly.">
 <meta property="og:url" content="https://legalhashchecksum.com/memo-appearance">
 <meta property="og:type" content="website">
 
@@ -38,7 +39,7 @@
   "@type": "WebApplication",
   "name": "Memo of Appearance Generator — Indian Courts",
   "url": "https://legalhashchecksum.com/memo-appearance",
-  "description": "Fill and download a Memorandum of Appearance as PDF. Supports District Court, High Court and Supreme Court formats. Free for Indian advocates.",
+  "description": "Fill and download a Memorandum of Appearance as PDF. Supports District Court, High Court and Supreme Court formats. For advocates, barristers and lawyers.",
   "applicationCategory": "LegalApplication",
   "operatingSystem": "Any",
   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
@@ -103,7 +104,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 .sign-block{margin-top:20mm;text-align:right}
 .sign-line{border-top:1px solid #333;display:inline-block;width:60mm;margin-bottom:2px}
 
-@media print{
+@media print{html,body{height:auto!important;min-height:0!important;overflow:visible!important}.app{display:block!important;height:auto!important;min-height:0!important}.form-panel{display:none!important}.preview-panel{display:block!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:0!important;background:none!important}.paper,.paper-p1,.paper-p2{min-height:0!important;height:auto!important;box-shadow:none!important;border:none!important;background:#fff!important}nav,.stamp-bar,.format-bar,.toolbar,.stamp-modal-overlay{display:none!important}footer,.page-footer{display:none!important}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   @page{size:216mm 356mm;margin:0}
   html,body{background:#fff!important;height:auto!important;overflow:visible!important}
@@ -200,7 +201,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 
 <!-- STAMP BAR -->
 <div class="stamp-bar" id="stampBar">
-  <span class="stamp-bar-label">🖂 Stamp:</span>
+  <span class="stamp-bar-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>Stamp:</span>
   <button class="btn-stamp btn-stamp-has" onclick="stampUpload()" title="Upload your existing stamp image">
     ⬆ I Have a Stamp
   </button>
@@ -217,7 +218,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 <!-- STAMP MAKER MODAL -->
 <div class="stamp-modal-overlay" id="stampModal">
   <div class="stamp-modal">
-    <h3>✦ Create Your Advocate Stamp</h3>
+    <h3>Create Your Advocate Stamp</h3>
     <p>Fill in your details, choose a shape and colour, then click Apply to place it on the document.</p>
 
     <div class="stamp-field"><label>Line 1 — Name</label><input id="sm1" placeholder="ADV. YOUR NAME" value="ADV. YOUR NAME"></div>
@@ -260,7 +261,7 @@ textarea.field-input{resize:vertical;min-height:52px}
 
     <div class="stamp-modal-btns">
       <button class="btn-sm-cancel" onclick="closeStampMaker()">Cancel</button>
-      <button class="btn-sm-apply" onclick="applyCreatedStamp()">✓ Apply Stamp to Document</button>
+      <button class="btn-sm-apply" onclick="applyCreatedStamp()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg>Apply Stamp to Document</button>
     </div>
   </div>
 </div>
@@ -744,5 +745,19 @@ window.clearStamp = function(){
 </section>
 <!-- ── End SEO FAQ ── -->
 
+<footer style="margin-top:40px;padding:18px 24px 24px;border-top:1px solid #E4E9F0;font-size:11px;color:#94A3B8;text-align:center">
+  <div style="display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center;justify-content:center;margin-bottom:6px">
+    <a href="/dashboard" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Dashboard</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/tools" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">All Tools</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/pricing" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Pricing</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/contact" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Contact</a>
+    <span style="color:#CBD5E1">·</span>
+    <a href="/privacy-policy" style="color:#94A3B8;text-decoration:none;padding:2px 7px;border-radius:5px" onmouseover="this.style.color='#1D4ED8'" onmouseout="this.style.color='#94A3B8'">Privacy Policy</a>
+      </div>
+  <div>© 2024–2026 legalhashchecksum.com</div>
+</footer>
 </body>
 </html>

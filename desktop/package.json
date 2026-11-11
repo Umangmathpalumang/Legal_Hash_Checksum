@@ -1,0 +1,66 @@
+{
+  "name": "lhc-pro-desktop",
+  "version": "1.0.0",
+  "description": "LegalHashChecksum Pro — desktop app for Mac and Windows",
+  "main": "electron.js",
+  "scripts": {
+    "start":     "electron .",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "build":     "electron-builder --mac --win"
+  },
+  "dependencies": {
+    "electron": "^30.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.0.0"
+  },
+  "build": {
+    "appId":       "com.legalhashchecksum.pro",
+    "productName": "LHC Pro",
+    "copyright":   "Copyright © 2026 legalhashchecksum.com",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron.js",
+      "preload.js"
+    ],
+    "extraResources": [
+      {
+        "from":   "../",
+        "to":     "app",
+        "filter": [
+          "**/*",
+          "!desktop/**",
+          "!.venv/**",
+          "!__pycache__/**",
+          "!*.pyc",
+          "!.git/**",
+          "!*.md"
+        ]
+      }
+    ],
+    "mac": {
+      "icon":     "build/icon.icns",
+      "category": "public.app-category.business",
+      "target":   [{ "target": "dmg", "arch": ["x64", "arm64"] }],
+      "darkModeSupport": true
+    },
+    "win": {
+      "icon":   "build/icon.ico",
+      "target": [
+        { "target": "nsis",     "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "linux": {
+      "target": [{ "target": "AppImage", "arch": ["x64"] }],
+      "category": "Office"
+    },
+    "nsis": {
+      "oneClick":          false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
