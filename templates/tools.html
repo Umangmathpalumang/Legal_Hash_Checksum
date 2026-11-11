@@ -1,9 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-IN">
 <head>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free Legal Tools for Indian Advocates | Legal Hash Checksum</title>
+  <meta name="description" content="Find free tools for evidence hashing, legal document drafting, judgment research, court fees and limitation periods.">
+  <meta property="og:title" content="Free Legal Tools | Legal Hash Checksum">
+  <meta property="og:description" content="Find evidence, drafting, research and calculator tools for everyday legal work.">
+  <meta property="og:url" content="https://legalhashchecksum.com/tools">
+  <link rel="canonical" href="https://legalhashchecksum.com/tools">
+  <meta name="theme-color" content="#faf8f5">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/site.css">
+  <link rel="stylesheet" href="/static/directory.css">
+  <script src="/static/lhc-core.js" defer></script>
+  <script src="/static/site.js" defer></script>
+  <script src="/static/directory.js" defer></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -11,1324 +25,161 @@
   gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
   window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
 </script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Legal Tools India — Free Tools for Advocates & Law Firms</title>
-<meta name="description" content="14 professional legal tools for advocates, barristers and lawyers — bail bond generator, legal notice, vakalatnama, BNS/IPC lookup, court fee calculator, limitation calculator and more. No login required.">
-<meta name="keywords" content="legal tools India, advocate tools, law firm tools, legal notice generator, bail application, BNS section lookup, IPC sections, court fee calculator, limitation calculator, free legal tools India, vakalatnama generator, bail bond form 45">
-<meta property="og:title" content="Legal Tools India — Free Tools for Advocates & Law Firms">
-<meta property="og:description" content="Professional legal tools for advocates, barristers and lawyers. Draft documents, lookup sections, calculate fees — all private, no login.">
-<meta property="og:type" content="website">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://legalhashchecksum.com/tools">
-<link rel="manifest" href="/manifest.json">
-<script src="/static/lhc-core.js" defer></script>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232563EB%22/><text x=%2216%22 y=%2222%22 font-size=%2220%22 font-family=%22monospace%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>⚖</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0d1117;
-  --surface:#161b22;
-  --card:#1c2128;
-  --card-hover:#21262d;
-  --border:#30363d;
-  --border-subtle:#21262d;
-  --text:#e6edf3;
-  --text-secondary:#c9d1d9;
-  --muted:#8b949e;
-  --muted2:#6e7681;
-  --accent:#2563EB;
-  --accent-light:#60a5fa;
-  --accent-glow:rgba(37,99,235,.15);
-  --green:#22c55e;
-  --green-dim:rgba(34,197,94,.12);
-  --green-border:rgba(34,197,94,.25);
-  --amber:#f59e0b;
-  --red:#f87171;
-  --teal:#2dd4bf;
-  --purple:#a78bfa;
-  --radius:12px;
-  --cat-bar-h:56px;
-}
-@media(prefers-color-scheme:light){
-  :root{
-    --bg:#f6f8fa;--surface:#ffffff;--card:#ffffff;--card-hover:#f0f4f8;
-    --border:#d1d9e0;--border-subtle:#e8ecf0;
-    --text:#1a1f2e;--text-secondary:#374151;--muted:#57606a;--muted2:#8a929c;
-    --accent-glow:rgba(37,99,235,.07);
-  }
-}
-
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
-
-/* ── NAVIGATION PROGRESS BAR (perceived performance) ── */
-#navProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:9999;
-  background:linear-gradient(90deg,var(--accent),var(--accent-light));
-  transition:width .25s ease,opacity .4s ease;opacity:0;border-radius:0 3px 3px 0;
-  box-shadow:0 0 8px rgba(37,99,235,.6)}
-#navProgress.loading{opacity:1}
-/* Tool card click ripple */
-.tool-card .nav-ripple{position:absolute;top:50%;left:50%;width:0;height:0;
-  background:rgba(37,99,235,.08);border-radius:50%;transform:translate(-50%,-50%);
-  animation:rippleOut .5s ease-out forwards}
-@keyframes rippleOut{to{width:200%;padding-bottom:200%;opacity:0}}
-
-/* ── NAV ── */
-nav{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;height:56px;
-  border-bottom:1px solid var(--border);
-  position:sticky;top:0;background:var(--bg);
-  z-index:200;backdrop-filter:blur(12px);
-}
-.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
-.nav-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.nav-logo svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.nav-name{font-size:14px;font-weight:700;letter-spacing:-.01em}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav-pill{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--green-dim);color:#15803d;border:1px solid var(--green-border);padding:4px 10px;border-radius:20px}
-.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:8px;transition:border-color .2s,color .2s;display:flex;align-items:center;gap:5px}
-.nav-link svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.nav-link:hover{border-color:var(--accent);color:var(--accent)}
-
-/* ── HERO ── */
-.hero{
-  max-width:860px;margin:0 auto;
-  padding:64px 32px 48px;
-  text-align:center;
-}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:7px;
-  background:var(--accent-glow);border:1px solid rgba(37,99,235,.3);
-  color:var(--accent);font-size:11px;font-weight:700;
-  letter-spacing:.07em;text-transform:uppercase;
-  padding:5px 14px;border-radius:20px;margin-bottom:28px;
-}
-.hero-eyebrow svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5}
-.hero h1{
-  font-size:clamp(30px,4.5vw,52px);font-weight:800;
-  letter-spacing:-.03em;line-height:1.08;
-  margin-bottom:16px;
-}
-.hero h1 em{font-style:normal;color:var(--accent)}
-.hero-desc{
-  font-size:17px;color:var(--muted);
-  max-width:520px;margin:0 auto 36px;
-  line-height:1.8;font-weight:400;
-}
-
-/* ── SEARCH BAR ── */
-.search-wrap{
-  position:relative;
-  max-width:560px;
-  margin:0 auto 36px;
-}
-.search-wrap svg.search-icon{
-  position:absolute;left:18px;top:50%;transform:translateY(-50%);
-  width:18px;height:18px;
-  stroke:var(--muted);fill:none;stroke-width:2;
-  stroke-linecap:round;stroke-linejoin:round;
-  pointer-events:none;
-  transition:stroke .2s;
-}
-.search-wrap:focus-within svg.search-icon{stroke:var(--accent)}
-#desktopSearch{
-  width:100%;
-  background:var(--surface);
-  color:var(--text);
-  border:1.5px solid var(--border);
-  border-radius:14px;
-  padding:16px 52px 16px 50px;
-  font-size:16px;
-  font-family:'Inter',sans-serif;
-  font-weight:400;
-  outline:none;
-  transition:border-color .2s, box-shadow .2s;
-  box-shadow:0 2px 8px rgba(0,0,0,.12);
-}
-#desktopSearch:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(37,99,235,.15), 0 2px 8px rgba(0,0,0,.12);
-}
-#desktopSearch::placeholder{color:var(--muted);font-size:15px}
-.search-kbd{
-  position:absolute;right:14px;top:50%;transform:translateY(-50%);
-  background:var(--border);color:var(--muted2);
-  font-size:11px;font-weight:600;font-family:monospace;
-  padding:3px 8px;border-radius:6px;
-  pointer-events:none;
-  transition:opacity .2s;
-}
-.search-wrap:focus-within .search-kbd{opacity:0}
-#searchEmpty{
-  display:none;text-align:center;padding:60px 20px;
-  color:var(--muted);
-}
-#searchEmpty .empty-icon{font-size:40px;margin-bottom:12px}
-#searchEmpty p{font-size:15px}
-
-/* stat strip */
-.stat-strip{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);overflow:hidden;
-  max-width:580px;margin:0 auto;
-}
-.stat-item{
-  padding:18px 12px;text-align:center;
-  border-right:1px solid var(--border);
-}
-.stat-item:last-child{border-right:none}
-.stat-n{font-size:22px;font-weight:800;letter-spacing:-.02em;color:var(--accent)}
-.stat-l{font-size:11px;color:var(--muted);margin-top:3px;font-weight:500;letter-spacing:.02em}
-
-.mobile-search-box{display:none}
-/* ── CATEGORY BAR ── */
-.cat-bar-wrap{
-  position:sticky;top:56px;z-index:150;
-  background:var(--bg);
-  border-bottom:1px solid var(--border);
-}
-.cat-bar{
-  display:flex;align-items:center;gap:6px;
-  max-width:1100px;margin:0 auto;
-  padding:0 32px;
-  height:54px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  -ms-overflow-style:none;
-}
-.cat-bar::-webkit-scrollbar{display:none}
-.cat-btn{
-  display:flex;align-items:center;gap:8px;
-  padding:0 18px;height:38px;
-  border-radius:10px;
-  border:1px solid transparent;
-  background:transparent;
-  color:var(--muted);
-  font-size:14px;font-weight:600;
-  font-family:'Inter',sans-serif;
-  cursor:pointer;white-space:nowrap;
-  transition:background .18s,color .18s,border-color .18s;
-  flex-shrink:0;
-  letter-spacing:-.01em;
-}
-.cat-btn svg{
-  width:15px;height:15px;
-  stroke:currentColor;fill:none;
-  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
-  flex-shrink:0;
-}
-.cat-btn:hover{background:var(--card);color:var(--text-secondary);border-color:var(--border)}
-.cat-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.cat-btn .cat-count{
-  font-size:11px;font-weight:700;
-  background:rgba(255,255,255,.2);
-  padding:1px 7px;border-radius:10px;
-  line-height:1.5;
-}
-.cat-btn:not(.active) .cat-count{background:var(--border);color:var(--muted2)}
-
-/* ── TOOLS SECTION ── */
-.tools-wrap{max-width:1100px;margin:0 auto;padding:32px 32px 80px}
-.tools-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-  gap:16px;
-}
-
-/* ── TOOL CARD ── */
-.tool-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:24px;
-  text-decoration:none;color:var(--text);
-  display:flex;flex-direction:column;gap:14px;
-  position:relative;overflow:hidden;
-  transition:border-color .2s,box-shadow .25s,transform .2s;
-  min-height:190px;
-}
-.tool-card::after{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),var(--accent-glow),transparent 55%);
-  opacity:0;transition:opacity .35s;pointer-events:none;
-}
-.tool-card:hover{
-  border-color:var(--accent);
-  box-shadow:0 6px 32px rgba(0,0,0,.22);
-  transform:translateY(-2px);
-}
-.tool-card:hover::after{opacity:1}
-.tool-card[data-new="true"]{border-color:rgba(167,139,250,.4)}
-
-/* card header */
-.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.card-icon{
-  width:44px;height:44px;border-radius:11px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.card-icon svg{width:22px;height:22px;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;fill:none}
-.card-meta{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
-.badge{
-  font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-  padding:3px 9px;border-radius:20px;white-space:nowrap;line-height:1.5;
-}
-.badge-live{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.28)}
-.badge-new{background:rgba(167,139,250,.12);color:#a78bfa;border:1px solid rgba(167,139,250,.28)}
-
-/* card body */
-.card-title{font-size:15.5px;font-weight:700;letter-spacing:-.02em;line-height:1.35}
-.card-desc{font-size:13px;color:var(--muted);line-height:1.75;flex:1}
-
-/* card footer */
-.card-foot{
-  display:flex;align-items:center;justify-content:space-between;
-  padding-top:14px;border-top:1px solid var(--border-subtle);
-  margin-top:auto;
-}
-.card-tag{font-size:11px;color:var(--muted2);max-width:78%;line-height:1.5}
-.card-cta{
-  width:32px;height:32px;border-radius:8px;
-  background:var(--accent);flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .2s,background .15s;
-}
-.tool-card:hover .card-cta{transform:translateX(4px)}
-.card-cta svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-
-/* hidden state */
-.tool-card.hidden{display:none}
-
-/* ── FEATURED CARD (Judgment Digest — full width, top of grid) ── */
-.featured-card{
-  grid-column:1 / -1;
-  background:linear-gradient(135deg,var(--card) 60%,rgba(37,99,235,.06));
-  border-color:rgba(37,99,235,.35);
-  cursor:pointer;
-  min-height:auto;
-}
-.featured-card:hover{
-  border-color:var(--accent);
-  box-shadow:0 8px 40px rgba(37,99,235,.18);
-  transform:translateY(-2px);
-}
-.featured-card .card-title{font-size:17px}
-.featured-card .card-desc{font-size:14px;max-width:640px}
-
-/* ── POPUP OVERLAY ── */
-.popup-overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:2000;
-  display:flex;align-items:center;justify-content:center;
-  padding:24px;
-  opacity:0;pointer-events:none;
-  transition:opacity .22s;
-}
-.popup-overlay.open{opacity:1;pointer-events:all}
-.popup-box{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  width:100%;max-width:440px;
-  padding:32px;
-  transform:translateY(16px) scale(.97);
-  transition:transform .22s;
-  position:relative;
-}
-.popup-overlay.open .popup-box{transform:translateY(0) scale(1)}
-.popup-close{
-  position:absolute;top:16px;right:16px;
-  width:30px;height:30px;border-radius:8px;
-  background:transparent;border:1px solid var(--border);
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  color:var(--muted);transition:border-color .15s,color .15s;
-}
-.popup-close:hover{border-color:var(--muted);color:var(--text)}
-.popup-close svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.popup-icon{
-  width:52px;height:52px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:18px;
-}
-.popup-icon svg{width:26px;height:26px;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.popup-title{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;color:var(--text)}
-.popup-desc{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:24px}
-.popup-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.popup-feat{display:flex;align-items:flex-start;gap:12px;font-size:13px;color:var(--text-secondary);line-height:1.5}
-.popup-feat-dot{
-  width:20px;height:20px;border-radius:6px;flex-shrink:0;margin-top:1px;
-  display:flex;align-items:center;justify-content:center;
-}
-.popup-feat-dot svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.popup-btn-primary{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  width:100%;padding:14px;
-  background:var(--accent);color:#fff;
-  border:none;border-radius:11px;
-  font-size:15px;font-weight:700;
-  font-family:'Inter',sans-serif;
-  cursor:pointer;text-decoration:none;
-  transition:opacity .15s,transform .15s;
-  letter-spacing:-.01em;
-}
-.popup-btn-primary:hover{opacity:.9;transform:translateY(-1px)}
-.popup-btn-primary svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.popup-btn-secondary{
-  display:block;text-align:center;
-  margin-top:12px;font-size:13px;color:var(--muted);
-  cursor:pointer;
-  transition:color .15s;
-}
-.popup-btn-secondary:hover{color:var(--text)}
-
-/* ── FOOTER ── */
-footer{
-  border-top:1px solid var(--border);
-  background:var(--surface);
-  padding:40px 24px 28px;
-  color:var(--muted);font-size:13px;
-}
-.ft-inner{max-width:900px;margin:0 auto}
-.ft-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px 32px;margin-bottom:32px}
-.ft-col-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
-.ft-links{display:flex;flex-direction:column;gap:7px}
-.ft-links a{color:var(--text-secondary);text-decoration:none;font-size:13px;font-weight:500;transition:color .15s}
-.ft-links a:hover{color:var(--accent-light)}
-.ft-bottom{border-top:1px solid var(--border);padding-top:20px;text-align:center;font-size:12px;color:var(--muted)}
-@media(max-width:600px){.ft-grid{grid-template-columns:1fr 1fr}}
-
-/* ── RESPONSIVE ── */
-@media(max-width:900px){
-  .tools-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:640px){
-  nav{padding:0 16px}
-  .hero{padding:48px 16px 40px}
-  .stat-strip{grid-template-columns:repeat(2,1fr)}
-  .stat-item:nth-child(2){border-right:none}
-  .stat-item:nth-child(3){border-top:1px solid var(--border)}
-  .stat-item:nth-child(4){border-top:1px solid var(--border);border-right:none}
-  .cat-bar{padding:0 12px;gap:6px}
-  .tools-wrap{padding:24px 16px 60px}
-  .tools-grid{grid-template-columns:1fr}
-}
-
-/* ── FEEDBACK ── */
-.fb-btn{position:fixed;bottom:24px;right:24px;z-index:900;width:48px;height:48px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,99,235,.4);transition:transform .2s,box-shadow .2s}
-.fb-btn:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(37,99,235,.5)}
-.fb-btn svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.fb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;display:flex;align-items:flex-end;justify-content:flex-end;padding:24px;opacity:0;pointer-events:none;transition:opacity .2s}
-.fb-overlay.open{opacity:1;pointer-events:all}
-.fb-modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:360px;transform:translateY(16px) scale(.98);transition:transform .22s;font-family:'Inter',sans-serif}
-.fb-overlay.open .fb-modal{transform:translateY(0) scale(1)}
-.fb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.fb-ttl{font-size:15px;font-weight:700;color:var(--text)}
-.fb-x{width:26px;height:26px;border-radius:7px;background:transparent;border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center}
-.fb-x svg{width:12px;height:12px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.fb-types{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
-.fb-type{padding:4px 11px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:.15s;white-space:nowrap;font-family:'Inter',sans-serif}
-.fb-type.active{border-color:var(--accent);color:var(--accent-light);background:var(--accent-glow)}
-.fb-field{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:9px 11px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;resize:none;transition:border-color .2s;margin-bottom:9px;box-sizing:border-box}
-.fb-field:focus{border-color:var(--accent)}
-.fb-field::placeholder{color:var(--muted2)}
-.fb-submit{width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;font-family:'Inter',sans-serif}
-.fb-submit:hover{opacity:.88}
-.fb-submit:disabled{opacity:.5;cursor:not-allowed}
-.fb-submit svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.fb-err{font-size:11px;color:var(--red);margin-bottom:8px;display:none}
-.fb-ok{text-align:center;padding:18px 0;display:none}
-.fb-ok svg{width:36px;height:36px;stroke:var(--green);fill:none;stroke-width:1.5;margin:0 auto 10px;display:block}
-.fb-ok h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px}
-.fb-ok p{font-size:12px;color:var(--muted)}
-
-/* APP-LIKE MOBILE VIEW */
-@media (max-width: 768px) {
-  body { background: #f4f7fb; }
-  nav { display: none; } /* Hide standard top nav */
-  
-  /* Dark Header matching mockup */
-  .hero {
-    background: #0f172a; 
-    color: #fff;
-    padding: 50px 20px 30px;
-    border-bottom-left-radius: 24px;
-    border-bottom-right-radius: 24px;
-    text-align: center;
-  }
-  .hero h1 { font-size: 24px; color: #fff; margin-bottom: 4px; }
-  .hero h1 em { color: #fff; font-style: normal; }
-  .hero-desc { font-size: 13px; color: #cbd5e1; margin-bottom: 0; }
-  .hero-eyebrow, .stat-strip, .cat-bar-wrap { display: none; }
-  
-  /* Real Search Bar */
-  .mobile-search-box {
-    width: 100%;
-    background: #f8fafc;
-    color: #1e293b;
-    padding: 12px 18px;
-    border-radius: 24px;
-    border: none;
-    font-size: 14px;
-    margin-top: 24px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    outline: none;
-  }
-  .mobile-search-box::placeholder { color: #64748b; }
-
-  /* 3-Column Grid for Tools */
-  .tools-wrap { padding: 24px 16px 110px; }
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-  
-  /* App Icon Cards */
-  .tool-card {
-    background: #fff;
-    border: none;
-    border-radius: 18px;
-    padding: 16px 8px;
-    align-items: center;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-  }
-  .card-head { margin: 0 0 10px 0; justify-content: center; width: 100%; }
-  .card-meta, .card-desc, .card-foot { display: none; }
-  .card-icon { width: 44px; height: 44px; background: transparent !important; }
-  .card-icon svg { width: 34px; height: 34px; stroke: #334155; stroke-width: 1.5; }
-  .card-title { font-size: 11px; font-weight: 600; color: #1e293b; line-height: 1.2; }
-
-  /* Bottom App Navigation */
-  .app-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: #fff;
-    padding: 12px 24px calc(12px + env(safe-area-inset-bottom));
-    justify-content: space-between;
-    border-top: 1px solid #e2e8f0;
-    z-index: 1000;
-  }
-  .app-nav-item {
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    text-decoration: none; color: #94a3b8; font-size: 10px; font-weight: 600;
-  }
-  .app-nav-item.active { color: #0f172a; }
-  .app-nav-item svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; }
-  .app-nav-item.active svg { fill: #0f172a; stroke: none; }
-  
-  footer {
-    display: block;
-    padding: 28px 20px calc(90px + env(safe-area-inset-bottom));
-    background: #fff;
-    border-top: 1px solid #e2e8f0;
-  }
-  .ft-grid { grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-bottom: 20px; }
-  .ft-col-title { font-size: 9px; color: #94a3b8; margin-bottom: 8px; }
-  .ft-links a { font-size: 12px; color: #475569; }
-  .ft-bottom { font-size: 11px; padding-top: 16px; }
-  .fb-btn { bottom: 85px; right: 16px; transform: scale(0.85); }
-}
-@media (min-width: 769px) { .app-nav { display: none; } }
-@media print{footer,.page-footer{display:none!important}}
-</style>
-<style>
-/* ── RIBBON (tools page) ── */
-.r-topbar{height:52px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;position:sticky;top:0;z-index:200;box-shadow:0 1px 4px rgba(0,0,0,.07)}
-.r-logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--text);flex-shrink:0}
-.r-logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(37,99,235,.3)}
-.r-logo-icon svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.r-logo-name{font-size:14px;font-weight:800;letter-spacing:-.3px;line-height:1.1}
-.r-logo-sub{font-size:10px;color:var(--muted);font-weight:500}
-.r-search-wrap{flex:1;max-width:340px;position:relative}
-.r-search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-.r-search-wrap input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 12px 7px 32px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:.2s}
-.r-search-wrap input:focus{border-color:var(--accent)}
-.r-search-wrap input::placeholder{color:var(--muted)}
-.r-actions{display:flex;align-items:center;gap:6px;margin-left:auto}
-.r-icobtn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:.15s}
-.r-icobtn:hover{border-color:var(--accent);color:var(--accent)}
-.r-avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer;border:2px solid var(--border);flex-shrink:0}
-.r-tabs{height:36px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:flex-end;padding:0 16px;overflow-x:auto;scrollbar-width:none;position:sticky;top:52px;z-index:190}
-.r-tabs::-webkit-scrollbar{display:none}
-.r-tab{font-size:12px;font-weight:600;padding:0 14px;height:35px;border:none;background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;gap:5px;text-decoration:none;font-family:'Inter',sans-serif}
-.r-tab:hover{color:var(--accent)}
-.r-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
-.r-tab svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.r-strip{height:46px;background:var(--surface);border-bottom:2px solid var(--border);display:flex;align-items:center;padding:0 16px;overflow-x:auto;scrollbar-width:none;position:sticky;top:88px;z-index:180;box-shadow:0 2px 6px rgba(0,0,0,.05)}
-.r-strip::-webkit-scrollbar{display:none}
-.r-grp{display:flex;align-items:center;gap:1px;padding:0 8px;position:relative}
-.r-grp:not(:last-child)::after{content:'';position:absolute;right:0;top:4px;bottom:4px;width:1px;background:var(--border)}
-.r-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:3px 7px;border-radius:6px;border:none;background:transparent;cursor:pointer;color:var(--muted);transition:.15s;font-size:10px;font-weight:600;line-height:1;white-space:nowrap;min-width:42px;text-decoration:none;font-family:'Inter',sans-serif}
-.r-btn:hover{background:rgba(37,99,235,.07);color:var(--accent)}
-.r-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.r-btn-hl{background:var(--accent);color:#fff}
-.r-btn-hl:hover{background:#1D4ED8;color:#fff}
-.r-hamburger{display:none;width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--card);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
-.r-hamburger svg{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round}
-.r-bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:8px 12px calc(8px + env(safe-area-inset-bottom));justify-content:space-around;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.06)}
-.r-bnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--muted);font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 6px;border-radius:8px;min-width:50px}
-.r-bnav-item.active{color:var(--accent)}
-.r-bnav-item svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.r-drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;backdrop-filter:blur(4px)}
-.r-drawer-overlay.open{display:block}
-.r-drawer{position:fixed;top:0;left:0;bottom:0;width:280px;background:var(--surface);z-index:301;transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 24px rgba(0,0,0,.2);display:flex;flex-direction:column}
-.r-drawer.open{transform:translateX(0)}
-.r-drawer-hd{padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.r-drawer-close{margin-left:auto;width:28px;height:28px;border:1px solid var(--border);border-radius:6px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted)}
-.r-drawer-close svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
-.r-drawer-nav{flex:1;overflow-y:auto;padding:10px 8px}
-.r-drawer-sec{font-size:9px;font-weight:700;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;padding:12px 10px 6px}
-.r-drawer-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;transition:.15s}
-.r-drawer-link:hover,.r-drawer-link.active{background:rgba(37,99,235,.07);color:var(--accent)}
-.r-drawer-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-@media(max-width:768px){.r-strip,.r-tabs{display:none}.r-hamburger{display:flex}.r-search-wrap{max-width:none;flex:1}.r-bnav{display:flex}}
-</style>
 </head>
-<body>
-
-<!-- ═══ RIBBON TOP BAR ═══ -->
-<header class="r-topbar">
-  <button class="r-hamburger" onclick="rOpenDrawer()" aria-label="Menu"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-  <a href="/" class="r-logo">
-    <div class="r-logo-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-    <div><div class="r-logo-name">LegalHash</div><div class="r-logo-sub">Checksum.com</div></div>
-  </a>
-  <div class="r-search-wrap">
-    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" placeholder="Search tools, acts, sections…" id="toolSearchInput" oninput="filterTools(this.value)">
-  </div>
-  <div class="r-actions">
-    <div class="r-avatar">UA</div>
-  </div>
-</header>
-
-<!-- ═══ RIBBON TABS ═══ -->
-<nav class="r-tabs">
-  <a href="/hash" class="r-tab"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>Hash Tool</a>
-  <a href="/cases" class="r-tab"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Cases</a>
-  <a href="/legal-qa" class="r-tab"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Q&amp;A</a>
-  <a href="/tools" class="r-tab active"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>All Tools</a>
-  <a href="/judgments" class="r-tab"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Documents</a>
-  <a href="/profile" class="r-tab"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
-</nav>
-
-<!-- ═══ RIBBON STRIP ═══ -->
-<div class="r-strip">
-  <div class="r-grp">
-    <a href="/bail-bond" class="r-btn r-btn-hl"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Bail Bond</a>
-    <a href="/legal-notice" class="r-btn r-btn-hl"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Legal Notice</a>
-  </div>
-  <div class="r-grp">
-    <a href="/law-converter" class="r-btn"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>IPC→BNS</a>
-    <a href="/bns-lookup" class="r-btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>BNS Lookup</a>
-    <a href="/court-fee" class="r-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Court Fee</a>
-    <a href="/limitation-calculator" class="r-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Limitation</a>
-    <a href="/vakalatnama" class="r-btn"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Vakalatnama</a>
-  </div>
-  <div class="r-grp">
-    <a href="/hash" class="r-btn"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>Hash Tool</a>
-    <a href="/legal-qa" class="r-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Q&amp;A</a>
-  </div>
-</div>
-
-<!-- ═══ DRAWER ═══ -->
-<div class="r-drawer-overlay" id="rDrawerOverlay" onclick="rCloseDrawer()"></div>
-<div class="r-drawer" id="rDrawer">
-  <div class="r-drawer-hd">
-    <div class="r-logo-icon" style="width:28px;height:28px"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-    <span style="font-size:13px;font-weight:800">Legal Tools India</span>
-    <button class="r-drawer-close" onclick="rCloseDrawer()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  </div>
-  <nav class="r-drawer-nav">
-    <div class="r-drawer-sec">Main</div>
-    <a href="/hash" class="r-drawer-link"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>Hash Tool</a>
-    <a href="/cases" class="r-drawer-link"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Cases Docket</a>
-    <a href="/legal-qa" class="r-drawer-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Legal Q&amp;A</a>
-    <a href="/tools" class="r-drawer-link active"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>All Tools</a>
-    <div class="r-drawer-sec">Legal Tools</div>
-    <a href="/bail-bond" class="r-drawer-link"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Bail Bond Generator</a>
-    <a href="/legal-notice" class="r-drawer-link"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Legal Notice</a>
-    <a href="/vakalatnama" class="r-drawer-link"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Vakalatnama</a>
-    <a href="/court-fee" class="r-drawer-link"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Court Fee Calculator</a>
-    <a href="/law-converter" class="r-drawer-link"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>IPC → BNS Converter</a>
-    <a href="/limitation-calculator" class="r-drawer-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Limitation Calculator</a>
-    <a href="/bns-lookup" class="r-drawer-link"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>BNS Section Lookup</a>
-  </nav>
-</div>
-
-<!-- ═══ BOTTOM NAV ═══ -->
-<nav class="r-bnav">
-  <a href="/" class="r-bnav-item"><svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>Hash</a>
-  <a href="/cases" class="r-bnav-item"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Cases</a>
-  <a href="/legal-qa" class="r-bnav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Q&amp;A</a>
-  <a href="/tools" class="r-bnav-item active"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Tools</a>
-  <a href="/profile" class="r-bnav-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
-</nav>
-<script>
-function rOpenDrawer(){document.getElementById('rDrawer').classList.add('open');document.getElementById('rDrawerOverlay').classList.add('open');document.body.style.overflow='hidden';}
-function rCloseDrawer(){document.getElementById('rDrawer').classList.remove('open');document.getElementById('rDrawerOverlay').classList.remove('open');document.body.style.overflow='';}
-function filterTools(val){
-  var q=val.toLowerCase().trim();
-  document.querySelectorAll('.tool-card,[data-tool]').forEach(function(card){
-    var txt=(card.textContent||'').toLowerCase();
-    card.style.display=(!q||txt.includes(q))?'':'none';
-  });
-}
-</script>
-<main>
-
-<!-- ── HERO ── -->
-<div class="hero">
-  <div class="hero-eyebrow">
-    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    For Advocates, Barristers and Lawyers
-  </div>
-  <h1>Every tool your<br><em>practice needs</em></h1>
-  <p class="hero-desc">Draft documents, lookup sections, calculate fees — professional tools built for Indian courts. No data sent to any server.</p>
-  <div class="search-wrap">
-    <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="desktopSearch" placeholder="Search tools — bail bond, BNS, limitation..." autocomplete="off" oninput="filterTools(this.value)">
-    <span class="search-kbd">⌘K</span>
-  </div>
-  <div id="searchEmpty">
-    <p style="font-size:15px;color:var(--muted)">No tools found. Try "bail", "notice" or "BNS".</p>
-  </div>
-  <div class="stat-strip">
-    <div class="stat-item"><div class="stat-n">14</div><div class="stat-l">Live tools</div></div>
-    <div class="stat-item"><div class="stat-n">100%</div><div class="stat-l">Private & secure</div></div>
-    <div class="stat-item"><div class="stat-n">BNS</div><div class="stat-l">2023 updated</div></div>
-    <div class="stat-item"><div class="stat-n">0</div><div class="stat-l">Data collected</div></div>
-  </div>
-</div>
-
-<!-- ── CATEGORY BAR ── -->
-<div class="cat-bar-wrap">
-  <div class="cat-bar" role="tablist" aria-label="Tool categories">
-    <button class="cat-btn active" data-cat="all" onclick="filterCat('all',this)" role="tab" aria-selected="true">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      All Tools
-      <span class="cat-count">14</span>
-    </button>
-    <button class="cat-btn" data-cat="docs" onclick="filterCat('docs',this)" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      Documents
-      <span class="cat-count">5</span>
-    </button>
-    <button class="cat-btn" data-cat="research" onclick="filterCat('research',this)" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      Research
-      <span class="cat-count">5</span>
-    </button>
-    <button class="cat-btn" data-cat="calc" onclick="filterCat('calc',this)" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
-      Calculators
-      <span class="cat-count">2</span>
-    </button>
-    <button class="cat-btn" data-cat="evidence" onclick="filterCat('evidence',this)" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M6 14h.01M10 10h4M10 14h4"/></svg>
-      Evidence
-      <span class="cat-count">1</span>
-    </button>
-    <button class="cat-btn" data-cat="community" onclick="filterCat('community',this)" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Legal Q&amp;A
-      <span class="cat-count">1</span>
-    </button>
-  </div>
-</div>
-
-<!-- ── TOOLS GRID ── -->
-<div class="tools-wrap">
-
-
-  <div class="tools-grid" id="toolsGrid">
-
-    <div class="tool-card featured-card" data-cat="research" data-new="true" onclick="openPopup('judgments')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openPopup('judgments')">
-      <div class="card-head">
-        <div class="card-icon" style="background:rgba(37,99,235,.18)">
-          <svg viewBox="0 0 24 24" style="stroke:#60a5fa;width:24px;height:24px;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+<body class="lhc-site">
+  <!-- site-header -->
+  <main id="site-main" tabindex="-1">
+    <section class="directory-hero site-container" aria-labelledby="directory-title">
+      <div class="directory-hero-panel">
+        <div class="directory-intro">
+          <p class="site-kicker"><span></span> THE TOOL LIBRARY</p>
+          <h1 id="directory-title">Find the right legal tool.</h1>
+          <p>Search evidence, documents, research, and calculators in one place.</p>
         </div>
-        <div class="card-meta">
-          <span class="badge badge-live">Live</span>
-          <span class="badge badge-new">New</span>
+        <div class="directory-search" id="directory-search" hidden>
+          <label class="visually-hidden" for="tool-query">Search legal tools</label>
+          <svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#search"/></svg>
+          <input id="tool-query" type="search" placeholder="Try bail bond, BNS, or file hash" autocomplete="off">
+          <button type="button" id="clear-query" aria-label="Clear search" hidden><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#close"/></svg></button>
+          <kbd aria-hidden="true">/</kbd>
         </div>
       </div>
-      <div class="card-title" style="font-size:17px">Daily Judgment Digest</div>
-      <div class="card-desc" style="font-size:14px">Supreme Court and High Court judgments updated every morning. Filter by practice area — Criminal, Civil, Family, Tax, Constitutional, Labour. Headnotes included.</div>
-      <div class="card-foot">
-        <span class="card-tag">SC · All High Courts · 6 Practice Areas · Updated Daily</span>
-        <div class="card-cta" style="width:36px;height:36px"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    </section>
+    <section class="directory-content site-container" aria-labelledby="results-heading">
+      <div class="directory-filters" role="group" aria-label="Tool category" hidden>
+        <button type="button" data-filter="all" aria-pressed="true">All tools</button>
+<button type="button" data-filter="evidence" aria-pressed="false">Evidence</button>
+<button type="button" data-filter="documents" aria-pressed="false">Documents</button>
+<button type="button" data-filter="research" aria-pressed="false">Research</button>
+<button type="button" data-filter="calculators" aria-pressed="false">Calculators</button>
+<button type="button" data-filter="community" aria-pressed="false">Community</button>
       </div>
-    </div>
-
-    <a aria-label="Vakalatnama Generator" class="tool-card" data-cat="docs" href="/vakalatnama">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(96,165,250,.1)">
-<svg style="stroke:#60a5fa" viewbox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Vakalatnama Generator</div>
-<div class="card-desc">Formatted Vakalatnama on official green legal paper. Fill advocate and client details — live preview, print or save as PDF instantly. Civil and criminal courts.</div>
-<div class="card-foot">
-<span class="card-tag">Civil · Criminal · High Court · District Court</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <a aria-label="Bail Bond Form 45" class="tool-card" data-cat="docs" href="/bail-bond">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(248,113,113,.1)">
-<svg style="stroke:#f87171" viewbox="0 0 24 24"><rect height="11" rx="2" width="18" x="3" y="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Bail Bond — Form No. 45</div>
-<div class="card-desc">Complete bail bond generator — Form 45, Surety Bond, and full Affidavit on legal paper. Three format modes, live preview. Covers Sections 436, 437, 438(3), 441 CrPC.</div>
-<div class="card-foot">
-<span class="card-tag">CrPC 436 · 437 · 438 · 441 · Legal Paper</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <a aria-label="Memo of Appearance" class="tool-card" data-cat="docs" href="/memo-appearance">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(45,212,191,.1)">
-<svg style="stroke:#2dd4bf" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="9" x2="12" y1="17" y2="17"></line></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Memo of Appearance</div>
-<div class="card-desc">Court-ready Memorandum of Appearance in seconds. Fill advocate and party details, live preview updates — clean legal paper format for any civil or criminal case.</div>
-<div class="card-foot">
-<span class="card-tag">Civil · Criminal · All Courts</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <a aria-label="Legal Notice Generator" class="tool-card" data-cat="docs" href="/legal-notice">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(245,158,11,.12)">
-<svg style="stroke:#f59e0b" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Legal Notice Generator</div>
-<div class="card-desc">Generate court-ready legal notices for cheque bounce (Sec 138), property disputes, consumer grievances, employment issues, and money recovery. Letterhead included.</div>
-<div class="card-foot">
-<span class="card-tag">138 NI Act · Consumer · Property · Employment</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <a aria-label="BNS IPC Section Lookup" class="tool-card" data-cat="research" href="/bns-lookup">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(45,212,191,.1)">
-<svg style="stroke:#2dd4bf" viewbox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">BNS / IPC Section Lookup</div>
-<div class="card-desc">Search any BNS 2023 or IPC section instantly — full text, punishment, bailable/cognizable status, and bidirectional IPC ↔ BNS mapping. Essential for criminal practice.</div>
-<div class="card-foot">
-<span class="card-tag">BNS 2023 · IPC · BNSS · NI Act</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <a aria-label="Limitation Period Calculator" class="tool-card" data-cat="calc" href="/limitation-calculator">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(248,113,113,.1)">
-<svg style="stroke:#f87171" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Limitation Period Calculator</div>
-<div class="card-desc">Calculate the exact last date to file under the Limitation Act 1963. Shows days remaining, expired warnings, and a quick-reference table of common limitation periods.</div>
-<div class="card-foot">
-<span class="card-tag">Limitation Act 1963 · Civil · Appeal · Revision</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <a aria-label="Court Fee Calculator" class="tool-card" data-cat="calc" href="/court-fee">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(34,197,94,.1)">
-<svg style="stroke:#22c55e" viewbox="0 0 24 24"><line x1="12" x2="12" y1="1" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Court Fee Calculator</div>
-<div class="card-desc">Calculate ad valorem court fees for civil suits across 10 Indian states. Slab-wise breakdown for money suits, property, injunction, divorce, probate and more.</div>
-<div class="card-foot">
-<span class="card-tag">10 States · Ad Valorem · Civil Suits</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <a aria-label="Old to New Law Converter" class="tool-card" data-cat="research" href="/law-converter">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(167,139,250,.1)">
-<svg style="stroke:#a78bfa" viewbox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Old → New Law Converter</div>
-<div class="card-desc">Convert IPC → BNS, CrPC → BNSS, Evidence Act → BSA. Full section-by-section mapping with practical notes, key changes, and bidirectional search. Updated 2024.</div>
-<div class="card-foot">
-<span class="card-tag">IPC · CrPC · IEA · BNS · BNSS · BSA</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <div aria-label="Legal Q&A" class="tool-card" data-cat="community" onclick="openPopup('qa')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openPopup('qa')">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(16,185,129,.1)">
-<svg style="stroke:#10B981" viewbox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Legal Q&amp;A — Ask Advocates</div>
-<div class="card-desc">Ask any legal question anonymously. Verified Indian advocates answer. Community platform covering property, criminal, family, consumer, and cyber law.</div>
-<div class="card-foot">
-<span class="card-tag">Property · Criminal · Family · Consumer · Cyber</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</div>
-
-    <a aria-label="Legal Hash Checksum" class="tool-card" data-cat="evidence" href="/hash">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(96,165,250,.1)">
-<svg style="stroke:#60a5fa" viewbox="0 0 24 24"><rect height="12" rx="2" width="20" x="2" y="6"></rect><path d="M6 10h.01M6 14h.01M10 10h4M10 14h4"></path></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Legal Hash Checksum</div>
-<div class="card-desc">Generate MD5, SHA-1, SHA-256 and SHA-512 hash values for digital evidence. Auto-generates Part A &amp; Part B certificates under BSA 2023 Section 63(4)(c).</div>
-<div class="card-foot">
-<span class="card-tag">BSA 2023 · Section 63(4)(c) · Digital Evidence</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <a aria-label="Legal Dictionary" class="tool-card" data-cat="research" href="/legal-dictionary">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(34,197,94,.1)">
-<svg style="stroke:#22c55e" viewbox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Legal Dictionary</div>
-<div class="card-desc">300+ legal terms, Latin maxims, and Indian law phrases explained in plain language. Browse by category — Criminal, Civil, Evidence, Constitutional, Procedural.</div>
-<div class="card-foot">
-<span class="card-tag">Latin Maxims · Criminal · Civil · Evidence</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <a aria-label="Advocate Stamp Generator" class="tool-card" data-cat="docs" data-new="true" href="/stamp-generator">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(167,139,250,.12)">
-<svg style="stroke:#a78bfa" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4"></circle><line x1="12" x2="12" y1="2" y2="4"></line><line x1="12" x2="12" y1="20" y2="22"></line><line x1="2" x2="4" y1="12" y2="12"></line><line x1="20" x2="22" y1="12" y2="12"></line></svg>
-</div>
-<div class="card-meta">
-<span class="badge badge-live">Live</span>
-<span class="badge badge-new">New</span>
-</div>
-</div>
-<div class="card-title">Advocate Stamp Generator</div>
-<div class="card-desc">Create your advocate rubber stamp — pick shape, ink colour, adjust size and opacity. Download as transparent PNG and drop it directly into any document tool.</div>
-<div class="card-foot">
-<span class="card-tag">Round · Rect · Oval · Hex · PNG Download</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-    <a aria-label="Offences Against Women and Children" class="tool-card" data-cat="research" href="/women-children-law">
-<div class="card-head">
-<div class="card-icon" style="background:rgba(244,114,182,.1)">
-<svg style="stroke:#f472b6" viewbox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"></path></svg>
-</div>
-<div class="card-meta"><span class="badge badge-live">Live</span></div>
-</div>
-<div class="card-title">Offences Against Women &amp; Children</div>
-<div class="card-desc">BNS 2023 Chapter V bare act — Sections 63 to 99. Searchable, filterable by sub-chapter. Includes NCW, NHRC, Childline helplines and online complaint portal links.</div>
-<div class="card-foot">
-<span class="card-tag">BNS Ch. V · Sec 63–99 · Helplines</span>
-<div class="card-cta"><svg viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-</div>
-</a>
-
-  </div><!-- end grid -->
-
-</div><!-- end tools-wrap -->
-
-</main>
-<footer>
-  <div class="ft-inner">
-    <div class="ft-grid">
-      <div>
-        <div class="ft-col-title">App</div>
-        <div class="ft-links">
-          <a href="/dashboard">Dashboard</a>
-          <a href="/download">Install app</a>
-          <a href="/cases">Cases</a>
-          <a href="/billing">Billing</a>
-          <a href="/tools">All Tools</a>
-        </div>
+      <div class="directory-heading">
+        <h2 id="results-heading">All tools</h2>
+        <p id="result-count" role="status">16 tools</p>
       </div>
-      <div>
-        <div class="ft-col-title">Explore</div>
-        <div class="ft-links">
-          <a href="/judgments">Judgments</a>
-          <a href="/pricing">Pricing</a>
-          <a href="/pricing">View plans</a>
-          <a href="/contact">Contact &amp; Support</a>
-        </div>
+      <div class="directory-grid" id="directory-grid">
+                  <a class="directory-card" href="/hash" data-category="evidence" data-keywords="checksum fingerprint sha sha256 md5 bsa evidence upload">
+            <div class="directory-card-top"><span class="directory-icon evidence"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#hash"/></svg></span><span class="tool-badge">Featured</span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Evidence</p>
+            <h3>File Hash Generator</h3>
+            <p class="directory-description">Generate SHA-256 and other file hashes in your browser. Prepare BSA §63 certificate drafts.</p>
+          </a>
+          <a class="directory-card" href="/judgments" data-category="research" data-keywords="judgments case law supreme court high court headnotes search">
+            <div class="directory-card-top"><span class="directory-icon research"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#book"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Research</p>
+            <h3>Judgment Digest</h3>
+            <p class="directory-description">Search Supreme Court and High Court decisions by court, year, or practice area.</p>
+          </a>
+          <a class="directory-card" href="/vakalatnama" data-category="documents" data-keywords="vakalat vakalatnama civil criminal court appearance authorisation">
+            <div class="directory-card-top"><span class="directory-icon documents"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#file"/></svg></span><span class="tool-badge">Featured</span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Documents</p>
+            <h3>Vakalatnama Generator</h3>
+            <p class="directory-description">Fill in advocate and party details, preview the document, then print or save it.</p>
+          </a>
+          <a class="directory-card" href="/verify" data-category="evidence" data-keywords="compare verify digital evidence checksum sha256 integrity">
+            <div class="directory-card-top"><span class="directory-icon evidence"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#shield"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Evidence</p>
+            <h3>Hash Verification</h3>
+            <p class="directory-description">Compare a local file with a recorded hash to check whether it matches.</p>
+          </a>
+          <a class="directory-card" href="/bail-bond" data-category="documents" data-keywords="bail bond surety affidavit form 45 bnss crpc custody">
+            <div class="directory-card-top"><span class="directory-icon documents"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#file"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Documents</p>
+            <h3>Bail Bond · Form 45</h3>
+            <p class="directory-description">Prepare bail, surety, and affidavit drafts with a live preview.</p>
+          </a>
+          <a class="directory-card" href="/limitation-calculator" data-category="calculators" data-keywords="limitation deadline time days filing date appeal revision">
+            <div class="directory-card-top"><span class="directory-icon calculators"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#clock"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Calculators</p>
+            <h3>Limitation Calculator</h3>
+            <p class="directory-description">Work out a filing date from a selected limitation period and start date.</p>
+          </a>
+          <a class="directory-card" href="/memo-appearance" data-category="documents" data-keywords="memo appearance court advocate">
+            <div class="directory-card-top"><span class="directory-icon documents"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#file"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Documents</p>
+            <h3>Memo of Appearance</h3>
+            <p class="directory-description">Prepare a memorandum of appearance with advocate and party details.</p>
+          </a>
+          <a class="directory-card" href="/legal-notice" data-category="documents" data-keywords="notice cheque bounce demand property consumer ni 138 recovery">
+            <div class="directory-card-top"><span class="directory-icon documents"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#file"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Documents</p>
+            <h3>Legal Notice Generator</h3>
+            <p class="directory-description">Draft notices for matters such as cheque bounce, consumer disputes, and money recovery.</p>
+          </a>
+          <a class="directory-card" href="/bns-lookup" data-category="research" data-keywords="bns ipc criminal code sections 420 302 376 bnss punishment">
+            <div class="directory-card-top"><span class="directory-icon research"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#book"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Research</p>
+            <h3>BNS / IPC Section Lookup</h3>
+            <p class="directory-description">Look up BNS and IPC sections and see the mapping between them.</p>
+          </a>
+          <a class="directory-card" href="/court-fee" data-category="calculators" data-keywords="fee fees calculator court ad valorem state civil rupee">
+            <div class="directory-card-top"><span class="directory-icon calculators"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#calculator"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Calculators</p>
+            <h3>Court Fee Calculator</h3>
+            <p class="directory-description">Estimate court fees for common civil suit categories using the available state schedules.</p>
+          </a>
+          <a class="directory-card" href="/law-converter" data-category="research" data-keywords="law mapping ipc bns crpc bnss iea bsa old new convert">
+            <div class="directory-card-top"><span class="directory-icon research"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#swap"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Research</p>
+            <h3>Old to New Law Converter</h3>
+            <p class="directory-description">Find corresponding sections across the IPC, CrPC, Evidence Act, and newer codes.</p>
+          </a>
+          <a class="directory-card" href="/legal-qa" data-category="community" data-keywords="qa community question answer advocate help">
+            <div class="directory-card-top"><span class="directory-icon community"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#message"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Community</p>
+            <h3>Legal Q&amp;A</h3>
+            <p class="directory-description">Browse community questions or submit a question for moderation.</p>
+          </a>
+          <a class="directory-card" href="/legal-dictionary" data-category="research" data-keywords="glossary legal dictionary definitions latin maxims terms">
+            <div class="directory-card-top"><span class="directory-icon research"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#book"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Research</p>
+            <h3>Legal Dictionary</h3>
+            <p class="directory-description">Find plain-language explanations of legal terms, Latin maxims, and phrases.</p>
+          </a>
+          <a class="directory-card" href="/stamp-generator" data-category="documents" data-keywords="advocate rubber stamp png image seal">
+            <div class="directory-card-top"><span class="directory-icon documents"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#stamp"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Documents</p>
+            <h3>Advocate Stamp Generator</h3>
+            <p class="directory-description">Create a custom advocate stamp and export it as a transparent PNG.</p>
+          </a>
+          <a class="directory-card" href="/women-children-law" data-category="research" data-keywords="women children offences bns chapter v sections help support">
+            <div class="directory-card-top"><span class="directory-icon research"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#book"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Research</p>
+            <h3>Offences Against Women &amp; Children</h3>
+            <p class="directory-description">Browse the relevant BNS chapter and find support resources.</p>
+          </a>
+          <a class="directory-card" href="/legal-notice-custom" data-category="documents" data-keywords="custom legal notice letter freeform draft document">
+            <div class="directory-card-top"><span class="directory-icon documents"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#file"/></svg></span><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></div>
+            <p class="directory-category">Documents</p>
+            <h3>Custom Legal Notice</h3>
+            <p class="directory-description">Start with a flexible notice template for a matter that needs a custom format.</p>
+          </a>
       </div>
-      <div>
-        <div class="ft-col-title">Legal</div>
-        <div class="ft-links">
-          <a href="/privacy-policy">Privacy Policy</a>
-        </div>
+      <div class="directory-empty" id="directory-empty" hidden>
+        <h3>No tools found</h3>
+        <p>Try a shorter search such as “bail”, “IPC”, or “hash”.</p>
+        <button type="button" class="site-button site-button-outline" id="reset-tools">Show all tools</button>
       </div>
-    </div>
-    <div class="ft-bottom">© 2024–2026 legalhashchecksum.com · Built for Indian advocates · All tools run locally in your browser</div>
-  </div>
-</footer>
-
-<!-- Feedback button -->
-<button class="fb-btn" onclick="fbOpen()" aria-label="Send feedback" title="Feedback / Report issue">
-  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-</button>
-<div class="fb-overlay" id="fbOverlay" onclick="fbBgClose(event)">
-  <div class="fb-modal">
-    <div id="fbForm">
-      <div class="fb-head">
-        <div class="fb-ttl">Send Feedback</div>
-        <button class="fb-x" aria-label="Close feedback" onclick="fbClose()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-      </div>
-      <div class="fb-types">
-        <button class="fb-type active" onclick="fbSetType(this,'Bug / Error')">Bug</button>
-        <button class="fb-type" onclick="fbSetType(this,'Improvement')">Improvement</button>
-        <button class="fb-type" onclick="fbSetType(this,'New Feature')">New Feature</button>
-        <button class="fb-type" onclick="fbSetType(this,'General')">General</button>
-      </div>
-      <textarea class="fb-field" id="fbMsg" rows="4" placeholder="Describe the issue or suggestion..." maxlength="1000"></textarea>
-      <input class="fb-field" type="email" id="fbEmail" placeholder="Email (optional, for reply)" maxlength="80">
-      <div class="fb-err" id="fbError">Please write your feedback first.</div>
-      <button class="fb-submit" id="fbSubmit" onclick="fbSubmit()">
-        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Send Feedback
-      </button>
-    </div>
-    <div class="fb-ok" id="fbOk">
-      <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      <h3>Thank you!</h3>
-      <p>We review every message and improve accordingly.</p>
-    </div>
-  </div>
-</div>
-
-<div id="navProgress"></div>
-
-<script>
-/* ── NAV PROGRESS BAR ── */
-(function(){
-  var bar=document.getElementById('navProgress');
-  var _w=0,_iv=null;
-  function startProgress(){
-    if(!bar)return;
-    _w=0;bar.style.width='0%';bar.classList.add('loading');
-    // sprint to 70% quickly, then crawl to 90%
-    _iv=setInterval(function(){
-      _w+=(_w<70?5:_w<90?0.8:0.1);
-      if(_w>94)_w=94;
-      bar.style.width=_w+'%';
-    },80);
-  }
-  function finishProgress(){
-    clearInterval(_iv);
-    bar.style.width='100%';
-    setTimeout(function(){bar.classList.remove('loading');bar.style.width='0%';},350);
-  }
-  // fire on every tool-card click
-  document.addEventListener('click',function(e){
-    var card=e.target.closest('.tool-card');
-    if(!card)return;
-    var href=card.getAttribute('href');
-    if(!href||href.startsWith('#'))return;
-    // ripple effect on card
-    var r=document.createElement('span');
-    r.className='nav-ripple';
-    card.appendChild(r);
-    setTimeout(function(){if(r.parentNode)r.parentNode.removeChild(r);},600);
-    startProgress();
-  });
-  // complete when page starts unloading
-  window.addEventListener('pagehide',finishProgress);
-  window.addEventListener('beforeunload',finishProgress);
-})();
-
-/* ── CATEGORY FILTER ── */
-function filterCat(cat, btn){
-  // clear search box
-  var s = document.getElementById('desktopSearch');
-  if(s){ s.value = ''; }
-  var empty = document.getElementById('searchEmpty');
-  if(empty) empty.style.display = 'none';
-
-  // update buttons
-  document.querySelectorAll('.cat-btn').forEach(function(b){
-    b.classList.remove('active');
-    b.setAttribute('aria-selected','false');
-  });
-  btn.classList.add('active');
-  btn.setAttribute('aria-selected','true');
-
-  // show/hide cards
-  document.querySelectorAll('.tool-card').forEach(function(card){
-    var cardCat = card.dataset.cat;
-    if(cat === 'all' || cardCat === cat){
-      card.classList.remove('hidden');
-    } else {
-      card.classList.add('hidden');
-    }
-  });
-
-  // GA
-  if(typeof gaEvent!=='undefined') gaEvent('category_filter',{category:cat});
-}
-
-/* ── CARD HOVER GLOW ── */
-document.querySelectorAll('.tool-card').forEach(function(card){
-  card.addEventListener('mousemove',function(e){
-    var r = card.getBoundingClientRect();
-    card.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100)+'%');
-    card.style.setProperty('--my', ((e.clientY-r.top)/r.height*100)+'%');
-  });
-  card.addEventListener('click', function(){
-    var t = this.querySelector('.card-title');
-    if(typeof gaEvent!=='undefined') gaEvent('tool_click',{tool_name:t?t.textContent.trim():'unknown',from_page:'tools_hub'});
-  });
-});
-
-/* ── FEEDBACK ── */
-(function(){
-  var fbType='Bug / Error';
-  var T={'/':'Legal Hash Checksum','/tools':'Tools Hub','/vakalatnama':'Vakalatnama','/bail-bond':'Bail Bond','/memo-appearance':'Memo of Appearance','/bns-lookup':'BNS / IPC Lookup','/limitation-calculator':'Limitation Calculator','/court-fee':'Court Fee','/legal-notice':'Legal Notice','/law-converter':'Law Converter','/legal-dictionary':'Legal Dictionary','/women-children-law':'Women & Children BNS','/stamp-generator':'Stamp Generator','/legal-qa':'Legal Q&A','/judgments':'Judgment Digest'};
-  var path=window.location.pathname.replace(/\/$/,'')||'/';
-  window.fbOpen=function(){document.getElementById('fbOverlay').classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){var m=document.getElementById('fbMsg');if(m)m.focus();},200)};
-  window.fbClose=function(){document.getElementById('fbOverlay').classList.remove('open');document.body.style.overflow=''};
-  window.fbBgClose=function(e){if(e.target===document.getElementById('fbOverlay'))fbClose()};
-  window.fbSetType=function(btn,type){fbType=type;document.querySelectorAll('.fb-type').forEach(function(b){b.classList.remove('active')});btn.classList.add('active')};
-  var SVG_SEND='<svg viewBox="0 0 24 24" width="13" height="13" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
-  window.fbSubmit=function(){
-    var msg=document.getElementById('fbMsg').value.trim();
-    var email=document.getElementById('fbEmail').value.trim();
-    var errEl=document.getElementById('fbError');
-    var btn=document.getElementById('fbSubmit');
-    if(!msg){errEl.style.display='block';return}
-    errEl.style.display='none';
-    btn.disabled=true;btn.innerHTML=SVG_SEND+' Sending...';
-    if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:T[path]||path});
-    fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:fbType,page:T[path]||path,message:msg,email:email||'',url:window.location.href})})
-    .then(function(r){return r.json()})
-    .then(function(d){
-      if(d.ok){document.getElementById('fbForm').style.display='none';document.getElementById('fbOk').style.display='block';setTimeout(fbClose,3000)}
-      else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Failed. Try again.';errEl.style.display='block'}
-    }).catch(function(){btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Network error.';errEl.style.display='block'});
-  };
-  /* ── POPUP JS ── */
-  window.openPopup = function(id) {
-    var overlay = document.getElementById(id === 'judgments' ? 'popupJudgments' : 'popupQa');
-    if(!overlay) return;
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    if(typeof gaEvent !== 'undefined') gaEvent('popup_open', {tool: id});
-  };
-  window.closePopup = function(id) {
-    var overlay = document.getElementById(id);
-    if(!overlay) return;
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  };
-  window.closePopupBg = function(e, id) {
-    if(e.target === document.getElementById(id)) closePopup(id);
-  };
-  // Close on Escape
-  document.addEventListener('keydown', function(e) {
-    if(e.key === 'Escape') {
-      closePopup('popupJudgments');
-      closePopup('popupQa');
-    }
-  });
-
-  document.getElementById('fbOverlay').addEventListener('transitionend',function(){
-    if(!this.classList.contains('open')){
-      setTimeout(function(){
-        var f=document.getElementById('fbForm'),s=document.getElementById('fbOk');
-        if(f)f.style.display='block';if(s)s.style.display='none';
-        var m=document.getElementById('fbMsg');if(m)m.value='';
-        var em=document.getElementById('fbEmail');if(em)em.value='';
-        var btn=document.getElementById('fbSubmit');
-        if(btn){btn.disabled=false;btn.innerHTML=SVG_SEND+' Send Feedback'}
-      },300);
-    }
-  });
-})();
-
-function filterTools(q) {
-  var query = (q || '').toLowerCase().trim();
-  var cards = document.querySelectorAll('.tool-card');
-  var visible = 0;
-  cards.forEach(function(card) {
-    var title = (card.querySelector('.card-title') ? card.querySelector('.card-title').innerText : '').toLowerCase();
-    var desc  = (card.querySelector('.card-desc')  ? card.querySelector('.card-desc').innerText  : '').toLowerCase();
-    var tag   = (card.querySelector('.card-tag')   ? card.querySelector('.card-tag').innerText   : '').toLowerCase();
-    var match = !query || title.includes(query) || desc.includes(query) || tag.includes(query);
-    card.classList.toggle('hidden', !match);
-    if(match) visible++;
-  });
-  // show/hide empty state
-  var empty = document.getElementById('searchEmpty');
-  if(empty) empty.style.display = (query && visible === 0) ? 'block' : 'none';
-  // reset cat filter to "all" when typing
-  if(query) {
-    document.querySelectorAll('.cat-btn').forEach(function(b){ b.classList.remove('active'); });
-    var allBtn = document.querySelector('.cat-btn[data-cat="all"]');
-    if(allBtn) allBtn.classList.add('active');
-  }
-  if(typeof gaEvent !== 'undefined' && query.length > 2) {
-    gaEvent('search_tools', {query: query, results: visible});
-  }
-}
-
-// Keyboard shortcut ⌘K / Ctrl+K to focus search
-document.addEventListener('keydown', function(e) {
-  if((e.metaKey || e.ctrlKey) && e.key === 'k') {
-    e.preventDefault();
-    var s = document.getElementById('desktopSearch');
-    if(s){ s.focus(); s.select(); }
-  }
-  if(e.key === 'Escape') {
-    var s = document.getElementById('desktopSearch');
-    if(s && document.activeElement === s){ s.blur(); filterTools(''); s.value=''; }
-  }
-});
-
-// Also wire mobile search if present
-var mobileS = document.getElementById('mobileSearch');
-if(mobileS) mobileS.addEventListener('input', function(){ filterTools(this.value); });
-</script>
-
-
-<!-- ToolPilot Directory Backlink -->
-<div style="text-align: center; padding: 30px 20px 60px; clear: both;">
-  <a href="https://www.toolpilot.ai" target="_blank" style="display: inline-block; opacity: 0.85; transition: opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85">
-    <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1692 468" style="height: 32px; width: auto; fill: currentColor; display: block;"><defs><style>.cls-1{fill-rule:evenodd;stroke-width:0px;}</style></defs><g id="Layer_1-2"><path class="cls-1" d="m756,108h-90c-9.94,0-18,8.06-18,18v108c0,9.94,8.06,18,18,18h90c9.94,0,18-8.06,18-18v-108c0-9.94-8.06-18-18-18Zm0,126h-90v-108h90v108Zm144-126h-90c-9.94,0-18,8.06-18,18v108c0,9.94,8.06,18,18,18h90c9.94,0,18-8.06,18-18v-108c0-9.94-8.06-18-18-18Zm0,126h-90v-108h90v108ZM432,72h-216v396h36V108h180v144h-144v36h144c19.88,0,36-16.12,36-36V108c0-19.88-16.12-36-36-36Zm72,54h54v126h18v-126h54v-18h-126v18ZM36,36h252V0H0v108h144v288h36V72H36v-36Zm1260,72h-18v144h126v-18h-108v-126Zm-54,144h18V108h-18v144Zm288-144h-90c-9.94,0-18,8.06-18,18v108c0,9.94,8.06,18,18,18h90c9.94,0,18-8.06,18-18v-108c0-9.94-8.06-18-18-18Zm0,126h-90v-108h90v108Zm36-126v18h54v126h18v-126h54v-18h-126Zm-360,0h-108v144h18v-54h90c9.94,0,18-8.06,18-18v-54c0-9.94-8.06-18-18-18Zm0,72h-90v-54h90v54Zm-252-72h-18v144h126v-18h-108v-126Z"/></g></svg>
-  </a>
-</div>
-  </a>
-</div>
-
-<!-- Mobile App Bottom Nav -->
-<div class="app-nav">
-  <a href="/" class="app-nav-item">
-    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-    Home
-  </a>
-  <a href="/cases" class="app-nav-item">
-    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-    Cases
-  </a>
-  <a href="/tools" class="app-nav-item active">
-    <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-    Tools
-  </a>
-  <a href="/alerts" class="app-nav-item">
-    <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-    Alerts
-  </a>
-  <a href="/profile" class="app-nav-item">
-    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-    Profile
-  </a>
-</div>
-<!-- ── POPUP: Daily Judgment Digest ── -->
-<div class="popup-overlay" id="popupJudgments" onclick="closePopupBg(event,'popupJudgments')">
-  <div class="popup-box">
-    <button class="popup-close" onclick="closePopup('popupJudgments')" aria-label="Close">
-      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-    <div class="popup-icon" style="background:rgba(37,99,235,.12)">
-      <svg viewBox="0 0 24 24" style="stroke:#60a5fa"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-    </div>
-    <div class="popup-title">Daily Judgment Digest</div>
-    <div class="popup-desc">Every morning, fresh Supreme Court and High Court judgments — organised by practice area, with headnotes. No login. No paywall.</div>
-    <div class="popup-features">
-      <div class="popup-feat">
-        <div class="popup-feat-dot" style="background:rgba(37,99,235,.8)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Updated daily at 6 AM — SC, Delhi HC, Allahabad HC, Calcutta HC, Bombay HC and more</span>
-      </div>
-      <div class="popup-feat">
-        <div class="popup-feat-dot" style="background:rgba(37,99,235,.8)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Filter by Criminal, Civil, Family, Tax, Constitutional or Labour practice area</span>
-      </div>
-      <div class="popup-feat">
-        <div class="popup-feat-dot" style="background:rgba(37,99,235,.8)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Headnotes included — read the holding before opening the full judgment</span>
-      </div>
-    </div>
-    <a href="/judgments" class="popup-btn-primary">
-      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      Open Judgment Digest
-    </a>
-    <div class="popup-btn-secondary" onclick="closePopup('popupJudgments')">Close</div>
-  </div>
-</div>
-
-<!-- ── POPUP: Legal Q&A ── -->
-<div class="popup-overlay" id="popupQa" onclick="closePopupBg(event,'popupQa')">
-  <div class="popup-box">
-    <button class="popup-close" onclick="closePopup('popupQa')" aria-label="Close">
-      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-    <div class="popup-icon" style="background:rgba(16,185,129,.1)">
-      <svg viewBox="0 0 24 24" style="stroke:#10B981"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    </div>
-    <div class="popup-title">Legal Q&A</div>
-    <div class="popup-desc">Ask any legal question anonymously. Verified Indian advocates from District Courts, High Courts and the Supreme Court answer from experience.</div>
-    <div class="popup-features">
-      <div class="popup-feat">
-        <div class="popup-feat-dot" style="background:rgba(16,185,129,.8)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Ask anonymously — your name is never shown unless you choose</span>
-      </div>
-      <div class="popup-feat">
-        <div class="popup-feat-dot" style="background:rgba(16,185,129,.8)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Property, criminal, family, consumer, cyber law and more</span>
-      </div>
-      <div class="popup-feat">
-        <div class="popup-feat-dot" style="background:rgba(16,185,129,.8)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Advocates can answer and build reputation in the community</span>
-      </div>
-    </div>
-    <a href="/legal-qa" class="popup-btn-primary" style="background:#10B981">
-      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      Open Legal Q&A
-    </a>
-    <div class="popup-btn-secondary" onclick="closePopup('popupQa')">Close</div>
-  </div>
-</div>
-
+      <aside class="directory-feedback" aria-label="Tool library feedback">
+        <div><strong>What tool would make your work easier?</strong><p>Tell us what’s missing from the library.</p></div>
+        <button class="site-button site-button-outline" id="feedback-open" type="button" hidden>Send feedback <svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#arrow"/></svg></button>
+        <noscript><a href="/contact">Contact support</a></noscript>
+      </aside>
+    </section>
+  </main>
+  <dialog class="feedback-dialog" id="feedback-dialog" aria-labelledby="feedback-title">
+    <form id="feedback-form">
+      <div class="feedback-header"><h2 id="feedback-title">Send feedback</h2><button id="feedback-close" type="button" aria-label="Close feedback"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#close"/></svg></button></div>
+      <p>Please leave out confidential client and case information.</p>
+      <label>Feedback type
+        <select name="type"><option>New feature</option><option>Improvement</option><option>Bug</option><option>General</option></select>
+      </label>
+      <label>Message<textarea name="message" rows="4" maxlength="2000" required></textarea></label>
+      <label>Email (optional)<input type="email" name="email" maxlength="254"></label>
+      <div class="feedback-actions"><button type="submit" class="site-button site-button-primary">Send feedback</button><p id="feedback-status" role="status"></p></div>
+    </form>
+  </dialog>
+  <!-- site-footer -->
 </body>
-
 </html>

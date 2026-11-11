@@ -1,8 +1,11 @@
 /* Cache the public app shell for offline use. API requests go to the server. */
-const CACHE = 'lhc-v2';
+const CACHE = 'lhc-v3';
 const SHELL = [
   '/', '/tools', '/dashboard', '/cases', '/billing', '/hash',
   '/download', '/judgments', '/alerts', '/static/lhc-core.js', '/manifest.json',
+  '/static/site.css', '/static/site.js', '/static/site-icons.svg',
+  '/static/directory.css', '/static/directory.js', '/static/evidence.css',
+  '/static/workspace.css', '/static/workspace.js',
   '/favicon.svg', '/static/icon-192.png', '/static/icon-512.png'
 ];
 
@@ -28,15 +31,16 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
-  if (url.search || !SHELL.includes(url.pathname)) return;
+  if ((url.search && url.pathname !== '/tools') || !SHELL.includes(url.pathname)) return;
+  const cacheKey = url.pathname === '/tools' ? '/tools' : request;
 
   event.respondWith(caches.open(CACHE).then(async cache => {
     try {
       const response = await fetch(request);
-      if (response.ok) await cache.put(request, response.clone());
+      if (response.ok) await cache.put(cacheKey, response.clone());
       return response;
     } catch (error) {
-      const cached = await cache.match(request);
+      const cached = await cache.match(cacheKey);
       if (cached) return cached;
       throw error;
     }

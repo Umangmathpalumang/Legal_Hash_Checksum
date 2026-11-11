@@ -369,28 +369,30 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .tour-trigger:hover{color:var(--ac);background:var(--acs)}
 .tour-trigger svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
 </style>
+<link rel="stylesheet" href="/static/workspace.css">
+<script src="/static/workspace.js" defer></script>
 </head>
-<body>
+<body class="lhc-workspace lhc-dashboard">
 
 <div class="sidebar-ov" id="sidebarOv" onclick="closeSidebar()"></div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <a href="/dashboard" class="logo-link">
-      <div class="logo-mark">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <a href="/" class="logo-link" aria-label="Legal Hash Checksum home">
+      <div class="logo-mark"><svg aria-hidden="true" viewBox="0 0 32 32"><use href="/static/site-icons.svg#brand"/></svg>
       </div>
       <div>
-        <div class="logo-text">legalhash<span>checksum</span>.com</div>
-        <div class="logo-badge">Pro</div>
+        <div class="logo-text">Legal Hash Checksum</div>
+        <div class="logo-badge">Practice workspace</div>
       </div>
     </a>
+    <button class="workspace-close" type="button" aria-label="Close navigation"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/static/site-icons.svg#close"/></svg></button>
   </div>
 
-  <nav class="sidebar-nav">
+  <nav class="sidebar-nav" aria-label="Workspace navigation">
     <div class="nav-section">Practice</div>
-    <a href="/dashboard" class="nav-item active">
+    <a href="/dashboard" class="nav-item active" aria-current="page">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </a>
@@ -402,6 +404,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
       <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
       Billing &amp; Invoices
     </a>
+    <a href="/alerts" class="nav-item"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/static/site-icons.svg#calendar"/></svg>Hearings &amp; alerts</a>
     <a href="/legal-qa" class="nav-item">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       Legal Q&amp;A
@@ -452,16 +455,13 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       Limitation Calc
     </a>
-    <a href="/tools" class="nav-item">
-      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-      All Tools
-    </a>
+    <a href="/judgments" class="nav-item"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/static/site-icons.svg#book"/></svg>Judgment Digest</a>
   </nav>
 
   <div class="sidebar-footer">
     <a href="/pricing" id="upgradeChip" style="display:flex;align-items:center;gap:8px;margin:0 0 10px;padding:9px 12px;background:var(--acs);border-radius:10px;text-decoration:none;border:1px solid var(--acl)20">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-      <span style="font-size:12px;font-weight:700;color:var(--ac)" id="sidebarPlanLabel">Upgrade to Pro</span>
+      <span style="font-size:12px;font-weight:700;color:var(--ac)" id="sidebarPlanLabel">View plans</span>
     </a>
     <div class="sidebar-user">
       <div class="s-avatar">UA</div>
@@ -484,20 +484,19 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 <div class="main-content">
   <!-- TOP BAR -->
   <header class="topbar">
-    <button class="hamburger" onclick="openSidebar()">
+    <button class="hamburger" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar" onclick="openSidebar()">
       <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="page-breadcrumb">Dashboard</div>
-    <div class="top-search">
+    <form class="top-search" id="workspace-case-search" action="/cases" role="search">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" placeholder="Search cases, clients…">
-    </div>
+      <input type="text" aria-label="Find cases in this browser" placeholder="Search cases, clients…">
+    </form>
     <div class="top-right">
-      <div class="icobtn">
+      <a class="icobtn" href="/alerts" aria-label="Hearing alerts">
         <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        <span class="notif-dot"></span>
-      </div>
-      <a href="/cases" class="btn-new-case">
+      </a>
+      <a href="/cases#new" class="btn-new-case" aria-label="New case">
         <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         <span>New Case</span>
       </a>
@@ -506,11 +505,18 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 
   <!-- PAGE -->
   <main class="page">
-    <div class="page-header">
+    <div class="page-header workspace-hero">
       <div>
-        <div class="page-title">Practice Dashboard</div>
+        <p class="workspace-kicker">PRACTICE OVERVIEW</p>
+        <h1 class="page-title">Practice Dashboard</h1>
         <div class="page-greeting" id="greetUser"></div>
       </div>
+
+      <button class="btn-new-case" onclick="document.getElementById('intakeModal').style.display='flex'">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        <span>New Client Intake</span>
+      </button>
+    </div>
 
       <!-- JUDGMENT STRIP -->
       <div class="jw-strip" id="jwStrip">
@@ -524,12 +530,6 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
         </div>
         <a href="/judgments" class="jw-strip-all">All →</a>
       </div>
-
-      <button class="btn-new-case" onclick="document.getElementById('intakeModal').style.display='flex'">
-        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-        <span>New Client Intake</span>
-      </button>
-    </div>
 
     <!-- STAT TILES -->
     <div class="stats-grid">
@@ -555,7 +555,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
         <div class="stat-icon purple"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
         <div class="stat-lbl">Next Hearing</div>
         <div class="stat-val purple" id="tileNextHearing" style="font-size:18px;margin-top:4px">—</div>
-        <div class="stat-badge new" id="tileNextHearingCase" style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div>
+        <div class="stat-badge new" id="tileNextHearingCase" style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">No hearing set</div>
       </div>
     </div>
 
@@ -618,7 +618,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
           <div class="card-head"><div class="card-title"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Quick Actions</div></div>
           <div class="card-body">
             <div class="qa-grid">
-              <a href="/cases" class="qa-btn"><div class="qa-btn-icon blue"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="qa-btn-text">New Case</div><div class="qa-btn-sub">Add to docket</div></div></a>
+              <a href="/cases#new" class="qa-btn"><div class="qa-btn-icon blue"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="qa-btn-text">New Case</div><div class="qa-btn-sub">Add to docket</div></div></a>
               <a href="/billing" class="qa-btn"><div class="qa-btn-icon amber"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div><div class="qa-btn-text">Invoice</div><div class="qa-btn-sub">Generate bill</div></div></a>
               <a href="/bail-bond" class="qa-btn"><div class="qa-btn-icon purple"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="qa-btn-text">Bail Bond</div><div class="qa-btn-sub">Form 45</div></div></a>
               <a href="/legal-notice" class="qa-btn"><div class="qa-btn-icon green"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="qa-btn-text">Legal Notice</div><div class="qa-btn-sub">Draft &amp; send</div></div></a>
@@ -804,12 +804,21 @@ function updateTiles(){
     var next=upcoming[0],d=new Date(next.hearingDate);
     document.getElementById('tileNextHearing').textContent=d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
     document.getElementById('tileNextHearingCase').textContent=next.title||next.clientName;
+  } else {
+    document.getElementById('tileNextHearing').textContent='—';
+    document.getElementById('tileNextHearingCase').textContent='No hearing set';
   }
 }
 
 /* BAR CHART */
 function renderBarChart(){
   var cases=getCases();
+  var el=document.getElementById('barChart');
+  if(!el)return;
+  if(!cases.length){
+    el.innerHTML='<p class="chart-empty">Case activity will appear here as you add matters.</p>';
+    return;
+  }
   var months=[];
   for(var i=5;i>=0;i--){var d=new Date();d.setMonth(d.getMonth()-i);months.push({label:d.toLocaleString('en-IN',{month:'short'}),m:d.getMonth(),y:d.getFullYear()});}
   var html=months.map(function(mo){
@@ -821,7 +830,7 @@ function renderBarChart(){
       +'<div class="bar bar-closed" title="'+closed+' closed" style="height:'+Math.round(closed/scale*maxH)+'px;width:12px"></div>'
       +'</div><div class="bar-lbl">'+mo.label+'</div></div>';
   }).join('');
-  var el=document.getElementById('barChart');if(el)el.innerHTML=html;
+  el.innerHTML=html;
 }
 
 /* DONUT CHART */
@@ -984,20 +993,6 @@ refreshAll();
     });
 })();
 
-/* Seed sample data if empty */
-(function seedIfEmpty(){
-  var cases=getCases();
-  if(cases.length>0)return;
-  var sample=[
-    {id:1,clientName:'Ramesh Kumar',caseId:'C001',title:'Ramesh Kumar v. State',caseType:'Criminal / FIR / Bail',court:'Sessions Court, Lucknow',hearingDate:new Date(Date.now()+3*86400000).toISOString().split('T')[0],status:'Active',createdAt:new Date(Date.now()-10*86400000).toISOString()},
-    {id:2,clientName:'Priya Sharma',caseId:'C002',title:'Priya Sharma v. Mohan Lal',caseType:'Family / Matrimonial',court:'Family Court, Delhi',hearingDate:new Date(Date.now()+7*86400000).toISOString().split('T')[0],status:'Active',createdAt:new Date(Date.now()-5*86400000).toISOString()},
-    {id:3,clientName:'TechCorp Ltd.',caseId:'C003',title:'TechCorp Ltd. v. Vendor',caseType:'Civil / Suit',court:'Delhi High Court',hearingDate:new Date(Date.now()+14*86400000).toISOString().split('T')[0],status:'Active',createdAt:new Date(Date.now()-2*86400000).toISOString()},
-    {id:4,clientName:'Anil Verma',caseId:'C004',title:'Anil Verma Cheque Bounce',caseType:'Cheque Bounce / NI Act',court:'MM Court, Noida',hearingDate:new Date(Date.now()-3*86400000).toISOString().split('T')[0],status:'Closed',closedAt:new Date().toISOString(),createdAt:new Date(Date.now()-30*86400000).toISOString()},
-  ];
-  saveCases(sample);
-  addActivity('Welcome to legalhashchecksum.com — sample cases loaded.','case');
-  refreshAll();
-})();
 </script>
 
 <!-- ── TOUR OVERLAY ── -->
@@ -1020,7 +1015,7 @@ refreshAll();
 var STEPS=[
   {sel:null,pos:'center',
    title:"Welcome to your Practice Dashboard!",
-   desc:"You've set up your account — let me show you around in about a minute. This tour covers everything you need to hit the ground running."},
+   desc:"Take a quick look around your browser-based workspace. This tour covers everything you need to hit the ground running."},
   {sel:'#sidebar',pos:'right',
    title:"Your navigation sidebar",
    desc:"Everything lives here — Cases, Billing, Legal Documents, and all Tools. On mobile, tap the ☰ icon at the top to open it."},
@@ -1168,8 +1163,6 @@ window.startTour=function(force){
   showStep(0);
 };
 
-// Auto-start for first-time users after a short delay
-setTimeout(function(){startTour(false);},900);
 
 })();
 </script>

@@ -133,21 +133,28 @@ async def favicon():
 async def favicon_svg():
     return FileResponse(BASE_DIR / "favicon.svg", media_type="image/svg+xml")
 
+def public_page(template: str, active: str = "") -> HTMLResponse:
+    templates = BASE_DIR / "templates"
+    markup = (templates / template).read_text(encoding="utf-8")
+    header = (templates / "public/header.html").read_text(encoding="utf-8")
+    for item in ("hash", "tools", "judgments"):
+        header = header.replace(
+            "{{nav_" + item + "}}",
+            'aria-current="page"' if item == active else "",
+        )
+    footer = (templates / "public/footer.html").read_text(encoding="utf-8")
+    return HTMLResponse(markup.replace("<!-- site-header -->", header).replace("<!-- site-footer -->", footer))
+
+
 @app.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    html_path = os.path.join(os.path.dirname(__file__), "templates", "tools.html")
-    try:
-        return HTMLResponse(content=open(html_path).read())
-    except FileNotFoundError:
-        raise HTTPException(status_code=500, detail="Template not found")
+async def index():
+    return public_page("home.html")
+
 
 @app.get("/hash", response_class=HTMLResponse)
-async def hash_tool(request: Request):
-    html_path = os.path.join(os.path.dirname(__file__), "templates", "index.html")
-    try:
-        return HTMLResponse(content=open(html_path).read())
-    except FileNotFoundError:
-        raise HTTPException(status_code=500, detail="Template not found")
+async def hash_tool():
+    return public_page("index.html", "hash")
+
 
 @app.get("/llms.txt", include_in_schema=False)
 async def llms_text():
@@ -162,12 +169,9 @@ async def verify_portal(request: Request):
         raise HTTPException(status_code=500, detail="Template not found")
 
 @app.get("/tools", response_class=HTMLResponse)
-async def tools(request: Request):
-    html_path = os.path.join(os.path.dirname(__file__), "templates", "tools.html")
-    try:
-        return HTMLResponse(content=open(html_path).read())
-    except FileNotFoundError:
-        raise HTTPException(status_code=500, detail="Template not found")
+async def tools():
+    return public_page("tools.html", "tools")
+
 
 @app.get("/profile", response_class=HTMLResponse)
 async def get_profile():
@@ -351,6 +355,9 @@ async def sitemap():
     <priority>1.0</priority>
   </url>
   <url><loc>https://legalhashchecksum.com/hash</loc></url>
+  <url><loc>https://legalhashchecksum.com/tools</loc></url>
+  <url><loc>https://legalhashchecksum.com/verify</loc></url>
+  <url><loc>https://legalhashchecksum.com/judgments</loc></url>
 </urlset>''',
         media_type="application/xml",
     )
@@ -684,8 +691,8 @@ VALID_COURTS = [
 
 @app.get("/judgments", response_class=HTMLResponse)
 async def get_judgments_page():
-    p = os.path.join(os.path.dirname(__file__), "templates", "judgments.html")
-    return HTMLResponse(content=open(p).read())
+    return public_page("judgments.html", "judgments")
+
 
 @app.get("/api/judgments")
 async def api_judgments(

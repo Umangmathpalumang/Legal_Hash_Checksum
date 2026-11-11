@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Legal Hash Checksum | Evidence &amp; Practice Tools for Indian Advocates</title>
+  <meta name="description" content="Generate and verify file hashes in your browser, prepare legal documents, and organise cases, hearings and billing. Free tools for Indian advocates.">
+  <link rel="canonical" href="https://legalhashchecksum.com/">
+  <meta property="og:title" content="Legal Hash Checksum">
+  <meta property="og:description" content="Private file hashing, free legal tools and a practice workspace for Indian advocates.">
+  <meta property="og:url" content="https://legalhashchecksum.com/">
+  <meta name="theme-color" content="#faf8f5">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/site.css">
+  <script src="/static/lhc-core.js" defer></script>
+  <script src="/static/site.js" defer></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
+  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
+</script>
+</head>
+<body class="lhc-site">
+  <!-- site-header -->
+  <main id="site-main" tabindex="-1">
+    <section class="site-hero">
+      <div class="site-container site-hero-grid">
+        <div class="site-hero-copy">
+          <p class="site-kicker"><span></span> FOR INDIAN ADVOCATES</p>
+          <h1>Evidence you can <br class="hero-break"><em>stand behind.</em></h1>
+          <p class="site-lede">Generate and verify file hashes on your device. Draft legal documents, research judgments, and keep your practice organised in one workspace.</p>
+          <div class="site-hero-actions">
+            <a href="/hash" class="site-button site-button-primary">Hash a file <svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#arrow"/></svg></a>
+            <a href="/tools" class="site-button site-button-subtle">Explore free tools <svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#arrow"/></svg></a>
+          </div>
+          <p class="site-hero-trust"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#lock"/></svg> Browser-based hashing <span aria-hidden="true">·</span> No sign-in required</p>
+        </div>
+
+        <div class="product-preview" aria-label="Interactive product preview">
+          <svg class="preview-art" aria-hidden="true" viewBox="0 0 490 460" fill="none" preserveAspectRatio="xMidYMid slice">
+            <defs><pattern id="preview-dots" width="17" height="17" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".85" fill="#c0a7ff" opacity=".32"/></pattern></defs>
+            <path d="M0 0h490v460H0z" fill="url(#preview-dots)" opacity=".6"/>
+            <g stroke="#a488ee" opacity=".24">
+              <ellipse cx="396" cy="215" rx="232" ry="178" transform="rotate(-36 396 215)"/>
+              <ellipse cx="396" cy="215" rx="212" ry="156" transform="rotate(-36 396 215)"/>
+              <ellipse cx="396" cy="215" rx="192" ry="135" transform="rotate(-36 396 215)"/>
+              <ellipse cx="396" cy="215" rx="172" ry="114" transform="rotate(-36 396 215)"/>
+              <ellipse cx="396" cy="215" rx="152" ry="94" transform="rotate(-36 396 215)"/>
+              <ellipse cx="396" cy="215" rx="132" ry="74" transform="rotate(-36 396 215)"/>
+            </g>
+          </svg>
+          <div class="preview-shell">
+            <div class="preview-top"><span class="preview-title"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#grid"/></svg> Workspace preview</span><span class="preview-sample">SAMPLE DATA</span></div>
+            <div class="preview-tabs" role="tablist" aria-label="Preview a workflow">
+              <button type="button" role="tab" aria-selected="true" aria-controls="preview-evidence" id="tab-evidence">Evidence</button>
+              <button type="button" role="tab" aria-selected="false" aria-controls="preview-practice" id="tab-practice" tabindex="-1">Practice</button>
+            </div>
+            <section class="preview-panel" id="preview-evidence" role="tabpanel" aria-labelledby="tab-evidence">
+              <div class="preview-file"><span class="preview-file-icon"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#file"/></svg></span><span><strong>sample-evidence.txt</strong><small>Built-in sample · no upload</small></span><span class="preview-badge">SHA-256</span></div>
+              <div class="preview-hash"><span>FILE FINGERPRINT</span><code id="sample-hash">25e7f2512751b8481d118c7cfe4b456dbff28621e26b68724343131327563022</code></div>
+              <div class="preview-bottom"><button type="button" id="sample-run"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#hash"/></svg> Run sample</button><span id="sample-status" role="status">Processed in your browser</span></div>
+            </section>
+            <section class="preview-panel" id="preview-practice" role="tabpanel" aria-labelledby="tab-practice" hidden>
+              <div class="preview-practice-head"><span>MATTER DOCKET</span><span>2 active matters</span></div>
+              <div class="preview-matter"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#briefcase"/></svg><span><strong>Sample civil matter</strong><small>Next hearing scheduled</small></span><span class="preview-badge">Active</span></div>
+              <div class="preview-matter"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#file"/></svg><span><strong>Sample client intake</strong><small>Documents to review</small></span><span class="preview-badge">Active</span></div>
+              <div class="preview-bottom"><a href="/dashboard">Open your workspace <svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#arrow"/></svg></a></div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="site-container">
+      <nav class="workflow-nav" aria-label="Explore by task">
+        <a href="/hash"><span class="workflow-icon"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#hash"/></svg></span><span><strong>Evidence</strong><small>Hash &amp; verify</small></span><svg class="site-icon workflow-arrow" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></a>
+        <a href="/tools?category=documents"><span class="workflow-icon"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#file"/></svg></span><span><strong>Documents</strong><small>Draft &amp; print</small></span><svg class="site-icon workflow-arrow" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></a>
+        <a href="/judgments"><span class="workflow-icon"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#book"/></svg></span><span><strong>Research</strong><small>Find judgments</small></span><svg class="site-icon workflow-arrow" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></a>
+        <a href="/dashboard"><span class="workflow-icon"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#briefcase"/></svg></span><span><strong>Practice</strong><small>Track cases &amp; billing</small></span><svg class="site-icon workflow-arrow" aria-hidden="true"><use href="/static/site-icons.svg#external"/></svg></a>
+      </nav>
+    </div>
+
+    <section class="site-section site-container" aria-labelledby="workflows-title">
+      <div class="site-section-head">
+        <div><p class="site-kicker"><span></span> EVERYDAY LEGAL WORK</p><h2 id="workflows-title">Start with the task at hand.</h2></div>
+        <p>From checking a file to preparing for a hearing, get to the tool you need without digging through menus.</p>
+      </div>
+      <div class="site-feature-grid">
+        <article class="site-feature">
+          <span class="feature-icon evidence"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#shield"/></svg></span>
+          <h3>Check file integrity</h3><p>Generate hashes for one file or a batch, compare a known fingerprint, and prepare a BSA §63 certificate draft.</p>
+          <a href="/hash">Open evidence tools <svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#arrow"/></svg></a>
+        </article>
+        <article class="site-feature">
+          <span class="feature-icon documents"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#file"/></svg></span>
+          <h3>Prepare routine documents</h3><p>Start a vakalatnama, bail bond, memo of appearance, or legal notice from a guided template.</p>
+          <a href="/tools?category=documents">Browse document tools <svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#arrow"/></svg></a>
+        </article>
+        <article class="site-feature">
+          <span class="feature-icon practice"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#calendar"/></svg></span>
+          <h3>Keep your practice in order</h3><p>See upcoming hearings, manage your matter docket, and track time and invoices.</p>
+          <a href="/dashboard">Open practice dashboard <svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#arrow"/></svg></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="site-container site-privacy" aria-labelledby="privacy-title">
+      <span class="privacy-icon"><svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#lock"/></svg></span>
+      <div><h2 id="privacy-title">Your files stay on your device.</h2><p>File hashing runs in your browser. Case records and billing entries are stored locally; judgment search and community features connect to the site.</p></div>
+      <a href="/privacy-policy" class="site-button site-button-outline">Read about privacy <svg class="site-icon" aria-hidden="true"><use href="/static/site-icons.svg#arrow"/></svg></a>
+    </section>
+  </main>
+  <!-- site-footer -->
+</body>
+</html>

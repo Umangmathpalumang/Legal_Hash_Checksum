@@ -24,21 +24,6 @@
 }
 body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh;-webkit-font-smoothing:antialiased}
 
-/* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;
-    padding:0 28px;height:52px;border-bottom:1px solid var(--bd);
-    position:sticky;top:0;background:rgba(13,17,23,.95);backdrop-filter:blur(10px);z-index:200}
-.nav-brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--tx)}
-.nav-logo{width:28px;height:28px;background:var(--ac);border-radius:7px;
-          display:flex;align-items:center;justify-content:center;
-          font-size:16px;font-weight:700;font-family:monospace;color:#fff}
-.nav-name{font-size:14px;font-weight:600}
-.nav-links{display:flex;gap:4px}
-.nav-links a{color:var(--tx2);text-decoration:none;font-size:13px;font-weight:500;
-             padding:5px 10px;border-radius:6px;transition:all .12s}
-.nav-links a:hover{color:var(--tx);background:var(--s1)}
-.nav-links a.active{color:var(--acl);font-weight:600}
-
 /* LAYOUT */
 .page{max-width:1180px;margin:0 auto;padding:0 24px}
 
@@ -190,21 +175,14 @@ select:focus{border-color:var(--ac)}
   .sc-n{font-size:18px}
 }
 </style>
+<link rel="stylesheet" href="/static/site.css">
+<link rel="stylesheet" href="/static/evidence.css">
+<script src="/static/site.js" defer></script>
 </head>
-<body>
-<nav>
-  <a href="/" class="nav-brand">
-    <div class="nav-logo">#</div>
-    <span class="nav-name">Legal Hash Checksum</span>
-  </a>
-  <div class="nav-links">
-    <a href="/tools">Tools</a>
-    <a href="/judgments" class="active">Judgments</a>
-    <a href="/legal-qa">Q&amp;A</a>
-  </div>
-</nav>
+<body class="lhc-digest">
+<!-- site-header -->
 
-<div class="page">
+<main class="page" id="site-main" tabindex="-1">
   <div class="hdr">
     <div class="hdr-left">
       <h1>Daily Judgment Digest</h1>
@@ -213,8 +191,8 @@ select:focus{border-color:var(--ac)}
     </div>
     <div class="search-wrap">
       <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="searchInput" placeholder="Search judgments by name…" autocomplete="off">
-      <button class="search-clear" id="searchClear" title="Clear">✕</button>
+      <input type="text" id="searchInput" aria-label="Search judgments" placeholder="Search judgments by name…" autocomplete="off">
+      <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
     </div>
   </div>
 
@@ -294,7 +272,8 @@ select:focus{border-color:var(--ac)}
     <button class="pgb" id="pgNext">Next →</button>
     <button class="pgb" id="pgLast" title="Last page">»</button>
   </div>
-</div>
+</main>
+<!-- site-footer -->
 
 <script>
 // ── State ──────────────────────────────────────────────
