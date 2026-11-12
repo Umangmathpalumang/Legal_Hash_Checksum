@@ -152,12 +152,21 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 
 /* ── INVOICE PRINT ── */
 @media print{
-  .sidebar,.topbar,.bnav,.sidebar-ov,.no-print{display:none!important}
-  .main-content{margin-left:0!important}
-  .invoice-section{display:block!important}
-  body{background:#fff!important;color:#000!important}
-  .inv-paper{box-shadow:none!important;border:1px solid #ccc!important;max-width:100%!important}
+  @page{size:A4 portrait;margin:15mm}
+  body.lhc-billing{min-height:0!important;background:#fff!important;color:#111!important}
+  .lhc-billing > :is(.sidebar,.sidebar-ov,.bnav,#toast,.modal-ov),
+  .lhc-billing .topbar{display:none!important}
+  .lhc-billing .main-content{margin-left:0!important}
+  .invoice-preview-open > :not(#invoiceSection),
+  .invoice-preview-open #invoiceSection .no-print{display:none!important}
+  .invoice-preview-open #invoiceSection{display:block!important}
+  .invoice-preview-open .inv-paper{
+    box-shadow:none!important;border:0!important;margin:0!important;padding:0!important;max-width:none!important;
+  }
+  .inv-tbl th{color:#111!important;background:#eef2f9!important;border-bottom:1px solid #ccc}
+  .inv-tbl tr,.inv-total-section,.inv-seal{break-inside:avoid}
 }
+
 .invoice-section{display:none}
 .inv-paper{background:#fff;border:1px solid var(--bd);border-radius:12px;max-width:700px;margin:0 auto;padding:32px;box-shadow:var(--shm)}
 .inv-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #1a1a2e}
@@ -609,11 +618,12 @@ function generateInvoice(){
     +'<div class="inv-footer">This is a computer-generated invoice. | legalhashchecksum.com</div>';
   document.getElementById('invPaper').innerHTML=html;
   document.getElementById('invoiceSection').style.display='block';
+  document.body.classList.add('invoice-preview-open');
   document.querySelector('.page').style.display='none';
   currentInvoice={invNo,firm,adv,total,subtotal,gst,clientName:c?c.clientName:'Client',caseId:c?c.caseId:'',date:new Date().toISOString(),status:'unpaid',entryCount:es.length};
   document.getElementById('invPaper').scrollIntoView({behavior:'smooth'});
 }
-function hideInvoice(){document.getElementById('invoiceSection').style.display='none';document.querySelector('.page').style.display='block';currentInvoice=null;}
+function hideInvoice(){document.body.classList.remove('invoice-preview-open');document.getElementById('invoiceSection').style.display='none';document.querySelector('.page').style.display='block';currentInvoice=null;}
 function saveInvoiceToPast(){
   if(!currentInvoice){showToast('Generate invoice first');return;}
   var invs=getInvoices();invs.unshift(currentInvoice);saveInvoices(invs);

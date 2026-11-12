@@ -107,12 +107,11 @@ textarea.field-input{resize:vertical;min-height:60px;font-family:'EB Garamond',s
 
 /* Page numbers - only on print */
 @media print{html,body{height:auto!important;min-height:0!important;overflow:visible!important}.app{display:block!important;height:auto!important;min-height:0!important}.form-panel{display:none!important}.preview-panel{display:block!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:0!important;background:none!important}.paper,.paper-p1,.paper-p2{min-height:0!important;height:auto!important;box-shadow:none!important;border:none!important;background:#fff!important}nav,.stamp-bar,.format-bar,.toolbar,.stamp-modal-overlay{display:none!important}footer,.page-footer{display:none!important}
-  .paper .page-num{position:fixed;bottom:10mm;left:0;right:0;text-align:center;font-size:9pt;font-family:'EB Garamond',serif;color:#111}
   nav,.type-bar,.form-panel,.preview-label{display:none!important}
   .app{display:block}
   .preview-panel{background:#fff!important;padding:0;max-height:none;display:block}
-  .paper{box-shadow:none;margin:0 auto;width:216mm!important;border:none;min-height:0;padding:15mm 20mm;background:#fff!important;transform:none!important}
-  @page{size:legal portrait;margin:0}
+  .paper{box-shadow:none;margin:0;width:auto!important;border:none;min-height:0;padding:0;background:#fff!important;transform:none!important}
+  @page{size:legal portrait;margin:15mm 20mm}
 }
 
 /* ── STAMP SYSTEM ── */

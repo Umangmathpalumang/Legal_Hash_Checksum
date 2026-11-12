@@ -181,7 +181,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .foot{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--bd);font-size:12px;color:var(--tx3);text-align:center;line-height:1.8}
 
 /* Print certificate - exact official format */
-#cprev{display:none;background:#fff}
+#cprev{display:none;max-width:930px;margin:0 auto;background:#fff}
 .cpaper{background:#fff;color:#111;font-family:'Times New Roman',Times,serif;max-width:720px;margin:1.5rem auto;padding:3.5rem 4rem;font-size:13.5px;line-height:1.8}
 .chead{text-align:center;margin-bottom:.3rem}
 .chead p{font-size:13.5px;text-transform:uppercase;letter-spacing:.5px;margin:.2rem 0}
@@ -189,7 +189,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .chead .citalic{font-style:italic;font-size:13px}
 .cpart{text-align:center;font-weight:bold;font-size:13.5px;margin:1.2rem 0 .1rem}
 .cpartsub{text-align:center;font-size:13px;margin-bottom:1.2rem}
-.cpara{margin:.7rem 0;text-align:justify}
+.cpara{margin:.7rem 0;text-align:justify;overflow-wrap:anywhere}
 .cbl{display:inline-block;border-bottom:1px solid #111;min-width:160px;vertical-align:bottom}
 .cbl-sm{display:inline-block;border-bottom:1px solid #111;min-width:90px;vertical-align:bottom}
 .cbl-lg{display:inline-block;border-bottom:1px solid #111;min-width:260px;vertical-align:bottom}
@@ -205,7 +205,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .csig{margin-top:2.5rem;text-align:right;font-size:13px;page-break-inside:avoid;break-inside:avoid}
 .cbottom{margin-top:1rem;font-size:13px;page-break-inside:avoid;break-inside:avoid}
 .cbottom p{margin:.2rem 0}
-.chashbox{background:#f5f5f5;border:1px solid #ddd;border-left:3px solid #1A2980;padding:.7rem 1rem;margin:.7rem 0;font-size:12px;page-break-before:always;break-before:page}
+.chashbox{background:#f5f5f5;border:1px solid #ddd;border-left:3px solid #1A2980;padding:.7rem 1rem;margin:.7rem 0;font-size:12px}
 .chashbox table{width:100%;border-collapse:collapse;margin-top:.4rem;font-size:11px;page-break-inside:avoid;break-inside:avoid}
 .chashbox th{background:#1A2980;color:#fff;padding:4px 8px;text-align:left}
 .chashbox td{padding:4px 8px;border:1px solid #ddd;word-break:break-all}
@@ -218,21 +218,22 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
   .cpaper{padding:2rem 1.5rem}
   .hrow{grid-template-columns:72px 1fr 28px}
 }
-@media print{
-  /* Hide all UI chrome during print */
-  .fb-btn, .fb-overlay, .fb-modal,
-  #theme-toggle, [id*="theme"], [class*="theme-toggle"],
-  nav, .nav, header,
-  .lt-btn, [class*="legal-tool"], [class*="lt-"],
-  iframe, .cf-widget, [id*="cloudflare"],
-  button:not(.print-keep),
-  .feedback-widget { display:none!important; }
-
-  body,html{background:#fff}
-  .wrap{display:none}
-  #cprev{display:block!important}
-  .cpaper{border:none;padding:2cm;max-width:100%}
-  @page{margin:1.5cm}
+@media print {
+  @page { size: A4 portrait; margin: 15mm 17mm; }
+  html, body.lhc-hash { background: white !important; }
+  body.lhc-hash { min-height: 0; color: #111; --bg: #fff; --s1: #fff; --tx: #111; --tx2: #333; --tx3: #555; }
+  .lhc-hash > :is(.fb-btn, .fb-overlay, .no-print, .site-header, .site-skip, .site-footer),
+  .lhc-hash a[href="/tools"][style*="position:fixed"] { display: none !important; }
+  .lhc-hash:has(#cpaper:not(:empty)) > :not(#cprev) { display: none !important; }
+  #cprev:has(#cpaper:not(:empty)) { display: block; }
+  #cpaper { width: auto; max-width: none; margin: 0; padding: 0; color: #111; line-height: 1.45; }
+  .cpara { margin: .5rem 0; }
+  .cpart { margin-top: .8rem; }
+  .cpartsub { margin-bottom: .7rem; }
+  .csig { margin-top: 1.4rem; }
+  .cbottom { margin-top: .7rem; }
+  .chashbox { break-before: page; }
+  .chashbox th { background: #eef2f9; color: #111; border: 1px solid #ddd; }
 }
 
 /* Legal Hash Checksum header */
@@ -274,41 +275,6 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 }
 </script>
 
-<style>
-@media print {
-  /* Hide ALL floating buttons, widgets, overlays */
-  .fb-btn, .fb-overlay,
-  [class*="fb-"], [id*="fb-"],
-  [class*="legal-tool"], [id*="legal-tool"],
-  [class*="lt-btn"], [id*="lt-"],
-  [class*="cf-"], [id*="cf-"],
-  [class*="theme"], [id*="theme"],
-  [class*="dark-mode"], [class*="moon"],
-  iframe, .widget, .floating,
-  nav, header, footer,
-  button, .btn { display:none!important; }
-  
-  * { -webkit-print-color-adjust:exact!important; }
-}
-</style>
-<style>
-@media print {
-  .fb-btn, .fb-overlay, .fb-modal,
-  [class*="fb-"], [id*="fb-"],
-  [class*="legal-tool"], [id*="legal-tool"],
-  [class*="lt-"], [id*="lt-"],
-  [class*="theme"], [id*="theme-toggle"],
-  [class*="moon"], [class*="dark"],
-  nav, header, footer,
-  iframe, .widget,
-  #theme-toggle, #dark-toggle { display:none!important; }
-}
-</style><style>
-@media print {
-  .no-print, .fb-btn, .fb-overlay, .fb-modal,
-  a[href="/tools"][style*="fixed"], [style*="position:fixed"] { display:none!important; }
-}
-</style>
 <link rel="stylesheet" href="/static/site.css">
 <link rel="stylesheet" href="/static/evidence.css">
 <script src="/static/site.js" defer></script>
@@ -639,12 +605,12 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
     Hash calculations run in your browser without uploading files.<br>
     <span style="color:var(--tx3)">legalhashchecksum.com</span>
   </div>
-</div>
-
-<!-- Certificate print -->
-<div id="cprev">
-  <div class="cpaper" id="cpaper"></div>
 </main>
+
+<!-- The certificate is a sibling of the controls so print can hide the form. -->
+<div id="cprev" aria-label="Certificate preview">
+  <div class="cpaper" id="cpaper"></div>
+</div>
 
 <script>
 'use strict';
@@ -1178,7 +1144,10 @@ function doVerify(){
   res.style.display='block';
 }
 
-function gv(id){const el=document.getElementById(id);return el?el.value.trim():''}
+function escapeCertificateText(value){
+  return value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function gv(id){return escapeCertificateText(document.getElementById(id)?.value.trim() || '');}
 function gchk(gid){return[...document.querySelectorAll('#'+gid+' input[type=checkbox]:checked')].map(e=>e.value).join(', ')}
 
 function getJurisdictionDetails() {
@@ -1216,13 +1185,8 @@ function printCert(part){
   const imeiLabel=imeiType?imeiType.value:'IMEI/UIN/UID/MAC/Cloud ID';
   const imei=(imeiLabel!=='IMEI/UIN/UID/MAC/Cloud ID'?imeiLabel+': ':'')+( gv(p+'-imei')||'____________________');
   const other=gv(p+'-other')||'';
-  const now=new Date();const _pad=n=>String(n).padStart(2,'0');
-  const _td=now.getFullYear()+'-'+_pad(now.getMonth()+1)+'-'+_pad(now.getDate());
-  const _tt=_pad(now.getHours())+':'+_pad(now.getMinutes());
-  const el_dt=document.getElementById(p+'-dt');if(el_dt)el_dt.value=_td;
-  const el_tm=document.getElementById(p+'-tm');if(el_tm)el_tm.value=_tt;
-  const dateS=fmtDInput(_td);
-  const timeS=_tt;
+  const dateS=fmtDInput(gv(p+'-dt'));
+  const timeS=gv(p+'-tm')||'______';
   const place=gv(p+'-pl')||'____________';
   const devs=gchk(p+'-dev');
 
@@ -1232,6 +1196,10 @@ function printCert(part){
   const sha256c=Object.keys(HR).includes('SHA-256');
   const md5c=Object.keys(HR).includes('MD5');
   const firstH=Object.values(HR)[0]||'_________________';
+  const otherChecked=document.getElementById(p+'-oth-c').checked;
+  const otherAlgorithm=gv(p+'-oth-t');
+  const reportFile=Object.keys(allResults).length>1
+    ? document.getElementById('cert-file-select').value : F?.name;
 
   const devList=[
     {n:'Computer / Storage Media',row:0},{n:'DVR',row:0},{n:'Mobile',row:0},{n:'Flash Drive',row:0},
@@ -1272,15 +1240,11 @@ function printCert(part){
 </div>
 <div class="cpara">by me (select as applicable).</div>
 <div class="cpara">I state that the HASH value/s of the electronic/digital record/s is <span class="cbl">&nbsp;${firstH}&nbsp;</span>, obtained through the following algorithm:--</div>
-<div class="chashbox">
-  <strong>Hash Report (to be enclosed with the certificate)</strong>
-  <table><thead><tr><th>Algorithm</th><th>Hash Value</th></tr></thead><tbody>${hrows}</tbody></table>
-</div>
 <div class="calist">
   <div class="cai"><span class="cbox">${sha1c?'X':''}</span> SHA1: <span class="caval">${HR['SHA-1']||''}</span></div>
   <div class="cai"><span class="cbox">${sha256c?'X':''}</span> SHA256: <span class="caval">${HR['SHA-256']||''}</span></div>
   <div class="cai"><span class="cbox">${md5c?'X':''}</span> MD5: <span class="caval">${HR['MD5']||''}</span></div>
-  <div class="cai"><span class="cbox"></span> Other <span class="cbl-sm"></span> (Legally acceptable standard)</div>
+  <div class="cai"><span class="cbox">${otherChecked?'X':''}</span> Other <span class="cbl-sm">${otherAlgorithm}</span> (Legally acceptable standard)</div>
 </div>
 <div class="cpara">(Hash report to be enclosed with the certificate)</div>
 <div class="csig">(Name and signature)</div>
@@ -1311,15 +1275,11 @@ function printCert(part){
 <div class="cpara">${imeiLabel}: <span class="cbl">&nbsp;${imei}&nbsp;</span> (as applicable)</div>
 <div class="cpara">and any other relevant information, if any, about the device/digital record <span class="cbl-sm">&nbsp;${other}&nbsp;</span> (specify).</div>
 <div class="cpara">I state that the HASH value/s of the electronic/digital record/s is <span class="cbl">&nbsp;${firstH}&nbsp;</span>, obtained through the following algorithm:--</div>
-<div class="chashbox">
-  <strong>Hash Report (to be enclosed with the certificate)</strong>
-  <table><thead><tr><th>Algorithm</th><th>Hash Value</th></tr></thead><tbody>${hrows}</tbody></table>
-</div>
 <div class="calist">
   <div class="cai"><span class="cbox">${sha1c?'X':''}</span> SHA1: <span class="caval">${HR['SHA-1']||''}</span></div>
   <div class="cai"><span class="cbox">${sha256c?'X':''}</span> SHA256: <span class="caval">${HR['SHA-256']||''}</span></div>
   <div class="cai"><span class="cbox">${md5c?'X':''}</span> MD5: <span class="caval">${HR['MD5']||''}</span></div>
-  <div class="cai"><span class="cbox"></span> Other <span class="cbl-sm"></span> (Legally acceptable standard)</div>
+  <div class="cai"><span class="cbox">${otherChecked?'X':''}</span> Other <span class="cbl-sm">${otherAlgorithm}</span> (Legally acceptable standard)</div>
 </div>
 <div class="cpara">(Hash report to be enclosed with the certificate)</div>
 <div class="csig">(Name, designation and signature)<br><br>${nm}<br>${desig}<br>${org}</div>
@@ -1330,23 +1290,20 @@ function printCert(part){
 </div>`;
   }
 
+  if(hrows){
+    html+=`
+<div class="chashbox">
+  <strong>Hash Report (to be enclosed with the certificate)</strong>
+  ${reportFile?'<p>File: '+escapeCertificateText(reportFile)+'</p>':''}
+  <table><thead><tr><th>Algorithm</th><th>Hash Value</th></tr></thead><tbody>${hrows}</tbody></table>
+</div>
+`;
+  }
   document.getElementById('cpaper').innerHTML=html;
-  document.getElementById('cprev').style.display='block';
-  document.getElementById('cprev').scrollIntoView({behavior:'smooth'});
-
-
-  setTimeout(function(){
-    // Force hide all floating elements before print
-    var hide = document.querySelectorAll('.fb-btn,.fb-overlay,.no-print,a[href="/tools"]');
-    hide.forEach(function(el){ el.setAttribute('data-was-display', el.style.display); el.style.setProperty('display','none','important'); });
-    
-    window.print();
-    
-    // Restore after print
-    setTimeout(function(){
-      hide.forEach(function(el){ el.style.display = el.getAttribute('data-was-display') || ''; });
-    }, 1000);
-  }, 700);
+  const preview=document.getElementById('cprev');
+  preview.style.display='block';
+  preview.scrollIntoView({behavior:'smooth'});
+  window.print();
 }
 </script>
 <script id="workerCode" type="text/worker-code">

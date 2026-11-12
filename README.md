@@ -29,3 +29,7 @@ Feedback is sent to `FEEDBACK_TO` (or to `GMAIL_USER` when no destination is set
 Paid plans are shown as a preview. The checkout and billing policy mockups in [docs/payment-drafts](docs/payment-drafts) are not served by the app. Payment verification, subscriptions, and native releases are separate work.
 
 GitHub Actions deploys pushes to `main` to the VPS.
+
+### Browser PDF checks
+
+With the app running locally, use `python tests/print_smoke.py --base-url http://127.0.0.1:8506 --output-dir /tmp/lhc-form-pdfs`. The script requires `playwright`, `pypdf`, and Playwright Chromium (or pass `--browser` with a Chrome executable). It fills the forms with synthetic data, generates PDFs, and checks the extracted text and page counts.
