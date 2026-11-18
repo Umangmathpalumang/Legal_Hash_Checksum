@@ -33,3 +33,7 @@ GitHub Actions deploys pushes to `main` to the VPS.
 ### Browser PDF checks
 
 With the app running locally, use `python tests/print_smoke.py --base-url http://127.0.0.1:8506 --output-dir /tmp/lhc-form-pdfs`. The script requires `playwright`, `pypdf`, and Playwright Chromium (or pass `--browser` with a Chrome executable). It fills the forms with synthetic data, generates PDFs, and checks the extracted text and page counts.
+
+### Scheduled outreach Gmail recovery
+
+The campaign mailers under `~/lhc` on `cedrf` use Gmail OAuth, separately from the website feedback app password. To check their shared token from your Mac, run `python3 scripts/reauthorize-outreach-gmail.py` with `google-auth-oauthlib` installed. If Google rejects the refresh grant, rerun with `--reauthorize` and sign in with the existing sender account. The helper requests only the previously granted send scope, verifies the refreshed credential, backs up the old token privately, and replaces it atomically. This restores the existing cron campaigns; the helper itself does not send a message, run a batch, or reset campaign history. The legacy Python 3.8 cron runtime should be upgraded separately after authentication is restored.
