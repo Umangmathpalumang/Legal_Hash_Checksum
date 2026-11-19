@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
-  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
-</script>
+<script src="/static/analytics.js"></script>
 <!-- AI & Search Engine Optimization (GEO) Schema -->
 <script type="application/ld+json">
 {
@@ -590,7 +582,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
     <div class="lawnote">
       <strong style="color:var(--cyl)">Legal basis:</strong> The Schedule [See section 63(4)(c)] of the Bharatiya Sakshya Adhiniyam, 2023 replaced Section 65B of the Indian Evidence Act, 1872. Part A is signed by the party producing the evidence; Part B is signed by the technical expert verifying it. Both require the hash value and algorithm to be stated. Attach the printed hash report to the signed certificate.
     </div>
-  
+
   <div style="text-align: center; padding-top: 40px; margin-top: 40px; border-top: 1px solid var(--bd);">
     <div style="text-align: center; padding: 30px 20px 60px; clear: both;">
       <a href="https://www.toolpilot.ai" target="_blank" style="display: inline-block; opacity: 0.85; transition: opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85">
@@ -747,7 +739,6 @@ const er=s=>'<span style="color:#ff4444">'+s+'</span>';
 
 async function startHash(){
   if(FILES.length>1){await startHashAll();return;}
-  if(FILES.length>1){await startHashAll();return;}
   const algos=selAlgos();if(!F)return;if(!algos.length){alert('Select at least one algorithm.');return}
   const btn=document.getElementById('hbtn');btn.disabled=true;
   co().innerHTML='';document.getElementById('con').style.display='block';
@@ -770,6 +761,7 @@ async function startHash(){
   try {
     buf = await F.arrayBuffer();
   } catch(e) {
+    window.gaEvent?.('hash_failed',{file_count:0,algorithm_count:algos.length});
     await clog(er('[X] Failed to read file: '+e.message),0);
     btn.disabled=false;return;
   }
@@ -920,6 +912,7 @@ self.onmessage = function(e) {
       }
     } else if (msg.type === 'done') {
       Object.assign(HR, msg.results);
+      window.gaEvent?.('hash_completed',{file_count:1,algorithm_count:algos.length,result:'complete'});
       sp(100,'Complete');
       await clog('',50);
       await clog(ok('[+] Complete -- '+Object.keys(HR).length+'/'+algos.length+' | '+msg.elapsed+'s'),80);
@@ -927,6 +920,7 @@ self.onmessage = function(e) {
       URL.revokeObjectURL(workerURL);
       setTimeout(()=>{document.getElementById('con').style.display='none';showRes(msg.elapsed);btn.disabled=false},1000);
     } else if (msg.type === 'error') {
+      window.gaEvent?.('hash_failed',{file_count:0,algorithm_count:algos.length});
       await clog(er('[X] Worker error: '+msg.msg),0);
       worker.terminate();
       URL.revokeObjectURL(workerURL);
@@ -935,6 +929,7 @@ self.onmessage = function(e) {
   };
 
   worker.onerror = async function(e) {
+    window.gaEvent?.('hash_failed',{file_count:0,algorithm_count:algos.length});
     await clog(er('[X] Worker failed: '+e.message),0);
     worker.terminate();
     URL.revokeObjectURL(workerURL);
@@ -946,6 +941,7 @@ self.onmessage = function(e) {
 function filesSelected(fileList){
   if(!fileList||!fileList.length)return;
   FILES=Array.from(fileList);
+  window.gaEvent?.('file_selected',{file_count:FILES.length});
   allResults={};
   F=FILES[0];
   currentFileIdx=0;
@@ -994,6 +990,7 @@ async function startHashAll(){
   sp(0,'Processing '+FILES.length+' files...');
   allResults={};
   const totalT=performance.now();
+  let completedFiles=0;
   await clog(di('$ ')+hi('hash_engine --multi-file --count='+FILES.length+' --algorithms='+algos.join(',')),0);
 
   for(let i=0;i<FILES.length;i++){
@@ -1007,10 +1004,15 @@ async function startHashAll(){
     try{
       const results=await hashInWorker(buf,algos);
       allResults[file.name]=results;
+      completedFiles++;
       Object.entries(results).forEach(([algo,val])=>clog(ok('  [+] '+algo.padEnd(8))+cy(val),0));
     }catch(e){await clog(er('[X] Hash failed: '+e.message),0);}
   }
 
+  window.gaEvent?.(completedFiles ? 'hash_completed' : 'hash_failed',{
+    file_count:completedFiles, algorithm_count:algos.length,
+    result:completedFiles===FILES.length ? 'complete' : 'partial'
+  });
   const elapsed=((performance.now()-totalT)/1000).toFixed(2);
   await clog('',50);
   await clog(ok('[+] '+FILES.length+' files complete in '+elapsed+'s'),80);
@@ -1303,6 +1305,7 @@ function printCert(part){
   const preview=document.getElementById('cprev');
   preview.style.display='block';
   preview.scrollIntoView({behavior:'smooth'});
+  window.gaEvent?.('certificate_prepared',{part:part,has_hash_report:Boolean(hrows)});
   window.print();
 }
 </script>
@@ -1599,13 +1602,7 @@ self.onmessage = function(e) {
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
   Legal Tools
 </a>
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  var fi=document.getElementById('fileInput');
-  if(fi)fi.addEventListener('change',function(){gaEvent('file_selected',{tool:'hash_checksum',file_count:this.files.length});});
-  document.querySelectorAll('[onclick*="print"]').forEach(function(b){b.addEventListener('click',function(){gaEvent('generate_certificate',{tool:'hash_checksum'});});});
-});
-</script>
+
 <!-- ── Feedback Widget ── -->
 <!-- ── Feedback Widget ── -->
 <style>
@@ -1923,7 +1920,7 @@ textarea.fb-field {
     fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:fbType,page:label,message:msg,email:email||'',url:window.location.href})})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.ok){if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
+      if(d.ok){if(typeof gaEvent!=='undefined')window.gaEvent?.('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
       else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Could not send feedback. Try again later or use Contact & support.';errEl.style.display='block';}
     }).catch(function(){btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Network error. Check connection.';errEl.style.display='block';});
   };
@@ -1962,7 +1959,7 @@ function toggleTheme(){
   var cur=document.documentElement.getAttribute('data-theme')||'dark';
   var next=cur==='dark'?'light':'dark';
   _applyTheme(next,true);
-  if(typeof gaEvent!=='undefined')gaEvent('theme_toggle',{theme:next});
+  if(typeof gaEvent!=='undefined')window.gaEvent?.('theme_toggle',{theme:next});
 }
 </script>
 </body>

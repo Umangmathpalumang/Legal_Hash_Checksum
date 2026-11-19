@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/analytics.js"></script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
-  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Section 138 Limitation Calculator & Condonation of Delay — NI Act | Free</title>
@@ -171,7 +163,7 @@ h1{font-size:26px;font-weight:800;margin-bottom:8px}
       <label class="field-label">Today's Date</label>
       <input class="field-input" type="date" id="todayDate" onchange="calculate()">
     </div>
-    <button class="btn" onclick="calculate()">Calculate Last Date to File</button>
+    <button class="btn" onclick="calculate(true)">Calculate Last Date to File</button>
   </div>
 
   <div class="result-box" id="resultBox">
@@ -226,7 +218,7 @@ h1{font-size:26px;font-weight:800;margin-bottom:8px}
     <div style="font-size:14px; color:var(--muted); line-height:1.6;">
       <h3 style="color:var(--text); font-size:15px; margin:16px 0 8px;">How the 138 Limitation Calculator Works</h3>
       <p style="margin-bottom:12px;">Under Section 138 of the Negotiable Instruments (NI) Act, strict timelines apply. Once a cheque bounces, you must send a legal notice within 30 days. The drawer has 15 days to pay. If they fail, the cause of action arises, and you have exactly <strong>1 month (30 days)</strong> to file the complaint.</p>
-      
+
       <h3 style="color:var(--text); font-size:15px; margin:16px 0 8px;">Condonation of Delay Calculator (Section 5)</h3>
       <p>If your limitation period shows as <strong>EXPIRED</strong>, Indian courts may still accept your case if you have a "sufficient cause". You must file an application under Section 5 of the Limitation Act, 1963. Use the negative "Days Remaining" value from this calculator to state the exact number of delayed days in your condonation affidavit.</p>
     </div>
@@ -241,7 +233,7 @@ h1{font-size:26px;font-weight:800;margin-bottom:8px}
   document.getElementById('todayDate').value=fmt(now);
 })();
 
-function calculate(){
+function calculate(trackAction=false){
   const suitVal=document.getElementById('suitType').value;
   const coaDate=document.getElementById('coaDate').value;
   const todayDate=document.getElementById('todayDate').value;
@@ -282,13 +274,10 @@ function calculate(){
     alert.innerHTML=`<div class="safe"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>${diffDays} days remaining. You are within the limitation period.</div>`;
   }
   box.classList.add('show');
+  if(trackAction)window.gaEvent?.('calculate');
 }
 </script>
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.btn').forEach(function(b){b.addEventListener('click',function(){var s=document.getElementById('suitType');gaEvent('calculate',{tool:'limitation_calculator',suit_type:s?s.options[s.selectedIndex].text:''});});});
-});
-</script>
+
 <!-- ── Feedback Widget ── -->
 <style>
 .fb-btn{position:fixed;bottom:24px;right:24px;z-index:900;width:52px;height:52px;border-radius:50%;background:#2563EB;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,99,235,.4);transition:transform .2s,box-shadow .2s}
@@ -379,7 +368,7 @@ document.addEventListener('DOMContentLoaded',function(){
     fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:fbType,page:label,message:msg,email:email||'',url:window.location.href})})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.ok){if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
+      if(d.ok){if(typeof gaEvent!=='undefined')window.gaEvent?.('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
       else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Could not send feedback. Try again later or use Contact & support.';errEl.style.display='block';}
     }).catch(function(){btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Network error. Check connection.';errEl.style.display='block';});
   };

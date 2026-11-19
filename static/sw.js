@@ -1,9 +1,9 @@
 /* Cache the public app shell for offline use. API requests go to the server. */
-const CACHE = 'lhc-v4';
+const CACHE = 'lhc-v5';
 const SHELL = [
   '/', '/tools', '/dashboard', '/cases', '/billing', '/hash',
   '/download', '/judgments', '/alerts', '/static/lhc-core.js', '/manifest.json',
-  '/static/site.css', '/static/site.js', '/static/site-icons.svg',
+  '/static/site.css', '/static/site.js', '/static/site-icons.svg', '/static/analytics.js',
   '/static/directory.css', '/static/directory.js', '/static/evidence.css',
   '/static/workspace.css', '/static/workspace.js', '/static/ui-icons.css',
   '/favicon.svg', '/static/icon-192.png', '/static/icon-512.png'

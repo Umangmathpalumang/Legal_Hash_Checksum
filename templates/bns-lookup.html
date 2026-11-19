@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/analytics.js"></script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
-  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BNS Section List & IPC to BNS Lookup — Bharatiya Nyaya Sanhita 2023</title>
@@ -232,7 +224,7 @@ function doSearch(){
 <script>
 document.addEventListener('DOMContentLoaded',function(){
   var si=document.getElementById('searchInput');
-  if(si){var t;si.addEventListener('input',function(){clearTimeout(t);var v=this.value;t=setTimeout(function(){if(v.trim().length>1)gaEvent('search',{tool:'bns_lookup',search_term:v.trim()});},1000);});}
+  if(si){var t;si.addEventListener('input',function(){clearTimeout(t);var v=this.value;t=setTimeout(function(){if(v.trim().length>1)window.gaEvent?.('tool_search',{tool:'bns_lookup',has_query:true});},1000);});}
 });
 </script>
 <!-- ── Feedback Widget ── -->
@@ -325,7 +317,7 @@ document.addEventListener('DOMContentLoaded',function(){
     fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:fbType,page:label,message:msg,email:email||'',url:window.location.href})})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.ok){if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
+      if(d.ok){if(typeof gaEvent!=='undefined')window.gaEvent?.('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
       else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Could not send feedback. Try again later or use Contact & support.';errEl.style.display='block';}
     }).catch(function(){btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Network error. Check connection.';errEl.style.display='block';});
   };

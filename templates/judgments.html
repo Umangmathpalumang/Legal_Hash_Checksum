@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/analytics.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Judgment Digest — Supreme Court & High Courts | Legal Hash Checksum</title>
@@ -11,8 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-D8RVNQPKBQ');window.gaEvent=function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};</script>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -311,7 +311,7 @@ function renderCards(judgments){
     const note = cleanNote(j.headnote);
     const area = (j.practice_area||'general').toLowerCase();
     return `<a class="card" href="${esc(j.source_url)}" target="_blank" rel="noopener"
-        onclick="gaEvent('j_click',{area:'${area}',court:'${esc(j.court)}'})">
+        onclick="window.gaEvent?.('j_click',{area:'${area}',has_court:Boolean('${esc(j.court)}')})">
       <div class="ctop">
         <span class="tag t-${area}">${area.toUpperCase()}</span>
         <span class="cdate">${fdate(j.judgment_date)}</span>
@@ -384,7 +384,7 @@ async function load(){
     renderCards(d.judgments||[]);
     updatePager();
     updateRBar();
-    gaEvent('j_filter',{area:S.area||'all',court:S.court||'all',days:S.days,year:S.year,q:S.q||''});
+    window.gaEvent?.('j_filter',{area:S.area||'all',has_court:Boolean(S.court),days:S.days,year:S.year,has_query:Boolean(S.q)});
   }catch(e){
     document.getElementById('main').innerHTML=
       `<div class="err"><h3>Could not load judgments</h3><p>${e.message}</p></div>`;

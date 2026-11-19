@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/analytics.js"></script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <script src="/static/lhc-core.js"></script>
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
-  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vakalatnama Generator — Fill Online & Download PDF Free | Indian Courts</title>
@@ -867,7 +859,7 @@ function saveDraft(){
   if(v('ahcDay'))   v('ahcDay').value   = now.getDate();
   if(v('ahcMonth')) v('ahcMonth').value = months[now.getMonth()];
   if(v('ahcYear2')) v('ahcYear2').value = yr2;
-  
+
   try {
     const draft = localStorage.getItem('lhc_vak_draft');
     if (draft) {
@@ -883,11 +875,6 @@ function saveDraft(){
 
   if(currentFmt==='general') render(); else renderAHC();
 })();
-</script>
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('[onclick*="print"]').forEach(function(b){b.addEventListener('click',function(){gaEvent('print_document',{tool:'vakalatnama'});});});
-});
 </script>
 <!-- ── Feedback Widget ── -->
 <style>
@@ -979,7 +966,7 @@ document.addEventListener('DOMContentLoaded',function(){
     fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:fbType,page:label,message:msg,email:email||'',url:window.location.href})})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.ok){if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
+      if(d.ok){if(typeof gaEvent!=='undefined')window.gaEvent?.('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
       else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Could not send feedback. Try again later or use Contact & support.';errEl.style.display='block';}
     }).catch(function(){btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Network error. Check connection.';errEl.style.display='block';});
   };
@@ -1355,7 +1342,7 @@ window.clearStamp = function(){
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const savedName = localStorage.getItem('advName');
-  
+
   if (savedName) {
     const advInput = document.getElementById('advocate');
     if (advInput) {

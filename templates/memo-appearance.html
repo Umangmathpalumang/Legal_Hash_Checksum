@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/analytics.js"></script>
 <script src="/static/lhc-core.js"></script>
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
-  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Memo of Appearance — Free Form for Indian Courts | Fill & Print PDF</title>
@@ -387,11 +379,6 @@ function clearAll(){
   render();
 })();
 </script>
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('[onclick*="print"]').forEach(function(b){b.addEventListener('click',function(){gaEvent('print_document',{tool:'memo_appearance'});});});
-});
-</script>
 <!-- ── Feedback Widget ── -->
 <style>
 .fb-btn{position:fixed;bottom:24px;right:24px;z-index:900;width:52px;height:52px;border-radius:50%;background:#2563EB;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,99,235,.4);transition:transform .2s,box-shadow .2s}
@@ -482,7 +469,7 @@ document.addEventListener('DOMContentLoaded',function(){
     fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:fbType,page:label,message:msg,email:email||'',url:window.location.href})})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.ok){if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
+      if(d.ok){if(typeof gaEvent!=='undefined')window.gaEvent?.('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
       else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Could not send feedback. Try again later or use Contact & support.';errEl.style.display='block';}
     }).catch(function(){btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Network error. Check connection.';errEl.style.display='block';});
   };
@@ -727,7 +714,7 @@ window.clearStamp = function(){
 
 <section id="seo-faq">
   <h2>Memo of Appearance Guide & FAQ</h2>
-  
+
   <h3>How to fill a memo of appearance in court?</h3>
   <p>Filling a <strong>memo of appearance in court</strong> requires precise information to establish your legal representation. You must include:</p>
   <ul>

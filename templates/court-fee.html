@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/analytics.js"></script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
-  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Court Fee Calculator — Indian Courts</title>
@@ -104,7 +96,7 @@ h1{font-size:26px;font-weight:800;margin-bottom:8px}
       <label class="field-label">Suit Valuation / Claim Amount (₹)</label>
       <input class="field-input" type="number" id="amount" placeholder="e.g. 500000" min="1" oninput="calculate()">
     </div>
-    <button class="btn" onclick="if(typeof gaEvent!=='undefined')gaEvent('calculate',{tool:'court_fee'});calculate()">Calculate Court Fee</button>
+    <button class="btn" onclick="calculate(true)">Calculate Court Fee</button>
   </div>
 
   <div class="result-box" id="resultBox">
@@ -150,7 +142,7 @@ function getSlabs(state){
   return slabs[state]||slabs.up;
 }
 
-function calculate(){
+function calculate(trackAction=false){
   const state=document.getElementById('state').value;
   const suitType=document.getElementById('suitType').value;
   const amount=parseFloat(document.getElementById('amount').value)||0;
@@ -186,13 +178,10 @@ function calculate(){
   document.getElementById('resultFee').textContent=fmt(fee);
   document.getElementById('breakdown').innerHTML=rows.map(r=>`<div class="breakdown-row"><span>${r.label}</span><span>${fmt(r.fee)}</span></div>`).join('')+`<div class="breakdown-row"><span>Total Court Fee</span><span>${fmt(fee)}</span></div>`;
   box.classList.add('show');
+  if(trackAction)window.gaEvent?.('calculate');
 }
 </script>
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.btn').forEach(function(b){b.addEventListener('click',function(){var st=document.getElementById('state'),su=document.getElementById('suitType'),am=document.getElementById('amount');gaEvent('calculate',{tool:'court_fee_calculator',state:st?st.value:'',suit_type:su?su.value:'',amount:am?am.value:''});});});
-});
-</script>
+
 <!-- ── Feedback Widget ── -->
 <style>
 .fb-btn{position:fixed;bottom:24px;right:24px;z-index:900;width:52px;height:52px;border-radius:50%;background:#2563EB;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,99,235,.4);transition:transform .2s,box-shadow .2s}
@@ -283,7 +272,7 @@ document.addEventListener('DOMContentLoaded',function(){
     fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:fbType,page:label,message:msg,email:email||'',url:window.location.href})})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.ok){if(typeof gaEvent!=='undefined')gaEvent('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
+      if(d.ok){if(typeof gaEvent!=='undefined')window.gaEvent?.('feedback_sent',{type:fbType,page:label,has_email:!!email});document.getElementById('fbForm').style.display='none';document.getElementById('fbSuccess').style.display='block';setTimeout(fbClose,3000);}
       else{btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Could not send feedback. Try again later or use Contact & support.';errEl.style.display='block';}
     }).catch(function(){btn.disabled=false;btn.innerHTML=SVG_SEND+' Try again';errEl.textContent='Network error. Check connection.';errEl.style.display='block';});
   };

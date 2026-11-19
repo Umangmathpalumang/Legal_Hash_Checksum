@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/static/analytics.js"></script>
 <script src="/static/lhc-core.js"></script>
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
-  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How to Fill Bail Bond Form No. 45 — Free Generator for Indian Courts</title>
@@ -872,7 +864,6 @@ window.addEventListener('afterprint',  afterPrint);
 var _origPrint = window.print.bind(window);
 window.print = function(){
   beforePrint();
-  if(typeof gaEvent!=='undefined') gaEvent('print_document', {tool:'bail_bond'});
   _origPrint();
   setTimeout(afterPrint, 3000);
 };
@@ -1174,7 +1165,7 @@ function downloadStampPNG(){
 
 <section id="seo-faq">
   <h2>Bail Bond (Form No. 45) Guide & FAQ</h2>
-  
+
   <h3>What is Form No. 45 under CrPC / BNSS?</h3>
   <p><strong>Form No. 45</strong> is the standard legal format used in Indian courts for a Bail Bond and Surety Bond. It is executed under Sections 436, 437, 438, and 441 of the Code of Criminal Procedure (CrPC) / corresponding sections of the BNSS, ensuring the accused's attendance in court.</p>
 

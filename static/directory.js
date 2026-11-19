@@ -39,8 +39,7 @@ function renderFilters(sync = true) {
     const next = new URL(location.href);
     if (category === 'all') next.searchParams.delete('category');
     else next.searchParams.set('category', category);
-    if (search) next.searchParams.set('q', query.value.trim());
-    else next.searchParams.delete('q');
+    next.searchParams.delete('q');
     if (next.href !== location.href) history.replaceState(null, '', next);
   }
 }
@@ -49,11 +48,32 @@ query.maxLength = 120;
 directorySearch.hidden = false;
 filters.hidden = false;
 readFilters();
-renderFilters(false);
-query.addEventListener('input', () => renderFilters());
+renderFilters();
+let searchTimer;
+query.addEventListener('input', () => {
+  renderFilters();
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(() => {
+    if(query.value.trim())window.gaEvent?.('tool_search',{has_query:true});
+  },700);
+});
+cards.forEach(({card}) => card.addEventListener('click', () => {
+  window.gaEvent?.('tool_open',{destination:{
+    '/hash':'hash_checksum','/verify':'verify','/vakalatnama':'vakalatnama','/legal-qa':'legal_qa',
+    '/bail-bond':'bail_bond','/memo-appearance':'memo_appearance',
+    '/legal-notice':'legal_notice','/legal-notice-custom':'legal_notice_custom',
+    '/judgments':'judgments','/law-converter':'law_converter',
+    '/bns-lookup':'bns_lookup','/court-fee':'court_fee_calculator',
+    '/limitation-calculator':'limitation_calculator','/stamp-generator':'stamp_generator',
+    '/women-children-law':'women_children_law','/legal-dictionary':'legal_dictionary',
+  }[new URL(card.href).pathname]});
+}));
 clear.addEventListener('click', () => { query.value = ''; renderFilters(); query.focus(); });
 buttons.forEach(button => {
-  button.addEventListener('click', () => { category = button.dataset.filter; renderFilters(); });
+  button.addEventListener('click', () => {
+    category = button.dataset.filter; renderFilters();
+    window.gaEvent?.('filter_category',{category});
+  });
 });
 document.querySelector('#reset-tools').addEventListener('click', () => {
   category = 'all';
@@ -101,6 +121,7 @@ if (typeof dialog.showModal === 'function') {
         }),
       });
       if (!response.ok || !(await response.json()).ok) throw new Error();
+      window.gaEvent?.('feedback_sent',{has_email:Boolean(data.get('email').trim())});
       form.reset();
       status.textContent = 'Thanks. Your feedback was sent.';
     } catch {

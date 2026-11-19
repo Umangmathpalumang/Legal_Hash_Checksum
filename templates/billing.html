@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+<script src="/static/analytics.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Billing — legalhashchecksum.com</title>
@@ -617,6 +618,7 @@ function generateInvoice(){
     +'<div class="inv-seal"><div class="inv-sign"><div class="inv-sign-line"></div><div class="inv-sign-lbl">'+adv+'</div><div class="inv-sign-lbl" style="font-weight:400;color:#888">Authorised Signatory</div></div></div></div>'
     +'<div class="inv-footer">This is a computer-generated invoice. | legalhashchecksum.com</div>';
   document.getElementById('invPaper').innerHTML=html;
+  window.gaEvent?.('invoice_prepared');
   document.getElementById('invoiceSection').style.display='block';
   document.body.classList.add('invoice-preview-open');
   document.querySelector('.page').style.display='none';

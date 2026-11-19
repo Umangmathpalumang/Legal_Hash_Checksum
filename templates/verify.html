@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8RVNQPKBQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D8RVNQPKBQ', {page_title:document.title,page_location:window.location.href,send_page_view:true});
-  window.gaEvent = function(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});};
-</script>
+<script src="/static/analytics.js"></script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -190,28 +182,33 @@ function sha512(ab){
   return H.map(v=>v.toString(16).padStart(16,'0')).join('');
 }
 
+let verifyFileVersion=0;
+let lastTrackedVerification='';
+
 async function handleFile(file) {
   if (!file) return;
-  if(typeof gaEvent!=='undefined') gaEvent('file_loaded', {tool:'verify', file_size_kb: Math.round(file.size/1024)});
+  verifyFileVersion++;
+  lastTrackedVerification='';
   document.getElementById('fileName').textContent = file.name;
   document.getElementById('fileSize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
   document.getElementById('fileInfo').style.display = 'block';
 
   const buffer = await file.arrayBuffer();
-  
+
   computedHashes = {
     'MD5': md5(buffer),
     'SHA-1': sha1(buffer),
     'SHA-256': sha256(buffer),
     'SHA-512': sha512(buffer)
   };
+  window.gaEvent?.('file_loaded');
 
   const listEl = document.getElementById('computedList');
-  listEl.innerHTML = Object.entries(computedHashes).map(([algo, val]) => 
+  listEl.innerHTML = Object.entries(computedHashes).map(([algo, val]) =>
     `<div class="computed-row"><span>${algo}:</span> <span>${val}</span></div>`
   ).join('');
   document.getElementById('computedBox').style.display = 'block';
-  
+
   verifyHash();
 }
 
@@ -226,8 +223,13 @@ function verifyHash() {
   const match = Object.values(computedHashes).some(h => h === expected);
   resEl.style.display = 'block';
   resEl.className = 'vresult ' + (match ? 'ok' : 'er');
-  if(typeof gaEvent!=='undefined') gaEvent('hash_verified', {tool:'verify', result: match ? 'match' : 'mismatch'});
-  resEl.innerHTML = match 
+  const verificationKey=verifyFileVersion+':'+expected;
+  if(/^[a-f0-9]+$/.test(expected) && Object.values(computedHashes).some(h=>h.length===expected.length)
+      && verificationKey!==lastTrackedVerification){
+    window.gaEvent?.('hash_verified', {result: match ? 'match' : 'mismatch'});
+    lastTrackedVerification=verificationKey;
+  }
+  resEl.innerHTML = match
     ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px;color:var(--ok)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>MATCH CONFIRMED — Unaltered Evidence<br><span style="font-size:11px;opacity:0.8">Computed cryptographic hash matches certificate record perfectly.</span>'
     : '<svg class="ui-icon" aria-hidden="true" focusable="false"><use href="/static/site-icons.svg#close"/></svg> MISMATCH DETECTED — Integrity Compromised<br><span style="font-size:11px;opacity:0.8">The file contents do not match the expected hash.</span>';
 }
