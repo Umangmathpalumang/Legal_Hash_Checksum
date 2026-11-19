@@ -386,7 +386,7 @@ window.LHCGate = {
    ═══════════════════════════════════════════════════════════════════ */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/sw.js').catch(function () {});
+    navigator.serviceWorker.register('/sw.js?v=20261120-tracking', {updateViaCache:'none'}).catch(function () {});
   });
 }
 

@@ -8,6 +8,12 @@ Loading the helper twice does not initialize it twice. Page configuration waits
 for the document title. Calls use optional chaining so blocking analytics does
 not stop calculations, hashing or native printing.
 
+Script references use a release query parameter so a CDN/browser cache cannot
+serve the previous directory or core script after deployment. The worker URL
+uses the same release parameter, bypasses its HTTP update cache and revalidates
+at the server. Its precache/fetch keys retain the versioned script URLs. Bump the
+release references and worker cache name when changing these assets.
+
 ## Events to use in reports
 
 All custom events include a canonical `tool` identifier derived from the route.
@@ -80,6 +86,7 @@ below is solely for the test process, not a production configuration change:
 ```sh
 python -c 'import main,uvicorn; main.RATE_LIMIT=500; uvicorn.run(main.app,host="127.0.0.1",port=18515)'
 python tests/analytics_smoke.py --base-url http://127.0.0.1:18515 --browser '/path/to/chrome'
+python tests/pwa_smoke.py --base-url http://127.0.0.1:18515 --browser '/path/to/chrome'
 ```
 
 The test requires Playwright. It serves real application pages under a simulated

@@ -1,10 +1,10 @@
 /* Cache the public app shell for offline use. API requests go to the server. */
-const CACHE = 'lhc-v5';
+const CACHE = 'lhc-v6';
 const SHELL = [
   '/', '/tools', '/dashboard', '/cases', '/billing', '/hash',
-  '/download', '/judgments', '/alerts', '/static/lhc-core.js', '/manifest.json',
-  '/static/site.css', '/static/site.js', '/static/site-icons.svg', '/static/analytics.js',
-  '/static/directory.css', '/static/directory.js', '/static/evidence.css',
+  '/download', '/judgments', '/alerts', '/static/lhc-core.js?v=20261120-tracking', '/manifest.json',
+  '/static/site.css', '/static/site.js', '/static/site-icons.svg', '/static/analytics.js?v=20261120-tracking',
+  '/static/directory.css', '/static/directory.js?v=20261120-tracking', '/static/evidence.css',
   '/static/workspace.css', '/static/workspace.js', '/static/ui-icons.css',
   '/favicon.svg', '/static/icon-192.png', '/static/icon-512.png'
 ];
@@ -31,8 +31,8 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
-  if ((url.search && url.pathname !== '/tools') || !SHELL.includes(url.pathname)) return;
-  const cacheKey = url.pathname === '/tools' ? '/tools' : request;
+  const cacheKey = url.pathname === '/tools' ? '/tools' : url.pathname + url.search;
+  if (!SHELL.includes(cacheKey)) return;
 
   event.respondWith(caches.open(CACHE).then(async cache => {
     try {

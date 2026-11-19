@@ -113,7 +113,8 @@ async def security_headers(request: Request, call_next):
 @app.get("/sw.js", include_in_schema=False)
 async def service_worker():
     return FileResponse(BASE_DIR / "static/sw.js", media_type="application/javascript",
-                        headers={"Service-Worker-Allowed": "/"})
+                        headers={"Service-Worker-Allowed": "/",
+                                 "Cache-Control": "no-cache, max-age=0, must-revalidate"})
 
 @app.get("/manifest.json", include_in_schema=False)
 async def pwa_manifest():
