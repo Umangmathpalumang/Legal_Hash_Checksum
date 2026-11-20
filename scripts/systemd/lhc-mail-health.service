@@ -1,0 +1,20 @@
+[Unit]
+Description=Legal Hash Checksum Gmail authentication check and owner alerts
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu
+Environment=HOME=/home/ubuntu
+UMask=0077
+ExecStart=/usr/bin/python3 /home/ubuntu/.local/lib/lhc-mail-health/check-gmail-health.py --notify
+TimeoutStartSec=110
+SuccessExitStatus=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/ubuntu/.local/state/lhc-mail-health

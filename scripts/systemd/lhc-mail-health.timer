@@ -1,0 +1,11 @@
+[Unit]
+Description=Check Legal Hash Checksum email authentication every hour
+
+[Timer]
+OnCalendar=*-*-* *:15:00
+Persistent=true
+RandomizedDelaySec=60
+Unit=lhc-mail-health.service
+
+[Install]
+WantedBy=timers.target
