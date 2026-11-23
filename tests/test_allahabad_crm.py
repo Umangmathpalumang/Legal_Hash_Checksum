@@ -34,6 +34,47 @@ def update_excel_crm(contact, email_num, template_used, sent_at_dt):
 
 
 class AllahabadRepairTests(unittest.TestCase):
+    def test_reconciliation_fills_live_fields_without_rebuilding_contact_cells(self):
+        import openpyxl
+        contact = {"sl": 1, "roll": "001", "name": "Fixture", "email": "fixture@example.com", "address": "Original", "remarks": "Keep"}
+        history = {contact["email"]: {"sent_at": "2026-11-23T08:30:00", "msg_id": "fixture-id"}}
+        with tempfile.TemporaryDirectory() as folder:
+            original, staged = Path(folder) / "original.xlsx", Path(folder) / "staged.xlsx"
+            crm.build_workbook(original, [contact], {}, set())
+            wb = openpyxl.load_workbook(original)
+            wb["Allahabad HC Advocates"].column_dimensions["E"].width = 61
+            wb["Send Log"].append([datetime(2026, 11, 23), "02:00 PM", "Fixture", contact["email"], "1", "t1", "Python Script"])
+            wb.save(original)
+            wb.close()
+            before = original.read_bytes()
+            crm.reconcile_workbook(original, staged, history)
+            self.assertEqual(original.read_bytes(), before)
+            self.assertEqual(crm.verify_workbook(staged, [contact], history)["send_log_rows"], 1)
+            wb = openpyxl.load_workbook(staged)
+            self.assertEqual(wb["Allahabad HC Advocates"]["G3"].value, "Sent")
+            self.assertEqual(wb["Allahabad HC Advocates"]["I3"].value, "fixture-id")
+            self.assertEqual(wb["Allahabad HC Advocates"].column_dimensions["E"].width, 61)
+            self.assertEqual(wb["Send Log"]["F2"].value, "t1")
+            wb.close()
+
+    def test_concurrent_crm_change_is_not_overwritten(self):
+        ns = {}
+        exec(crm.ATOMIC_SAVE, ns)
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "crm.xlsx"
+            path.write_bytes(b"original")
+            stat = path.stat()
+            signature = (stat.st_ino, stat.st_size, stat.st_mtime_ns)
+            def competing_save(staged):
+                with zipfile.ZipFile(staged, "w") as archive:
+                    archive.writestr("xl/workbook.xml", "fixture")
+                path.write_bytes(b"external update")
+            workbook = MagicMock()
+            workbook.save.side_effect = competing_save
+            with self.assertRaisesRegex(RuntimeError, "CRM changed"):
+                ns["_save_crm_atomic"](workbook, path, signature)
+            self.assertEqual(path.read_bytes(), b"external update")
+
     def test_live_crm_writer_updates_status_time_and_message_id_atomically(self):
         import openpyxl
         full_writer = '''def update_excel_crm(contact, email_num, template_used, sent_at_dt):
