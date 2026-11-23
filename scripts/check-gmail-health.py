@@ -15,7 +15,7 @@ import subprocess
 import sys
 import tempfile
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
 from email.utils import formatdate, make_msgid
 from urllib import error, parse, request
@@ -207,7 +207,67 @@ def check_campaigns():
         except OSError:
             results[name] = {"status": "log_unavailable", "last_run": None, "sent": 0,
                              "errors": ["log_unavailable"], "warnings": []}
+    directory = root / "indian_advocates"
+    if directory.exists():
+        results["indian_advocates"] = directory_campaign_snapshot(directory, datetime.now())
     return results
+
+
+def directory_campaign_snapshot(root, now):
+    """Read only the new campaign's saved, redacted status. Never run a sender."""
+    result = {"status": "log_unavailable", "last_run": None, "sent": 0,
+              "errors": ["log_unavailable"], "warnings": []}
+    try:
+        cfg = json.loads((root / "config.json").read_text())
+        if cfg.get("enabled") is False:
+            return dict(result, status="paused", errors=[])
+        if cfg.get("enabled") is not True:
+            return dict(result, status="failed", errors=["campaign_config_error"])
+        saved = json.loads((root / "latest_run.json").read_text())
+        allowed_status = {"not_due", "in_progress", "completed", "empty_queue",
+                          "rate_limited", "failed", "partial_failure", "paused"}
+        allowed_errors = {"invalid_request_or_recipient", "gmail_auth_or_limit_401",
+                          "gmail_auth_or_limit_403", "gmail_auth_or_limit_429",
+                          "delivery_outcome_unknown", "campaign_runtime_error", "scope_mismatch",
+                          "unsafe_token_path", "auth_failed", "auth_failed_or_network_error",
+                          "legacy_exclusion_file_unavailable", "legacy_workbook_unavailable",
+                          "legacy_workbook_schema_changed", "legacy_email_formula",
+                          "legacy_workbook_unreadable", "legacy_history_unreadable",
+                          "shared_blacklist_unavailable", "legacy_exclusions_changed_during_read"}
+        status = saved.get("status")
+        sent = saved.get("sent", 0)
+        if status not in allowed_status or not isinstance(sent, int) or sent < 0:
+            return dict(result, status="failed", errors=["campaign_status_invalid"])
+        errors = [code if code in allowed_errors else "unexpected_campaign_error"
+                  for code in saved.get("errors", [])]
+        warnings = (["delivery_outcome_requires_review"]
+                    if "delivery_outcome_requires_review" in saved.get("warnings", []) else [])
+        last = None
+        if saved.get("last_run"):
+            parsed = datetime.fromisoformat(saved["last_run"].replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                return dict(result, status="failed", errors=["campaign_status_invalid"])
+            last = parsed.astimezone(timezone(timedelta(hours=5, minutes=30))).replace(tzinfo=None)
+        result = {"status": status, "last_run": last.isoformat() if last else None,
+                  "sent": sent, "errors": errors, "warnings": warnings}
+        if warnings and status not in {"failed", "partial_failure", "in_progress"}:
+            result["status"] = "partial_failure"
+        if status == "in_progress" and last and now-last > timedelta(minutes=15):
+            result["status"] = "failed"
+            result["errors"].append("run_did_not_finish")
+        expected = now.replace(hour=min(now.hour,17),minute=10,second=0,microsecond=0)
+        if expected > now:
+            expected -= timedelta(hours=1)
+        enabled_at = cfg.get("enabled_at")
+        enabled = (datetime.fromisoformat(enabled_at.replace("Z", "+00:00"))
+                   .astimezone(timezone(timedelta(hours=5, minutes=30))).replace(tzinfo=None)) if enabled_at else None
+        if (now.weekday()<5 and 9<=expected.hour<=17 and now>expected+timedelta(minutes=15)
+                and (not enabled or enabled<=expected) and (not last or last<expected-timedelta(seconds=60))):
+            result["status"] = "schedule_missed"
+            result["errors"].append("scheduled_run_missing")
+        return result
+    except (OSError, ValueError, TypeError, KeyError):
+        return dict(result, status="log_unavailable", errors=["log_unavailable"])
 
 
 def recovery_body(checks, campaigns=None):

@@ -1,0 +1,39 @@
+name: Outreach sender tests
+
+on:
+  push:
+    paths:
+      - 'scripts/*gmail*.py'
+      - 'scripts/indian-advocate-emailer.py'
+      - 'scripts/install-indian-advocate-sender.py'
+      - 'tests/test_indian_advocate_emailer.py'
+      - 'tests/test_directory_campaign_health.py'
+      - 'tests/test_gmail_health.py'
+      - 'requirements-outreach.txt'
+      - '.github/workflows/outreach-tests.yml'
+  pull_request:
+    paths:
+      - 'scripts/*gmail*.py'
+      - 'scripts/indian-advocate-emailer.py'
+      - 'scripts/install-indian-advocate-sender.py'
+      - 'tests/test_indian_advocate_emailer.py'
+      - 'tests/test_directory_campaign_health.py'
+      - 'tests/test_gmail_health.py'
+      - 'requirements-outreach.txt'
+      - '.github/workflows/outreach-tests.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements-outreach.txt
+      - run: python -m unittest discover -s tests -p test_indian_advocate_emailer.py -v
+      - run: python -m unittest discover -s tests -p test_directory_campaign_health.py -v
+      - run: python -m unittest discover -s tests -p test_gmail_health.py -v
