@@ -6,6 +6,7 @@ import base64
 import fcntl
 import json
 import os
+import re
 from pathlib import Path
 import shlex
 import smtplib
@@ -14,6 +15,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from datetime import datetime, timedelta
 from email.message import EmailMessage
 from email.utils import formatdate, make_msgid
 from urllib import error, parse, request
@@ -27,7 +29,8 @@ STATE_DIR = Path.home() / ".local/state/lhc-mail-health"
 MAC_ROOT = "/Users/umang/Desktop/legalchecksum/Legal_Hash_Checksum-ui"
 MAC_PYTHON = "/Users/umang/.pyenv/versions/3.10.11/bin/python"
 LABELS = {"feedback": "Website feedback (Gmail app password)",
-          "outreach": "Scheduled outreach (Gmail OAuth)"}
+          "outreach": "Scheduled outreach (Gmail OAuth)",
+          "outreach_jobs": "Latest scheduled campaign runs"}
 REMINDER_SECONDS = 24 * 60 * 60
 
 
@@ -90,29 +93,44 @@ def check_outreach():
             return "config_error", None
         # Validate the existing sender without importing or executing any mailer.
         senders = set()
+        scope_mismatch = False
         for name in ("allahabad_emailer.py", "calcutta_emailer.py", "lhc_emailer.py"):
-            for node in ast.parse((root / name).read_text()).body:
+            tree = ast.parse((root / name).read_text())
+            for node in tree.body:
                 if isinstance(node, ast.Assign) and isinstance(node.value, ast.Constant):
                     if any(isinstance(t, ast.Name) and t.id == "SENDER_EMAIL" for t in node.targets):
                         senders.add(node.value.value)
+            # Legacy mailers can define SCOPES inside get_gmail_service. Loading
+            # the token alone does not exercise that requested scope override.
+            definitions = []
+            for node in ast.walk(tree):
+                targets = (node.targets if isinstance(node, ast.Assign)
+                           else [node.target] if isinstance(node, ast.AnnAssign) else [])
+                if any(isinstance(t, ast.Name) and t.id == "SCOPES" for t in targets):
+                    definitions.append(set(ast.literal_eval(node.value)))
+            if not definitions or any(s != {SEND_SCOPE} for s in definitions):
+                scope_mismatch = True
         if {s for s in senders if isinstance(s, str) and s.endswith("@gmail.com")} != {OWNER}:
             return "config_error", None
         data = {k: token[k] for k in ("client_id", "client_secret", "refresh_token")}
         if not all(data.values()):
             return "config_error", None
         data["grant_type"] = "refresh_token"
+        data["scope"] = SEND_SCOPE
         req = request.Request(TOKEN_URL, data=parse.urlencode(data).encode())
         with request.urlopen(req, timeout=12) as response:
             result = json.load(response)
         if not result.get("access_token"):
             return "config_error", None
         # Access token stays in memory. No credential file is modified.
-        return "ok", result["access_token"]
+        return ("scope_mismatch" if scope_mismatch else "ok"), result["access_token"]
     except error.HTTPError as exc:
         try:
             reason = json.loads(exc.read()).get("error")
         except (ValueError, OSError):
             reason = None
+        if reason == "invalid_scope":
+            return "scope_mismatch", None
         return ("auth_failed" if reason in ("invalid_grant", "invalid_client", "unauthorized_client")
                 else "network_error"), None
     except (OSError, error.URLError):
@@ -121,16 +139,101 @@ def check_outreach():
         return "config_error", None
 
 
-def recovery_body(checks):
+def campaign_snapshot(text, now, minute=0, weekdays_only=True):
+    """Summarize the latest run without exposing log messages or contact data."""
+    latest = None
+    active_today = False
+    seen_sends = set()
+    result = {"status": "not_due", "last_run": None, "sent": 0, "errors": [], "warnings": []}
+    for line in text.splitlines():
+        dated = re.match(r"^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", line)
+        if dated:
+            stamp = datetime.strptime(dated[1], "%Y-%m-%d %H:%M:%S")
+            active_today = stamp.date() == now.date()
+        if not active_today:
+            continue
+        if dated and any(marker in line for marker in ("IST:", "IST time:", "Emailer starting ===")):
+            latest = stamp
+            seen_sends = set()
+            result = {"status": "in_progress", "last_run": stamp.isoformat(), "sent": 0,
+                      "errors": [], "warnings": []}
+        if latest is None:
+            continue
+        for marker, label in (("invalid_scope", "invalid_scope"), ("invalid_grant", "invalid_grant"),
+                              ("Invalid To header", "invalid_recipient"), ("HttpError", "gmail_api_error")):
+            if marker in line and label not in result["errors"]:
+                result["errors"].append(label)
+                result["status"] = "failed"
+        if "File is not a zip file" in line:
+            result["warnings"] = ["crm_workbook_corrupt"]
+        if "✓ Sent" in line and dated:
+            seen_sends.add(line)
+            result["sent"] = len(seen_sends)
+        done = re.search(r"=== Done\. Sent (\d+)/(\d+)", line)
+        if done:
+            result["sent"] = int(done[1])
+            result["status"] = (("partial_failure" if result["sent"] else "failed") if result["errors"]
+                                else "completed" if result["sent"] else "empty_queue")
+        if "All contacts have been emailed" in line or "Nothing to do." in line:
+            result["status"] = "empty_queue"
+        if "Outside working hours" in line:
+            result["status"] = "not_due"
+    if result["status"] == "in_progress" and latest and now - latest > timedelta(minutes=15):
+        result["status"] = "failed"
+        result["errors"].append("run_did_not_finish")
+    if not weekdays_only or now.weekday() < 5:
+        expected = now.replace(hour=min(now.hour, 17), minute=minute, second=0, microsecond=0)
+        if expected > now:
+            expected -= timedelta(hours=1)
+        if expected.date() == now.date() and 9 <= expected.hour <= 17 and now > expected + timedelta(minutes=15):
+            if latest is None or latest < expected - timedelta(seconds=60):
+                result["status"] = "schedule_missed"
+                result["errors"].append("scheduled_run_missing")
+    return result
+
+
+def check_campaigns():
+    root = Path.home() / "lhc"
+    results = {}
+    for name, logfile, minute, weekdays in (("allahabad", "allahabad_emailer.log", 0, True),
+                                           ("calcutta", "calcutta_emailer.log", 20, False),
+                                           ("lhc", "emailer.log", 40, True)):
+        try:
+            with (root / logfile).open("rb") as stream:
+                stream.seek(0, 2)
+                stream.seek(max(0, stream.tell() - 512000))
+                text = stream.read().decode("utf-8", errors="replace")
+            results[name] = campaign_snapshot(text, datetime.now(), minute, weekdays)
+        except OSError:
+            results[name] = {"status": "log_unavailable", "last_run": None, "sent": 0,
+                             "errors": ["log_unavailable"], "warnings": []}
+    return results
+
+
+def recovery_body(checks, campaigns=None):
     lines = ["Legal Hash Checksum email authentication check", "",
              "Checked at: " + time.strftime("%Y-%m-%d %H:%M:%S %Z"), ""]
     for name, status in sorted(checks.items()):
         lines.append("{}: {}".format(LABELS[name], status))
+    for name, summary in sorted((campaigns or {}).items()):
+        lines.append("{}: {}; last run {}; sent {}; errors {}; warnings {}".format(
+            name, summary["status"], summary["last_run"], summary["sent"],
+            ", ".join(summary["errors"]) or "none", ", ".join(summary["warnings"]) or "none"))
+    if checks.get("outreach_jobs") != "ok" and checks.get("outreach_jobs") is not None:
+        lines += ["", "A scheduled campaign failed or its run could not be verified.",
+                  "Working Gmail sign-in alone does not prove email was sent.",
+                  "Inspect the redacted campaign summaries above. Do not run another batch or reset sent history."]
     lines += ["", "If an authentication check failed, open Terminal on your Mac."]
     if checks.get("outreach") == "auth_failed":
         lines += ["", "Renew the existing outreach sign-in:",
                   MAC_PYTHON + " " + MAC_ROOT + "/scripts/reauthorize-outreach-gmail.py --reauthorize",
                   "Sign in with " + OWNER + ". This helper does not send a campaign batch."]
+    if checks.get("outreach") == "scope_mismatch":
+        lines += ["", "The campaign's requested Gmail permissions do not match its send-only token.",
+                  "Do not replace the feedback app password or grant inbox access to fix this.",
+                  "Run the reviewed campaign scope/recipient repair from your Mac:",
+                  MAC_PYTHON + " " + MAC_ROOT + "/scripts/repair-outreach-runtime.py --remote --apply",
+                  "This fixes code only, preserves contacts and sent history, and does not run a batch."]
     if checks.get("feedback") == "auth_failed":
         lines += ["", "Replace the rejected website feedback app password:",
                   "1. Open https://myaccount.google.com/apppasswords and create an app password for lch-feedback.",
@@ -158,7 +261,7 @@ def send_owner_email(subject, body, checks, smtp_settings, oauth_access):
             with smtp_connection(smtp_settings) as connection:
                 refused = connection.send_message(msg, from_addr=smtp_settings[0], to_addrs=[OWNER])
             return "accepted_smtp" if not refused else "failed"
-        if checks.get("outreach") == "ok" and oauth_access:
+        if checks.get("outreach") in ("ok", "scope_mismatch") and oauth_access:
             msg["From"] = OWNER
             payload = json.dumps({"raw": base64.urlsafe_b64encode(msg.as_bytes()).decode()}).encode()
             req = request.Request(
@@ -207,7 +310,9 @@ def public_status(state, now):
     age = max(0, int(now - state.get("checked_at", 0)))
     return {"checks": state.get("checks", {}), "age_seconds": age,
             "stale": age > 2 * 60 * 60, "email_alert": state.get("email_alert", "none"),
-            "pending_notification": state.get("pending_notification", False)}
+            "pending_notification": state.get("pending_notification", False),
+            "campaigns": state.get("campaigns", {}),
+            "coverage": state.get("coverage", "authentication_only")}
 
 
 def run_check(notify=False, test_email=False):
@@ -223,10 +328,14 @@ def run_check(notify=False, test_email=False):
         previous = read_state()
         feedback, smtp_settings = check_feedback()
         outreach, oauth_access = check_outreach()
-        checks = {"feedback": feedback, "outreach": outreach}
+        campaigns = check_campaigns()
+        bad_jobs = {"failed", "partial_failure", "schedule_missed", "log_unavailable"}
+        job_status = "delivery_failed" if any(c["status"] in bad_jobs for c in campaigns.values()) else "ok"
+        checks = {"feedback": feedback, "outreach": outreach, "outreach_jobs": job_status}
         now = time.time()
         kind, signature = notification_kind(previous, checks, now)
         state = {"checked_at": now, "checks": checks,
+                 "campaigns": campaigns, "coverage": "authentication_and_latest_scheduled_runs",
                  "notified_signature": previous.get("notified_signature", ""),
                  "last_notified_at": previous.get("last_notified_at", 0),
                  "email_alert": previous.get("email_alert", "none"),
@@ -234,13 +343,13 @@ def run_check(notify=False, test_email=False):
         if test_email:
             state["test_email"] = send_owner_email(
                 "Email monitoring is enabled (setup test)",
-                "Hourly VPS checks are enabled for feedback SMTP and outreach OAuth.\n"
+                "Hourly VPS checks are enabled for feedback SMTP, outreach OAuth, and scheduled campaign results.\n"
                 "You will receive an incident alert, at most one reminder per 24 hours for the same failure, "
-                "and a recovery message.\n\n" + recovery_body(checks),
+                "and a recovery message.\n\n" + recovery_body(checks, campaigns),
                 checks, smtp_settings, oauth_access)
         if notify and kind:
-            subject = "Email authentication needs attention" if signature else "Email authentication recovered"
-            delivery = send_owner_email(subject, recovery_body(checks), checks, smtp_settings, oauth_access)
+            subject = "Email system needs attention" if signature else "Email system recovered"
+            delivery = send_owner_email(subject, recovery_body(checks, campaigns), checks, smtp_settings, oauth_access)
             state["email_alert"] = delivery
             if delivery.startswith("accepted_"):
                 state.update(notified_signature=signature, last_notified_at=now, pending_notification=False)

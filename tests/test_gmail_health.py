@@ -8,6 +8,8 @@ import unittest
 from unittest.mock import MagicMock, patch
 from urllib.error import HTTPError, URLError
 from io import BytesIO
+from datetime import datetime
+from urllib.parse import parse_qs
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,6 +19,11 @@ SPEC.loader.exec_module(health)
 
 
 class GmailHealthTests(unittest.TestCase):
+    def setUp(self):
+        no_real_logs = patch.object(health, "check_campaigns", return_value={})
+        no_real_logs.start()
+        self.addCleanup(no_real_logs.stop)
+
     def test_first_failure_and_daily_reminder(self):
         checks = {"feedback": "ok", "outreach": "auth_failed"}
         kind, signature = health.notification_kind({}, checks, 100)
@@ -118,15 +125,28 @@ class GmailHealthTests(unittest.TestCase):
             original = token_path.read_bytes()
             (root / "credentials.json").write_text(json.dumps({"installed": {"token_uri": health.TOKEN_URL, "client_id": "fixture"}}))
             for name in ("allahabad_emailer.py", "calcutta_emailer.py", "lhc_emailer.py"):
-                (root / name).write_text("SENDER_EMAIL = " + repr(health.OWNER) + "\nraise RuntimeError('Must never execute a campaign')\n")
+                (root / name).write_text("SENDER_EMAIL = " + repr(health.OWNER)
+                                        + "\nSCOPES = " + repr([health.SEND_SCOPE])
+                                        + "\nraise RuntimeError('Must never execute a campaign')\n")
             response = MagicMock()
             response.__enter__.return_value = BytesIO(b'{"access_token":"ACCESS"}')
-            with patch.object(health.request, "urlopen", return_value=response):
+            with patch.object(health.request, "urlopen", return_value=response) as urlopen:
                 self.assertEqual(health.check_outreach(), ("ok", "ACCESS"))
+                self.assertEqual(parse_qs(urlopen.call_args.args[0].data.decode())["scope"], [health.SEND_SCOPE])
             self.assertEqual(token_path.read_bytes(), original)
+            (root / "allahabad_emailer.py").write_text(
+                "SENDER_EMAIL = " + repr(health.OWNER)
+                + "\ndef get_gmail_service():\n SCOPES = "
+                + repr([health.SEND_SCOPE, "https://www.googleapis.com/auth/gmail.readonly"]) + "\n")
+            response.__enter__.return_value = BytesIO(b'{"access_token":"ACCESS"}')
+            with patch.object(health.request, "urlopen", return_value=response):
+                self.assertEqual(health.check_outreach(), ("scope_mismatch", "ACCESS"))
             rejected = HTTPError(health.TOKEN_URL, 400, "bad", {}, BytesIO(b'{"error":"invalid_grant"}'))
             with patch.object(health.request, "urlopen", side_effect=rejected):
                 self.assertEqual(health.check_outreach(), ("auth_failed", None))
+            rejected = HTTPError(health.TOKEN_URL, 400, "bad", {}, BytesIO(b'{"error":"invalid_scope"}'))
+            with patch.object(health.request, "urlopen", side_effect=rejected):
+                self.assertEqual(health.check_outreach(), ("scope_mismatch", None))
             with patch.object(health.request, "urlopen", side_effect=URLError("SECRET")):
                 self.assertEqual(health.check_outreach(), ("network_error", None))
             token["scopes"].append("gmail.readonly")
@@ -138,6 +158,77 @@ class GmailHealthTests(unittest.TestCase):
     def test_missing_or_stale_monitor_state_is_visible(self):
         self.assertTrue(health.public_status({}, 100000)["stale"])
         self.assertFalse(health.public_status({"checked_at": 100000}, 100010)["stale"])
+
+    def test_scope_failure_guidance_does_not_request_password_or_inbox_access(self):
+        body = health.recovery_body({"feedback": "ok", "outreach": "scope_mismatch"})
+        self.assertIn("repair-outreach-runtime.py --remote --apply", body)
+        self.assertNotIn("update-feedback-gmail.py", body)
+        self.assertNotIn("reauthorize-outreach-gmail.py --reauthorize", body)
+
+    def test_healthy_oauth_token_can_alert_for_campaign_scope_mismatch(self):
+        response = MagicMock()
+        response.__enter__.return_value = BytesIO(b'{"id":"fixture"}')
+        with patch.object(health.request, "urlopen", return_value=response):
+            self.assertEqual(health.send_owner_email("Failure", "body",
+                {"feedback": "auth_failed", "outreach": "scope_mismatch"}, None, "ACCESS"), "accepted_oauth")
+
+
+class CampaignStatusTests(unittest.TestCase):
+    def test_latest_failed_run_is_not_hidden_by_older_success(self):
+        text = """2026-11-23 09:00:00 INFO === Allahabad HC Emailer starting ===
+2026-11-23 09:03:00 INFO === Done. Sent 12/12. Total: 12/200 ===
+2026-11-23 10:00:00 INFO === Allahabad HC Emailer starting ===
+google.auth.exceptions.RefreshError: ('invalid_scope: Bad Request', {})
+"""
+        result = health.campaign_snapshot(text, datetime(2026, 11, 23, 10, 15))
+        self.assertEqual(result["status"], "failed")
+        self.assertEqual(result["sent"], 0)
+        self.assertIn("invalid_scope", result["errors"])
+
+    def test_corrupt_crm_warning_does_not_hide_successful_sends(self):
+        text = """2026-11-23 12:00:00 INFO === Allahabad HC Emailer starting ===
+2026-11-23 12:01:00 WARNING Excel update failed: File is not a zip file
+2026-11-23 12:02:00 INFO === Done. Sent 9/12. Total: 4208/20588 ===
+"""
+        result = health.campaign_snapshot(text, datetime(2026, 11, 23, 12, 15))
+        self.assertEqual((result["status"], result["sent"]), ("completed", 9))
+        self.assertIn("crm_workbook_corrupt", result["warnings"])
+
+    def test_calcutta_invalid_headers_are_delivery_failure_despite_valid_auth(self):
+        text = """2026-11-23 11:20:00 INFO IST time: Mon 23-Nov 11:20 AM | Working hours: True
+2026-11-23 11:20:05 ERROR Failed: HttpError 400 Invalid To header
+2026-11-23 11:20:12 INFO === Done. Sent 0/12 this run. Excel CRM updated. ===
+"""
+        result = health.campaign_snapshot(text, datetime(2026, 11, 23, 12, 15), 20, False)
+        self.assertEqual(result["status"], "failed")
+        self.assertIn("invalid_recipient", result["errors"])
+        self.assertNotIn("header", json.dumps(result))
+
+    def test_completed_queue_is_normal_and_does_not_require_repeat_emailing(self):
+        text = """2026-11-23 11:40:00 INFO === LHC Emailer starting ===
+2026-11-23 11:40:00 INFO All contacts have been emailed. Nothing to do.
+"""
+        self.assertEqual(health.campaign_snapshot(text, datetime(2026, 11, 23, 12, 15), 40)["status"], "empty_queue")
+
+    def test_missing_cron_run_is_reported_after_grace_period(self):
+        self.assertEqual(health.campaign_snapshot("", datetime(2026, 11, 23, 12, 14))["status"], "not_due")
+        self.assertEqual(health.campaign_snapshot("", datetime(2026, 11, 23, 12, 16))["status"], "schedule_missed")
+
+    def test_midnight_and_weekend_do_not_create_false_missing_run_alert(self):
+        self.assertEqual(health.campaign_snapshot("", datetime(2026, 11, 23, 0, 15), 20, False)["status"], "not_due")
+        self.assertEqual(health.campaign_snapshot("", datetime(2026, 11, 22, 12, 16))["status"], "not_due")
+
+    def test_new_run_clears_previous_header_failures(self):
+        text = """2026-11-23 11:20:00 INFO IST time: Mon 23-Nov 11:20 AM | Working hours: True
+2026-11-23 11:20:01 ERROR HttpError 400 Invalid To header
+2026-11-23 11:20:02 INFO === Done. Sent 0/12 this run. Excel CRM updated. ===
+2026-11-23 12:20:00 INFO IST time: Mon 23-Nov 12:20 PM | Working hours: True
+2026-11-23 12:20:01 WARNING Skipping invalid recipient in workbook row 4; contact unchanged
+2026-11-23 12:20:02 INFO === Done. Sent 0/12 this run. Excel CRM updated. ===
+"""
+        result = health.campaign_snapshot(text, datetime(2026, 11, 23, 12, 25), 20, False)
+        self.assertEqual(result["status"], "empty_queue")
+        self.assertEqual(result["errors"], [])
 
 
 if __name__ == "__main__":
