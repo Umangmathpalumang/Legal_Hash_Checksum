@@ -174,6 +174,14 @@ class GmailHealthTests(unittest.TestCase):
 
 
 class CampaignStatusTests(unittest.TestCase):
+    def test_allahabad_failure_email_has_data_repair_steps_not_password_rotation(self):
+        campaigns = {"allahabad": {"status": "partial_failure", "last_run": "2026-11-23T13:00:00",
+                                  "sent": 9, "errors": ["invalid_recipient"], "warnings": ["crm_workbook_corrupt"]}}
+        body = health.recovery_body({"feedback": "ok", "outreach": "ok", "outreach_jobs": "delivery_failed"}, campaigns)
+        self.assertIn("repair-allahabad-crm.py --remote --apply", body)
+        self.assertNotIn("update-feedback-gmail.py", body)
+        self.assertNotIn("reauthorize-outreach-gmail.py --reauthorize", body)
+
     def test_latest_failed_run_is_not_hidden_by_older_success(self):
         text = """2026-11-23 09:00:00 INFO === Allahabad HC Emailer starting ===
 2026-11-23 09:03:00 INFO === Done. Sent 12/12. Total: 12/200 ===

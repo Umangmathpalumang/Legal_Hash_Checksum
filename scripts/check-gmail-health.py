@@ -211,7 +211,7 @@ def check_campaigns():
 
 
 def recovery_body(checks, campaigns=None):
-    lines = ["Legal Hash Checksum email authentication check", "",
+    lines = ["Legal Hash Checksum email and campaign health check", "",
              "Checked at: " + time.strftime("%Y-%m-%d %H:%M:%S %Z"), ""]
     for name, status in sorted(checks.items()):
         lines.append("{}: {}".format(LABELS[name], status))
@@ -223,6 +223,13 @@ def recovery_body(checks, campaigns=None):
         lines += ["", "A scheduled campaign failed or its run could not be verified.",
                   "Working Gmail sign-in alone does not prove email was sent.",
                   "Inspect the redacted campaign summaries above. Do not run another batch or reset sent history."]
+    allahabad = (campaigns or {}).get("allahabad", {})
+    if ("invalid_recipient" in allahabad.get("errors", [])
+            or "crm_workbook_corrupt" in allahabad.get("warnings", [])):
+        lines += ["", "For the known Allahabad malformed-recipient or damaged-CRM issue:",
+                  MAC_PYTHON + " " + MAC_ROOT + "/scripts/repair-allahabad-crm.py --remote --apply",
+                  "This reviewed helper backs up damaged files, preserves send history, skips malformed addresses,",
+                  "and repairs the CRM from existing records. It does not send or replay a campaign batch."]
     lines += ["", "If an authentication check failed, open Terminal on your Mac."]
     if checks.get("outreach") == "auth_failed":
         lines += ["", "Renew the existing outreach sign-in:",
